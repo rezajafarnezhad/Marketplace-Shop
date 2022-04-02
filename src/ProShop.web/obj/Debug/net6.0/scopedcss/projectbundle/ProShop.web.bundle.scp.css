@@ -1,0 +1,26 @@
+/* _content/ProShop.web/Pages/Identity/LoginWithPhoneNumber.cshtml.rz.scp.css */
+#login-register-text[b-xhvhmgknev] {
+font-weight: bold;
+}
+
+#login-box[b-xhvhmgknev] {
+margin-top: 9rem;
+}
+
+[b-xhvhmgknev] img#login-register-picture {
+    width: 140px;
+}
+/* _content/ProShop.web/Pages/Identity/RegisterLogin.cshtml.rz.scp.css */
+#login-register-text[b-2p4pf41uk5] {
+     font-weight: bold;
+ }
+
+#login-box[b-2p4pf41uk5] {
+    margin-top: 9rem;
+}
+
+[b-2p4pf41uk5] img#login-register-picture {
+
+    width: 140px;
+
+}

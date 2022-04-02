@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ProShop.Common\ProShop.Common.csproj" />
+	  <ProjectReference Include="..\ProShop.DataLayer\ProShop.DataLayer.csproj" />
+	  <ProjectReference Include="..\ProShop.Services\ProShop.Services.csproj" />
+	  <ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />
+	</ItemGroup>
+
+</Project>

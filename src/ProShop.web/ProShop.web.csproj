@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <UserSecretsId>57f4f4d9-9bea-45df-b1b6-fecb75dd8670</UserSecretsId>
+	
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProShop.Ioc\ProShop.Ioc.csproj" />
+    <ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+  </ItemGroup>
+
+</Project>

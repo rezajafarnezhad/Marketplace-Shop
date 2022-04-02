@@ -1,0 +1,28 @@
+﻿<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/ProShop.web.styles.css">
+    <title>@ViewData["Title"] | Proshop</title>
+</head>
+
+<body>
+
+    @RenderBody()
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("ValidationScript", false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("CustomScripts", false)
+</body>
+
+</html>

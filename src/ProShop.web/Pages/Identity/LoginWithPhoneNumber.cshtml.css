@@ -1,0 +1,11 @@
+#login-register-text {
+font-weight: bold;
+}
+
+#login-box {
+margin-top: 9rem;
+}
+
+::deep img#login-register-picture {
+    width: 140px;
+}

@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="DNTCommon.Web.Core" Version="3.3.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProShop.Common\ProShop.Common.csproj" />
+    <ProjectReference Include="..\ProShop.DataLayer\ProShop.DataLayer.csproj" />
+    <ProjectReference Include="..\ProShop.Entities\ProShop.Entities.csproj" />
+    <ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
