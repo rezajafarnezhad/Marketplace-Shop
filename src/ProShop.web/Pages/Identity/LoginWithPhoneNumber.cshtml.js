@@ -29,20 +29,18 @@ function setCountDownTimeBox() {
 }
 
 ///////
-function reSendActivationCode(phoneNumber, e) {
-    showLoading(function () { reSendActivationCodeFunc(phoneNumber, e) });
+function reSendActivationCode(phoneNumber, e, reSendSmsUrl) {
+    showLoading(function () { reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) });
 }
-function reSendActivationCodeFunc(phoneNumber, e) {
+function reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) {
     var objectToSend = {
         phoneNumber: phoneNumber,
         __RequestVerificationToken: getRVT(e)
     }
-    console.log(objectToSend);
-    console.log(window.location.pathname);
-    $.post(window.location.pathname + '?handler=ReSendUserSmsActivation', objectToSend, function (data, status) {
+    $.post(reSendSmsUrl, objectToSend, function (data, status) {
+        hideLoading();
         if (status == 'success' && data.isSuccessful) {
-            hideLoading();
-            console.log(data.message);
+            showToastr('success', data.message)
             $('#activation-code-box').html(data.data.activationCode);
             $('#count-down-timer-box').parent().removeClass('d-none');
             $('#send-user-activation-sms-box').addClass('d-none');
@@ -50,11 +48,37 @@ function reSendActivationCodeFunc(phoneNumber, e) {
             second = 0;
             setCountDownTimeBox();
             countDownTimerInterval = setInterval(countDown, 1000);
+        } else {
+            showToastr('error', data.message)
         }
     }).fail(function () {
-        console.log('خطایی به وجود آمد، لطفا مجددا تلاش نمایید');
+        showToastr('error', 'خطایی به وجود آمد، لطفا مجددا تلاش نمایید')
+
     });
 }
 function getRVT(e) {
     return $(e).parents('form').find(`input[name="${rvt}"]`).val();
+}
+
+
+
+
+function onBeginLoginWithPhoneNumber() {
+    showLoading();
+}
+function onCompleteLoginWithPhoneNumber() {
+    hideLoading();
+}
+function onFailureLoginWithPhoneNumber() {
+    showToastr('error', 'خطایی به وجود آمد، لطفا مجددا تلاش نمایید');
+}
+
+function onSuccessLoginWithPhoneNumber(data, status) {
+    if (status == 'success' && data.isSuccessful) {
+        showToastr('success', 'شما با موفقیت وارد شدید');
+        location.href = '/';
+    }
+    else {
+        showToastr('error', 'خطایی به وجود آمد، لطفا مجددا تلاش نمایید');
+    }
 }

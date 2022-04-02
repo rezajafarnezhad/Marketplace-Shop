@@ -10,7 +10,7 @@ using ProShop.ViewModels.Identity;
 using ProShop.ViewModels.Identity.Settings;
 namespace ProShop.web.Pages.Identity;
 
-public class RegisterLoginModel : PageModel
+public class RegisterLoginModel : PageBase
 {
 
     private readonly SiteSettings _siteSettings;

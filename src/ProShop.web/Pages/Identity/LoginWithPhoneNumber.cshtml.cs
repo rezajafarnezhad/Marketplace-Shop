@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.DataLayer.Context;
 using ProShop.Services.Contracts.Identity;
@@ -7,7 +8,7 @@ using ProShop.ViewModels.Identity;
 
 namespace ProShop.web.Pages.Identity;
 
-public class LoginWithPhoneNumberModel : PageModel
+public class LoginWithPhoneNumberModel : PageBase
 {
     private readonly IApplicationUserManager _applicationUserManager;
     private readonly IApplicationSigninManager _applicationSigninManager;
@@ -55,22 +56,28 @@ public class LoginWithPhoneNumberModel : PageModel
     public async Task<IActionResult> OnPostAsync(LoginWithPhoneNumberViewModel loginWithPhoneNumber)
     {
         if (!ModelState.IsValid)
-            return Page();
+        {
+            return Json(new JsonResultOperation(false, "مقادیر را به درستی وارد کنید"));
+        }
+         
 
 
         var _user = await _applicationUserManager.FindByNameAsync(loginWithPhoneNumber.PhoneNumber);
         if (_user == null)
-            return Page();
+            return Json(new JsonResultOperation(false));
+
 
 
         var result = await _applicationUserManager.VerifyChangePhoneNumberTokenAsync(_user, loginWithPhoneNumber.ActivationCode, loginWithPhoneNumber.PhoneNumber);
 
         if (!result)
-            return Page();
+            return Json(new JsonResultOperation(false, "کد وارد شده صحیح نمیباشد"));
+
 
 
         await _applicationSigninManager.SignInAsync(_user, true);
-        return RedirectToPage("/Index");
+        return Json(new JsonResultOperation(true, "با موفقیت وارد شدید"));
+
     }
 
 
@@ -79,21 +86,21 @@ public class LoginWithPhoneNumberModel : PageModel
         //System.Threading.Thread.Sleep(2000);
         var _user = await _applicationUserManager.FindByNameAsync(phoneNumber);
         if (_user is null)
-            return new JsonResult(new JsonResultOperation(false));
+            return Json(new JsonResultOperation(false));
 
         if(_user.SendSmsLastTime.AddMinutes(3) > DateTime.Now)
-            return new JsonResult(new JsonResultOperation(false));
+            return Json(new JsonResultOperation(false));
 
         var phoneNumberToken = await _applicationUserManager.GenerateChangePhoneNumberTokenAsync(_user, phoneNumber);
         //Send Sms
         //var sendSmsResult = await _smsSender.SendSmsAsync(_user.PhoneNumber, $"کد فعال سازی شما\n {phoneNumberToken}");
         //if (!sendSmsResult)
         //{
-        //    return new JsonResult(new JsonResultOperation(false, "در ارسال پیامک خطایی به وجود آمد، لطفا دوباره سعی نمایید"));
+        //    return Json(new JsonResultOperation(false, "در ارسال پیامک خطایی به وجود آمد، لطفا دوباره سعی نمایید"));
         //}
         _user.SendSmsLastTime = DateTime.Now;
         await _unitOfWork.SaveChangesAsync();
-        return new JsonResult(new JsonResultOperation(true, "کد فعال سازی مجددا پیامک شد")
+        return Json(new JsonResultOperation(true, "کد فعال سازی مجددا پیامک شد")
         {
             Data = new
             {
