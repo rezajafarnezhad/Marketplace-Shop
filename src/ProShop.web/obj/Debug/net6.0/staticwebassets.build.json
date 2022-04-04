@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5JVSCv3V3IW3xNdIQjQfQyg1UKkYEWDnTsDYrmlpAJw=",
+  "Hash": "1Q1awKr3QggIWQUMl9csr0tVZqa/7MxIQ28nfRjvcgE=",
   "Source": "ProShop.web",
   "BasePath": "_content/ProShop.web",
   "Mode": "Default",
@@ -51,6 +51,23 @@
       "OriginalItemSpec": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\ProShop.web.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\AdminPanel\\Category\\Index.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/AdminPanel/Category/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\AdminPanel\\Category\\Index.cshtml.js"
+    },
+    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Identity\\LoginWithPhoneNumber.cshtml.js",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -83,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "Pages\\Identity\\RegisterLogin.cshtml.js"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\css\\admin-styls.css",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "css/admin-styls.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin-styls.css"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\css\\main-styls.css",
@@ -627,6 +661,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\user-avatar.png"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\js\\admin-scripts.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "js/admin-scripts.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\admin-scripts.js"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\js\\main-scripts.js",

@@ -49,6 +49,9 @@ namespace ProShop.DataLayer.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsShowInMenus")
                         .HasColumnType("bit");
 
@@ -91,7 +94,7 @@ namespace ProShop.DataLayer.Migrations
                     b.HasIndex("Slug", "Title")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ProShop.Entities.Identity.Role", b =>

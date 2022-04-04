@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using ProShop.Entities;
 using ProShop.Entities.Identity;
 using System.Globalization;
+using ProShop.Common.EntityFramework;
 
 namespace ProShop.DataLayer.Context;
 
@@ -43,11 +44,12 @@ public class ApplicationDbContext :
         return base.SaveChangesAsync(cancellationToken);
     }
 
-    public DbSet<Category> Categories { get; set; }
+   
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.RegisterAllEntities(typeof(EntityBase));
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         //...
         // This should be placed here, at the end.

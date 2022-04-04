@@ -51,3 +51,16 @@ function showToastr(status, message) {
 }
 
 // End toastr
+
+
+//ToolTip
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+
+function ShowErrorMessage(message) {
+
+    showToastr('error', message != null ? message : 'خطایی به وجود آمد، لطفا مجددا تلاش نمایید');
+}

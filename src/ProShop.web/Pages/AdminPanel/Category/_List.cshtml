@@ -1,0 +1,53 @@
+﻿@model ProShop.ViewModels.Categories.ShowCategoriesViewModel
+@if (Model.Categories.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
+                    <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
+                    <th class="text-center">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Item in Model.Categories)
+                {
+
+                    <tr>
+                        <td>@Item.Title</td>
+                        <td>@Item.Parent</td>
+                        <td>@Item.slug</td>
+                        <td>
+                            @if (Item.ShowInMenus)
+                            {
+
+                                <div class="d-grid">
+                                    <span class="btn btn-success" type="button">بله</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-grid">
+                                    <span class="btn btn-danger" type="button">خیر</span>
+                                </div>
+                            }
+
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-warning">ویرایش</button>
+                            <button class="btn btn-danger">حذف</button>
+                            <button class="btn btn-success">افزودن زیر دسته</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <partial name="_RecordNotFound" />
+}

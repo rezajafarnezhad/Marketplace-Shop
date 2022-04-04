@@ -1,0 +1,64 @@
+﻿@page
+@using ProShop.ViewModels.Categories
+@using ProShop.ViewModels
+@model ProShop.web.Pages.AdminPanel.Category.IndexModel
+@{
+    ViewData["Title"] = "دسته بندی ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+
+        <form class="alert alert-secondary Search-form-via-ajax">
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+           
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-form-label" asp-for="SearchCategories.Title"></label>
+                    <input class="form-control" asp-for="SearchCategories.Title"/>
+                    <span class="span-error-message" asp-validation-for="SearchCategories.Title"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-form-label" asp-for="SearchCategories.Slug"></label>
+                    <input class="form-control" asp-for="SearchCategories.Slug"/>
+                    <span class="span-error-message" asp-validation-for="SearchCategories.Slug"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-form-label" asp-for="SearchCategories.ShowInMenusStatus"></label>
+                    <select class="form-control" asp-for="SearchCategories.ShowInMenusStatus" asp-items="Html.GetEnumSelectList<ShowInMenusStatus>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-form-label" asp-for="SearchCategories.DeletedStatus"></label>
+                    <select class="form-control" asp-for="SearchCategories.DeletedStatus" asp-items="Html.GetEnumSelectList<DeletedStatus>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button type="submit" class="btn btn-info">جستجو ...</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="read-data-table">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}
+
+@section CustomScripts
+{
+    <script src="~/Pages/AdminPanel/Category/Index.cshtml.js"></script>
+}
