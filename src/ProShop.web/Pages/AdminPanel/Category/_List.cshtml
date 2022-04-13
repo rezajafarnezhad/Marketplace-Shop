@@ -1,50 +1,107 @@
 ﻿@model ProShop.ViewModels.Categories.ShowCategoriesViewModel
 @if (Model.Categories.Any())
 {
-    <div class="table-responsive">
+    <div class="table-responsive data-table-body">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-light">
-                <tr>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
-                    <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
-                    <th class="text-center">عملیات</th>
-                </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
+                <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
+                <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
+                <th>@Html.DisplayNameFor(c=>c.Categories[0].Picture)</th>
+                <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
+                <th class="text-center">عملیات</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var Item in Model.Categories)
-                {
+            @foreach (var Item in Model.Categories)
+            {
 
-                    <tr>
-                        <td>@Item.Title</td>
-                        <td>@Item.Parent</td>
-                        <td>@Item.slug</td>
-                        <td>
-                            @if (Item.ShowInMenus)
-                            {
+                <tr>
+                    <td>@Item.Title</td>
+                    <td>@Item.Parent</td>
+                    <td>@Item.slug</td>
+                    <td>
+                        @if (Item.Picture == "بدون عکس")
+                        {
+                            <div class="d-grid">
+                                <span class="btn btn-secondary" type="button">@Item.Picture</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="d-flex justify-content-center">
+                                <img src="~/images/categories/@Item.Picture" class="rounded max-width-200" />
+                            </span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (Item.ShowInMenus)
+                        {
 
-                                <div class="d-grid">
-                                    <span class="btn btn-success" type="button">بله</span>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="d-grid">
-                                    <span class="btn btn-danger" type="button">خیر</span>
-                                </div>
-                            }
+                            <div class="d-grid fs-4">
+                                <span class="bi bi-check2-circle text-success"></span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-grid fs-4">
+                                <span class="bi bi-exclamation-circle text-danger"></span>
+                            </div>
+                        }
 
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-warning">ویرایش</button>
-                            <button class="btn btn-danger">حذف</button>
-                            <button class="btn btn-success">افزودن زیر دسته</button>
-                        </td>
-                    </tr>
-                }
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-warning">ویرایش
+                            <span class="bi bi-eraser"></span>
+                        </button>
+                        <button class="btn btn-danger">حذف
+                            <span class="bi bi-trash2"></span>
+                        </button>
+                        <button class="btn btn-success">افزودن زیر دسته
+                            <span class="bi bi-diagram-3-fill"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
+        
+        <!-- Pagination -->
+        <hr/>
+        <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
+            <div class="btn-group me-2">
+                @if (Model.Pagination.CurrentPage != 1)
+                {
+                    <button value="1" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button value="@(Model.Pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                }
+                @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
+                {
+                    <button value="@counter" type="button"
+                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                        @counter
+                    </button>
+                }
+                @if (Model.Pagination.CurrentPage != Model.Pagination.PagesCount)
+                {
+                    <button value="@(Model.Pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.Pagination.PagesCount" value="@Model.Pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-left"></i>
+                        @Model.Pagination.PagesCount
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
+            <div class="input-group">
+                <input id="page-number-input" value="@Model.Pagination.CurrentPage" min="1" max="@Model.Pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
+            </div>
+        </div>
+        <!-- End pagination -->
     </div>
 }
 else

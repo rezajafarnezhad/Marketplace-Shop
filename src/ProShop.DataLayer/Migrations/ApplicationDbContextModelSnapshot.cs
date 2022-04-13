@@ -45,7 +45,6 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
@@ -73,7 +72,6 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Picture")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -91,7 +89,10 @@ namespace ProShop.DataLayer.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.HasIndex("Slug", "Title")
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("Title")
                         .IsUnique();
 
                     b.ToTable("Categories", (string)null);

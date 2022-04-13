@@ -18,12 +18,17 @@ public class ShowCategoryViewModel
     [Display(Name = "نمایش در منوهای اصلی")]
     public bool ShowInMenus { get; set; }
 
+    [Display(Name = "تصویر")]
+    public string Picture { get; set; }
+    
+
 }
 
 public class ShowCategoriesViewModel
 {
-    public List<ShowCategoryViewModel> Categories { get; set; }
+    public List<ShowCategoryViewModel> Categories { get; set; } = new();
     public SearchCategoriesViewModel SearchCategories { get; set; } = new();
+    public PaginationViewModel Pagination { get; set; } = new();
 }
 
 public class SearchCategoriesViewModel

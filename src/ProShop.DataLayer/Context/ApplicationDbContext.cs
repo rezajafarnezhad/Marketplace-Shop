@@ -6,6 +6,7 @@ using ProShop.Entities;
 using ProShop.Entities.Identity;
 using System.Globalization;
 using ProShop.Common.EntityFramework;
+using ProShop.DataLayer.Configurations;
 
 namespace ProShop.DataLayer.Context;
 
@@ -50,7 +51,8 @@ public class ApplicationDbContext :
     {
         base.OnModelCreating(builder);
         builder.RegisterAllEntities(typeof(EntityBase));
-        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        var asb = typeof(CategoryConfiguration).Assembly;
+        builder.ApplyConfigurationsFromAssembly(asb);
         //...
         // This should be placed here, at the end.
         builder.AddAuditableShadowProperties();

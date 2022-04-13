@@ -29,7 +29,7 @@ namespace ProShop.Common.IdentityToolkit
         public static List<string> GetModelStateErrors(this ModelStateDictionary modelState)
         {
             return modelState.Keys.SelectMany(k => modelState[k].Errors)
-                .Select(m => m.ErrorMessage).ToList();
+                .Select(m => m.ErrorMessage).OrderByDescending(c=>c).ToList();
         }
 
         public static string DumpErrors(this IdentityResult result, bool useHtmlNewLine = false)

@@ -30,9 +30,7 @@ function setCountDownTimeBox() {
 
 ///////
 function reSendActivationCode(phoneNumber, e, reSendSmsUrl) {
-    showLoading(function () { reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) });
-}
-function reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) {
+    showLoading();
     var objectToSend = {
         phoneNumber: phoneNumber,
         __RequestVerificationToken: getRVT(e)
@@ -40,7 +38,7 @@ function reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) {
     $.post(reSendSmsUrl, objectToSend, function (data, status) {
         hideLoading();
         if (status == 'success' && data.isSuccessful) {
-            showToastr('success', data.message)
+            showToastr('success', data.message);
             $('#activation-code-box').html(data.data.activationCode);
             $('#count-down-timer-box').parent().removeClass('d-none');
             $('#send-user-activation-sms-box').addClass('d-none');
@@ -48,19 +46,17 @@ function reSendActivationCodeFunc(phoneNumber, e, reSendSmsUrl) {
             second = 0;
             setCountDownTimeBox();
             countDownTimerInterval = setInterval(countDown, 1000);
-        } else {
-            showToastr('error', data.message)
+        }
+        else {
+            showToastr('error', data.message);
         }
     }).fail(function () {
-        ShowErrorMessage()
-
+        ShowErrorMessage();
     });
 }
 function getRVT(e) {
     return $(e).parents('form').find(`input[name="${rvt}"]`).val();
 }
-
-
 
 
 function onBeginLoginWithPhoneNumber() {
@@ -69,16 +65,19 @@ function onBeginLoginWithPhoneNumber() {
 function onCompleteLoginWithPhoneNumber() {
     hideLoading();
 }
-function onFailureLoginWithPhoneNumber() {
-    ShowErrorMessage()
+function onFailureLoginWithPhoneNumber(data, status) {
+        ShowErrorMessage();
 }
 
 function onSuccessLoginWithPhoneNumber(data, status) {
     if (status == 'success' && data.isSuccessful) {
         showToastr('success', 'شما با موفقیت وارد شدید');
-        location.href = '/';
+        var delayInMilliseconds = 4000;
+        setTimeout(function () {
+            location.href = '/';
+        }, delayInMilliseconds);
     }
     else {
-        ShowErrorMessage()
+        ShowErrorMessage();
     }
 }

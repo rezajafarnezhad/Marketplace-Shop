@@ -19,17 +19,17 @@ public class CategoryService : GenericService<Category>, ICategoryService
     }
 
 
-    public async Task<ShowCategoriesViewModel> GetCategories(SearchCategoriesViewModel search)
+    public async Task<ShowCategoriesViewModel> GetCategories(ShowCategoriesViewModel model)
     {
         var categories = _categories.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(search.Title))
-            categories = categories.Where(c => c.Title.Contains(search.Title.Trim()));
+        if (!string.IsNullOrWhiteSpace(model.SearchCategories.Title))
+            categories = categories.Where(c => c.Title.Contains(model.SearchCategories.Title.Trim()));
 
-        if (!string.IsNullOrWhiteSpace(search.Slug))
-            categories = categories.Where(c => c.Slug.Contains(search.Slug.Trim()));
+        if (!string.IsNullOrWhiteSpace(model.SearchCategories.Slug))
+            categories = categories.Where(c => c.Slug.Contains(model.SearchCategories.Slug.Trim()));
 
-        switch (search.DeletedStatus)
+        switch (model.SearchCategories.DeletedStatus)
         {
             case DeletedStatus.True:
                 break;
@@ -44,7 +44,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
 
         }
 
-        switch (search.ShowInMenusStatus)
+        switch (model.SearchCategories.ShowInMenusStatus)
         {
             case ShowInMenusStatus.False:
                 categories = categories.Where(c => !c.IsShowInMenus);
@@ -58,19 +58,47 @@ public class CategoryService : GenericService<Category>, ICategoryService
                 break;
         }
 
+        var paginationResult = await GenericPagination(categories,model.Pagination);
 
         return new()
         {
-            Categories = await categories
+            Categories = await paginationResult.Query
                 .Select(c => new ShowCategoryViewModel()
                 {
                     Parent = c.ParentId != null ? c.ParentCategory.Title : "دسته اصلی",
                     ShowInMenus = c.IsShowInMenus,
                     Title = c.Title,
                     slug = c.Slug,
+                    Picture = c.Picture ?? "بدون عکس"
 
-                }).ToListAsync()
+                }).ToListAsync(),
+            Pagination = paginationResult.Pagination
 
         };
+    }
+
+    public Dictionary<long, string> GetCategoriesToShowInSelectBox()
+    {
+        return _categories.ToDictionary(c => c.Id, c => c.Title);
+    }
+
+    public override async Task<DuplicateColumns> AddAsync(Category entity)
+    {
+        var result = new List<string>();
+
+        if (await _categories.AnyAsync(c => c.Title == entity.Title))
+            result.Add(nameof(Category.Title));
+
+        if (await _categories.AnyAsync(c => c.Slug == entity.Slug))
+            result.Add(nameof(Category.Slug));
+
+        if (!result.Any())
+            await base.AddAsync(entity);
+
+        return new DuplicateColumns(!result.Any())
+        {
+            Columns = result
+        };
+
     }
 }

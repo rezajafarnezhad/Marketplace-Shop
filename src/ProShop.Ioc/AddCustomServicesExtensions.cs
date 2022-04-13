@@ -49,6 +49,7 @@ public static class AddCustomServicesExtensions
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ISmsSender, AuthMessageSender>();
         services.AddScoped<IHttpClientService, HttpClientService>();
+        services.AddScoped<IUploadFileService, UploadFileService>();
 
         return services;
     }
