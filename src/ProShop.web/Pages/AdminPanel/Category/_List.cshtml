@@ -4,71 +4,82 @@
     <div class="table-responsive data-table-body">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-light">
-            <tr>
-                <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
-                <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
-                <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
-                <th>@Html.DisplayNameFor(c=>c.Categories[0].Picture)</th>
-                <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
-                <th class="text-center">عملیات</th>
-            </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Picture)</th>
+                    <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
+                    <th class="text-center">عملیات</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var Item in Model.Categories)
-            {
+                @foreach (var Item in Model.Categories)
+                {
 
-                <tr>
-                    <td>@Item.Title</td>
-                    <td>@Item.Parent</td>
-                    <td>@Item.slug</td>
-                    <td>
-                        @if (Item.Picture == "بدون عکس")
-                        {
-                            <div class="d-grid">
-                                <span class="btn btn-secondary" type="button">@Item.Picture</span>
-                            </div>
-                        }
-                        else
-                        {
-                            <span class="d-flex justify-content-center">
-                                <img src="~/images/categories/@Item.Picture" class="rounded max-width-200" />
-                            </span>
-                        }
-                    </td>
-                    <td class="text-center">
-                        @if (Item.ShowInMenus)
-                        {
+                    <tr>
+                        <td>@Item.Title</td>
+                        <td>@Item.Parent</td>
+                        <td>@Item.slug</td>
+                        <td>
+                            @if (Item.Picture == "بدون عکس")
+                            {
+                                <div class="d-grid">
+                                    <span class="btn btn-secondary" type="button">@Item.Picture</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="d-flex justify-content-center">
+                                    <img src="~/images/categories/@Item.Picture" class="rounded max-width-200" />
+                                </span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Item.ShowInMenus)
+                            {
 
-                            <div class="d-grid fs-4">
-                                <span class="bi bi-check2-circle text-success"></span>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="d-grid fs-4">
-                                <span class="bi bi-exclamation-circle text-danger"></span>
-                            </div>
-                        }
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-check2-circle text-success"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-exclamation-circle text-danger"></span>
+                                </div>
+                            }
 
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-warning">ویرایش
-                            <span class="bi bi-eraser"></span>
-                        </button>
-                        <button class="btn btn-danger">حذف
-                            <span class="bi bi-trash2"></span>
-                        </button>
-                        <button class="btn btn-success">افزودن زیر دسته
-                            <span class="bi bi-diagram-3-fill"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
+                        </td>
+                        <td class="text-center">
+
+                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی"  class="btn btn-warning show-modal-form-button">
+                                ویرایش
+                                <span class="bi bi-eraser"></span>
+                            </a>
+
+                            <form asp-page-handler="Delete" class="d-inline-block">
+                                <input type="hidden" name="elementId" value="@Item.Id"/>
+                                <button type="button" class="btn btn-danger delete-row-button">
+                                    حذف
+                                    <span class="bi bi-trash2"></span>
+                                </button>
+
+                            </form>
+
+
+                            <button class="btn btn-success">
+                                افزودن زیر دسته
+                                <span class="bi bi-diagram-3-fill"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
-        
+
         <!-- Pagination -->
-        <hr/>
+    <hr />
         <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
             <div class="btn-group me-2">
                 @if (Model.Pagination.CurrentPage != 1)
@@ -81,7 +92,7 @@
                 @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }
@@ -102,7 +113,7 @@
             </div>
         </div>
         <!-- End pagination -->
-    </div>
+</div>
 }
 else
 {

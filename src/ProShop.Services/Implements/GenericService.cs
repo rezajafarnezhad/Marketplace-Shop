@@ -24,8 +24,12 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
     }
 
 
-    public void Update(TEntity entity)
-        => _entities.Update(entity);
+    public virtual async Task<DuplicateColumns> Update(TEntity entity)
+    {
+        _entities.Update(entity);
+        return new DuplicateColumns();
+    }
+
 
     public void Remove(TEntity entity)
         => _entities.Remove(entity);
@@ -46,12 +50,15 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
     public Task<bool> IsExistsByIdAsync(long id)
         => _entities.AnyAsync(x => x.Id == id);
 
+    public async Task SoftDelete(TEntity entity)
+        => entity.IsDeleted = true;
+
 
     public async Task<PaginationResultViewModel<T>> GenericPagination<T>(IQueryable<T> items, PaginationViewModel pagination)
     {
         if (pagination.CurrentPage < 1)
             pagination.CurrentPage = 1;
-        var itemsCount =await items.LongCountAsync();
+        var itemsCount = await items.LongCountAsync();
         var pagesCount = (int)Math.Ceiling(
             (decimal)itemsCount / pagination.Take
         );

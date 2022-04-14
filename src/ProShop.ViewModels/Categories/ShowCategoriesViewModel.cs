@@ -20,8 +20,9 @@ public class ShowCategoryViewModel
 
     [Display(Name = "تصویر")]
     public string Picture { get; set; }
-    
 
+
+    public long Id { get; set; }
 }
 
 public class ShowCategoriesViewModel

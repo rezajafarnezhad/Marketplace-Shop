@@ -1,26 +1,81 @@
 ﻿
+
 $(function () {
 
-    $('.show-modal-form-button').click(function (e) {
-        e.preventDefault();
-        var Url = $(this).attr('href');
-        showLoading();
-        $.get(Url, function (data, status) {
-            hideLoading();
-            if (status == 'success') {
-                $('#form-modal-place .modal-body').html(data);
-                $.validator.unobtrusive.parse($('#form-modal-place form'));
-                initializeTinyMCE();
-                initializeSelect2();
-                $("#form-modal-place").modal("show");
+    function activatingDeleteButtons() {
+        $('.delete-row-button').click(function () {
+            var currentForm = $(this).parent();
+            Swal.fire({
+                title: 'اعلان',
+                text: 'آیا مطمئن به حذف هستید ؟',
+                icon: 'warning',
+                confirmButtonText: 'بله',
+                showDenyButton: true,
+                denyButtonText: 'خیر',
+                confirmButtonColor: '#067719',
+                allowOutsideClick: false
+
+            }).then((result) => {
+               
+                if (result.isConfirmed) {
+                    var data = {
+                        elementId: currentForm.find('input:first').val(),
+                        __RequestVerificationToken: currentForm.find('input:last').val(),
+                    }
+                    showLoading();
+                    $.post(location.pathname + "?handler=Delete", data, function (data, status) {
+                        if (data.isSuccessful == false) {
+                            showToastr('warning', data.message);
+                        } else {
+                            fillDataTable();
+                            showToastr('success', data.message);
+                        }
+
+                    }).always(function () {
+                        hideLoading();
+                    }).fail(function () {
+                        ShowErrorMessage();
+                    })
+                }
+            });
+        });
+       
+    }
+    
+
+
+    function activatingModalForm() {
+        $('.show-modal-form-button').click(function (e) {
+            e.preventDefault();
+            var Url = $(this).attr('href');
+            var customtitle = $(this).attr('custom-title');
+            if (customtitle == undefined) {
+                customtitle = $(this).text().trim();
             }
-            else {
-                ShowErrorMessage()
-            }
+            $('#form-modal-place .modal-header h5').html(customtitle);
+            showLoading();
+            $.get(Url, function (data, status) {
+                if (data.isSuccessful == false) {
+
+                    showToastr('warning', data.message);
+                } else {
+
+                    $('#form-modal-place .modal-body').html(data);
+                    $.validator.unobtrusive.parse($('#form-modal-place form'));
+                    initializeTinyMCE();
+                    initializeSelect2();
+                    $("#form-modal-place").modal("show");
+                }
+            }).fail(function () {
+                ShowErrorMessage();
+            }).always(function () {
+                hideLoading();
+            });
         });
 
-    });
+    }
 
+    activatingModalForm();
 
     var isMainPaginationClicked = false;
     var isGotoPageClicked = false;
@@ -88,15 +143,19 @@ $(function () {
     }
 
     function fillDataTable() {
+        $('.read-data-table .data-table-body').remove();
+        $('.search-form-loading').attr('disabled', 'disabled');
+        $('.data-table-loading').removeClass('d-none');
         $.get(`${location.pathname}?handler=GetDataTable`, function (data, status) {
             $('.Search-form-loading').removeAttr('disabled');
             $('.data-table-loading').addClass('d-none');
 
             if (status == 'success') {
-                $('.read-data-table .data-table-body').remove();
                 $('.read-data-table').append(data);
                 activatingPagination();
                 activatingGotoPage();
+                activatingModalForm();
+                activatingDeleteButtons();
                 enablingTooltips();
             }
             else {
@@ -117,7 +176,7 @@ $(function () {
         }
         else if (!isMainPaginationClicked) {
             $('.Search-form-via-ajax input[name$="Pagination.CurrentPage"]').val(1);
-        } 
+        }
 
         const formData = currentForm.serializeArray();
 
@@ -128,8 +187,8 @@ $(function () {
 
         $('.data-table-loading').removeClass('d-none');
         $('.data-table-body').html('');
-
-
+        $('[data-bs-toggle="tooltip"], .tooltip').tooltip("hide");
+        $('#record-not-found-box').remove();
         $.get(`${location.pathname}?handler=GetDataTable`, formData, function (data, status) {
             isMainPaginationClicked = false;
             isGotoPageClicked = false;
@@ -145,9 +204,11 @@ $(function () {
                     fillValidationForm(data.data, currentForm);
                     showToastr('warning', data.message);
                 } else {
-                    $('.read-data-table .data-table-body').html(data);
+                    $('.read-data-table').append(data);
                     activatingPagination();
                     activatingGotoPage();
+                    activatingDeleteButtons();
+                    activatingModalForm();
                     enablingTooltips();
                 }
 

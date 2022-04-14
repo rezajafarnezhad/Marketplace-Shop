@@ -65,11 +65,13 @@ public class CategoryService : GenericService<Category>, ICategoryService
             Categories = await paginationResult.Query
                 .Select(c => new ShowCategoryViewModel()
                 {
+                    Id = c.Id,
                     Parent = c.ParentId != null ? c.ParentCategory.Title : "دسته اصلی",
                     ShowInMenus = c.IsShowInMenus,
                     Title = c.Title,
                     slug = c.Slug,
-                    Picture = c.Picture ?? "بدون عکس"
+                    Picture = c.Picture ?? "بدون عکس",
+
 
                 }).ToListAsync(),
             Pagination = paginationResult.Pagination
@@ -100,5 +102,44 @@ public class CategoryService : GenericService<Category>, ICategoryService
             Columns = result
         };
 
+    }
+
+
+    public async Task<EditCategoryViewModel> GetForEdit(long Id)
+    {
+        return await _categories.Select(c => new EditCategoryViewModel()
+        {
+
+            Id = c.Id,
+            Title = c.Title,
+            Slug = c.Slug,
+            ParentId = c.ParentId,
+            Description = c.Description,
+            IsShowInMenus = c.IsShowInMenus,
+            SelectedPicture = c.Picture,
+
+        }).SingleOrDefaultAsync(c => c.Id == Id);
+    }
+
+
+    public override async Task<DuplicateColumns> Update(Category entity)
+    {
+        var query = _categories.Where(c => c.Id != entity.Id);
+        var result = new List<string>();
+
+        if (await query.AnyAsync(c => c.Title == entity.Title))
+            result.Add(nameof(Category.Title));
+
+        if (await query.AnyAsync(c => c.Slug == entity.Slug))
+            result.Add(nameof(Category.Slug));
+
+        if (!result.Any())
+            await base.Update(entity);
+
+        return new DuplicateColumns(!result.Any())
+        {
+            Columns = result
+        };
+       
     }
 }
