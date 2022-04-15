@@ -23,6 +23,10 @@ public class ShowCategoryViewModel
 
 
     public long Id { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+
 }
 
 public class ShowCategoriesViewModel
@@ -48,6 +52,32 @@ public class SearchCategoriesViewModel
 
     [Display(Name = "نمایش در منو های اصلی")]
     public ShowInMenusStatus ShowInMenusStatus { get; set; }
+
+    [Display(Name = "نمایش براساس")]
+
+    public SortingCategories Sorting { get; set; }
+
+    [Display(Name = "مرتب سازی بر اساس")]
+    public SortingOrder SortingOrder { get; set; }
+}
+
+
+public enum SortingCategories
+{
+    [Display(Name = "شناسه")]
+    Id,
+    
+    [Display(Name = "عنوان")]
+    Title,
+    
+    [Display(Name = "آدرس دسته بندی")]
+    Slug,
+    
+    [Display(Name = "نمایش در منو های اصلی")]
+    IsShowInMenus,
+    
+    [Display(Name = "حذف شده ها")]
+    IsDeleted
 }
 
 public enum ShowInMenusStatus

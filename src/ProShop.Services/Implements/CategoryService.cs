@@ -58,6 +58,9 @@ public class CategoryService : GenericService<Category>, ICategoryService
                 break;
         }
 
+        categories = categories.CreateOrderByExpression(model.SearchCategories.Sorting.ToString(),
+            model.SearchCategories.SortingOrder.ToString());
+
         var paginationResult = await GenericPagination(categories,model.Pagination);
 
         return new()
@@ -71,6 +74,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
                     Title = c.Title,
                     slug = c.Slug,
                     Picture = c.Picture ?? "بدون عکس",
+                    IsDeleted = c.IsDeleted
 
 
                 }).ToListAsync(),
@@ -79,9 +83,12 @@ public class CategoryService : GenericService<Category>, ICategoryService
         };
     }
 
-    public Dictionary<long, string> GetCategoriesToShowInSelectBox()
+    public Dictionary<long, string> GetCategoriesToShowInSelectBox(long? id=null)
     {
-        return _categories.ToDictionary(c => c.Id, c => c.Title);
+        return _categories
+            
+            .Where(c=>id == null || c.Id !=id)
+            .ToDictionary(c => c.Id, c => c.Title);
     }
 
     public override async Task<DuplicateColumns> AddAsync(Category entity)
@@ -117,6 +124,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
             Description = c.Description,
             IsShowInMenus = c.IsShowInMenus,
             SelectedPicture = c.Picture,
+            
 
         }).SingleOrDefaultAsync(c => c.Id == Id);
     }

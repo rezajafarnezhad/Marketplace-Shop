@@ -46,10 +46,18 @@ namespace ProShop.web.Pages.AdminPanel.Category
         }
 
 
-        public IActionResult OnGetAdd()
+        public async Task<IActionResult> OnGetAdd(long id=0)
         {
+
+            if (id > 0)
+            {
+                if (!await _categoryService.IsExistsBy(nameof(Entities.Category.Id),id))
+                    return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+            }
+
             var model = new AddCategoryViewModel()
             {
+                ParentId = id,
                 MainCategories = _categoryService.GetCategoriesToShowInSelectBox()
                     .CreateSelectListItem(firstItemText: "خودش سر دسته اصلی است")
 
@@ -107,7 +115,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
             {
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
             }
-            model.MainCategories = _categoryService.GetCategoriesToShowInSelectBox()
+            model.MainCategories = _categoryService.GetCategoriesToShowInSelectBox(Id)
                 .CreateSelectListItem(firstItemText: "خودش سر دسته اصلی است");
             return Partial("Edit", model);
         }
@@ -122,6 +130,10 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 });
             }
 
+            if (model.Id == model.ParentId)
+            {
+                return Json(new JsonResultOperation(false, "یک رکورد نمیتواند والد خودش باشد"));
+            }
 
 
             var _category = await _categoryService.FindByIdAsync(model.Id);
@@ -170,6 +182,56 @@ namespace ProShop.web.Pages.AdminPanel.Category
             await _categoryService.SoftDelete(_category);
             await _unitOfWork.SaveChangesAsync();
             return Json(new JsonResultOperation(true, "دسته بندی مورد نظر با موفقیت حذف شد"));
+        } 
+        
+        public async Task<IActionResult> OnPostRestore(long elementId)
+        {
+            var _category = await _categoryService.FindByIdAsync(elementId);
+            if (_category is null)
+            {
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+            }
+            await _categoryService.Restore(_category);
+            await _unitOfWork.SaveChangesAsync();
+            return Json(new JsonResultOperation(true, "دسته بندی مورد نظر با موفقیت بازگردانی شد"));
+        }
+
+        public async Task<IActionResult> OnPostDeletePicture(long elementId)
+        {
+            var _category = await _categoryService.FindByIdAsync(elementId);
+            if (_category is null)
+            {
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+            }
+
+            var fileName = _category.Picture;
+            _category.Picture = null;
+            await _unitOfWork.SaveChangesAsync();
+            _uploadFileService.DeleteFile(fileName, "images", "Categories");
+            return Json(new JsonResultOperation(true, "تصویر دسته بندی مورد نظر با موفقیت حذف شد"));
+        }
+
+
+
+
+        public async Task<IActionResult> OnPostCheckForTitle(string title)
+        {
+            return Json(!await _categoryService.IsExistsBy(nameof(Entities.Category.Title), title));
+        }
+
+        public async Task<IActionResult> OnPostCheckForSlug(string slug)
+        {
+            return Json(!await _categoryService.IsExistsBy(nameof(Entities.Category.Slug), slug));
+        }
+
+        public async Task<IActionResult> OnPostCheckForTitleOnEdit(string title, long id)
+        {
+            return Json(!await _categoryService.IsExistsBy(nameof(Entities.Category.Title), title, id));
+        }
+
+        public async Task<IActionResult> OnPostCheckForSlugOnEdit(string slug, long id)
+        {
+            return Json(!await _categoryService.IsExistsBy(nameof(Entities.Category.Slug), slug, id));
         }
     }
 }

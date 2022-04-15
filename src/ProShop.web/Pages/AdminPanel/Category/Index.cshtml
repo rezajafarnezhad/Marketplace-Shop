@@ -46,6 +46,14 @@
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="CategoriesViewModel.SearchCategories.DeletedStatus"></label>
                     <select class="form-control" asp-for="CategoriesViewModel.SearchCategories.DeletedStatus" asp-items="Html.GetEnumSelectList<DeletedStatus>()"></select>
+                </div> 
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CategoriesViewModel.SearchCategories.Sorting"></label>
+                    <select class="form-control" asp-for="CategoriesViewModel.SearchCategories.Sorting" asp-items="Html.GetEnumSelectList<SortingCategories>()"></select>
+                </div> 
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CategoriesViewModel.SearchCategories.SortingOrder"></label>
+                    <select class="form-control" asp-for="CategoriesViewModel.SearchCategories.SortingOrder" asp-items="Html.GetEnumSelectList<SortingOrder>()"></select>
                 </div>
                 <div class="col-12 my-2">
                     <div class="d-grid d-lg-block">

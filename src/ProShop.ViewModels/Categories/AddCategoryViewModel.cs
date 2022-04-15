@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProShop.Common.Attributes;
 using ProShop.Common.Constants;
@@ -10,6 +11,12 @@ namespace ProShop.ViewModels.Categories;
 
 public class AddCategoryViewModel
 {
+
+
+    [PageRemote(PageName = "Index", PageHandler = "CheckForTitle",
+        HttpMethod = "POST",
+        ErrorMessage = AttributesErrorMessages.RemoteMessage,
+        AdditionalFields = ViewModelConstants.AntiForgeryToken)]
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [MaxLength(100, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     [Display(Name = "عنوان")]
@@ -18,6 +25,10 @@ public class AddCategoryViewModel
 
     public string? Description { get; set; }
 
+    [PageRemote(PageName = "Index", PageHandler = "CheckForSlug",
+        HttpMethod = "POST",
+        ErrorMessage = AttributesErrorMessages.RemoteMessage,
+        AdditionalFields = ViewModelConstants.AntiForgeryToken)]
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [MaxLength(300, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     [Display(Name = "آدرس دسته بندی")]

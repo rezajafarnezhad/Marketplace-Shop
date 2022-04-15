@@ -4,6 +4,18 @@ namespace ProShop.ViewModels;
 
 
 
+public enum SortingOrder
+{
+    [Display(Name = "صعودی")]
+    Asc,
+
+    [Display(Name = "نزولی")]
+    Desc
+}
+public static class ViewModelConstants
+{
+    public const string AntiForgeryToken = "__RequestVerificationToken";
+}
 public enum DeletedStatus
 {
     [Display(Name = "نمایش داده نشوند")]

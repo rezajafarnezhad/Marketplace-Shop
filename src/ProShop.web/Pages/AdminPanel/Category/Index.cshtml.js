@@ -5,9 +5,10 @@ $(function () {
     function activatingDeleteButtons() {
         $('.delete-row-button').click(function () {
             var currentForm = $(this).parent();
+            var customMessage = $(this).attr('custom-message');
             Swal.fire({
                 title: 'اعلان',
-                text: 'آیا مطمئن به حذف هستید ؟',
+                text: customMessage == undefined ? 'آیا مطمئن به حذف هستید ؟' : customMessage,
                 icon: 'warning',
                 confirmButtonText: 'بله',
                 showDenyButton: true,
@@ -16,14 +17,14 @@ $(function () {
                 allowOutsideClick: false
 
             }).then((result) => {
-               
+
                 if (result.isConfirmed) {
                     var data = {
                         elementId: currentForm.find('input:first').val(),
                         __RequestVerificationToken: currentForm.find('input:last').val(),
                     }
                     showLoading();
-                    $.post(location.pathname + "?handler=Delete", data, function (data, status) {
+                    $.post(currentForm.attr('action'), data, function (data, status) {
                         if (data.isSuccessful == false) {
                             showToastr('warning', data.message);
                         } else {
@@ -39,9 +40,9 @@ $(function () {
                 }
             });
         });
-       
+
     }
-    
+
 
 
     function activatingModalForm() {
@@ -75,7 +76,7 @@ $(function () {
 
     }
 
-    activatingModalForm();
+    //activatingModalForm();
 
     var isMainPaginationClicked = false;
     var isGotoPageClicked = false;
@@ -146,7 +147,10 @@ $(function () {
         $('.read-data-table .data-table-body').remove();
         $('.search-form-loading').attr('disabled', 'disabled');
         $('.data-table-loading').removeClass('d-none');
-        $.get(`${location.pathname}?handler=GetDataTable`, function (data, status) {
+
+        const formData = $('form.Search-form-via-ajax').serializeArray();
+
+        $.get(`${location.pathname}?handler=GetDataTable`, formData, function (data, status) {
             $('.Search-form-loading').removeAttr('disabled');
             $('.data-table-loading').addClass('d-none');
 

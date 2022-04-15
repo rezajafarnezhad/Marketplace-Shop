@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/BVGz71qfRudtB2rECGVJCZOSf6Uu4YVBDX9VjJp0nU=",
+  "Hash": "eN5jKWYJ8QpsbIB7PiKkSE6QHN3oJLFwSgK4NSWvqc4=",
   "Source": "ProShop.web",
   "BasePath": "_content/ProShop.web",
   "Mode": "Default",
@@ -663,6 +663,23 @@
       "OriginalItemSpec": "wwwroot\\images\\Categories\\5cb17ee137d7478f8a638993efcc2482.jpg"
     },
     {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Categories\\94f00268dc5d416db5d86affaaf3b146.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Categories/94f00268dc5d416db5d86affaaf3b146.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Categories\\94f00268dc5d416db5d86affaaf3b146.jpg"
+    },
+    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Categories\\c7be348eb29449cebdac511eaa47a97f.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -680,12 +697,12 @@
       "OriginalItemSpec": "wwwroot\\images\\Categories\\c7be348eb29449cebdac511eaa47a97f.jpg"
     },
     {
-      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Categories\\ebe8ce9d0a284dd5bc4b1518e0ec29bc.jpg",
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Categories\\cf05f00ebb6c4b518aa285e74a07d4f0.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
       "BasePath": "_content/ProShop.web",
-      "RelativePath": "images/Categories/ebe8ce9d0a284dd5bc4b1518e0ec29bc.jpg",
+      "RelativePath": "images/Categories/cf05f00ebb6c4b518aa285e74a07d4f0.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -694,7 +711,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\Categories\\ebe8ce9d0a284dd5bc4b1518e0ec29bc.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\Categories\\cf05f00ebb6c4b518aa285e74a07d4f0.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\user-avatar.png",

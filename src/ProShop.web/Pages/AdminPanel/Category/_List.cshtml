@@ -58,20 +58,44 @@
                                 <span class="bi bi-eraser"></span>
                             </a>
 
-                            <form asp-page-handler="Delete" class="d-inline-block">
-                                <input type="hidden" name="elementId" value="@Item.Id"/>
-                                <button type="button" class="btn btn-danger delete-row-button">
-                                    حذف
-                                    <span class="bi bi-trash2"></span>
-                                </button>
+                          
+                            
+                            @if (Item.IsDeleted)
+                            {
+                                <form asp-page-handler="Restore" class="d-inline-block">
+                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <button custom-message="آیا مطمئن به بازگردانی هستید ؟" type="button" class="btn btn-info delete-row-button">
+                                        بازگردانی
+                                        <span class="bi bi-trash2"></span>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-page-handler="Delete" class="d-inline-block">
+                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <button type="button" class="btn btn-danger delete-row-button">
+                                        حذف
+                                        <span class="bi bi-trash2"></span>
+                                    </button>
+                                </form>
+                            }
 
-                            </form>
-
-
-                            <button class="btn btn-success">
+                            <a asp-page-handler="Add" asp-route-id="@Item.Id" class="btn btn-success show-modal-form-button">
                                 افزودن زیر دسته
                                 <span class="bi bi-diagram-3-fill"></span>
-                            </button>
+                            </a>
+                            @if (Item.Picture != "بدون عکس")
+                            {
+                                <form asp-page-handler="DeletePicture" class="d-inline-block">
+                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <button type="button" class="btn btn-danger delete-row-button">
+                                        حذف تصویر
+                                        <span class="bi bi-trash2"></span>
+                                    </button>
+
+                                </form>
+                            }
                         </td>
                     </tr>
                 }

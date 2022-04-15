@@ -6,7 +6,7 @@ using ProShop.ViewModels;
 
 namespace ProShop.Services.Implements;
 
-public abstract class GenericService<TEntity> : IGenericService<TEntity> where TEntity : EntityBase, new()
+public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : EntityBase, new()
 {
     private readonly IUnitOfWork _uow;
     private readonly DbSet<TEntity> _entities;
@@ -47,12 +47,21 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
     public async Task<TEntity> FindByIdAsync(long id)
         => await _entities.FindAsync(id);
 
-    public Task<bool> IsExistsByIdAsync(long id)
-        => _entities.AnyAsync(x => x.Id == id);
+    
+    public async Task<bool> IsExistsBy(string propertyToFilter, object propertyValue, long? id = null)
+    {
+        var exp = ExpressionHelpers.CreateExpression<TEntity>(propertyToFilter, propertyValue);
+        return await _entities
+            .Where(x => id == null || x.Id != id)
+            .AnyAsync(exp);
+    }
+
 
     public async Task SoftDelete(TEntity entity)
         => entity.IsDeleted = true;
 
+    public async Task Restore(TEntity entity)
+        => entity.IsDeleted = false;
 
     public async Task<PaginationResultViewModel<T>> GenericPagination<T>(IQueryable<T> items, PaginationViewModel pagination)
     {
