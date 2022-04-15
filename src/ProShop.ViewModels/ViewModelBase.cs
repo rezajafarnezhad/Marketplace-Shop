@@ -28,11 +28,27 @@ public enum DeletedStatus
     OnlyDeleted
 }
 
+
+public enum PageCount
+{
+    [Display(Name = "10 سطر")]
+    Ten,
+    [Display(Name = "25 سطر")]
+
+    TwentyFive,
+    [Display(Name = "50 سطر")]
+
+    Fifty,
+    [Display(Name = "100 سطر")]
+
+    Hundred,
+}
+
 public class PaginationViewModel
 {
     public int CurrentPage { get; set; } = 1;
 
-    public byte Take { get; set; }
+    public PageCount PageCount { get; set; } = PageCount.Ten;
 
     public int PagesCount { get; set; }
     public int StartPage 

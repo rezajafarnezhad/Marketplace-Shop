@@ -159,6 +159,7 @@ $(function () {
                 activatingPagination();
                 activatingGotoPage();
                 activatingModalForm();
+                activatingPageCount();
                 activatingDeleteButtons();
                 enablingTooltips();
             }
@@ -169,6 +170,18 @@ $(function () {
     }
 
     fillDataTable();
+
+
+    function activatingPageCount() {
+
+        $('#page-count-selectbox').change(function () {
+
+            var pageCountValue = this.value;
+            $('.Search-form-via-ajax input[name$="Pagination.PageCount"]').val(pageCountValue);
+            $('.Search-form-via-ajax').submit();
+        });
+    }
+
 
     $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
         e.preventDefault();
@@ -212,6 +225,7 @@ $(function () {
                     activatingPagination();
                     activatingGotoPage();
                     activatingDeleteButtons();
+                    activatingPageCount();
                     activatingModalForm();
                     enablingTooltips();
                 }

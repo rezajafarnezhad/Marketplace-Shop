@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
@@ -67,20 +68,30 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     {
         if (pagination.CurrentPage < 1)
             pagination.CurrentPage = 1;
+
+        var take = pagination.PageCount switch
+        {
+            PageCount.TwentyFive =>25,
+            PageCount.Fifty =>50,
+            PageCount.Hundred =>100,
+            _=> 10,
+        };
+
+
         var itemsCount = await items.LongCountAsync();
         var pagesCount = (int)Math.Ceiling(
-            (decimal)itemsCount / pagination.Take
+            (decimal)itemsCount / take
         );
         if (pagesCount <= 0)
             pagesCount = 1;
         if (pagination.CurrentPage > pagesCount)
             pagination.CurrentPage = pagesCount;
-        var skip = (pagination.CurrentPage - 1) * pagination.Take;
+        var skip = (pagination.CurrentPage - 1) * take;
         pagination.PagesCount = pagesCount;
         return new PaginationResultViewModel<T>
         {
             Pagination = pagination,
-            Query = items.Skip(skip).Take(pagination.Take)
+            Query = items.Skip(skip).Take(take)
         };
     }
 

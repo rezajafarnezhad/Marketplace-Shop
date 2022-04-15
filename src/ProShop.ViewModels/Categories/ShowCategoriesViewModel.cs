@@ -21,6 +21,7 @@ public class ShowCategoryViewModel
     [Display(Name = "تصویر")]
     public string Picture { get; set; }
 
+    [Display(Name = "شناسه")]
 
     public long Id { get; set; }
 

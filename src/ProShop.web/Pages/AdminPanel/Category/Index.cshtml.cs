@@ -41,7 +41,6 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 });
             }
 
-            categoriesViewModel.Pagination.Take = 6;
             return Partial("_List", await _categoryService.GetCategories(categoriesViewModel));
         }
 

@@ -1,10 +1,12 @@
-﻿@model ProShop.ViewModels.Categories.ShowCategoriesViewModel
+﻿@using ProShop.ViewModels
+@model ProShop.ViewModels.Categories.ShowCategoriesViewModel
 @if (Model.Categories.Any())
 {
     <div class="table-responsive data-table-body">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-light">
                 <tr>
+                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Id)</th>
                     <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
                     <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
                     <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
@@ -18,6 +20,7 @@
                 {
 
                     <tr>
+                        <td>@Item.Id</td>
                         <td>@Item.Title</td>
                         <td>@Item.Parent</td>
                         <td>@Item.slug</td>
@@ -116,7 +119,7 @@
                 @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }
@@ -128,6 +131,9 @@
                         @Model.Pagination.PagesCount
                     </button>
                 }
+            </div>
+            <div>
+                <select id="page-count-selectbox" class="form-control" asp-for="Pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
             </div>
         </div>
         <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
