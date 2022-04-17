@@ -1,0 +1,106 @@
+﻿@page
+@model ProShop.web.Pages.AdminPanel.Feature.IndexModel
+@{
+    ViewData["Title"] = "ویژگی های دسته بندی ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+
+        <div class="d-grid d-lg-block mb-2 text-end">
+            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button">
+                افزودن ویژگی دسته بندی
+                <span class="bi bi-plus-circle mt-5"></span>
+            </a>
+        </div>
+
+        <form class="alert alert-secondary Search-form-via-ajax">
+            <input type="hidden" asp-for="FeaturesViewModel.Pagination.CurrentPage"  />
+            <input type="hidden" asp-for="FeaturesViewModel.Pagination.PageCount"  />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="FeaturesViewModel.SearchFeature.CategoryId"></label>
+                    <select class="form-control" asp-for="FeaturesViewModel.SearchFeature.CategoryId" asp-items=Model.FeaturesViewModel.SearchFeature.Categories></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="FeaturesViewModel.SearchFeature.Title"></label>
+                    <input class="form-control" asp-for="FeaturesViewModel.SearchFeature.Title"  />
+                    <span class="span-error-message" asp-validation-for="FeaturesViewModel.SearchFeature.Title"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="FeaturesViewModel.SearchFeature.Sorting"></label>
+                    <select class="form-control" asp-for="FeaturesViewModel.SearchFeature.Sorting" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.Features.SortingFeatures>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="FeaturesViewModel.SearchFeature.SortingOrder"></label>
+                    <select class="form-control" asp-for="FeaturesViewModel.SearchFeature.SortingOrder" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif"  />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="form-modal-place" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer d-flex justify-content-start">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial"  />
+<script src="~/lib/tinymce/tinymce.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/select2/js/i18n/fa.min.js"></script>
+<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+}
+
+@section CustomScripts
+{
+@*<script src="~/Pages/AdminPanel/Category/Index.cshtml.js"></script>*@
+}
+@section Styles
+{
+<link rel="stylesheet" href="~/lib/select2/css/select2.min.css"  />
+<link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css"  />
+<link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css"  />
+
+}

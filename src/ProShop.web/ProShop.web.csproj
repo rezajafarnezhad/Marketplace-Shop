@@ -6,7 +6,6 @@
 	  <UserSecretsId>57f4f4d9-9bea-45df-b1b6-fecb75dd8670</UserSecretsId>
   </PropertyGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\ProShop.Ioc\ProShop.Ioc.csproj" />
     <ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />

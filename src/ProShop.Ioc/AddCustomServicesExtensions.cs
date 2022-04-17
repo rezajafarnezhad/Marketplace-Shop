@@ -46,10 +46,14 @@ public static class AddCustomServicesExtensions
         services.AddScoped<IIdentityDbInitializer, IdentityDbInitializer>();
 
 
-        services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ISmsSender, AuthMessageSender>();
         services.AddScoped<IHttpClientService, HttpClientService>();
         services.AddScoped<IUploadFileService, UploadFileService>();
+
+
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IFeatureService,FeatureService>();
+        services.AddScoped<ICategoryFeatureService, CategoryFeatureService>();
 
         return services;
     }

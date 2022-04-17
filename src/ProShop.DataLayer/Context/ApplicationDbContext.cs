@@ -21,6 +21,7 @@ public class ApplicationDbContext :
 
     }
 
+
     public T GetShadowPropertyValue<T>(object entity, string propertyName) where T : IConvertible
     {
         var value = this.Entry(entity).Property(propertyName).CurrentValue;
