@@ -36,7 +36,7 @@ function reSendActivationCode(phoneNumber, e, reSendSmsUrl) {
         __RequestVerificationToken: getRVT(e)
     }
     $.post(reSendSmsUrl, objectToSend, function (data, status) {
-        hideLoading();
+      
         if (status == 'success' && data.isSuccessful) {
             showToastr('success', data.message);
             $('#activation-code-box').html(data.data.activationCode);
@@ -52,6 +52,8 @@ function reSendActivationCode(phoneNumber, e, reSendSmsUrl) {
         }
     }).fail(function () {
         ShowErrorMessage();
+    }).always(function () {
+        hideLoading();
     });
 }
 function getRVT(e) {
@@ -59,25 +61,10 @@ function getRVT(e) {
 }
 
 
-function onBeginLoginWithPhoneNumber() {
-    showLoading();
-}
-function onCompleteLoginWithPhoneNumber() {
-    hideLoading();
-}
-function onFailureLoginWithPhoneNumber(data, status) {
-        ShowErrorMessage();
-}
+function loginWithPhonenumberInIdentity(message) {
 
-function onSuccessLoginWithPhoneNumber(data, status) {
-    if (status == 'success' && data.isSuccessful) {
-        showToastr('success', 'شما با موفقیت وارد شدید');
-        var delayInMilliseconds = 4000;
-        setTimeout(function () {
-            location.href = '/';
-        }, delayInMilliseconds);
-    }
-    else {
-        ShowErrorMessage();
-    }
+    alert(message);
+    showToastr('success', message);
+    //return;
+    //location.href = "/";
 }

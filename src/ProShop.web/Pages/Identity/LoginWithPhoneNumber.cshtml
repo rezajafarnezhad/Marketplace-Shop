@@ -29,15 +29,9 @@
         <div id="login-register-text" class="mt-3 rem1and3 d-flex">
             <span>کد تایید را وارد نمایید</span>
         </div>
-        <form data-ajax="true"
-              data-ajax-begin="onBeginLoginWithPhoneNumber"
-              data-ajax-complete="onCompleteLoginWithPhoneNumber"
-              data-ajax-failure="onFailureLoginWithPhoneNumber"
-              data-ajax-success="onSuccessLoginWithPhoneNumber"
-              method="POST"
-              class="mt-3">
+        <form method="POST" call-function-in-the-end="loginWithPhonenumberInIdentity"  class="mt-3 public-ajax-form" asp-page="./LoginWithPhoneNumber.cshtml">
 
-            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="text-danger asp-validation-summary" asp-validation-summary="All"></div>
             <div>
                 <label class="form-label rem0and9">
                     کد تایید برای شماره موبایل

@@ -338,6 +338,9 @@
             "projectReferences": {
               "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj": {
                 "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj"
+              },
+              "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Entities\\ProShop.Entities.csproj": {
+                "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Entities\\ProShop.Entities.csproj"
               }
             }
           }

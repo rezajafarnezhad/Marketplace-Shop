@@ -97,3 +97,13 @@ span.select2-dropdown.select2-dropdown--below {
 .ui-autocomplete {
     z-index: 5000;
 }
+
+.border-bottom-dashed {
+    border-bottom: 2px dashed #0DCAF0;
+}
+
+.img-Activation-Sellary {
+    height: 213px;
+    width: 330px;
+    border-radius: 8px;
+}

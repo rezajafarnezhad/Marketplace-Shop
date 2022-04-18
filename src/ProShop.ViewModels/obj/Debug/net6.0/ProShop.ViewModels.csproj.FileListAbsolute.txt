@@ -13,3 +13,5 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\obj\Debug\net6.0\ProS
 C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\obj\Debug\net6.0\refint\ProShop.ViewModels.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\obj\Debug\net6.0\ProShop.ViewModels.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\obj\Debug\net6.0\ref\ProShop.ViewModels.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\bin\Debug\net6.0\ProShop.Entities.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.ViewModels\bin\Debug\net6.0\ProShop.Entities.pdb

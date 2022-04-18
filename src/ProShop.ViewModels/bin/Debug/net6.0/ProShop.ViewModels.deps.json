@@ -10,7 +10,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "2.2.0",
           "Microsoft.Extensions.Identity.Core": "6.0.3",
-          "ProShop.Common": "1.0.0"
+          "ProShop.Common": "1.0.0",
+          "ProShop.Entities": "1.0.0"
         },
         "runtime": {
           "ProShop.ViewModels.dll": {}
@@ -543,6 +544,19 @@
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.322.12401"
+          }
+        }
+      },
+      "Microsoft.Extensions.Identity.Stores/6.0.3": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Identity.Core": "6.0.3",
+          "Microsoft.Extensions.Logging": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Identity.Stores.dll": {
             "assemblyVersion": "6.0.0.0",
             "fileVersion": "6.0.322.12401"
           }
@@ -1485,6 +1499,17 @@
         "runtime": {
           "ProShop.Common.dll": {}
         }
+      },
+      "ProShop.Entities/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Microsoft.EntityFrameworkCore": "6.0.3",
+          "Microsoft.Extensions.Identity.Stores": "6.0.3",
+          "ProShop.Common": "1.0.0"
+        },
+        "runtime": {
+          "ProShop.Entities.dll": {}
+        }
       }
     }
   },
@@ -1941,6 +1966,13 @@
       "sha512": "sha512-sCpESSuSgYl89xl1O+Yl1QXui8x9ORTj1jiGd25LJWZjqF7I3nuveUvkP/Rp2/bM2ffro42FsRJsYyf6VqB+4w==",
       "path": "microsoft.extensions.identity.core/6.0.3",
       "hashPath": "microsoft.extensions.identity.core.6.0.3.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Stores/6.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r69xvrnPzzyapjEqHVU/7TByTqLdOzrGfUFGcJcMQbCj9tR1tb45EPb90jhUr2ARJDtfI1S2pwQH2ZV4KYfekw==",
+      "path": "microsoft.extensions.identity.stores/6.0.3",
+      "hashPath": "microsoft.extensions.identity.stores.6.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Localization/2.2.0": {
       "type": "package",
@@ -2692,6 +2724,11 @@
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
     },
     "ProShop.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ProShop.Entities/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -16,14 +16,23 @@ public class User : IdentityUser<long>, IAuditableEntity
     public bool IsActive { get; set; }
 
     public DateTime CreatedDateTime { get; set; }
+    public bool IsSeller { get; set; }
 
     
     public string Avatar { get; set; }
-
+    public string NationalCode { get; set; }
+    public Gender Gender { get; set; }
     public DateTime SendSmsLastTime { get; set; }
 
     public virtual ICollection<UserClaim> UserClaims { get; set; }
     public virtual ICollection<UserLogin> UserLogins { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<UserToken> UserTokens { get; set; }
+    public Seller Seller { get; set; }
+}
+
+public enum Gender
+{
+    Man,
+    Woman
 }

@@ -4119,7 +4119,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "2.2.0",
           "Microsoft.Extensions.Identity.Core": "6.0.3",
-          "ProShop.Common": "1.0.0"
+          "ProShop.Common": "1.0.0",
+          "ProShop.Entities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/ProShop.ViewModels.dll": {}
