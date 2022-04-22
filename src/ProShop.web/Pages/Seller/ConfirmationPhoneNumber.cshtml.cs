@@ -82,9 +82,10 @@ namespace ProShop.web.Pages.Seller
                 return Json(new JsonResultOperation(false, "کد وارد شده صحیح نمیباشد"));
 
 
-
-            await _applicationSigninManager.SignInAsync(_user, true);
-            return Json(new JsonResultOperation(true, "با موفقیت وارد شدید"));
+            return Json(new JsonResultOperation(true, "شماره تلفن شما با موفقیت تایید شد")
+            {
+                Data = Confirmation.PhoneNumber
+            });
 
         }
 

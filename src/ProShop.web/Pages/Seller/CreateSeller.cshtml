@@ -1,0 +1,278 @@
+﻿@page "{phoneNumber}"
+@model ProShop.web.Pages.Seller.CreateSellerModel
+@{
+    ViewData["Title"] = "وارد کردن مشخصات فروشنده";
+}
+
+<div class="container" id="create-seller-container">
+    <form call-function-in-the-end="CreateSeller" method="post" class="public-ajax-form" asp-page="./CreateSeller">
+        <input type="hidden" asp-for="CreateSeller.PhoneNumber" />
+        <div class="card mt-5">
+            <div class="card-header">
+                <div class="card-title text-center h5">
+                    <div class="mb-3">
+                        بعد از وارد کردن اطلاعات کامل، شما به عنوان فروشنده
+                        <a asp-page="/Index" class="text-info border-bottom-dashed">پرو شاپ</a>
+                        انتخاب می شوید
+                        <a asp-page="/Index">
+                            <img src="~/images/application/eshop.png" width="105" />
+                        </a>
+                    </div>
+                    <button type="button" id="previous-tab-create-seller" class="btn btn-primary">قبلی</button>
+                    <button type="button" id="next-tab-create-seller" class="btn btn-primary">بعدی</button>
+                    <button class="btn btn-primary">تکمیل ثبت نام</button>
+                </div>
+                <div class="text-danger" asp-validation-summary="All"></div>
+            </div>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#seller-info" type="button" role="tab" aria-controls="nav-home" aria-selected="true">اطلاعات فروشنده و فروشگاه</button>
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#seller-identity" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">اطلاعات هویتی</button>
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contract" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">قرارداد</button>
+                    </div>
+                </nav>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="seller-info">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="mb-3 form-check form-switch px-3">
+                                    <label class="form-check-label" asp-for="CreateSeller.IsLegalPerson">
+                                        شخص حقیقی
+                                    </label>
+                                    <div>
+                                        <input id="legal-person-checkbox-create-seller" class="form-check-input m-0" asp-for="CreateSeller.IsLegalPerson" />
+                                    </div>
+                                </div>
+                                <!-- Legal person -->
+
+                                <div class="row m-0 p-0" id="legal-person-box-create-seller">
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label">نوع شرکت</label>
+                                        <select class="form-select" asp-for="CreateSeller.CompanyType" asp-items="Html.GetEnumSelectList<ProShop.Entities.CompanyType>()">
+                                        </select>
+                                        <span asp-validation-for="CreateSeller.CompanyType" class="span-error-message"></span>
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label" asp-for="CreateSeller.CompanyName"></label>
+                                        <input class="form-control" asp-for="CreateSeller.CompanyName"/>
+                                        <span asp-validation-for="CreateSeller.CompanyName" class="span-error-message"></span>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label" asp-for="CreateSeller.RegisterNumber"></label>
+                                        <input class="form-control" asp-for="CreateSeller.RegisterNumber"/>
+                                        <span asp-validation-for="CreateSeller.RegisterNumber" class="span-error-message"></span>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label" asp-for="CreateSeller.EconomicCode"></label>
+                                        <input class="form-control" asp-for="CreateSeller.EconomicCode"/>
+                                        <span asp-validation-for="CreateSeller.EconomicCode" class="span-error-message"></span>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label" asp-for="CreateSeller.SignatureOwners"></label>
+                                        <input class="form-control" asp-for="CreateSeller.SignatureOwners"/>
+                                        <span asp-validation-for="CreateSeller.SignatureOwners" class="span-error-message"></span>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6 col-lg-3">
+                                        <label class="form-label" asp-for="CreateSeller.NationalId"></label>
+                                        <input class="form-control" asp-for="CreateSeller.NationalId"/>
+                                        <span asp-validation-for="CreateSeller.NationalId" class="span-error-message"></span>
+                                    </div>
+
+
+                                </div>
+                                <!-- End Legal person -->
+
+                                <div class="mb-3 col-md-6 col-lg-2">
+                                    <label class="form-label" asp-for="CreateSeller.FirstName"></label>
+                                    <input class="form-control" asp-for="CreateSeller.FirstName" />
+                                    <span asp-validation-for="CreateSeller.FirstName" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-2">
+                                    <label class="form-label" asp-for="CreateSeller.LastName"></label>
+                                    <input class="form-control" asp-for="CreateSeller.LastName" />
+                                    <span asp-validation-for="CreateSeller.LastName" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.BirthDate"></label>
+                                    <div class="input-group">
+                                        <input birth-date-en="@Model.CreateSeller.BirthDateEn" readonly="readonly" class="custom-md-persian-datepicker  form-control" asp-for="CreateSeller.BirthDate" />
+                                        <span class="input-group-text">
+                                            <i id="birth-date-icon-create-seller" class="pointer-cursor bi bi-calendar2-date"></i>
+                                        </span>
+                                    </div>
+                                    <span asp-validation-for="CreateSeller.BirthDate" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.NationalCode"></label>
+                                    <input class="form-control" asp-for="CreateSeller.NationalCode" />
+                                    <span asp-validation-for="CreateSeller.NationalCode" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-2">
+                                    <label class="form-label" asp-for="CreateSeller.Gender"></label>
+                                    <select class="form-select" asp-for="CreateSeller.Gender" asp-items="Html.GetEnumSelectList<ProShop.Entities.Identity.Gender>()">
+                                        <option value="">
+                                            انتخاب کنید
+                                        </option>
+                                    </select>
+                                    <span asp-validation-for="CreateSeller.Gender" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label asp-for="CreateSeller.ShopName"></label>
+                                    <input class="form-control" asp-for="CreateSeller.ShopName" />
+                                    <span asp-validation-for="CreateSeller.ShopName" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.LogoFile"></label>
+                                    <input class="form-control" asp-for="CreateSeller.LogoFile" />
+                                    <span asp-validation-for="CreateSeller.LogoFile" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-lg-6">
+                                    <label class="form-label" asp-for="CreateSeller.Address"></label>
+                                    <input class="form-control" asp-for="CreateSeller.Address" />
+                                    <span asp-validation-for="CreateSeller.Address" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.Website"></label>
+                                    <div class="input-group">
+                                        <input class="form-control" asp-for="CreateSeller.Website" />
+                                        <span class="input-group-text">
+                                            <i class="bi bi-globe"></i>
+                                        </span>
+                                    </div>
+                                    <span asp-validation-for="CreateSeller.Website" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.PostalCode"></label>
+                                    <input class="form-control" asp-for="CreateSeller.PostalCode" />
+                                    <span asp-validation-for="CreateSeller.PostalCode" class="span-error-message"></span>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <label class="form-label" asp-for="CreateSeller.ShabaNumber"></label>
+                                    <div class="input-group">
+                                        <input class="form-control" asp-for="CreateSeller.ShabaNumber" />
+                                        <span class="input-group-text">IR</span>
+                                    </div>
+                                    <span asp-validation-for="CreateSeller.ShabaNumber" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.Telephone"></label>
+                                    <input class="form-control" asp-for="CreateSeller.Telephone" placeholder="02134348384" />
+                                    <span asp-validation-for="CreateSeller.Telephone" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.ProvinceId"></label>
+                                    <select class="form-select custom-select2" asp-for="CreateSeller.ProvinceId" asp-items="Model.CreateSeller.Provinces"></select>
+                                    <span asp-validation-for="CreateSeller.ProvinceId" class="span-error-message"></span>
+                                </div>
+                                <div class="mb-3 col-md-6 col-lg-3">
+                                    <label class="form-label" asp-for="CreateSeller.CityId"></label>
+                                    <select class="form-select custom-select2" asp-for="CreateSeller.CityId">
+                                        <option value="0">انتخاب کنید</option>
+                                    </select>
+                                    <span asp-validation-for="CreateSeller.CityId" class="span-error-message"></span>
+                                </div>
+                                <div>
+                                    <label class="form-label" asp-for="CreateSeller.AboutSeller"></label>
+                                    <textarea class="form-control custom-tinymce" asp-for="CreateSeller.AboutSeller"></textarea>
+                                    <span asp-validation-for="CreateSeller.AboutSeller" class="span-error-message"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="seller-identity">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label" asp-for="CreateSeller.IdCartPictureFile"></label>
+                                    <i data-bs-toggle="tooltip" data-bs-html="true" title="تصویر کارت ملی باید به صورت کاملا واضح باشد <img src='/images/application/Id-Cart-Sample.jpg' width='130' />" class="bi bi-question-circle"></i>
+                                    <input image-preview-box="id-cart-image-preview-box-create-seller" class="form-control image-preivew-input" asp-for="CreateSeller.IdCartPictureFile" />
+                                    <span asp-validation-for="CreateSeller.IdCartPictureFile" class="span-error-message"></span>
+                                </div>
+                                <div class="d-none" id="id-cart-image-preview-box-create-seller">
+                                    <img alt="لطفا یک عکس استاندارد را وارد کنید" src="~/images/application/eshop.png" class="text-danger cardidSize" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="contract">
+                        <div class="card">
+                            <div class="card-body custom-overflow-y" id="seller-contract">
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                                <br />
+                                1- قانون یک
+                                <br />
+                                2- قانون دو
+                            </div>
+                            <div class="card-footer">
+                                <div class="form-check my-2">
+                                    <input class="form-check-input" asp-for="CreateSeller.AcceptToTheTerms">
+                                    <label class="form-check-label" asp-for="CreateSeller.AcceptToTheTerms"></label>
+                                    <span asp-validation-for="CreateSeller.AcceptToTheTerms" class="span-error-message"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button type="button" id="previous-tab-create-seller" class="btn btn-primary">قبلی</button>
+                <button type="button" id="next-tab-create-seller" class="btn btn-primary">بعدی</button>
+                <button class="btn btn-primary">تکمیل ثبت نام</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+<script src="~/lib/tinymce/tinymce.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/select2/js/i18n/fa.min.js"></script>
+<script src="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.min.js"></script>
+}
+
+@section CustomScripts
+{
+<script src="~/Pages/Seller/CreateSeller.cshtml.js"></script>
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css"  />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css"  />
+    <link rel="stylesheet" href="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.style.min.css"  />
+}
+

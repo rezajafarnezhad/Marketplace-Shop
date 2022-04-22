@@ -7,6 +7,8 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.runtimeconfig.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.pdb
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\Ben.Demystifier.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\DNTCommon.Web.Core.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\DNTPersianUtils.Core.dll
@@ -290,6 +292,8 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\staticwebas
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Identity\LoginWithPhoneNumber.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Identity\RegisterLogin.cshtml.rz.scp.css
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Seller\CreateSeller.cshtml.rz.scp.css
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Seller\Register.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\bundle\ProShop.web.styles.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\projectbundle\ProShop.web.bundle.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.csproj.CopyComplete
@@ -298,4 +302,3 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\refint\ProS
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Seller\Register.cshtml.rz.scp.css

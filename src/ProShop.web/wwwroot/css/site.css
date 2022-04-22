@@ -61,6 +61,9 @@ body {
 a{
     text-decoration: none;
 }
+.pointer-cursor {
+    cursor: pointer;
+}
 
 .rem1and3{
     font-size: 1.3rem;
@@ -106,4 +109,14 @@ span.select2-dropdown.select2-dropdown--below {
     height: 213px;
     width: 330px;
     border-radius: 8px;
+}
+.custom-overflow-y {
+    overflow-y: scroll;
+}
+
+.cardidSize {
+    width: 382px;
+    height: 235px;
+    border:;
+    border-radius: 12px;
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using ProShop.Common.Constants;
 using ProShop.Common.IdentityToolkit;
+using ProShop.DataLayer.Context;
 using ProShop.Entities.Identity;
 using ProShop.Services.Contracts.Identity;
 using ProShop.ViewModels.Identity.Settings;
@@ -16,12 +17,14 @@ public class RegisterModel : PageModel
     private readonly SiteSettings _siteSettings;
     private readonly ILogger<RegisterModel> _logger;
     private readonly ISmsSender _smsSender;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterModel(IApplicationUserManager userManager, ISmsSender smsSender, IOptionsMonitor<SiteSettings> siteSettings, ILogger<RegisterModel> logger)
+    public RegisterModel(IApplicationUserManager userManager, ISmsSender smsSender, IOptionsMonitor<SiteSettings> siteSettings, ILogger<RegisterModel> logger, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _smsSender = smsSender;
         _logger = logger;
+        _unitOfWork = unitOfWork;
         _siteSettings = siteSettings.CurrentValue;
     }
 
@@ -57,6 +60,7 @@ public class RegisterModel : PageModel
             var result = await _userManager.CreateAsync(_user);
             if (result.Succeeded)
             {
+                await _unitOfWork.SaveChangesAsync();
                 _logger.LogInformation(LogCodes.RegisterCode, $"{_user.UserName} Created a new account with phone number");
                 AddUser = true;
             }
@@ -79,6 +83,7 @@ public class RegisterModel : PageModel
 
             _user.SendSmsLastTime = DateTime.Now;
             await _userManager.UpdateAsync(_user);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         return RedirectToPage("./ConfirmationPhoneNumber", new { phoneNumber = RegisterSeller.PhoneNumber });

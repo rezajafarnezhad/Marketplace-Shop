@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "pT7IUwwy1d3Ekzu2rI7wSFQJ3bUAOIiRyYyy9ZkO1KpPkKLFEiS4MjBy5fJEVhzrBPHB82FUao+FN8fFcWNdQg==",
+  "dgSpecHash": "vIZZoh6O+585gnq442d74TQYLy5EVLKZWhIcToRNR9xzf0Ge4AnPxN1dl+kWs61P5H6pmYUAtn61NWTLLEhn9Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Services\\ProShop.Services.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\mReza\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\ben.demystifier\\0.4.1\\ben.demystifier.0.4.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntcommon.web.core\\3.3.0\\dntcommon.web.core.3.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntpersianutils.core\\5.4.1\\dntpersianutils.core.5.4.1.nupkg.sha512",
@@ -58,7 +60,7 @@
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.codeanalysis.common\\2.8.0\\microsoft.codeanalysis.common.2.8.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.codeanalysis.csharp\\2.8.0\\microsoft.codeanalysis.csharp.2.8.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.codeanalysis.razor\\2.2.0\\microsoft.codeanalysis.razor.2.2.0.nupkg.sha512",
-    "C:\\Users\\mReza\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",

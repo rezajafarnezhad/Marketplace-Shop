@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ProShop.Entities.Identity;
 using System.Security.Claims;
+using ProShop.ViewModels.Sellers;
 
 namespace ProShop.Services.Contracts.Identity;
 
@@ -114,4 +115,7 @@ public interface IApplicationUserManager : IDisposable
     IQueryable<User> Users { get; }
 
     Task<DateTime?> GetSendSmsLastTime(string phoneNumber);
+    Task<bool> CheckForUserIsSeller(string phoneNumber);
+    Task<CreateSellerViewModel> GetUserInfoForCreateSeller(string phoneNumber);
+    Task<User> GetUserForCreateSeller(string phoneNumber);
 }

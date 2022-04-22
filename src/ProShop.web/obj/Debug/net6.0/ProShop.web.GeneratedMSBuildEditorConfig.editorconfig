@@ -59,12 +59,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/ConfirmationPhoneNumber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXENvbmZpcm1hdGlvblBob25lTnVtYmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/SellerRegistrationDone.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXFNlbGxlclJlZ2lzdHJhdGlvbkRvbmUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/_ViewStart.cshtml]
@@ -91,6 +103,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9SZWNvcmROb3RGb3VuZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_SellerPanelLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9TZWxsZXJQYW5lbExheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -110,6 +126,10 @@ build_metadata.AdditionalFiles.CssScope = b-xhvhmgknev
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Identity/RegisterLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUmVnaXN0ZXJMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-2p4pf41uk5
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/CreateSeller.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXENyZWF0ZVNlbGxlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-7jw3sehyj4
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXFJlZ2lzdGVyLmNzaHRtbA==

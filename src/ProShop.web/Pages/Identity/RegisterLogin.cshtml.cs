@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
+using ProShop.DataLayer.Context;
 using ProShop.Entities.Identity;
 using ProShop.Services.Contracts.Identity;
 using ProShop.ViewModels.Identity;
@@ -18,12 +19,14 @@ public class RegisterLoginModel : PageBase
     private readonly ISmsSender _smsSender;
     private readonly ILogger<RegisterLoginModel> _logger;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    public RegisterLoginModel(IOptionsMonitor<SiteSettings> siteSettings, IApplicationUserManager applicationUserManager, ILogger<RegisterLoginModel> logger, ISmsSender smsSender, IWebHostEnvironment webHostEnvironment)
+    private readonly IUnitOfWork _unitOfWork;
+    public RegisterLoginModel(IOptionsMonitor<SiteSettings> siteSettings, IApplicationUserManager applicationUserManager, ILogger<RegisterLoginModel> logger, ISmsSender smsSender, IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork)
     {
         _applicationUserManager = applicationUserManager;
         _logger = logger;
         _smsSender = smsSender;
         _webHostEnvironment = webHostEnvironment;
+        _unitOfWork = unitOfWork;
         _siteSettings = siteSettings.CurrentValue;
     }
 
@@ -59,6 +62,7 @@ public class RegisterLoginModel : PageBase
                 var result = await _applicationUserManager.CreateAsync(_user);
                 if (result.Succeeded)
                 {
+                    await _unitOfWork.SaveChangesAsync();
                     _logger.LogInformation(LogCodes.RegisterCode, $"{_user.UserName} Created a new account with phone number");
                     AddNewUser = true;
                 }
@@ -82,6 +86,7 @@ public class RegisterLoginModel : PageBase
 
                 _user.SendSmsLastTime = DateTime.Now;
                 await _applicationUserManager.UpdateAsync(_user);
+                await _unitOfWork.SaveChangesAsync();
             }
         }
 

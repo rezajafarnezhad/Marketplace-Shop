@@ -61,10 +61,8 @@ function getRVT(e) {
 }
 
 
-function loginWithPhonenumberInIdentity(message) {
-
-    alert(message);
+function loginWithPhonenumberInIdentity(message, data) {
+    console.log(data);
     showToastr('success', message);
-    //return;
-    //location.href = "/";
+    location.href = data;
 }

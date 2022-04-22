@@ -12,4 +12,5 @@ public interface IGenericService<TEntity> where TEntity : EntityBase, new()
     Task<bool> IsExistsBy(string propertyToFilter, object propertyValue, long? id = null);
     Task SoftDelete(TEntity entity);
     Task Restore(TEntity entity);
+    Task<bool> AnyAsync();
 }

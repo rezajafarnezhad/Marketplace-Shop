@@ -13,6 +13,7 @@ namespace ProShop.Services.Implements.Identity
             IdentityErrorDescriber describer = null)
             : base((ApplicationDbContext)Uow, describer)
         {
+            AutoSaveChanges = false;
         }
     }
 }

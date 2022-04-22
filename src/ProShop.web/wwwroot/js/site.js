@@ -13,6 +13,8 @@ var loadingModalHtml = `<div class="modal" id="loading-modal" data-bs-backdrop="
         </div>
     </div>
 </div>`;
+
+
 function showLoading() {
     if ($('#loading-modal').length === 0) {
         $('body').append(loadingModalHtml);
@@ -22,7 +24,6 @@ function showLoading() {
 function hideLoading() {
     $('#loading-modal').modal('hide');
 }
-
 // Toastr
 
 function showToastr(status, message) {
@@ -66,39 +67,46 @@ function ShowErrorMessage(message) {
 }
 
 function initializeTinyMCE() {
-    tinymce.remove('textarea.custom-tinymce');
-    tinymce.init({
-        selector: 'textarea.custom-tinymce',
-        height: 300,
-        max_height: 500,
-        language: 'fa_IR',
-        language_url: '/js/fa_IR.js',
-        //content_style: 'body {font-family: Vazir}',
-        plugins: 'link table preview wordcount',
-        toolbar: [
-            {
-                name: 'history', items: ['undo', 'redo', 'preview']
-            },
-            {
-                name: 'styles', items: ['styleselect']
-            },
-            {
-                name: 'formatting', items: ['bold', 'italic', 'underline', 'link']
-            },
-            {
-                name: 'alignment', items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify', 'forecolor', 'backcolor']
-            },
-            {
-                name: 'table', items: ['table', 'wordcount']
-            },
-            {
-                name: 'indentation', items: ['outdent', 'indent']
-            }
-        ],
-        // menubar: false,
-        branding: false
-    });
+
+    if ($('textarea.custom-tinymce').length > 0) {
+        tinymce.remove('textarea.custom-tinymce');
+        tinymce.init({
+            selector: 'textarea.custom-tinymce',
+            height: 300,
+            max_height: 500,
+            language: 'fa_IR',
+            language_url: '/js/fa_IR.js',
+            //content_style: 'body {font-family: Vazir}',
+            plugins: 'link table preview wordcount',
+            toolbar: [
+                {
+                    name: 'history', items: ['undo', 'redo', 'preview']
+                },
+                {
+                    name: 'styles', items: ['styleselect']
+                },
+                {
+                    name: 'formatting', items: ['bold', 'italic', 'underline', 'link']
+                },
+                {
+                    name: 'alignment', items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify', 'forecolor', 'backcolor']
+                },
+                {
+                    name: 'table', items: ['table', 'wordcount']
+                },
+                {
+                    name: 'indentation', items: ['outdent', 'indent']
+                }
+            ],
+            // menubar: false,
+            branding: false
+        });
+    }
+
 }
+
+initializeTinyMCE();
+
 document.addEventListener('focusin', function (e) {
     if (e.target.closest('.tox-tinymce-aux, .moxman-window, .tam-assetmanager-root') !== null) {
         e.stopImmediatePropagation();
@@ -106,20 +114,63 @@ document.addEventListener('focusin', function (e) {
 });
 
 function initializeSelect2() {
+
     $('.custom-select2').select2({
         theme: 'bootstrap-5',
         dropdownParent: $('#form-modal-place'),
 
     });
 }
+function initializeSelect2WithoutModal() {
 
+    if ($('.custom-select2').length > 0) {
+        $('.custom-select2').select2({
+            theme: 'bootstrap-5',
+        });
+    }
+
+}
+
+initializeSelect2WithoutModal();
 
 // Validation
 
 // fileRequired
 
+
+
+
+var imageInputsWithProblems = [];
+
+// یک آرایه و یک آیتم میگیره
+// آیتم رو از آرایه حذف میکنه
+function removeItemInArray(arr, item) {
+    var found = arr.indexOf(item);
+
+    while (found !== -1) {
+        arr.splice(found, 1);
+        found = arr.indexOf(item);
+    }
+}
+
+
+
 if (jQuery.validator) {
 
+    $.validator.setDefaults({
+        ignore: [],
+        // other default options
+    });
+
+    var defaultRangeValidator = $.validator.methods.range;
+
+    $.validator.methods.range = function (value, element, param) {
+        if (element.type === 'checkbox') {
+            return element.checked;
+        } else {
+            return defaultRangeValidator.call(this, value, element, param);
+        }
+    }
 
     jQuery.validator.addMethod("fileRequired", function (value, element, param) {
         if (element.files[0] != null)
@@ -140,13 +191,36 @@ if (jQuery.validator) {
 
     // isImage
     jQuery.validator.addMethod('isImage', function (value, element, param) {
-        if (element.files[0] != null) {
-            var whiteListExtensions = $(element).data('val-whitelistextensions').split(',');
-            return whiteListExtensions.includes(element.files[0].type);
+        var selectedFile = element.files[0];
+        if (selectedFile === undefined) {
+            return true;
         }
+        var whiteListExtensions = $(element).data('val-whitelistextensions').split(',');
+        if (!whiteListExtensions.includes(selectedFile.type)) {
+            return false;
+        }
+        var currentElementId = $(element).attr('id');
+        var currentForm = $(element).parents('form');
+
+        if (imageInputsWithProblems.includes(currentElementId)) {
+            removeItemInArray(imageInputsWithProblems, currentElementId);
+            return false;
+        }
+
+        if ($('#image-preview-box-temp').length === 0) {
+            $('body').append('<img class="d-none" id="image-preview-box-temp" />');
+        }
+        $('#image-preview-box-temp').attr('src', URL.createObjectURL(selectedFile));
+        $('#image-preview-box-temp').off('error');
+        $('#image-preview-box-temp').on('error',
+            function () {
+                imageInputsWithProblems.push(currentElementId);
+                currentForm.validate().element(`#${currentElementId}`);
+            });
         return true;
     });
     jQuery.validator.unobtrusive.adapters.addBool('isImage');
+
 
     // maxFileSize
     jQuery.validator.addMethod('maxFileSize', function (value, element, param) {
@@ -242,6 +316,7 @@ function activatingModalForm() {
                 initializingAutocomplete();
                 $.validator.unobtrusive.parse($('#form-modal-place form'));
                 initializeTinyMCE();
+                activatingInputAttributes();
                 initializeSelect2();
                 $("#form-modal-place").modal("show");
             }
@@ -455,13 +530,10 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
                 fillValidationForm(finalData, currentForm);
                 showToastr('warning', data.message);
             } else {
-                window[functionName](data.message);
-                $('.asp-validation-summary').html("");
+                window[functionName](data.message, data.data);
             }
         },
         complete: function () {
-
-
             hideLoading();
         },
         error: function () {
@@ -472,6 +544,72 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
 });
 
 
+function getDateWithAjax(url,formdata,functionNameToCallInTheEnd) {
+    $.ajax({
+        url: url,
+        data: formdata,
+        type: 'Get',
+        enctype: 'multipart/form-data',
+        dataType: 'json',
+        beforeSend: function () {
+            showLoading();
+        },
+        success: function (data, status) {
 
+            if (data.isSuccessful === false) {
+                showToastr('warning', data.message);
+            } else {
+                window[functionNameToCallInTheEnd](data.message, data.data);
+            }
+        },
+        complete: function () {
+            hideLoading();
+        },
+        error: function () {
+            ShowErrorMessage();
+        }
+
+    });
+}
 
 //End ajax Operation
+
+$('form input').blur(function() {
+    $(this).parents('form').valid();
+});
+
+$('form input.custom-md-persian-datepicker').change(function() {
+    $(this).parents('form').valid();
+});
+
+$('form select').change(function () {
+    $(this).parents('form').valid();
+});
+
+$('form input[type="checkbox"] ,input[type="file"] ').change(function () {
+    $(this).parents('form').valid();
+});
+
+
+
+
+
+function activatingInputAttributes() {
+    $('input[data-val-ltrdir="true"]').attr('dir', 'ltr');
+    $('input[data-val-isimage]').attr('accept', 'image/*');
+}
+
+activatingInputAttributes();
+
+
+$('.image-preivew-input').change(function () {
+    var selectedFile = this.files[0];
+    var imagePreviewBox = $(this).attr('image-preview-box');
+    if (selectedFile && selectedFile.size > 0) {
+        $(`#${imagePreviewBox}`).removeClass('d-none');
+        $(`#${imagePreviewBox} img`).attr('src', URL.createObjectURL(selectedFile));
+    } else {
+        $(`#${imagePreviewBox} img`).attr('src', '');
+        $(`#${imagePreviewBox}`).addClass('d-none');
+    }
+})

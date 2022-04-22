@@ -281,6 +281,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "DNTCommon.Web.Core": {
               "target": "Package",
               "version": "[3.3.0, )"

@@ -76,7 +76,10 @@ public class LoginWithPhoneNumberModel : PageBase
 
 
         await _applicationSigninManager.SignInAsync(_user, true);
-        return Json(new JsonResultOperation(true, "با موفقیت وارد شدید"));
+        return Json(new JsonResultOperation(true, "با موفقیت وارد شدید")
+        {
+            Data = "/Index",
+        });
 
     }
 

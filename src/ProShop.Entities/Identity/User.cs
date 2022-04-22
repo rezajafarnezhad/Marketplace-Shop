@@ -16,12 +16,13 @@ public class User : IdentityUser<long>, IAuditableEntity
     public bool IsActive { get; set; }
 
     public DateTime CreatedDateTime { get; set; }
+    public DateTime? BirthDate { get; set; }
     public bool IsSeller { get; set; }
 
     
     public string Avatar { get; set; }
     public string NationalCode { get; set; }
-    public Gender Gender { get; set; }
+    public Gender? Gender { get; set; }
     public DateTime SendSmsLastTime { get; set; }
 
     public virtual ICollection<UserClaim> UserClaims { get; set; }
@@ -33,6 +34,10 @@ public class User : IdentityUser<long>, IAuditableEntity
 
 public enum Gender
 {
+    [Display(Name = "آقا")]
     Man,
+
+    [Display(Name = "خانم")]
+
     Woman
 }

@@ -63,7 +63,7 @@ function getRVT(e) {
 }
 
 
-function confirmationSellaryPhoneNumber(message) {
+function confirmationSellaryPhoneNumber(message,data) {
+    location.href = `/Seller/CreateSeller/${data}`;
     showToastr('success', message);
-   /* location.href = "/";*/
 }

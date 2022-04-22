@@ -11,6 +11,7 @@ namespace ProShop.Services.Implements.Identity
     {
         public ApplicationRoleStore(IUnitOfWork Uow, IdentityErrorDescriber describer = null) : base((ApplicationDbContext)Uow, describer)
         {
+            AutoSaveChanges = false;
         }
     }
 }

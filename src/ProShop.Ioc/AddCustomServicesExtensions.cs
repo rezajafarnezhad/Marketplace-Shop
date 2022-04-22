@@ -10,6 +10,7 @@ using ProShop.Services.Implements;
 using ProShop.Services.Implements.Identity;
 using System.Security.Claims;
 using System.Security.Principal;
+using Ganss.XSS;
 
 namespace ProShop.Ioc;
 
@@ -54,6 +55,15 @@ public static class AddCustomServicesExtensions
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IFeatureService,FeatureService>();
         services.AddScoped<ICategoryFeatureService, CategoryFeatureService>();
+        services.AddScoped<IProvinceAndCityService, ProvinceAndCityService>();
+        services.AddScoped<ISellerService,SellerService>();
+
+        #region Html sanitizer
+        IHtmlSanitizer sanitizer = new HtmlSanitizer();
+        //services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
+        services.AddSingleton(sanitizer);
+        #endregion
+
 
         return services;
     }

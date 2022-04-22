@@ -128,7 +128,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
 
         }).SingleOrDefaultAsync(c => c.Id == Id);
     }
-
+  
 
     public override async Task<DuplicateColumns> Update(Category entity)
     {
