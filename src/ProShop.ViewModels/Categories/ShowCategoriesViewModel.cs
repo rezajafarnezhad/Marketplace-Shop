@@ -5,6 +5,13 @@ using ProShop.Common.Constants;
 namespace ProShop.ViewModels.Categories;
 
 
+
+public class ShowCategoriesViewModel
+{
+    public List<ShowCategoryViewModel> Categories { get; set; } = new();
+    public SearchCategoriesViewModel SearchCategories { get; set; } = new();
+    public PaginationViewModel Pagination { get; set; } = new();
+}
 public class ShowCategoryViewModel
 {
     [Display(Name = "عنوان")]
@@ -28,13 +35,6 @@ public class ShowCategoryViewModel
     public bool IsDeleted { get; set; }
 
 
-}
-
-public class ShowCategoriesViewModel
-{
-    public List<ShowCategoryViewModel> Categories { get; set; } = new();
-    public SearchCategoriesViewModel SearchCategories { get; set; } = new();
-    public PaginationViewModel Pagination { get; set; } = new();
 }
 
 public class SearchCategoriesViewModel

@@ -1,6 +1,52 @@
 ﻿
 var rvt = '__RequestVerificationToken';
 
+
+var htmlModalPlace = `<div class="modal fade" id="html-modal-place" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer d-flex justify-content-start">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>`;
+
+function appendHtmlModalPlaceToBody() {
+    if ($('#html-modal-place').length === 0) {
+        $('body').append(htmlModalPlace);
+    }
+}
+
+var formModalPlace = `<div class="modal fade" id="form-modal-place" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer d-flex justify-content-start">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>`;
+
+function appendFormModalPlaceToBody() {
+    if ($('#form-modal-place').length === 0) {
+        $('body').append(formModalPlace);
+    }
+}
+
+
+
+
 var loadingModalHtml = `<div class="modal" id="loading-modal" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -72,6 +118,12 @@ function initializeTinyMCE() {
         tinymce.remove('textarea.custom-tinymce');
         tinymce.init({
             selector: 'textarea.custom-tinymce',
+            setup: function (editor) {
+                editor.on('blur', function (e) {
+                    var elementId = $(e.target.targetElm).attr('id');
+                    $(e.target.formElement).validate().element(`#${elementId}`);
+                });
+            },
             height: 300,
             max_height: 500,
             language: 'fa_IR',
@@ -156,7 +208,15 @@ function removeItemInArray(arr, item) {
 
 
 if (jQuery.validator) {
-
+    // برای اعتبار سنجی اینپوت های مخفی از این کد استفاده میکنیم
+    // کجا کاربر داره ؟
+    // هنگام استفاده از
+    // navs-tabs
+    // What is navs-tabs ?
+    // https://getbootstrap.com/docs/5.0/components/navs-tabs/#javascript-behavior
+    // برای مثال در تب دوم، اینپوت های تب اول مخفی هستن
+    // و به صورت پیشفرض اعتبار سنجی نمیشن
+    // کد پایین، اینپوت های مخفی رو هم اعتبار سنجی میکنه
     $.validator.setDefaults({
         ignore: [],
         // other default options
@@ -232,18 +292,34 @@ if (jQuery.validator) {
         return true;
     });
     jQuery.validator.unobtrusive.adapters.addBool('maxFileSize');
+
+    // makeTinyMceRequired
+    jQuery.validator.addMethod('makeTinyMceRequired', function (value, element, param) {
+        var editorId = $(element).attr('id');
+        var editorContent = tinyMCE.get(editorId).getContent();
+        $('body').append(`<div id="test-makeTinyMceRequired">${editorContent}</div>`);
+        var result = isNullOrWhitespace($('#test-makeTinyMceRequired').text());
+        $('#test-makeTinyMceRequired').remove();
+        return !result;
+    });
+    jQuery.validator.unobtrusive.adapters.addBool('makeTinyMceRequired');
 }
 
 
 // End validation
+function isNullOrWhitespace(input) {
 
+    if (typeof input === 'undefined' || input == null) return true;
+
+    return input.replace(/\s/g, '').length < 1;
+}
 
 
 //Ajax operations
 
 
-
-function activatingDeleteButtons() {
+// فعال ساز دکمه حذف، در داخل گرید
+function activatingDeleteButtons(isModalmode) {
     $('.delete-row-button').click(function () {
         var currentForm = $(this).parent();
         var customMessage = $(this).attr('custom-message');
@@ -269,8 +345,11 @@ function activatingDeleteButtons() {
                         if (data.isSuccessful == false) {
                             showToastr('warning', data.message);
                         } else {
-                            fillDataTable();
+                            if (isModalmode) {
+                                $('#html-modal-place').modal('hide');
+                            }
                             showToastr('success', data.message);
+                            fillDataTable();
                         }
 
                     }).always(function () {
@@ -296,6 +375,10 @@ function initializingAutocomplete() {
 
 
 }
+
+
+// این فانکشن فرم های مربوط به ایجاد و ویرایش را
+// به صورت ایجکس برگشت میزند که در داخل مودال نمایش دهیم
 function activatingModalForm() {
     $('.show-modal-form-button').click(function (e) {
         e.preventDefault();
@@ -331,8 +414,11 @@ function activatingModalForm() {
 
 //activatingModalForm();
 
-var isMainPaginationClicked = false;
-var isGotoPageClicked = false;
+
+
+
+// فرم ایجاد و ویرایش در داخل مودال موقعی که سابمیت شوند توسط این
+// فانکشن به صورت ایجکسی به سمت سرور ارسال میشوند
 
 $(document).on('submit', 'form.custom-ajax-form', function (e) {
 
@@ -379,7 +465,7 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
     });
 });
 
-
+// فعال ساز مربوط به صحفه بندی
 function activatingPagination() {
     $("#main-pagianation button").click(function () {
         isMainPaginationClicked = true;
@@ -389,6 +475,7 @@ function activatingPagination() {
     });
 }
 
+// فعال ساز دکمه برو به صفحه فلان
 function activatingGotoPage() {
     $("#goto-page-button").click(function () {
         isGotoPageClicked = true;
@@ -396,34 +483,43 @@ function activatingGotoPage() {
     });
 }
 
+
+// خواندن اطلاعات و ریختن آن در داخل گرید
 function fillDataTable() {
     $('.read-data-table .data-table-body').remove();
     $('#record-not-found-box').remove();
     $('.search-form-loading').attr('disabled', 'disabled');
     $('.data-table-loading').removeClass('d-none');
 
-    const formData = $('form.Search-form-via-ajax').serializeArray();
+    var currentForm = $('form.Search-form-via-ajax');
 
-    $.get(`${location.pathname}?handler=GetDataTable`, formData, function (data, status) {
+    const formData = currentForm.serializeArray();
+
+    $.get(`${location.pathname}?handler=GetDataTable`,
+        formData,
+        function(data, status) {
+            if (data.isSuccessful === false) {
+                fillValidationForm(data.data, currentForm);
+                showToastr('warning', data.message);
+            } else {
+                $('.read-data-table').append(data);
+                activatingPagination();
+                activatingGotoPage();
+                activatingModalForm();
+                activatingPageCount();
+                activatingDeleteButtons();
+                enablingTooltips();
+                activatingGetHtmlWithAjax();
+            }
+        }).fail(function() {
+        ShowErrorMessage();
+    }).always(function() {
         $('.Search-form-loading').removeAttr('disabled');
         $('.data-table-loading').addClass('d-none');
-
-        if (status == 'success') {
-            $('.read-data-table').append(data);
-            activatingPagination();
-            activatingGotoPage();
-            activatingModalForm();
-            activatingPageCount();
-            activatingDeleteButtons();
-            enablingTooltips();
-        }
-        else {
-            ShowErrorMessage();
-        }
     });
 }
 
-
+// فعالساز مربوط به تعداد آیتم در هر صفحه
 function activatingPageCount() {
 
     $('#page-count-selectbox').change(function () {
@@ -434,7 +530,15 @@ function activatingPageCount() {
     });
 }
 
+// برای مثال در صفحه دو یک گرید هستیم
+// و کاربر یک عبارتی را سرچ میکند ما باید بیاییم
+// و از صفحه یک دوباره شروع به نمایش دادن اطلاعات کنیم
+// این متغیر برای این کار است
+var isMainPaginationClicked = false;
 
+// اگر دکمه برو به فلان صحفحه کلیک شده بود
+// باید به همان صفحه برویم
+var isGotoPageClicked = false;
 $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
     e.preventDefault();
     var currentForm = $(this);
@@ -466,8 +570,6 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
         currentForm.find('.Search-form-loading').removeAttr('disabled', 'disabled');
         currentForm.find('.Search-form-loading span').addClass('d-none');
         $('.data-table-loading').addClass('d-none');
-
-
         if (status == 'success') {
             if (data.isSuccessful == false) {
                 fillValidationForm(data.data, currentForm);
@@ -480,6 +582,7 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
                 activatingPageCount();
                 activatingModalForm();
                 enablingTooltips();
+                activatingGetHtmlWithAjax();
             }
 
         } else {
@@ -489,6 +592,12 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
 
 });
 
+
+// موقعی که یک فرم به سمت سرور ارسال میشود
+// اگر خطای اعتبار سنجی داشته باشد
+// با استفاده از این فانکشن متن خطاها را داخل
+// <div asp-validation-summary="All" class="text-danger"></div>
+// نمایش میدهیم
 function fillValidationForm(errors, currentForm) {
     var result = '<ul>';
     errors.forEach(function (e) {
@@ -502,7 +611,8 @@ function fillValidationForm(errors, currentForm) {
 
 
 
-
+// این فانکشن هر فرمی را به صورت پست به سمت سرور با استفاده از ایجکس
+// ارسال میکند
 $(document).on('submit', 'form.public-ajax-form', function (e) {
 
     e.preventDefault();
@@ -543,8 +653,9 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
     });
 });
 
-
-function getDateWithAjax(url,formdata,functionNameToCallInTheEnd) {
+// با استفاده از این فانکشن میتوانیم اطلاعاتی را از سمت سرور دریافت کنیم
+// برای مثال برای خواندن شهرستان های یک استان از این فانکشن استفاده میکنیم
+function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
     $.ajax({
         url: url,
         data: formdata,
@@ -573,12 +684,21 @@ function getDateWithAjax(url,formdata,functionNameToCallInTheEnd) {
 }
 
 //End ajax Operation
-
-$('form input').blur(function() {
+// به محض بلر شدن یک اینپوت
+// تمامی اینپوت های فرم را مجددا اعتبار سنجی میکند
+// چرا از این استفاده میکنیم ؟
+// برای مثال شما روی دکمه ثبت نام کلیک میکنید و
+// در بالای صفحه و داخل تگ
+// <div asp-validation-summary="All" class="text-danger"></div>
+// مینویسد ایمیل را وارد کنید
+// شما نیز ایمیل را وارد میکنید
+// اما در قسمت بالای صفحه همچنان متن "لطفا ایمیل را وارد کنید" وجود دارد
+// برای اینکه این مشکل حل شود از این کد استفاده میکنیم
+$('form input').blur(function () {
     $(this).parents('form').valid();
 });
 
-$('form input.custom-md-persian-datepicker').change(function() {
+$('form input.custom-md-persian-datepicker').change(function () {
     $(this).parents('form').valid();
 });
 
@@ -591,8 +711,34 @@ $('form input[type="checkbox"] ,input[type="file"] ').change(function () {
 });
 
 
+function activatingGetHtmlWithAjax() {
 
+    $('.get-html-with-ajax').click(function () {
 
+        var funcToCall = $(this).attr('functionNameToCallOnClick');
+        window[funcToCall](this);
+    });
+}
+
+// خواندن صفحات
+// html
+// از سمت سرور
+function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd,clickedButton) {
+    showLoading();
+    $.get(url, data, function (data, status) {
+
+        if (data.isSuccessful === false) {
+            showToastr('warning', data.message);
+        } else {
+            window[functionNameToCallInTheEnd](data, clickedButton);
+        }
+
+    }).fail(function () {
+        ShowErrorMessage();
+    }).always(function () {
+        hideLoading();
+    });
+}
 
 function activatingInputAttributes() {
     $('input[data-val-ltrdir="true"]').attr('dir', 'ltr');
@@ -601,7 +747,7 @@ function activatingInputAttributes() {
 
 activatingInputAttributes();
 
-
+// نمایش پیش نمایش عکس
 $('.image-preivew-input').change(function () {
     var selectedFile = this.files[0];
     var imagePreviewBox = $(this).attr('image-preview-box');

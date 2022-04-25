@@ -1,4 +1,5 @@
-﻿using ProShop.Entities.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using ProShop.Entities.Identity;
 
 namespace ProShop.Entities;
 
@@ -58,17 +59,35 @@ public class Seller : EntityBase, IAuditableEntity
 
    
     public string Location { get; set; }
-
-    public bool IsDocumentApproved { get; set; }
+    public string RejectReason { get; set; }
+   
 
     public bool IsActive { get; set; }
 
     public DateTime CreatedDateTime { get; set; }
 
-
+    public DocumentStatus DocumentStatus { get; set; }
     public User User { get; set; }
     public ProvinceAndCity Province { get; set; }
 
     public ProvinceAndCity City { get; set; }
 
+}
+
+public enum DocumentStatus : byte
+{
+    [Display(Name = "در انتظار تایید اولیه")]
+    AwaitingInitialApproval,
+
+    [Display(Name = "تایید شده")]
+    Confirmed,
+
+    [Display(Name = "رد شده در حالت اولیه")]
+    Rejected,
+
+    [Display(Name = "در انتظار تایید فروشنده سیستم")]
+    AwaitingApprovalSystemSeller,
+
+    [Display(Name = "رد شده برای فروشنده  سیستم")]
+    RejectedSystemSeller
 }

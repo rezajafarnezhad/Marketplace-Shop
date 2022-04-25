@@ -28,6 +28,7 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
         builder.Property(c => c.Logo).IsRequired(false).HasMaxLength(200);
         builder.Property(c => c.Website).IsRequired(false).HasMaxLength(40);
         builder.Property(c => c.Website).IsRequired(false).HasMaxLength(150);
+        builder.Property(c => c.RejectReason).IsRequired(false);
         builder.Property(c => c.Location).IsRequired(false).HasMaxLength(200);
 
 

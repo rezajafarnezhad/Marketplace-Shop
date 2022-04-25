@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Printing;
+using AngleSharp.Css.Dom;
 using AutoMapper;
 using DNTPersianUtils.Core;
 using DNTPersianUtils.Core.IranCities;
@@ -104,6 +105,9 @@ public class CreateSellerModel : PageBase
             });
         }
 
+
+        bool isReal;
+
         if (!CreateSeller.IsLegalPerson)
         {
             CreateSeller.CompanyName
@@ -113,9 +117,11 @@ public class CreateSellerModel : PageBase
                             = CreateSeller.NationalId
                                 = null;
             CreateSeller.CompanyType = null;
+            isReal = true;
         }
         else
         {
+            isReal = false;
             var legalPersonProperties = new List<string>()
             {
                 nameof(CreateSeller.CompanyName),
@@ -158,6 +164,8 @@ public class CreateSellerModel : PageBase
         }
 
         var _seller = _mapper.Map<Entities.Seller>(CreateSeller);
+        _seller.IsRealPerson = isReal;
+        _seller.IsActive = true;
         _seller.UserId = _user.Id;
         _seller.SellerCode = await _sellerService.GetSellerCodeForCreateSeller();
 

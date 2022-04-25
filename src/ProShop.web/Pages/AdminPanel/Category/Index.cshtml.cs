@@ -35,6 +35,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(String.Empty, PublicConstantStrings.ModelStateErrorMessage);
                 return Json(new JsonResultOperation(false, PublicConstantStrings.ModelStateErrorMessage)
                 {
                     Data = ModelState.GetModelStateErrors()

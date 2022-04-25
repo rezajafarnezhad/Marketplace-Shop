@@ -723,6 +723,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte>("DocumentStatus")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("EconomicCode")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
@@ -736,9 +739,6 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDocumentApproved")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRealPerson")
@@ -781,6 +781,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<string>("RegisterNumber")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RejectReason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SellerCode")
                         .HasColumnType("int");

@@ -1,0 +1,135 @@
+﻿@using ProShop.ViewModels
+@using ProShop.Entities
+@using ProShop.Common.Helpers
+@model ProShop.ViewModels.Sellers.ShowSellersViewModel
+@if (Model.Sellers.Any())
+{
+    <div class="table-responsive data-table-body">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].Id)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].ShopName)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].FullName)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].SellerCode)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].ProvinceAndCity)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].DocumentStatus)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].CreatedDateTime)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].IsActive)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].IsRealPerson)</th>
+                    <th class="text-center">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Item in Model.Sellers)
+                {
+
+                    <tr>
+                        <td>@Item.Id</td>
+                        <td>@Item.ShopName</td>
+                        <td>@Item.FullName</td>
+                        <td>@Item.SellerCode</td>
+                        <td>@Item.ProvinceAndCity</td>
+                        <td>
+                            @{
+                                string GetButtonClass(DocumentStatus status) => status switch
+                                {
+                                    DocumentStatus.Confirmed => "success",
+                                    DocumentStatus.AwaitingApprovalSystemSeller
+                                    or
+                                    DocumentStatus.AwaitingInitialApproval => "warning",
+                                    _ => "danger"
+                                };
+                            }
+                            
+                            <div class="d-grid">
+                                <span class="btn btn-@GetButtonClass(Item.DocumentStatus)" type="button">
+                                    @Item.DocumentStatus.GetEnumDisplayName()
+                                </span>
+                            </div>
+
+                        </td>
+                        <td>@Item.CreatedDateTime</td>
+                        <td class="text-center">
+                            @if (Item.IsActive)
+                            {
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-check2-square text-success"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-x-square text-danger"></span>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @if (Item.IsRealPerson)
+                            {
+                                <div class="d-grid">
+                                    <strong>شخص حقیقی</strong>
+                                </div>
+                               
+                            }
+                            else
+                            {
+                                <div class="d-grid">
+                                    <strong>شخص حقوقی</strong>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <button sellerId="@Item.Id"  type="button" functionNameToCallOnClick="getSellerDetails" class="get-html-with-ajax btn btn-info btn-sm">
+                                اطلاعات
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+    <hr />
+        <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
+            <div class="btn-group me-2">
+                @if (Model.Pagination.CurrentPage != 1)
+                {
+                    <button value="1" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button value="@(Model.Pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                }
+                @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
+                {
+                    <button value="@counter" type="button"
+                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                        @counter
+                    </button>
+                }
+                @if (Model.Pagination.CurrentPage != Model.Pagination.PagesCount)
+                {
+                    <button value="@(Model.Pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.Pagination.PagesCount" value="@Model.Pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-left"></i>
+                        @Model.Pagination.PagesCount
+                    </button>
+                }
+            </div>
+            <div>
+                <select id="page-count-selectbox" class="form-control" asp-for="Pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
+            </div>
+        </div>
+        <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
+            <div class="input-group">
+                <input id="page-number-input" value="@Model.Pagination.CurrentPage" min="1" max="@Model.Pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
+            </div>
+        </div>
+        <!-- End pagination -->
+</div>
+}
+else
+{
+    <partial name="_RecordNotFound" />
+}

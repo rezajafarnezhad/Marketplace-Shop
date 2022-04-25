@@ -64,7 +64,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
         });
     }
 
-    
+
     /// <summary>
     /// Adds some default values to the IdentityDb
     /// </summary>
@@ -77,7 +77,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             {
                 throw new InvalidOperationException(result.DumpErrors());
             }
-            
+
             var sellerRole = identityDbSeedData.SeedSellerRole().Result;
             if (sellerRole == IdentityResult.Failed())
             {
@@ -295,7 +295,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
                 IsDeleted = false,
                 ProvinceId = provinceId,
                 CityId = cityId,
-                IsDocumentApproved = false,
+                DocumentStatus = DocumentStatus.Confirmed,
                 User = user
             };
             await _sellerService.AddAsync(seller);

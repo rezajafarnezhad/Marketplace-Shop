@@ -7,12 +7,15 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.runtimeconfig.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.pdb
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AngleSharp.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AngleSharp.Css.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\Ben.Demystifier.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\DNTCommon.Web.Core.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\DNTPersianUtils.Core.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\HtmlAgilityPack.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\HtmlSanitizer.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\Humanizer.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\IPAddressRange.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\MailKit.dll

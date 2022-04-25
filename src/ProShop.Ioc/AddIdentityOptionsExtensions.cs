@@ -59,7 +59,7 @@ public static class AddIdentityOptionsExtensions
             options.TokenLifespan = siteSettings.EmailConfirmationTokenProviderLifespan;
         });
     }
-
+    
     private static void EnableImmediateLogout(this IServiceCollection services)
     {
         services.Configure<SecurityStampValidatorOptions>(options =>
