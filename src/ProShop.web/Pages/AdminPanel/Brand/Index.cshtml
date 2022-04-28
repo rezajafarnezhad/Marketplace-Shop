@@ -1,0 +1,102 @@
+﻿@page
+@model ProShop.web.Pages.AdminPanel.Brand.IndexModel
+@{
+    ViewData["Title"] = "برند ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+
+        <div class="d-grid d-lg-block mb-2 text-end">
+            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button">
+                افزودن برند
+                <span class="bi bi-plus-circle mt-5"></span>
+            </a>
+        </div>
+
+        <form class="alert alert-secondary Search-form-via-ajax">
+            <input type="hidden" asp-for="ShowBrands.Pagination.CurrentPage"  />
+            <input type="hidden" asp-for="ShowBrands.Pagination.PageCount"  />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.TitleFa"></label>
+                    <input class="form-control" asp-for="ShowBrands.SearchBrands.TitleFa"  />
+                    <span class="span-error-message" asp-validation-for="ShowBrands.SearchBrands.TitleFa"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.TitleEn"></label>
+                    <input class="form-control" asp-for="ShowBrands.SearchBrands.TitleEn"  />
+                    <span class="span-error-message" asp-validation-for="ShowBrands.SearchBrands.TitleEn"></span>
+                </div> 
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.BrandLinkEn"></label>
+                    <input class="form-control" asp-for="ShowBrands.SearchBrands.BrandLinkEn"  />
+                    <span class="span-error-message" asp-validation-for="ShowBrands.SearchBrands.BrandLinkEn"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.IsIranianBrand"></label>
+                    <select class="form-select" asp-for="ShowBrands.SearchBrands.IsIranianBrand">
+                        <option value="">همه</option>
+                        <option value="true">ایرانی</option>
+                        <option value="false">خارجی</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.DeletedStatus"></label>
+                    <select class="form-control" asp-for="ShowBrands.SearchBrands.DeletedStatus" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.DeletedStatus>()"></select>
+                </div> 
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.Sorting"></label>
+                    <select class="form-control" asp-for="ShowBrands.SearchBrands.Sorting" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.Brands.SortingBrands>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.SortingOrder"></label>
+                    <select class="form-control" asp-for="ShowBrands.SearchBrands.SortingOrder" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif"  />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial"  />
+<script src="~/lib/tinymce/tinymce.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/select2/js/i18n/fa.min.js"></script>
+}
+
+@section CustomScripts
+{
+<script src="~/Pages/AdminPanel/Brand/Index.cshtml.js"></script>
+}
+@section Styles
+{
+<link rel="stylesheet" href="~/lib/select2/css/select2.min.css"  />
+<link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css"  />
+}

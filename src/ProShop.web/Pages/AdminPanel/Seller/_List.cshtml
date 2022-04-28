@@ -9,6 +9,7 @@
             <thead class="table-light">
                 <tr>
                     <th>@Html.DisplayNameFor(c=>c.Sellers[0].Id)</th>
+                    <th>@Html.DisplayNameFor(c=>c.Sellers[0].UserPhoneNumber)</th>
                     <th>@Html.DisplayNameFor(c=>c.Sellers[0].ShopName)</th>
                     <th>@Html.DisplayNameFor(c=>c.Sellers[0].FullName)</th>
                     <th>@Html.DisplayNameFor(c=>c.Sellers[0].SellerCode)</th>
@@ -26,6 +27,7 @@
 
                     <tr>
                         <td>@Item.Id</td>
+                        <td>@Item.UserPhoneNumber</td>
                         <td>@Item.ShopName</td>
                         <td>@Item.FullName</td>
                         <td>@Item.SellerCode</td>

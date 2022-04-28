@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProShop.Common.Helpers;
 using ProShop.Entities.Identity;
+using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Sellers;
 
 namespace ProShop.web.Mappings;
@@ -29,6 +30,14 @@ public class MappingProfile : Profile
 
         this.CreateMap<Entities.Seller,SellerDetailsViewModel>()
             .ForMember(dest => dest.CreatedDateTime, options => options.MapFrom(src => src.CreatedDateTime.ToLongPersianDate()));
+
+
+        this.CreateMap<Entities.Brand, ShowBrandViewModel>();
+        this.CreateMap<AddBrandViewModel,Entities.Brand>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null); 
+      
+        this.CreateMap<Entities.Brand,EditBrandViewModel>().ReverseMap()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
             
     }
 }

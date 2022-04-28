@@ -21,7 +21,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
 
     public async Task<ShowCategoriesViewModel> GetCategories(ShowCategoriesViewModel model)
     {
-        var categories = _categories.AsQueryable();
+        var categories = _categories.AsNoTracking().AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(model.SearchCategories.Title))
             categories = categories.Where(c => c.Title.Contains(model.SearchCategories.Title.Trim()));
@@ -61,7 +61,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
         categories = categories.CreateOrderByExpression(model.SearchCategories.Sorting.ToString(),
             model.SearchCategories.SortingOrder.ToString());
 
-        var paginationResult = await GenericPagination(categories,model.Pagination);
+        var paginationResult = await GenericPagination(categories, model.Pagination);
 
         return new()
         {
@@ -75,19 +75,16 @@ public class CategoryService : GenericService<Category>, ICategoryService
                     slug = c.Slug,
                     Picture = c.Picture ?? "بدون عکس",
                     IsDeleted = c.IsDeleted
-
-
                 }).ToListAsync(),
             Pagination = paginationResult.Pagination
-
         };
     }
 
-    public Dictionary<long, string> GetCategoriesToShowInSelectBox(long? id=null)
+    public Dictionary<long, string> GetCategoriesToShowInSelectBox(long? id = null)
     {
         return _categories
-            
-            .Where(c=>id == null || c.Id !=id)
+
+            .Where(c => id == null || c.Id != id)
             .ToDictionary(c => c.Id, c => c.Title);
     }
 
@@ -124,11 +121,11 @@ public class CategoryService : GenericService<Category>, ICategoryService
             Description = c.Description,
             IsShowInMenus = c.IsShowInMenus,
             SelectedPicture = c.Picture,
-            
+
 
         }).SingleOrDefaultAsync(c => c.Id == Id);
     }
-  
+
 
     public override async Task<DuplicateColumns> Update(Category entity)
     {
@@ -148,6 +145,33 @@ public class CategoryService : GenericService<Category>, ICategoryService
         {
             Columns = result
         };
-       
+
+    }
+
+
+    public async Task<List<List<ShowCategoryForCreateProductViewModel>>> GetCategoriesForCreateProduct(long[] selectedCategoriesIds)
+    {
+        var result = new List<List<ShowCategoryForCreateProductViewModel>>();
+
+        result.Add(await _categories.Where(c => c.ParentId == null)
+            .Select(c => new ShowCategoryForCreateProductViewModel()
+            {
+                Id = c.Id,
+                Title = c.Title,
+                HasChild = c.ChildCategory.Any()
+            }).ToListAsync());
+
+        for (var counter = 0; counter < selectedCategoriesIds.Length; counter++)
+        {
+            var selectedCategoryId = selectedCategoriesIds[counter];
+            result.Add(await _categories.Where(c => c.ParentId == selectedCategoryId)
+                .Select(c => new ShowCategoryForCreateProductViewModel()
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    HasChild = c.ChildCategory.Any()
+                }).ToListAsync());
+        }
+        return result;
     }
 }

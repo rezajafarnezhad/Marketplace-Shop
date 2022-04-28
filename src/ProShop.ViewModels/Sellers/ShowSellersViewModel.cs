@@ -94,6 +94,9 @@ public class ShowSellerViewModel
 {
     [Display(Name = "شناسه")]
     public long Id { get; set; }
+    
+    [Display(Name = "شماره همراه")]
+    public string UserPhoneNumber { get; set; }
 
     [Display(Name = "شخص حقوقی / حقیفی")]
     public bool IsRealPerson { get; set; }

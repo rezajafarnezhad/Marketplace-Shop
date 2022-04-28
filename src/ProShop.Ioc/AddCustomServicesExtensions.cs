@@ -10,7 +10,9 @@ using ProShop.Services.Implements;
 using ProShop.Services.Implements.Identity;
 using System.Security.Claims;
 using System.Security.Principal;
+using DNTCommon.Web.Core;
 using Ganss.XSS;
+using UploadFileService = ProShop.Services.Implements.UploadFileService;
 
 namespace ProShop.Ioc;
 
@@ -57,6 +59,7 @@ public static class AddCustomServicesExtensions
         services.AddScoped<ICategoryFeatureService, CategoryFeatureService>();
         services.AddScoped<IProvinceAndCityService, ProvinceAndCityService>();
         services.AddScoped<ISellerService,SellerService>();
+        services.AddScoped<IBrandService, BrandService>();
 
         #region Html sanitizer
         IHtmlSanitizer sanitizer = new HtmlSanitizer();

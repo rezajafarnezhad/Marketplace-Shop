@@ -15,6 +15,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\mReza\source\repos\ProShop\src\ProShop.web
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/_List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxfTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Category/Add.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxDYXRlZ29yeVxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -73,6 +89,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_SelectProductCategoryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfU2VsZWN0UHJvZHVjdENhdGVnb3J5UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/_ViewStart.cshtml]

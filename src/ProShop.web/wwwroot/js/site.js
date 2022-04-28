@@ -166,12 +166,13 @@ document.addEventListener('focusin', function (e) {
 });
 
 function initializeSelect2() {
+    if ($('.custom-select2').length > 0) {
+        $('.custom-select2').select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#form-modal-place'),
 
-    $('.custom-select2').select2({
-        theme: 'bootstrap-5',
-        dropdownParent: $('#form-modal-place'),
-
-    });
+        });
+    }
 }
 function initializeSelect2WithoutModal() {
 
@@ -389,8 +390,8 @@ function activatingModalForm() {
         }
         $('#form-modal-place .modal-header h5').html(customtitle);
         showLoading();
-        $.get(Url, function (data, status) {
-            if (data.isSuccessful == false) {
+        $.get(Url, function (data) {
+            if (data.isSuccessful === false) {
 
                 showToastr('warning', data.message);
             } else {
@@ -401,6 +402,9 @@ function activatingModalForm() {
                 initializeTinyMCE();
                 activatingInputAttributes();
                 initializeSelect2();
+                if (typeof actionsAfterLoadModalForm === 'function') {
+                    actionsAfterLoadModalForm();
+                }
                 $("#form-modal-place").modal("show");
             }
         }).fail(function () {
@@ -441,7 +445,7 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
             currentForm.find('.submit-custom-ajax-button').attr('disabled', 'disabled');
 
         },
-        success: function (data, status) {
+        success: function (data) {
 
             if (data.isSuccessful == false) {
                 fillValidationForm(data.data, currentForm);
@@ -495,9 +499,7 @@ function fillDataTable() {
 
     const formData = currentForm.serializeArray();
 
-    $.get(`${location.pathname}?handler=GetDataTable`,
-        formData,
-        function(data, status) {
+    $.get(`${location.pathname}?handler=GetDataTable`, formData, function(data, status) {
             if (data.isSuccessful === false) {
                 fillValidationForm(data.data, currentForm);
                 showToastr('warning', data.message);
@@ -723,20 +725,29 @@ function activatingGetHtmlWithAjax() {
 // خواندن صفحات
 // html
 // از سمت سرور
-function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd,clickedButton) {
-    showLoading();
-    $.get(url, data, function (data, status) {
-
-        if (data.isSuccessful === false) {
-            showToastr('warning', data.message);
-        } else {
-            window[functionNameToCallInTheEnd](data, clickedButton);
+function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
+    $.ajax({
+        url: url,
+        data: data,
+        type: 'GET',
+        dataType: 'html',
+        traditional: true,
+        beforeSend: function () {
+            showLoading();
+        },
+        success: function (data) {
+            if (data.isSuccessful === false) {
+                showToastr('warning', data.message);
+            } else {
+                window[functionNameToCallInTheEnd](data, clickedButton);
+            }
+        },
+        complete: function () {
+            hideLoading();
+        },
+        error: function () {
+            ShowErrorMessage();
         }
-
-    }).fail(function () {
-        ShowErrorMessage();
-    }).always(function () {
-        hideLoading();
     });
 }
 

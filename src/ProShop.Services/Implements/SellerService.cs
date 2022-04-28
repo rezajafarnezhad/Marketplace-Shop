@@ -50,7 +50,7 @@ public class SellerService : GenericService<Seller>, ISellerService
 
     public async Task<ShowSellersViewModel> GetSellers(ShowSellersViewModel model)
     {
-        var sellers = _sellers.AsQueryable();
+        var sellers = _sellers.AsNoTracking().AsQueryable();
 
         #region Searching
 
@@ -175,5 +175,3 @@ public class SellerService : GenericService<Seller>, ISellerService
 
 
 }
-
-

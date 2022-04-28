@@ -11,6 +11,8 @@ public class SellerDetailsViewModel
 {
     [Display(Name = "شناسه")]
     public long Id { get; set; }
+    [Display(Name = "شماره همراه")]
+    public string UserPhoneNumber { get; set; }
 
     [Display(Name = "نام فروشنده")]
     public string UserFirstName { get; set; }

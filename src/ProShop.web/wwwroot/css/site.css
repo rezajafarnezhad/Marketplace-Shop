@@ -93,6 +93,10 @@ span.select2-dropdown.select2-dropdown--below {
     width: 117px;
     height: 110px;
 }
+.max-width-Icon {
+    width: 52px;
+    height: 46px;
+}
 .rtl-direction {
     direction: rtl;
 }
