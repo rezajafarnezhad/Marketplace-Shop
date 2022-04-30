@@ -1,0 +1,53 @@
+﻿@model ProShop.ViewModels.Categories.AddBrandCategoryViewModel
+@{
+    var ShowEmpty = Model.Brands.Count > 0 ? "d-none" : String.Empty;
+}
+<form id="Add-Brand-To-Category-Form" class="alert alert-secondary custom-ajax-form" asp-page-handler="AddBrand" method="post">
+    <input type="hidden" asp-for="CategoryId" />
+    @foreach (var brand in Model.Brands)
+    {
+        <input type="hidden" name="Brands" value="@brand" />
+    }
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12 my-2">
+            <label class="form-label"> جستجو برند ها</label>
+            <span class="bi bi-globe2"></span>
+            <input class="form-control autocomplete" id="search-brand" />
+        </div>
+        <p>
+            برند های انتخاب شده برای این دسته بندی
+        </p>
+        <div id="selected-brands-box">
+            @if (@Model.Brands.Count > 0)
+            {
+                foreach (var item in Model.Brands)
+                {
+                    <div class="btn-group mb-3">
+                        <button type="button" class="btn btn-outline-dark btn-sm">
+                            @item
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm remove-selected-brands">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                }
+            }
+
+            <div id="empty-selected-brands" class="alert alert-warning @(ShowEmpty)">
+                <p>
+                    برندی برای این دسته بندی انتخاب نشده است
+                </p>
+            </div>
+
+        </div>
+        <div class="col-12 my-2">
+            <div class="d-grid d-lg-block">
+                <button type="submit" class="btn btn-info d-inline-flex align-items-center submit-custom-ajax-button">
+                    افزودن برند ها به این دسته بندی
+                    <span class="spinner-border spinner-border-sm  d-none ms-2"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

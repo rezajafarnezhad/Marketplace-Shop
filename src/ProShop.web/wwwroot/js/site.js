@@ -371,6 +371,10 @@ function initializingAutocomplete() {
             source: `${location.pathname}?handler=AutocompleteSearch`,
             minLength: 2,
             delay: 500,
+            select: function(event, ui) {
+                window['onAutocompleteSelect'](event , ui);
+
+            }
         });
     }
 

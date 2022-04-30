@@ -36,18 +36,9 @@
             <span class="span-error-message" asp-validation-for="NewBrandRegistrationPicture"></span>
         </div>
         <div class="col-12 col-lg-6 my-2 form-check form-switch px-3">
-            @if (Model.IsIranianBrand)
-            {
-                <label class="form-check-label" asp-for="IsIranianBrand">
-                    ایرانی
-                </label>
-            }
-            else
-            {
-                <label class="form-check-label" asp-for="IsIranianBrand">
-                   خارجی
-                </label>
-            }
+            <label class="form-check-label" asp-for="IsIranianBrand">
+                خارجی
+            </label>
             <div>
                 <input class="form-check-input m-0" asp-for="IsIranianBrand" />
             </div>

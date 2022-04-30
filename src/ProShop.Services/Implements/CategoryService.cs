@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
@@ -173,5 +174,12 @@ public class CategoryService : GenericService<Category>, ICategoryService
                 }).ToListAsync());
         }
         return result;
+    }
+
+    public async Task<List<string>> GetCategoryBrands(long categoryId)
+    {
+        return await _categories.Where(c => c.Id == categoryId)
+            .SelectMany(c => c.CategoryBrands)
+            .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn).ToListAsync();
     }
 }

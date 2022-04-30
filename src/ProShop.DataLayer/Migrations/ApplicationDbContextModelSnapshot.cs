@@ -182,6 +182,49 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.CategoryBrand", b =>
+                {
+                    b.Property<long>("BrandId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BrandId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryBrand", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.CategoryFeature", b =>
                 {
                     b.Property<long>("FeatureId")
@@ -928,6 +971,25 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.CategoryBrand", b =>
+                {
+                    b.HasOne("ProShop.Entities.Brand", "Brand")
+                        .WithMany("CategoryBrands")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Category", "Category")
+                        .WithMany("CategoryBrands")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("ProShop.Entities.CategoryFeature", b =>
                 {
                     b.HasOne("ProShop.Entities.Category", "Category")
@@ -1046,8 +1108,15 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Brand", b =>
+                {
+                    b.Navigation("CategoryBrands");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Category", b =>
                 {
+                    b.Navigation("CategoryBrands");
+
                     b.Navigation("CategoryFeatures");
 
                     b.Navigation("ChildCategory");

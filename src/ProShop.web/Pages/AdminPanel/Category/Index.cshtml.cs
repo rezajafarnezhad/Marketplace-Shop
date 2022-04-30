@@ -4,6 +4,7 @@ using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
+using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Categories;
 
@@ -17,11 +18,13 @@ namespace ProShop.web.Pages.AdminPanel.Category
         private readonly ICategoryService _categoryService;
         private readonly IUploadFileService _uploadFileService;
         private readonly IUnitOfWork _unitOfWork;
-        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService)
+        private readonly IBrandService _brandService;
+        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService)
         {
             _categoryService = categoryService;
             _unitOfWork = unitOfWork;
             _uploadFileService = uploadFileService;
+            _brandService = brandService;
         }
 
         #endregion
@@ -46,12 +49,12 @@ namespace ProShop.web.Pages.AdminPanel.Category
         }
 
 
-        public async Task<IActionResult> OnGetAdd(long id=0)
+        public async Task<IActionResult> OnGetAdd(long id = 0)
         {
 
             if (id > 0)
             {
-                if (!await _categoryService.IsExistsBy(nameof(Entities.Category.Id),id))
+                if (!await _categoryService.IsExistsBy(nameof(Entities.Category.Id), id))
                     return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
             }
 
@@ -182,8 +185,50 @@ namespace ProShop.web.Pages.AdminPanel.Category
             await _categoryService.SoftDelete(_category);
             await _unitOfWork.SaveChangesAsync();
             return Json(new JsonResultOperation(true, "دسته بندی مورد نظر با موفقیت حذف شد"));
-        } 
-        
+        }
+
+        public async Task<IActionResult> OnGetAddBrand(long categoryId)
+        {
+            var model = new AddBrandCategoryViewModel()
+            {
+                CategoryId = categoryId,
+                Brands = await _categoryService.GetCategoryBrands(categoryId)
+            };
+            return Partial("AddBrand", model);
+        }
+        public async Task<IActionResult> OnPostAddBrand(AddBrandCategoryViewModel model)
+        {
+            if (model.CategoryId < 1)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+
+            if (model.Brands.Count < 1)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.ModelStateErrorMessage));
+
+            var _Category = await _categoryService.FindByIdAsync(model.CategoryId);
+            if (_Category is null)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+            _Category.CategoryBrands.Clear();
+            model.Brands = model.Brands.Distinct().ToList();
+            var brandIdes = await _brandService.GetBrandIdsByList(model.Brands);
+            brandIdes.ForEach(bid=>_Category.CategoryBrands.Add(new CategoryBrand()
+            {
+                BrandId = bid,
+                
+            }));
+
+            await _unitOfWork.SaveChangesAsync();
+            return Json(new JsonResultOperation(true, "برند های مورد نظر با موفقیت به دسته بندی مذکور اضافه گردید"));
+        }
+
+        public async Task<IActionResult> OnGetAutocompleteSearch(string term)
+        {
+            return Json(await _brandService.AutocompleteSearch(term));
+        }
+
+
+
         public async Task<IActionResult> OnPostRestore(long elementId)
         {
             var _category = await _categoryService.FindByIdAsync(elementId);

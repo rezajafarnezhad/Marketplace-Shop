@@ -118,4 +118,20 @@ public class BrandService : GenericService<Brand>, IBrandService
         };
 
     }
+
+    public async Task<List<string>> AutocompleteSearch(string term)
+    {
+        return await _brands.Where(c => c.TitleFa.Contains(term) || c.TitleEn.Contains(term))
+            .Take(20)
+            .Select(c => c.TitleFa + " " + c.TitleEn).ToListAsync();
+    }
+
+    public async Task<List<long>> GetBrandIdsByList(List<string> brandsTile)
+    {
+
+        return await _brands.Where(c => brandsTile.Contains(c.TitleFa + " " + c.TitleEn))
+            .Select(c => c.Id)
+            .ToListAsync();
+
+    }
 }

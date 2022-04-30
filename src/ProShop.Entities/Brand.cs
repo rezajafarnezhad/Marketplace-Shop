@@ -11,4 +11,7 @@ public class Brand : EntityBase, IAuditableEntity
     public string JudiciaryLink { get; set; }
     public string BrandLinkEn { get; set; }
 
+    public ICollection<CategoryBrand> CategoryBrands { get; set; }
+
+
 }

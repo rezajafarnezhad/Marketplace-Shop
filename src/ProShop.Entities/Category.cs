@@ -12,5 +12,6 @@ public class Category : EntityBase, IAuditableEntity
     public Category ParentCategory { get; set; }
     public ICollection<Category> ChildCategory { get; set; }
     public ICollection<CategoryFeature> CategoryFeatures { get; set; }
+    public ICollection<CategoryBrand> CategoryBrands { get; set; } = new List<CategoryBrand>();
 
 }

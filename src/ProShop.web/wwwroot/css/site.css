@@ -124,3 +124,9 @@ span.select2-dropdown.select2-dropdown--below {
     border:;
     border-radius: 12px;
 }
+
+#selected-brands-box {
+    overflow-y: auto;
+    min-height: 46px;
+    max-height: 186px;
+}

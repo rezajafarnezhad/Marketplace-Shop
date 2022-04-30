@@ -56,6 +56,7 @@ public class FeatureService : GenericService<Feature>, IFeatureService
     public async Task<List<string>> AutocompleteSearch(string input)
     {
         var data =  await _features.Where(c => c.Title.Contains(input.Trim()))
+            .Take(20)
             .Select(c=>c.Title)
             .ToListAsync();
        

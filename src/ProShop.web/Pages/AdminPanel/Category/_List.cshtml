@@ -56,7 +56,7 @@
                         </td>
                         <td class="text-center">
 
-                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی"  class="btn btn-warning btn-sm show-modal-form-button">
+                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی"  class="btn btn-warning btn-sm d-inline-block show-modal-form-button">
                                 ویرایش
                                 <span class="bi bi-eraser"></span>
                             </a>
@@ -82,15 +82,19 @@
                                 </form>
                             }
 
-                            <a asp-page-handler="Add" asp-route-id="@Item.Id" class="btn btn-success btn-sm  show-modal-form-button">
+                            <a asp-page-handler="Add" asp-route-id="@Item.Id" class="btn btn-success btn-sm d-inline-block  show-modal-form-button">
                                 افزودن زیر دسته
                                 <span class="bi bi-diagram-3-fill"></span>
+                            </a>
+                            <a asp-page-handler="AddBrand" asp-route-categoryId="@Item.Id" class="btn btn-secondary btn-sm d-inline-block  show-modal-form-button">
+                                افزودن برند
+                                <span class="bi bi-globe2"></span>
                             </a>
                             @if (Item.Picture != "بدون عکس")
                             {
                                 <form asp-page-handler="DeletePicture" class="d-inline-block">
                                     <input type="hidden" name="elementId" value="@Item.Id"/>
-                                    <button type="button" class="btn btn-danger btn-sm  delete-row-button">
+                                    <button type="button" class="btn btn-danger btn-sm m-2  delete-row-button">
                                         حذف تصویر
                                         <span class="bi bi-trash2"></span>
                                     </button>
