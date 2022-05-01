@@ -16,7 +16,7 @@ var brandBox =
 function onAutocompleteSelect(event,ui) {
    
     var enteredBrand = ui.item.value;
-    if ($('#Add-Brand-To-Category-Form input[type="hidden"][value="' + enteredBrand + '"]').length==0) {
+    if ($('#Add-Brand-To-Category-Form input[type="hidden"][value="' + enteredBrand + '"]').length == 0) {
         var brandBoxToAppend = brandBox.replace('[brand title]', enteredBrand);
         $('#empty-selected-brands').addClass('d-none');
         $('#selected-brands-box').append(brandBoxToAppend);
@@ -24,6 +24,8 @@ function onAutocompleteSelect(event,ui) {
         $(event.target).val('');
         var InputToAppend = `<input type="hidden" name="Brands" value="${enteredBrand}" />`
         $('#Add-Brand-To-Category-Form').prepend(InputToAppend);
+        showToastr('info', 'برند با موفقیت اضافه شد');
+
     }
     event.preventDefault();
     $(event.target).val('');
@@ -34,6 +36,7 @@ $(document).on('click', '.remove-selected-brands', function () {
     var selectedBrandText = $(this).parent().find('button:first').text().trim();
     $(this).parent().remove();
     $('#Add-Brand-To-Category-Form input[value="' + selectedBrandText + '"]').remove();
+    showToastr('info','برند با موفقیت حذف شد');
     if ($('#selected-brands-box .btn-group').length === 0) {
         $('#empty-selected-brands').removeClass('d-none');
     }

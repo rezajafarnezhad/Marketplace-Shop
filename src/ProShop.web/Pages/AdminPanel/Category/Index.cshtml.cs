@@ -205,7 +205,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
             if (model.Brands.Count < 1)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.ModelStateErrorMessage));
 
-            var _Category = await _categoryService.FindByIdAsync(model.CategoryId);
+            var _Category = await _categoryService.GetCategoryWithItsBrands(model.CategoryId);
             if (_Category is null)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 

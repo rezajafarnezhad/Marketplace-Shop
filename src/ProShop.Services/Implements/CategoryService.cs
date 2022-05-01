@@ -182,4 +182,11 @@ public class CategoryService : GenericService<Category>, ICategoryService
             .SelectMany(c => c.CategoryBrands)
             .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn).ToListAsync();
     }
+
+
+    public async Task<Category> GetCategoryWithItsBrands(long categotyId)
+    {
+        return await _categories.Include(c => c.CategoryBrands)
+            .SingleOrDefaultAsync(c => c.Id == categotyId);
+    }
 }
