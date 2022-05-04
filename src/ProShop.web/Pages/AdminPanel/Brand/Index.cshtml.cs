@@ -72,7 +72,7 @@ public class IndexModel : PageBase
         var BrandLogoName = model.LogoPicture.GenerateFileName();
         var _Brand = _mapper.Map<Entities.Brand>(model);
         _Brand.LogoPicture = BrandLogoName;
-
+        _Brand.IsConfirmed = true;
         string brandRegistrationPicture = null;
         if (model.BrandRegistrationPicture.IsFileUploaded())
             brandRegistrationPicture = model.BrandRegistrationPicture.GenerateFileName();
@@ -178,5 +178,56 @@ public class IndexModel : PageBase
 
         await _unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true, "برند مورد نظر با موفقیت ویرایش شد"));
+    }
+
+    public async Task<IActionResult> OnGetBrnadDetails(long brandId)
+    {
+        var model = await _brandService.GetBrandDetails(brandId);
+        if (model is null)
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+        return Partial("BrnadDetails",model);
+    }
+
+    public async Task<IActionResult> OnPostRejectBrand(BrandDetailsViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Json(new JsonResultOperation(false, "لطفا دلیل رد برند را وارد کنید"));
+        }
+
+        var _brand = await _brandService.GetInActiveBrand(model.Id);
+        if (_brand == null)
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+        var LogoFilename = _brand.LogoPicture;
+        var BrandRegistrationPictureFilename = _brand.BrandRegistrationPicture;
+
+        _brandService.Remove(_brand);
+        await _unitOfWork.SaveChangesAsync();
+
+        //Delete Pictures
+         _fileService.DeleteFile(LogoFilename, "images", "brands");
+         _fileService.DeleteFile(BrandRegistrationPictureFilename, "images", "BrandRegistrationPictures");
+
+        //ToDO: Send Email
+
+        return Json(new JsonResultOperation(true, "برند مورد نظر با موفقیت رد شد"));
+    }
+    public async Task<IActionResult> OnPostConfirmBrand(long Id)
+    {
+        if (Id < 1)
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+        var _brand = await _brandService.GetInActiveBrand(Id);
+        if (_brand == null)
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+        _brand.IsConfirmed = true;
+        await _unitOfWork.SaveChangesAsync();
+
+        //Send Email 
+
+        return Json(new JsonResultOperation(true, "برند مورد نظر با موفقیت تایید شد"));
     }
 }

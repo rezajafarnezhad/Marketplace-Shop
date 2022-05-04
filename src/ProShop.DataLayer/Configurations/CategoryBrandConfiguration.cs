@@ -20,11 +20,11 @@ public class CategoryBrandConfiguration : IEntityTypeConfiguration<CategoryBrand
         builder.HasOne(c => c.Brand)
             .WithMany(c => c.CategoryBrands)
             .HasForeignKey(c => c.BrandId)
-            .OnDelete(deleteBehavior:DeleteBehavior.Restrict);
+            .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
         
         builder.HasOne(c => c.Category)
             .WithMany(c => c.CategoryBrands)
             .HasForeignKey(c => c.CategoryId)
-            .OnDelete(deleteBehavior:DeleteBehavior.Restrict);
+            .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
     }
 }

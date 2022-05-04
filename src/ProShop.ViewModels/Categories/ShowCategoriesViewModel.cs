@@ -41,12 +41,12 @@ public class SearchCategoriesViewModel
 {
     [Display(Name = "عنوان")]
     [MaxLength(100,ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
-    public string? Title { get; set; }
+    public string Title { get; set; }
 
     [Display(Name = "آدرس دسته بندی")]
     [MaxLength(300, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
 
-    public string? Slug { get; set; }
+    public string Slug { get; set; }
 
     [Display(Name = "وضعیت حذف شده ها")]
     public DeletedStatus DeletedStatus { get; set; }

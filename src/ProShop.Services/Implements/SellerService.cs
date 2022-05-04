@@ -171,7 +171,10 @@ public class SellerService : GenericService<Seller>, ISellerService
             .SingleOrDefaultAsync(c => c.Id == Id);
     }
 
-
+    public async Task<long> GetSellerId(long userId)
+    {
+        return await _sellers.Where(c => c.UserId == userId).Select(c => c.Id).SingleAsync();
+    }
 
 
 }

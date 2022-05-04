@@ -1,184 +1,188 @@
 /**
- * TinyMCE version 6.0.1 (2022-03-23)
+ * Copyright (c) Tiny Technologies, Inc. All rights reserved.
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
+ * For commercial licenses see https://www.tiny.cloud/
+ *
+ * Version: 5.10.2 (2021-11-17)
  */
-
 (function () {
     'use strict';
 
-    var global$5 = tinymce.util.Tools.resolve('tinymce.PluginManager');
+    var global$7 = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-    var global$4 = tinymce.util.Tools.resolve('tinymce.util.VK');
+    var global$6 = tinymce.util.Tools.resolve('tinymce.util.VK');
 
-    const hasProto = (v, constructor, predicate) => {
-      var _a;
-      if (predicate(v, constructor.prototype)) {
-        return true;
-      } else {
-        return ((_a = v.constructor) === null || _a === void 0 ? void 0 : _a.name) === constructor.name;
-      }
-    };
-    const typeOf = x => {
-      const t = typeof x;
+    var typeOf = function (x) {
+      var t = typeof x;
       if (x === null) {
         return 'null';
-      } else if (t === 'object' && Array.isArray(x)) {
+      } else if (t === 'object' && (Array.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'Array')) {
         return 'array';
-      } else if (t === 'object' && hasProto(x, String, (o, proto) => proto.isPrototypeOf(o))) {
+      } else if (t === 'object' && (String.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'String')) {
         return 'string';
       } else {
         return t;
       }
     };
-    const isType = type => value => typeOf(value) === type;
-    const isSimpleType = type => value => typeof value === type;
-    const eq = t => a => t === a;
-    const isString = isType('string');
-    const isObject = isType('object');
-    const isArray = isType('array');
-    const isNull = eq(null);
-    const isBoolean = isSimpleType('boolean');
-    const isNullable = a => a === null || a === undefined;
-    const isNonNullable = a => !isNullable(a);
-    const isFunction = isSimpleType('function');
-    const isArrayOf = (value, pred) => {
-      if (isArray(value)) {
-        for (let i = 0, len = value.length; i < len; ++i) {
-          if (!pred(value[i])) {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
+    var isType = function (type) {
+      return function (value) {
+        return typeOf(value) === type;
+      };
     };
+    var isSimpleType = function (type) {
+      return function (value) {
+        return typeof value === type;
+      };
+    };
+    var eq = function (t) {
+      return function (a) {
+        return t === a;
+      };
+    };
+    var isString = isType('string');
+    var isArray = isType('array');
+    var isNull = eq(null);
+    var isBoolean = isSimpleType('boolean');
+    var isFunction = isSimpleType('function');
 
-    const noop = () => {
+    var noop = function () {
     };
-    const tripleEquals = (a, b) => {
+    var constant = function (value) {
+      return function () {
+        return value;
+      };
+    };
+    var identity = function (x) {
+      return x;
+    };
+    var tripleEquals = function (a, b) {
       return a === b;
     };
+    var never = constant(false);
+    var always = constant(true);
 
-    class Optional {
-      constructor(tag, value) {
-        this.tag = tag;
-        this.value = value;
-      }
-      static some(value) {
-        return new Optional(true, value);
-      }
-      static none() {
-        return Optional.singletonNone;
-      }
-      fold(onNone, onSome) {
-        if (this.tag) {
-          return onSome(this.value);
-        } else {
-          return onNone();
+    var none = function () {
+      return NONE;
+    };
+    var NONE = function () {
+      var call = function (thunk) {
+        return thunk();
+      };
+      var id = identity;
+      var me = {
+        fold: function (n, _s) {
+          return n();
+        },
+        isSome: never,
+        isNone: always,
+        getOr: id,
+        getOrThunk: call,
+        getOrDie: function (msg) {
+          throw new Error(msg || 'error: getOrDie called on none.');
+        },
+        getOrNull: constant(null),
+        getOrUndefined: constant(undefined),
+        or: id,
+        orThunk: call,
+        map: none,
+        each: noop,
+        bind: none,
+        exists: never,
+        forall: always,
+        filter: function () {
+          return none();
+        },
+        toArray: function () {
+          return [];
+        },
+        toString: constant('none()')
+      };
+      return me;
+    }();
+    var some = function (a) {
+      var constant_a = constant(a);
+      var self = function () {
+        return me;
+      };
+      var bind = function (f) {
+        return f(a);
+      };
+      var me = {
+        fold: function (n, s) {
+          return s(a);
+        },
+        isSome: always,
+        isNone: never,
+        getOr: constant_a,
+        getOrThunk: constant_a,
+        getOrDie: constant_a,
+        getOrNull: constant_a,
+        getOrUndefined: constant_a,
+        or: self,
+        orThunk: self,
+        map: function (f) {
+          return some(f(a));
+        },
+        each: function (f) {
+          f(a);
+        },
+        bind: bind,
+        exists: bind,
+        forall: bind,
+        filter: function (f) {
+          return f(a) ? me : NONE;
+        },
+        toArray: function () {
+          return [a];
+        },
+        toString: function () {
+          return 'some(' + a + ')';
         }
-      }
-      isSome() {
-        return this.tag;
-      }
-      isNone() {
-        return !this.tag;
-      }
-      map(mapper) {
-        if (this.tag) {
-          return Optional.some(mapper(this.value));
-        } else {
-          return Optional.none();
-        }
-      }
-      bind(binder) {
-        if (this.tag) {
-          return binder(this.value);
-        } else {
-          return Optional.none();
-        }
-      }
-      exists(predicate) {
-        return this.tag && predicate(this.value);
-      }
-      forall(predicate) {
-        return !this.tag || predicate(this.value);
-      }
-      filter(predicate) {
-        if (!this.tag || predicate(this.value)) {
-          return this;
-        } else {
-          return Optional.none();
-        }
-      }
-      getOr(replacement) {
-        return this.tag ? this.value : replacement;
-      }
-      or(replacement) {
-        return this.tag ? this : replacement;
-      }
-      getOrThunk(thunk) {
-        return this.tag ? this.value : thunk();
-      }
-      orThunk(thunk) {
-        return this.tag ? this : thunk();
-      }
-      getOrDie(message) {
-        if (!this.tag) {
-          throw new Error(message !== null && message !== void 0 ? message : 'Called getOrDie on None');
-        } else {
-          return this.value;
-        }
-      }
-      static from(value) {
-        return isNonNullable(value) ? Optional.some(value) : Optional.none();
-      }
-      getOrNull() {
-        return this.tag ? this.value : null;
-      }
-      getOrUndefined() {
-        return this.value;
-      }
-      each(worker) {
-        if (this.tag) {
-          worker(this.value);
-        }
-      }
-      toArray() {
-        return this.tag ? [this.value] : [];
-      }
-      toString() {
-        return this.tag ? `some(${ this.value })` : 'none()';
-      }
-    }
-    Optional.singletonNone = new Optional(false);
+      };
+      return me;
+    };
+    var from = function (value) {
+      return value === null || value === undefined ? NONE : some(value);
+    };
+    var Optional = {
+      some: some,
+      none: none,
+      from: from
+    };
 
-    const nativeIndexOf = Array.prototype.indexOf;
-    const nativePush = Array.prototype.push;
-    const rawIndexOf = (ts, t) => nativeIndexOf.call(ts, t);
-    const contains = (xs, x) => rawIndexOf(xs, x) > -1;
-    const map = (xs, f) => {
-      const len = xs.length;
-      const r = new Array(len);
-      for (let i = 0; i < len; i++) {
-        const x = xs[i];
+    var nativeIndexOf = Array.prototype.indexOf;
+    var nativePush = Array.prototype.push;
+    var rawIndexOf = function (ts, t) {
+      return nativeIndexOf.call(ts, t);
+    };
+    var contains = function (xs, x) {
+      return rawIndexOf(xs, x) > -1;
+    };
+    var map = function (xs, f) {
+      var len = xs.length;
+      var r = new Array(len);
+      for (var i = 0; i < len; i++) {
+        var x = xs[i];
         r[i] = f(x, i);
       }
       return r;
     };
-    const each$1 = (xs, f) => {
-      for (let i = 0, len = xs.length; i < len; i++) {
-        const x = xs[i];
+    var each$1 = function (xs, f) {
+      for (var i = 0, len = xs.length; i < len; i++) {
+        var x = xs[i];
         f(x, i);
       }
     };
-    const foldl = (xs, f, acc) => {
-      each$1(xs, (x, i) => {
+    var foldl = function (xs, f, acc) {
+      each$1(xs, function (x, i) {
         acc = f(acc, x, i);
       });
       return acc;
     };
-    const flatten = xs => {
-      const r = [];
-      for (let i = 0, len = xs.length; i < len; ++i) {
+    var flatten = function (xs) {
+      var r = [];
+      for (var i = 0, len = xs.length; i < len; ++i) {
         if (!isArray(xs[i])) {
           throw new Error('Arr.flatten item ' + i + ' was not an array, input: ' + xs);
         }
@@ -186,10 +190,12 @@
       }
       return r;
     };
-    const bind = (xs, f) => flatten(map(xs, f));
-    const findMap = (arr, f) => {
-      for (let i = 0; i < arr.length; i++) {
-        const r = f(arr[i], i);
+    var bind = function (xs, f) {
+      return flatten(map(xs, f));
+    };
+    var findMap = function (arr, f) {
+      for (var i = 0; i < arr.length; i++) {
+        var r = f(arr[i], i);
         if (r.isSome()) {
           return r;
         }
@@ -197,102 +203,74 @@
       return Optional.none();
     };
 
-    const is = (lhs, rhs, comparator = tripleEquals) => lhs.exists(left => comparator(left, rhs));
-    const cat = arr => {
-      const r = [];
-      const push = x => {
+    var is = function (lhs, rhs, comparator) {
+      if (comparator === void 0) {
+        comparator = tripleEquals;
+      }
+      return lhs.exists(function (left) {
+        return comparator(left, rhs);
+      });
+    };
+    var cat = function (arr) {
+      var r = [];
+      var push = function (x) {
         r.push(x);
       };
-      for (let i = 0; i < arr.length; i++) {
+      for (var i = 0; i < arr.length; i++) {
         arr[i].each(push);
       }
       return r;
     };
-    const someIf = (b, a) => b ? Optional.some(a) : Optional.none();
-
-    const option = name => editor => editor.options.get(name);
-    const register$1 = editor => {
-      const registerOption = editor.options.register;
-      registerOption('link_assume_external_targets', {
-        processor: value => {
-          const valid = isString(value) || isBoolean(value);
-          if (valid) {
-            if (value === true) {
-              return {
-                value: 1,
-                valid
-              };
-            } else if (value === 'http' || value === 'https') {
-              return {
-                value,
-                valid
-              };
-            } else {
-              return {
-                value: 0,
-                valid
-              };
-            }
-          } else {
-            return {
-              valid: false,
-              message: 'Must be a string or a boolean.'
-            };
-          }
-        },
-        default: false
-      });
-      registerOption('link_context_toolbar', {
-        processor: 'boolean',
-        default: false
-      });
-      registerOption('link_list', { processor: value => isString(value) || isFunction(value) || isArrayOf(value, isObject) });
-      registerOption('link_default_target', { processor: 'string' });
-      registerOption('link_default_protocol', {
-        processor: 'string',
-        default: 'https'
-      });
-      registerOption('link_target_list', {
-        processor: value => isBoolean(value) || isArrayOf(value, isObject),
-        default: true
-      });
-      registerOption('link_rel_list', {
-        processor: 'object[]',
-        default: []
-      });
-      registerOption('link_class_list', {
-        processor: 'object[]',
-        default: []
-      });
-      registerOption('link_title', {
-        processor: 'boolean',
-        default: true
-      });
-      registerOption('allow_unsafe_link_target', {
-        processor: 'boolean',
-        default: false
-      });
-      registerOption('link_quicklink', {
-        processor: 'boolean',
-        default: false
-      });
+    var someIf = function (b, a) {
+      return b ? Optional.some(a) : Optional.none();
     };
-    const assumeExternalTargets = option('link_assume_external_targets');
-    const hasContextToolbar = option('link_context_toolbar');
-    const getLinkList = option('link_list');
-    const getDefaultLinkTarget = option('link_default_target');
-    const getDefaultLinkProtocol = option('link_default_protocol');
-    const getTargetList = option('link_target_list');
-    const getRelList = option('link_rel_list');
-    const getLinkClassList = option('link_class_list');
-    const shouldShowLinkTitle = option('link_title');
-    const allowUnsafeLinkTarget = option('allow_unsafe_link_target');
-    const useQuickLink = option('link_quicklink');
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    var assumeExternalTargets = function (editor) {
+      var externalTargets = editor.getParam('link_assume_external_targets', false);
+      if (isBoolean(externalTargets) && externalTargets) {
+        return 1;
+      } else if (isString(externalTargets) && (externalTargets === 'http' || externalTargets === 'https')) {
+        return externalTargets;
+      }
+      return 0;
+    };
+    var hasContextToolbar = function (editor) {
+      return editor.getParam('link_context_toolbar', false, 'boolean');
+    };
+    var getLinkList = function (editor) {
+      return editor.getParam('link_list');
+    };
+    var getDefaultLinkTarget = function (editor) {
+      return editor.getParam('default_link_target');
+    };
+    var getTargetList = function (editor) {
+      return editor.getParam('target_list', true);
+    };
+    var getRelList = function (editor) {
+      return editor.getParam('rel_list', [], 'array');
+    };
+    var getLinkClassList = function (editor) {
+      return editor.getParam('link_class_list', [], 'array');
+    };
+    var shouldShowLinkTitle = function (editor) {
+      return editor.getParam('link_title', true, 'boolean');
+    };
+    var allowUnsafeLinkTarget = function (editor) {
+      return editor.getParam('allow_unsafe_link_target', false, 'boolean');
+    };
+    var useQuickLink = function (editor) {
+      return editor.getParam('link_quicklink', false, 'boolean');
+    };
+    var getDefaultLinkProtocol = function (editor) {
+      return editor.getParam('link_default_protocol', 'http', 'string');
+    };
 
-    const getValue = item => isString(item.value) ? item.value : '';
-    const getText = item => {
+    var global$5 = tinymce.util.Tools.resolve('tinymce.util.Tools');
+
+    var getValue = function (item) {
+      return isString(item.value) ? item.value : '';
+    };
+    var getText = function (item) {
       if (isString(item.text)) {
         return item.text;
       } else if (isString(item.title)) {
@@ -301,83 +279,121 @@
         return '';
       }
     };
-    const sanitizeList = (list, extractValue) => {
-      const out = [];
-      global$3.each(list, item => {
-        const text = getText(item);
+    var sanitizeList = function (list, extractValue) {
+      var out = [];
+      global$5.each(list, function (item) {
+        var text = getText(item);
         if (item.menu !== undefined) {
-          const items = sanitizeList(item.menu, extractValue);
+          var items = sanitizeList(item.menu, extractValue);
           out.push({
-            text,
-            items
+            text: text,
+            items: items
           });
         } else {
-          const value = extractValue(item);
+          var value = extractValue(item);
           out.push({
-            text,
-            value
+            text: text,
+            value: value
           });
         }
       });
       return out;
     };
-    const sanitizeWith = (extracter = getValue) => list => Optional.from(list).map(list => sanitizeList(list, extracter));
-    const sanitize = list => sanitizeWith(getValue)(list);
-    const createUi = (name, label) => items => ({
-      name,
-      type: 'listbox',
-      label,
-      items
-    });
-    const ListOptions = {
-      sanitize,
-      sanitizeWith,
-      createUi,
-      getValue
+    var sanitizeWith = function (extracter) {
+      if (extracter === void 0) {
+        extracter = getValue;
+      }
+      return function (list) {
+        return Optional.from(list).map(function (list) {
+          return sanitizeList(list, extracter);
+        });
+      };
+    };
+    var sanitize = function (list) {
+      return sanitizeWith(getValue)(list);
+    };
+    var createUi = function (name, label) {
+      return function (items) {
+        return {
+          name: name,
+          type: 'listbox',
+          label: label,
+          items: items
+        };
+      };
+    };
+    var ListOptions = {
+      sanitize: sanitize,
+      sanitizeWith: sanitizeWith,
+      createUi: createUi,
+      getValue: getValue
     };
 
-    const keys = Object.keys;
-    const hasOwnProperty = Object.hasOwnProperty;
-    const each = (obj, f) => {
-      const props = keys(obj);
-      for (let k = 0, len = props.length; k < len; k++) {
-        const i = props[k];
-        const x = obj[i];
+    var __assign = function () {
+      __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p))
+              t[p] = s[p];
+        }
+        return t;
+      };
+      return __assign.apply(this, arguments);
+    };
+
+    var keys = Object.keys;
+    var hasOwnProperty = Object.hasOwnProperty;
+    var each = function (obj, f) {
+      var props = keys(obj);
+      for (var k = 0, len = props.length; k < len; k++) {
+        var i = props[k];
+        var x = obj[i];
         f(x, i);
       }
     };
-    const objAcc = r => (x, i) => {
-      r[i] = x;
+    var objAcc = function (r) {
+      return function (x, i) {
+        r[i] = x;
+      };
     };
-    const internalFilter = (obj, pred, onTrue, onFalse) => {
-      const r = {};
-      each(obj, (x, i) => {
+    var internalFilter = function (obj, pred, onTrue, onFalse) {
+      var r = {};
+      each(obj, function (x, i) {
         (pred(x, i) ? onTrue : onFalse)(x, i);
       });
       return r;
     };
-    const filter = (obj, pred) => {
-      const t = {};
+    var filter = function (obj, pred) {
+      var t = {};
       internalFilter(obj, pred, objAcc(t), noop);
       return t;
     };
-    const has = (obj, key) => hasOwnProperty.call(obj, key);
-    const hasNonNullableKey = (obj, key) => has(obj, key) && obj[key] !== undefined && obj[key] !== null;
+    var has = function (obj, key) {
+      return hasOwnProperty.call(obj, key);
+    };
+    var hasNonNullableKey = function (obj, key) {
+      return has(obj, key) && obj[key] !== undefined && obj[key] !== null;
+    };
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.dom.TreeWalker');
+    var global$4 = tinymce.util.Tools.resolve('tinymce.dom.TreeWalker');
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.URI');
+    var global$3 = tinymce.util.Tools.resolve('tinymce.util.URI');
 
-    const isAnchor = elm => elm && elm.nodeName.toLowerCase() === 'a';
-    const isLink = elm => isAnchor(elm) && !!getHref(elm);
-    const collectNodesInRange = (rng, predicate) => {
+    var isAnchor = function (elm) {
+      return elm && elm.nodeName.toLowerCase() === 'a';
+    };
+    var isLink = function (elm) {
+      return isAnchor(elm) && !!getHref(elm);
+    };
+    var collectNodesInRange = function (rng, predicate) {
       if (rng.collapsed) {
         return [];
       } else {
-        const contents = rng.cloneContents();
-        const walker = new global$2(contents.firstChild, contents);
-        const elements = [];
-        let current = contents.firstChild;
+        var contents = rng.cloneContents();
+        var walker = new global$4(contents.firstChild, contents);
+        var elements = [];
+        var current = contents.firstChild;
         do {
           if (predicate(current)) {
             elements.push(current);
@@ -386,25 +402,35 @@
         return elements;
       }
     };
-    const hasProtocol = url => /^\w+:/i.test(url);
-    const getHref = elm => {
-      const href = elm.getAttribute('data-mce-href');
+    var hasProtocol = function (url) {
+      return /^\w+:/i.test(url);
+    };
+    var getHref = function (elm) {
+      var href = elm.getAttribute('data-mce-href');
       return href ? href : elm.getAttribute('href');
     };
-    const applyRelTargetRules = (rel, isUnsafe) => {
-      const rules = ['noopener'];
-      const rels = rel ? rel.split(/\s+/) : [];
-      const toString = rels => global$3.trim(rels.sort().join(' '));
-      const addTargetRules = rels => {
+    var applyRelTargetRules = function (rel, isUnsafe) {
+      var rules = ['noopener'];
+      var rels = rel ? rel.split(/\s+/) : [];
+      var toString = function (rels) {
+        return global$5.trim(rels.sort().join(' '));
+      };
+      var addTargetRules = function (rels) {
         rels = removeTargetRules(rels);
         return rels.length > 0 ? rels.concat(rules) : rules;
       };
-      const removeTargetRules = rels => rels.filter(val => global$3.inArray(rules, val) === -1);
-      const newRels = isUnsafe ? addTargetRules(rels) : removeTargetRules(rels);
+      var removeTargetRules = function (rels) {
+        return rels.filter(function (val) {
+          return global$5.inArray(rules, val) === -1;
+        });
+      };
+      var newRels = isUnsafe ? addTargetRules(rels) : removeTargetRules(rels);
       return newRels.length > 0 ? toString(newRels) : '';
     };
-    const trimCaretContainers = text => text.replace(/\uFEFF/g, '');
-    const getAnchorElement = (editor, selectedElm) => {
+    var trimCaretContainers = function (text) {
+      return text.replace(/\uFEFF/g, '');
+    };
+    var getAnchorElement = function (editor, selectedElm) {
       selectedElm = selectedElm || editor.selection.getNode();
       if (isImageFigure(selectedElm)) {
         return editor.dom.select('a[href]', selectedElm)[0];
@@ -412,43 +438,51 @@
         return editor.dom.getParent(selectedElm, 'a[href]');
       }
     };
-    const getAnchorText = (selection, anchorElm) => {
-      const text = anchorElm ? anchorElm.innerText || anchorElm.textContent : selection.getContent({ format: 'text' });
+    var getAnchorText = function (selection, anchorElm) {
+      var text = anchorElm ? anchorElm.innerText || anchorElm.textContent : selection.getContent({ format: 'text' });
       return trimCaretContainers(text);
     };
-    const hasLinks = elements => global$3.grep(elements, isLink).length > 0;
-    const hasLinksInSelection = rng => collectNodesInRange(rng, isLink).length > 0;
-    const isOnlyTextSelected = editor => {
-      const inlineTextElements = editor.schema.getTextInlineElements();
-      const isElement = elm => elm.nodeType === 1 && !isAnchor(elm) && !has(inlineTextElements, elm.nodeName.toLowerCase());
-      const elements = collectNodesInRange(editor.selection.getRng(), isElement);
+    var hasLinks = function (elements) {
+      return global$5.grep(elements, isLink).length > 0;
+    };
+    var hasLinksInSelection = function (rng) {
+      return collectNodesInRange(rng, isLink).length > 0;
+    };
+    var isOnlyTextSelected = function (editor) {
+      var inlineTextElements = editor.schema.getTextInlineElements();
+      var isElement = function (elm) {
+        return elm.nodeType === 1 && !isAnchor(elm) && !has(inlineTextElements, elm.nodeName.toLowerCase());
+      };
+      var elements = collectNodesInRange(editor.selection.getRng(), isElement);
       return elements.length === 0;
     };
-    const isImageFigure = elm => elm && elm.nodeName === 'FIGURE' && /\bimage\b/i.test(elm.className);
-    const getLinkAttrs = data => {
-      const attrs = [
+    var isImageFigure = function (elm) {
+      return elm && elm.nodeName === 'FIGURE' && /\bimage\b/i.test(elm.className);
+    };
+    var getLinkAttrs = function (data) {
+      var attrs = [
         'title',
         'rel',
         'class',
         'target'
       ];
-      return foldl(attrs, (acc, key) => {
-        data[key].each(value => {
+      return foldl(attrs, function (acc, key) {
+        data[key].each(function (value) {
           acc[key] = value.length > 0 ? value : null;
         });
         return acc;
       }, { href: data.href });
     };
-    const handleExternalTargets = (href, assumeExternalTargets) => {
+    var handleExternalTargets = function (href, assumeExternalTargets) {
       if ((assumeExternalTargets === 'http' || assumeExternalTargets === 'https') && !hasProtocol(href)) {
         return assumeExternalTargets + '://' + href;
       }
       return href;
     };
-    const applyLinkOverrides = (editor, linkAttrs) => {
-      const newLinkAttrs = { ...linkAttrs };
-      if (getRelList(editor).length === 0 && !allowUnsafeLinkTarget(editor)) {
-        const newRel = applyRelTargetRules(newLinkAttrs.rel, newLinkAttrs.target === '_blank');
+    var applyLinkOverrides = function (editor, linkAttrs) {
+      var newLinkAttrs = __assign({}, linkAttrs);
+      if (!(getRelList(editor).length > 0) && allowUnsafeLinkTarget(editor) === false) {
+        var newRel = applyRelTargetRules(newLinkAttrs.rel, newLinkAttrs.target === '_blank');
         newLinkAttrs.rel = newRel ? newRel : null;
       }
       if (Optional.from(newLinkAttrs.target).isNone() && getTargetList(editor) === false) {
@@ -457,8 +491,8 @@
       newLinkAttrs.href = handleExternalTargets(newLinkAttrs.href, assumeExternalTargets(editor));
       return newLinkAttrs;
     };
-    const updateLink = (editor, anchorElm, text, linkAttrs) => {
-      text.each(text => {
+    var updateLink = function (editor, anchorElm, text, linkAttrs) {
+      text.each(function (text) {
         if (has(anchorElm, 'innerText')) {
           anchorElm.innerText = text;
         } else {
@@ -468,22 +502,22 @@
       editor.dom.setAttribs(anchorElm, linkAttrs);
       editor.selection.select(anchorElm);
     };
-    const createLink = (editor, selectedElm, text, linkAttrs) => {
+    var createLink = function (editor, selectedElm, text, linkAttrs) {
       if (isImageFigure(selectedElm)) {
         linkImageFigure(editor, selectedElm, linkAttrs);
       } else {
-        text.fold(() => {
+        text.fold(function () {
           editor.execCommand('mceInsertLink', false, linkAttrs);
-        }, text => {
+        }, function (text) {
           editor.insertContent(editor.dom.createHTML('a', linkAttrs, editor.dom.encode(text)));
         });
       }
     };
-    const linkDomMutation = (editor, attachState, data) => {
-      const selectedElm = editor.selection.getNode();
-      const anchorElm = getAnchorElement(editor, selectedElm);
-      const linkAttrs = applyLinkOverrides(editor, getLinkAttrs(data));
-      editor.undoManager.transact(() => {
+    var linkDomMutation = function (editor, attachState, data) {
+      var selectedElm = editor.selection.getNode();
+      var anchorElm = getAnchorElement(editor, selectedElm);
+      var linkAttrs = applyLinkOverrides(editor, getLinkAttrs(data));
+      editor.undoManager.transact(function () {
         if (data.href === attachState.href) {
           attachState.attach();
         }
@@ -495,12 +529,12 @@
         }
       });
     };
-    const unlinkSelection = editor => {
-      const dom = editor.dom, selection = editor.selection;
-      const bookmark = selection.getBookmark();
-      const rng = selection.getRng().cloneRange();
-      const startAnchorElm = dom.getParent(rng.startContainer, 'a[href]', editor.getBody());
-      const endAnchorElm = dom.getParent(rng.endContainer, 'a[href]', editor.getBody());
+    var unlinkSelection = function (editor) {
+      var dom = editor.dom, selection = editor.selection;
+      var bookmark = selection.getBookmark();
+      var rng = selection.getRng().cloneRange();
+      var startAnchorElm = dom.getParent(rng.startContainer, 'a[href]', editor.getBody());
+      var endAnchorElm = dom.getParent(rng.endContainer, 'a[href]', editor.getBody());
       if (startAnchorElm) {
         rng.setStartBefore(startAnchorElm);
       }
@@ -511,9 +545,9 @@
       editor.execCommand('unlink');
       selection.moveToBookmark(bookmark);
     };
-    const unlinkDomMutation = editor => {
-      editor.undoManager.transact(() => {
-        const node = editor.selection.getNode();
+    var unlinkDomMutation = function (editor) {
+      editor.undoManager.transact(function () {
+        var node = editor.selection.getNode();
         if (isImageFigure(node)) {
           unlinkImageFigure(editor, node);
         } else {
@@ -522,86 +556,78 @@
         editor.focus();
       });
     };
-    const unwrapOptions = data => {
-      const {
-        class: cls,
-        href,
-        rel,
-        target,
-        text,
-        title
-      } = data;
+    var unwrapOptions = function (data) {
+      var cls = data.class, href = data.href, rel = data.rel, target = data.target, text = data.text, title = data.title;
       return filter({
         class: cls.getOrNull(),
-        href,
+        href: href,
         rel: rel.getOrNull(),
         target: target.getOrNull(),
         text: text.getOrNull(),
         title: title.getOrNull()
-      }, (v, _k) => isNull(v) === false);
+      }, function (v, _k) {
+        return isNull(v) === false;
+      });
     };
-    const sanitizeData = (editor, data) => {
-      const getOption = editor.options.get;
-      const uriOptions = {
-        allow_html_data_urls: getOption('allow_html_data_urls'),
-        allow_script_urls: getOption('allow_script_urls'),
-        allow_svg_data_urls: getOption('allow_svg_data_urls')
-      };
-      const href = data.href;
-      return {
-        ...data,
-        href: global$1.isDomSafe(href, 'a', uriOptions) ? href : ''
-      };
+    var sanitizeData = function (editor, data) {
+      var href = data.href;
+      return __assign(__assign({}, data), { href: global$3.isDomSafe(href, 'a', editor.settings) ? href : '' });
     };
-    const link = (editor, attachState, data) => {
-      const sanitizedData = sanitizeData(editor, data);
+    var link = function (editor, attachState, data) {
+      var sanitizedData = sanitizeData(editor, data);
       editor.hasPlugin('rtc', true) ? editor.execCommand('createlink', false, unwrapOptions(sanitizedData)) : linkDomMutation(editor, attachState, sanitizedData);
     };
-    const unlink = editor => {
+    var unlink = function (editor) {
       editor.hasPlugin('rtc', true) ? editor.execCommand('unlink') : unlinkDomMutation(editor);
     };
-    const unlinkImageFigure = (editor, fig) => {
-      const img = editor.dom.select('img', fig)[0];
+    var unlinkImageFigure = function (editor, fig) {
+      var img = editor.dom.select('img', fig)[0];
       if (img) {
-        const a = editor.dom.getParents(img, 'a[href]', fig)[0];
+        var a = editor.dom.getParents(img, 'a[href]', fig)[0];
         if (a) {
           a.parentNode.insertBefore(img, a);
           editor.dom.remove(a);
         }
       }
     };
-    const linkImageFigure = (editor, fig, attrs) => {
-      const img = editor.dom.select('img', fig)[0];
+    var linkImageFigure = function (editor, fig, attrs) {
+      var img = editor.dom.select('img', fig)[0];
       if (img) {
-        const a = editor.dom.create('a', attrs);
+        var a = editor.dom.create('a', attrs);
         img.parentNode.insertBefore(a, img);
         a.appendChild(img);
       }
     };
 
-    const isListGroup = item => hasNonNullableKey(item, 'items');
-    const findTextByValue = (value, catalog) => findMap(catalog, item => {
-      if (isListGroup(item)) {
-        return findTextByValue(value, item.items);
-      } else {
-        return someIf(item.value === value, item);
-      }
-    });
-    const getDelta = (persistentText, fieldName, catalog, data) => {
-      const value = data[fieldName];
-      const hasPersistentText = persistentText.length > 0;
-      return value !== undefined ? findTextByValue(value, catalog).map(i => ({
-        url: {
-          value: i.value,
-          meta: {
-            text: hasPersistentText ? persistentText : i.text,
-            attach: noop
-          }
-        },
-        text: hasPersistentText ? persistentText : i.text
-      })) : Optional.none();
+    var isListGroup = function (item) {
+      return hasNonNullableKey(item, 'items');
     };
-    const findCatalog = (catalogs, fieldName) => {
+    var findTextByValue = function (value, catalog) {
+      return findMap(catalog, function (item) {
+        if (isListGroup(item)) {
+          return findTextByValue(value, item.items);
+        } else {
+          return someIf(item.value === value, item);
+        }
+      });
+    };
+    var getDelta = function (persistentText, fieldName, catalog, data) {
+      var value = data[fieldName];
+      var hasPersistentText = persistentText.length > 0;
+      return value !== undefined ? findTextByValue(value, catalog).map(function (i) {
+        return {
+          url: {
+            value: i.value,
+            meta: {
+              text: hasPersistentText ? persistentText : i.text,
+              attach: noop
+            }
+          },
+          text: hasPersistentText ? persistentText : i.text
+        };
+      }) : Optional.none();
+    };
+    var findCatalog = function (catalogs, fieldName) {
       if (fieldName === 'link') {
         return catalogs.link;
       } else if (fieldName === 'anchor') {
@@ -610,31 +636,36 @@
         return Optional.none();
       }
     };
-    const init = (initialData, linkCatalog) => {
-      const persistentData = {
+    var init = function (initialData, linkCatalog) {
+      var persistentData = {
         text: initialData.text,
         title: initialData.title
       };
-      const getTitleFromUrlChange = url => someIf(persistentData.title.length <= 0, Optional.from(url.meta.title).getOr(''));
-      const getTextFromUrlChange = url => someIf(persistentData.text.length <= 0, Optional.from(url.meta.text).getOr(url.value));
-      const onUrlChange = data => {
-        const text = getTextFromUrlChange(data.url);
-        const title = getTitleFromUrlChange(data.url);
+      var getTitleFromUrlChange = function (url) {
+        return someIf(persistentData.title.length <= 0, Optional.from(url.meta.title).getOr(''));
+      };
+      var getTextFromUrlChange = function (url) {
+        return someIf(persistentData.text.length <= 0, Optional.from(url.meta.text).getOr(url.value));
+      };
+      var onUrlChange = function (data) {
+        var text = getTextFromUrlChange(data.url);
+        var title = getTitleFromUrlChange(data.url);
         if (text.isSome() || title.isSome()) {
-          return Optional.some({
-            ...text.map(text => ({ text })).getOr({}),
-            ...title.map(title => ({ title })).getOr({})
-          });
+          return Optional.some(__assign(__assign({}, text.map(function (text) {
+            return { text: text };
+          }).getOr({})), title.map(function (title) {
+            return { title: title };
+          }).getOr({})));
         } else {
           return Optional.none();
         }
       };
-      const onCatalogChange = (data, change) => {
-        const catalog = findCatalog(linkCatalog, change.name).getOr([]);
+      var onCatalogChange = function (data, change) {
+        var catalog = findCatalog(linkCatalog, change.name).getOr([]);
         return getDelta(persistentData.text, change.name, catalog, data);
       };
-      const onChange = (getData, change) => {
-        const name = change.name;
+      var onChange = function (getData, change) {
+        var name = change.name;
         if (name === 'url') {
           return onUrlChange(getData());
         } else if (contains([
@@ -649,60 +680,70 @@
           return Optional.none();
         }
       };
-      return { onChange };
+      return { onChange: onChange };
     };
-    const DialogChanges = {
-      init,
-      getDelta
+    var DialogChanges = {
+      init: init,
+      getDelta: getDelta
     };
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Delay');
+    var global$2 = tinymce.util.Tools.resolve('tinymce.util.Delay');
 
-    const delayedConfirm = (editor, message, callback) => {
-      const rng = editor.selection.getRng();
-      global.setEditorTimeout(editor, () => {
-        editor.windowManager.confirm(message, state => {
+    var global$1 = tinymce.util.Tools.resolve('tinymce.util.Promise');
+
+    var delayedConfirm = function (editor, message, callback) {
+      var rng = editor.selection.getRng();
+      global$2.setEditorTimeout(editor, function () {
+        editor.windowManager.confirm(message, function (state) {
           editor.selection.setRng(rng);
           callback(state);
         });
       });
     };
-    const tryEmailTransform = data => {
-      const url = data.href;
-      const suggestMailTo = url.indexOf('@') > 0 && url.indexOf('/') === -1 && url.indexOf('mailto:') === -1;
+    var tryEmailTransform = function (data) {
+      var url = data.href;
+      var suggestMailTo = url.indexOf('@') > 0 && url.indexOf('/') === -1 && url.indexOf('mailto:') === -1;
       return suggestMailTo ? Optional.some({
         message: 'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?',
-        preprocess: oldData => ({
-          ...oldData,
-          href: 'mailto:' + url
-        })
+        preprocess: function (oldData) {
+          return __assign(__assign({}, oldData), { href: 'mailto:' + url });
+        }
       }) : Optional.none();
     };
-    const tryProtocolTransform = (assumeExternalTargets, defaultLinkProtocol) => data => {
-      const url = data.href;
-      const suggestProtocol = assumeExternalTargets === 1 && !hasProtocol(url) || assumeExternalTargets === 0 && /^\s*www(\.|\d\.)/i.test(url);
-      return suggestProtocol ? Optional.some({
-        message: `The URL you entered seems to be an external link. Do you want to add the required ${ defaultLinkProtocol }:// prefix?`,
-        preprocess: oldData => ({
-          ...oldData,
-          href: defaultLinkProtocol + '://' + url
-        })
-      }) : Optional.none();
+    var tryProtocolTransform = function (assumeExternalTargets, defaultLinkProtocol) {
+      return function (data) {
+        var url = data.href;
+        var suggestProtocol = assumeExternalTargets === 1 && !hasProtocol(url) || assumeExternalTargets === 0 && /^\s*www(\.|\d\.)/i.test(url);
+        return suggestProtocol ? Optional.some({
+          message: 'The URL you entered seems to be an external link. Do you want to add the required ' + defaultLinkProtocol + ':// prefix?',
+          preprocess: function (oldData) {
+            return __assign(__assign({}, oldData), { href: defaultLinkProtocol + '://' + url });
+          }
+        }) : Optional.none();
+      };
     };
-    const preprocess = (editor, data) => findMap([
-      tryEmailTransform,
-      tryProtocolTransform(assumeExternalTargets(editor), getDefaultLinkProtocol(editor))
-    ], f => f(data)).fold(() => Promise.resolve(data), transform => new Promise(callback => {
-      delayedConfirm(editor, transform.message, state => {
-        callback(state ? transform.preprocess(data) : data);
+    var preprocess = function (editor, data) {
+      return findMap([
+        tryEmailTransform,
+        tryProtocolTransform(assumeExternalTargets(editor), getDefaultLinkProtocol(editor))
+      ], function (f) {
+        return f(data);
+      }).fold(function () {
+        return global$1.resolve(data);
+      }, function (transform) {
+        return new global$1(function (callback) {
+          delayedConfirm(editor, transform.message, function (state) {
+            callback(state ? transform.preprocess(data) : data);
+          });
+        });
       });
-    }));
-    const DialogConfirms = { preprocess };
+    };
+    var DialogConfirms = { preprocess: preprocess };
 
-    const getAnchors = editor => {
-      const anchorNodes = editor.dom.select('a:not([href])');
-      const anchors = bind(anchorNodes, anchor => {
-        const id = anchor.name || anchor.id;
+    var getAnchors = function (editor) {
+      var anchorNodes = editor.dom.select('a:not([href])');
+      var anchors = bind(anchorNodes, function (anchor) {
+        var id = anchor.name || anchor.id;
         return id ? [{
             text: id,
             value: '#' + id
@@ -713,63 +754,81 @@
           value: ''
         }].concat(anchors)) : Optional.none();
     };
-    const AnchorListOptions = { getAnchors };
+    var AnchorListOptions = { getAnchors: getAnchors };
 
-    const getClasses = editor => {
-      const list = getLinkClassList(editor);
+    var getClasses = function (editor) {
+      var list = getLinkClassList(editor);
       if (list.length > 0) {
         return ListOptions.sanitize(list);
       }
       return Optional.none();
     };
-    const ClassListOptions = { getClasses };
+    var ClassListOptions = { getClasses: getClasses };
 
-    const parseJson = text => {
+    var global = tinymce.util.Tools.resolve('tinymce.util.XHR');
+
+    var parseJson = function (text) {
       try {
         return Optional.some(JSON.parse(text));
       } catch (err) {
         return Optional.none();
       }
     };
-    const getLinks = editor => {
-      const extractor = item => editor.convertURL(item.value || item.url, 'href');
-      const linkList = getLinkList(editor);
-      return new Promise(resolve => {
+    var getLinks = function (editor) {
+      var extractor = function (item) {
+        return editor.convertURL(item.value || item.url, 'href');
+      };
+      var linkList = getLinkList(editor);
+      return new global$1(function (callback) {
         if (isString(linkList)) {
-          fetch(linkList).then(res => res.ok ? res.text().then(parseJson) : Promise.reject()).then(resolve, () => resolve(Optional.none()));
+          global.send({
+            url: linkList,
+            success: function (text) {
+              return callback(parseJson(text));
+            },
+            error: function (_) {
+              return callback(Optional.none());
+            }
+          });
         } else if (isFunction(linkList)) {
-          linkList(output => resolve(Optional.some(output)));
+          linkList(function (output) {
+            return callback(Optional.some(output));
+          });
         } else {
-          resolve(Optional.from(linkList));
+          callback(Optional.from(linkList));
         }
-      }).then(optItems => optItems.bind(ListOptions.sanitizeWith(extractor)).map(items => {
-        if (items.length > 0) {
-          const noneItem = [{
-              text: 'None',
-              value: ''
-            }];
-          return noneItem.concat(items);
-        } else {
-          return items;
-        }
-      }));
+      }).then(function (optItems) {
+        return optItems.bind(ListOptions.sanitizeWith(extractor)).map(function (items) {
+          if (items.length > 0) {
+            var noneItem = [{
+                text: 'None',
+                value: ''
+              }];
+            return noneItem.concat(items);
+          } else {
+            return items;
+          }
+        });
+      });
     };
-    const LinkListOptions = { getLinks };
+    var LinkListOptions = { getLinks: getLinks };
 
-    const getRels = (editor, initialTarget) => {
-      const list = getRelList(editor);
+    var getRels = function (editor, initialTarget) {
+      var list = getRelList(editor);
       if (list.length > 0) {
-        const isTargetBlank = is(initialTarget, '_blank');
-        const enforceSafe = allowUnsafeLinkTarget(editor) === false;
-        const safeRelExtractor = item => applyRelTargetRules(ListOptions.getValue(item), isTargetBlank);
-        const sanitizer = enforceSafe ? ListOptions.sanitizeWith(safeRelExtractor) : ListOptions.sanitize;
+        var isTargetBlank_1 = is(initialTarget, '_blank');
+        var enforceSafe = allowUnsafeLinkTarget(editor) === false;
+        var safeRelExtractor = function (item) {
+          return applyRelTargetRules(ListOptions.getValue(item), isTargetBlank_1);
+        };
+        var sanitizer = enforceSafe ? ListOptions.sanitizeWith(safeRelExtractor) : ListOptions.sanitize;
         return sanitizer(list);
       }
       return Optional.none();
     };
-    const RelOptions = { getRels };
+    var RelOptions = { getRels: getRels };
 
-    const fallbacks = [
+    var fallbacks = [
       {
         text: 'Current window',
         value: ''
@@ -779,88 +838,98 @@
         value: '_blank'
       }
     ];
-    const getTargets = editor => {
-      const list = getTargetList(editor);
+    var getTargets = function (editor) {
+      var list = getTargetList(editor);
       if (isArray(list)) {
-        return ListOptions.sanitize(list).orThunk(() => Optional.some(fallbacks));
+        return ListOptions.sanitize(list).orThunk(function () {
+          return Optional.some(fallbacks);
+        });
       } else if (list === false) {
         return Optional.none();
       }
       return Optional.some(fallbacks);
     };
-    const TargetOptions = { getTargets };
+    var TargetOptions = { getTargets: getTargets };
 
-    const nonEmptyAttr = (dom, elem, name) => {
-      const val = dom.getAttrib(elem, name);
+    var nonEmptyAttr = function (dom, elem, name) {
+      var val = dom.getAttrib(elem, name);
       return val !== null && val.length > 0 ? Optional.some(val) : Optional.none();
     };
-    const extractFromAnchor = (editor, anchor) => {
-      const dom = editor.dom;
-      const onlyText = isOnlyTextSelected(editor);
-      const text = onlyText ? Optional.some(getAnchorText(editor.selection, anchor)) : Optional.none();
-      const url = anchor ? Optional.some(dom.getAttrib(anchor, 'href')) : Optional.none();
-      const target = anchor ? Optional.from(dom.getAttrib(anchor, 'target')) : Optional.none();
-      const rel = nonEmptyAttr(dom, anchor, 'rel');
-      const linkClass = nonEmptyAttr(dom, anchor, 'class');
-      const title = nonEmptyAttr(dom, anchor, 'title');
+    var extractFromAnchor = function (editor, anchor) {
+      var dom = editor.dom;
+      var onlyText = isOnlyTextSelected(editor);
+      var text = onlyText ? Optional.some(getAnchorText(editor.selection, anchor)) : Optional.none();
+      var url = anchor ? Optional.some(dom.getAttrib(anchor, 'href')) : Optional.none();
+      var target = anchor ? Optional.from(dom.getAttrib(anchor, 'target')) : Optional.none();
+      var rel = nonEmptyAttr(dom, anchor, 'rel');
+      var linkClass = nonEmptyAttr(dom, anchor, 'class');
+      var title = nonEmptyAttr(dom, anchor, 'title');
       return {
-        url,
-        text,
-        title,
-        target,
-        rel,
-        linkClass
+        url: url,
+        text: text,
+        title: title,
+        target: target,
+        rel: rel,
+        linkClass: linkClass
       };
     };
-    const collect = (editor, linkNode) => LinkListOptions.getLinks(editor).then(links => {
-      const anchor = extractFromAnchor(editor, linkNode);
-      return {
-        anchor,
-        catalogs: {
-          targets: TargetOptions.getTargets(editor),
-          rels: RelOptions.getRels(editor, anchor.target),
-          classes: ClassListOptions.getClasses(editor),
-          anchor: AnchorListOptions.getAnchors(editor),
-          link: links
-        },
-        optNode: Optional.from(linkNode),
-        flags: { titleEnabled: shouldShowLinkTitle(editor) }
-      };
-    });
-    const DialogInfo = { collect };
-
-    const handleSubmit = (editor, info) => api => {
-      const data = api.getData();
-      if (!data.url.value) {
-        unlink(editor);
-        api.close();
-        return;
-      }
-      const getChangedValue = key => Optional.from(data[key]).filter(value => !is(info.anchor[key], value));
-      const changedData = {
-        href: data.url.value,
-        text: getChangedValue('text'),
-        target: getChangedValue('target'),
-        rel: getChangedValue('rel'),
-        class: getChangedValue('linkClass'),
-        title: getChangedValue('title')
-      };
-      const attachState = {
-        href: data.url.value,
-        attach: data.url.meta !== undefined && data.url.meta.attach ? data.url.meta.attach : noop
-      };
-      DialogConfirms.preprocess(editor, changedData).then(pData => {
-        link(editor, attachState, pData);
+    var collect = function (editor, linkNode) {
+      return LinkListOptions.getLinks(editor).then(function (links) {
+        var anchor = extractFromAnchor(editor, linkNode);
+        return {
+          anchor: anchor,
+          catalogs: {
+            targets: TargetOptions.getTargets(editor),
+            rels: RelOptions.getRels(editor, anchor.target),
+            classes: ClassListOptions.getClasses(editor),
+            anchor: AnchorListOptions.getAnchors(editor),
+            link: links
+          },
+          optNode: Optional.from(linkNode),
+          flags: { titleEnabled: shouldShowLinkTitle(editor) }
+        };
       });
-      api.close();
     };
-    const collectData = editor => {
-      const anchorNode = getAnchorElement(editor);
+    var DialogInfo = { collect: collect };
+
+    var handleSubmit = function (editor, info) {
+      return function (api) {
+        var data = api.getData();
+        if (!data.url.value) {
+          unlink(editor);
+          api.close();
+          return;
+        }
+        var getChangedValue = function (key) {
+          return Optional.from(data[key]).filter(function (value) {
+            return !is(info.anchor[key], value);
+          });
+        };
+        var changedData = {
+          href: data.url.value,
+          text: getChangedValue('text'),
+          target: getChangedValue('target'),
+          rel: getChangedValue('rel'),
+          class: getChangedValue('linkClass'),
+          title: getChangedValue('title')
+        };
+        var attachState = {
+          href: data.url.value,
+          attach: data.url.meta !== undefined && data.url.meta.attach ? data.url.meta.attach : noop
+        };
+        DialogConfirms.preprocess(editor, changedData).then(function (pData) {
+          link(editor, attachState, pData);
+        });
+        api.close();
+      };
+    };
+    var collectData = function (editor) {
+      var anchorNode = getAnchorElement(editor);
       return DialogInfo.collect(editor, anchorNode);
     };
-    const getInitialData = (info, defaultTarget) => {
-      const anchor = info.anchor;
-      const url = anchor.url.getOr('');
+    var getInitialData = function (info, defaultTarget) {
+      var anchor = info.anchor;
+      var url = anchor.url.getOr('');
       return {
         url: {
           value: url,
@@ -875,28 +944,30 @@
         linkClass: anchor.linkClass.getOr('')
       };
     };
-    const makeDialog = (settings, onSubmit, editor) => {
-      const urlInput = [{
+    var makeDialog = function (settings, onSubmit, editor) {
+      var urlInput = [{
           name: 'url',
           type: 'urlinput',
           filetype: 'file',
           label: 'URL'
         }];
-      const displayText = settings.anchor.text.map(() => ({
-        name: 'text',
-        type: 'input',
-        label: 'Text to display'
-      })).toArray();
-      const titleText = settings.flags.titleEnabled ? [{
+      var displayText = settings.anchor.text.map(function () {
+        return {
+          name: 'text',
+          type: 'input',
+          label: 'Text to display'
+        };
+      }).toArray();
+      var titleText = settings.flags.titleEnabled ? [{
           name: 'title',
           type: 'input',
           label: 'Title'
         }] : [];
-      const defaultTarget = Optional.from(getDefaultLinkTarget(editor));
-      const initialData = getInitialData(settings, defaultTarget);
-      const catalogs = settings.catalogs;
-      const dialogDelta = DialogChanges.init(initialData, catalogs);
-      const body = {
+      var defaultTarget = Optional.from(getDefaultLinkTarget(editor));
+      var initialData = getInitialData(settings, defaultTarget);
+      var catalogs = settings.catalogs;
+      var dialogDelta = DialogChanges.init(initialData, catalogs);
+      var body = {
         type: 'panel',
         items: flatten([
           urlInput,
@@ -914,7 +985,7 @@
       return {
         title: 'Insert/Edit Link',
         size: 'normal',
-        body,
+        body: body,
         buttons: [
           {
             type: 'cancel',
@@ -928,50 +999,55 @@
             primary: true
           }
         ],
-        initialData,
-        onChange: (api, {name}) => {
-          dialogDelta.onChange(api.getData, { name }).each(newData => {
+        initialData: initialData,
+        onChange: function (api, _a) {
+          var name = _a.name;
+          dialogDelta.onChange(api.getData, { name: name }).each(function (newData) {
             api.setData(newData);
           });
         },
-        onSubmit
+        onSubmit: onSubmit
       };
     };
-    const open$1 = editor => {
-      const data = collectData(editor);
-      data.then(info => {
-        const onSubmit = handleSubmit(editor, info);
+    var open$1 = function (editor) {
+      var data = collectData(editor);
+      data.then(function (info) {
+        var onSubmit = handleSubmit(editor, info);
         return makeDialog(info, onSubmit, editor);
-      }).then(spec => {
+      }).then(function (spec) {
         editor.windowManager.open(spec);
       });
     };
 
-    const appendClickRemove = (link, evt) => {
+    var appendClickRemove = function (link, evt) {
       document.body.appendChild(link);
       link.dispatchEvent(evt);
       document.body.removeChild(link);
     };
-    const open = url => {
-      const link = document.createElement('a');
+    var open = function (url) {
+      var link = document.createElement('a');
       link.target = '_blank';
       link.href = url;
       link.rel = 'noreferrer noopener';
-      const evt = document.createEvent('MouseEvents');
+      var evt = document.createEvent('MouseEvents');
       evt.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       appendClickRemove(link, evt);
     };
 
-    const getLink = (editor, elm) => editor.dom.getParent(elm, 'a[href]');
-    const getSelectedLink = editor => getLink(editor, editor.selection.getStart());
-    const hasOnlyAltModifier = e => {
+    var getLink = function (editor, elm) {
+      return editor.dom.getParent(elm, 'a[href]');
+    };
+    var getSelectedLink = function (editor) {
+      return getLink(editor, editor.selection.getStart());
+    };
+    var hasOnlyAltModifier = function (e) {
       return e.altKey === true && e.shiftKey === false && e.ctrlKey === false && e.metaKey === false;
     };
-    const gotoLink = (editor, a) => {
+    var gotoLink = function (editor, a) {
       if (a) {
-        const href = getHref(a);
+        var href = getHref(a);
         if (/^#/.test(href)) {
-          const targetEl = editor.dom.select(href);
+          var targetEl = editor.$(href);
           if (targetEl.length) {
             editor.selection.scrollIntoView(targetEl[0], true);
           }
@@ -980,66 +1056,86 @@
         }
       }
     };
-    const openDialog = editor => () => {
-      open$1(editor);
+    var openDialog = function (editor) {
+      return function () {
+        open$1(editor);
+      };
     };
-    const gotoSelectedLink = editor => () => {
-      gotoLink(editor, getSelectedLink(editor));
+    var gotoSelectedLink = function (editor) {
+      return function () {
+        gotoLink(editor, getSelectedLink(editor));
+      };
     };
-    const setupGotoLinks = editor => {
-      editor.on('click', e => {
-        const link = getLink(editor, e.target);
-        if (link && global$4.metaKeyPressed(e)) {
+    var setupGotoLinks = function (editor) {
+      editor.on('click', function (e) {
+        var link = getLink(editor, e.target);
+        if (link && global$6.metaKeyPressed(e)) {
           e.preventDefault();
           gotoLink(editor, link);
         }
       });
-      editor.on('keydown', e => {
-        const link = getSelectedLink(editor);
+      editor.on('keydown', function (e) {
+        var link = getSelectedLink(editor);
         if (link && e.keyCode === 13 && hasOnlyAltModifier(e)) {
           e.preventDefault();
           gotoLink(editor, link);
         }
       });
     };
-    const toggleState = (editor, toggler) => {
+    var toggleState = function (editor, toggler) {
       editor.on('NodeChange', toggler);
-      return () => editor.off('NodeChange', toggler);
+      return function () {
+        return editor.off('NodeChange', toggler);
+      };
     };
-    const toggleActiveState = editor => api => {
-      const updateState = () => api.setActive(!editor.mode.isReadOnly() && getAnchorElement(editor, editor.selection.getNode()) !== null);
-      updateState();
-      return toggleState(editor, updateState);
+    var toggleActiveState = function (editor) {
+      return function (api) {
+        var updateState = function () {
+          return api.setActive(!editor.mode.isReadOnly() && getAnchorElement(editor, editor.selection.getNode()) !== null);
+        };
+        updateState();
+        return toggleState(editor, updateState);
+      };
     };
-    const toggleEnabledState = editor => api => {
-      const updateState = () => api.setEnabled(getAnchorElement(editor, editor.selection.getNode()) !== null);
-      updateState();
-      return toggleState(editor, updateState);
+    var toggleEnabledState = function (editor) {
+      return function (api) {
+        var updateState = function () {
+          return api.setDisabled(getAnchorElement(editor, editor.selection.getNode()) === null);
+        };
+        updateState();
+        return toggleState(editor, updateState);
+      };
     };
-    const toggleUnlinkState = editor => api => {
-      const hasLinks$1 = parents => hasLinks(parents) || hasLinksInSelection(editor.selection.getRng());
-      const parents = editor.dom.getParents(editor.selection.getStart());
-      api.setEnabled(hasLinks$1(parents));
-      return toggleState(editor, e => api.setEnabled(hasLinks$1(e.parents)));
+    var toggleUnlinkState = function (editor) {
+      return function (api) {
+        var hasLinks$1 = function (parents) {
+          return hasLinks(parents) || hasLinksInSelection(editor.selection.getRng());
+        };
+        var parents = editor.dom.getParents(editor.selection.getStart());
+        api.setDisabled(!hasLinks$1(parents));
+        return toggleState(editor, function (e) {
+          return api.setDisabled(!hasLinks$1(e.parents));
+        });
+      };
     };
 
-    const register = editor => {
-      editor.addCommand('mceLink', () => {
+    var register = function (editor) {
+      editor.addCommand('mceLink', function () {
         if (useQuickLink(editor)) {
-          editor.dispatch('contexttoolbar-show', { toolbarKey: 'quicklink' });
+          editor.fire('contexttoolbar-show', { toolbarKey: 'quicklink' });
         } else {
           openDialog(editor)();
         }
       });
     };
 
-    const setup = editor => {
-      editor.addShortcut('Meta+K', '', () => {
+    var setup = function (editor) {
+      editor.addShortcut('Meta+K', '', function () {
         editor.execCommand('mceLink');
       });
     };
 
-    const setupButtons = editor => {
+    var setupButtons = function (editor) {
       editor.ui.registry.addToggleButton('link', {
         icon: 'link',
         tooltip: 'Insert/edit link',
@@ -1055,11 +1151,13 @@
       editor.ui.registry.addButton('unlink', {
         icon: 'unlink',
         tooltip: 'Remove link',
-        onAction: () => unlink(editor),
+        onAction: function () {
+          return unlink(editor);
+        },
         onSetup: toggleUnlinkState(editor)
       });
     };
-    const setupMenuItems = editor => {
+    var setupMenuItems = function (editor) {
       editor.ui.registry.addMenuItem('openlink', {
         text: 'Open link',
         icon: 'new-tab',
@@ -1075,29 +1173,35 @@
       editor.ui.registry.addMenuItem('unlink', {
         icon: 'unlink',
         text: 'Remove link',
-        onAction: () => unlink(editor),
+        onAction: function () {
+          return unlink(editor);
+        },
         onSetup: toggleUnlinkState(editor)
       });
     };
-    const setupContextMenu = editor => {
-      const inLink = 'link unlink openlink';
-      const noLink = 'link';
-      editor.ui.registry.addContextMenu('link', { update: element => hasLinks(editor.dom.getParents(element, 'a')) ? inLink : noLink });
+    var setupContextMenu = function (editor) {
+      var inLink = 'link unlink openlink';
+      var noLink = 'link';
+      editor.ui.registry.addContextMenu('link', {
+        update: function (element) {
+          return hasLinks(editor.dom.getParents(element, 'a')) ? inLink : noLink;
+        }
+      });
     };
-    const setupContextToolbars = editor => {
-      const collapseSelectionToEnd = editor => {
+    var setupContextToolbars = function (editor) {
+      var collapseSelectionToEnd = function (editor) {
         editor.selection.collapse(false);
       };
-      const onSetupLink = buttonApi => {
-        const node = editor.selection.getNode();
-        buttonApi.setEnabled(getAnchorElement(editor, node) !== null);
+      var onSetupLink = function (buttonApi) {
+        var node = editor.selection.getNode();
+        buttonApi.setDisabled(!getAnchorElement(editor, node));
         return noop;
       };
-      const getLinkText = value => {
-        const anchor = getAnchorElement(editor);
-        const onlyText = isOnlyTextSelected(editor);
+      var getLinkText = function (value) {
+        var anchor = getAnchorElement(editor);
+        var onlyText = isOnlyTextSelected(editor);
         if (!anchor && onlyText) {
-          const text = getAnchorText(editor.selection, anchor);
+          var text = getAnchorText(editor.selection, anchor);
           return Optional.some(text.length > 0 ? text : value);
         } else {
           return Optional.none();
@@ -1111,9 +1215,11 @@
           onSetup: toggleActiveState(editor)
         },
         label: 'Link',
-        predicate: node => !!getAnchorElement(editor, node) && hasContextToolbar(editor),
-        initValue: () => {
-          const elm = getAnchorElement(editor);
+        predicate: function (node) {
+          return !!getAnchorElement(editor, node) && hasContextToolbar(editor);
+        },
+        initValue: function () {
+          var elm = getAnchorElement(editor);
           return !!elm ? getHref(elm) : '';
         },
         commands: [
@@ -1122,21 +1228,21 @@
             icon: 'link',
             tooltip: 'Link',
             primary: true,
-            onSetup: buttonApi => {
-              const node = editor.selection.getNode();
+            onSetup: function (buttonApi) {
+              var node = editor.selection.getNode();
               buttonApi.setActive(!!getAnchorElement(editor, node));
               return toggleActiveState(editor)(buttonApi);
             },
-            onAction: formApi => {
-              const value = formApi.getValue();
-              const text = getLinkText(value);
-              const attachState = {
+            onAction: function (formApi) {
+              var value = formApi.getValue();
+              var text = getLinkText(value);
+              var attachState = {
                 href: value,
                 attach: noop
               };
               link(editor, attachState, {
                 href: value,
-                text,
+                text: text,
                 title: Optional.none(),
                 rel: Optional.none(),
                 target: Optional.none(),
@@ -1151,7 +1257,7 @@
             icon: 'unlink',
             tooltip: 'Remove link',
             onSetup: onSetupLink,
-            onAction: formApi => {
+            onAction: function (formApi) {
               unlink(editor);
               formApi.hide();
             }
@@ -1161,7 +1267,7 @@
             icon: 'new-tab',
             tooltip: 'Open link',
             onSetup: onSetupLink,
-            onAction: formApi => {
+            onAction: function (formApi) {
               gotoSelectedLink(editor)();
               formApi.hide();
             }
@@ -1170,9 +1276,8 @@
       });
     };
 
-    var Plugin = () => {
-      global$5.add('link', editor => {
-        register$1(editor);
+    function Plugin () {
+      global$7.add('link', function (editor) {
         setupButtons(editor);
         setupMenuItems(editor);
         setupContextMenu(editor);
@@ -1181,8 +1286,8 @@
         register(editor);
         setup(editor);
       });
-    };
+    }
 
     Plugin();
 
-})();
+}());

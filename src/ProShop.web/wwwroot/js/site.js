@@ -106,58 +106,89 @@ function enablingTooltips() {
     });
 }
 
-enablingTooltips();
 function ShowErrorMessage(message) {
 
     showToastr('error', message != null ? message : 'خطایی به وجود آمد، لطفا مجددا تلاش نمایید');
 }
 
+
+// Send `TinyMCE` images to server with specific url
+function sendTinyMceImagesToServer(blobInfo, success, failure, progress, url) {
+    var formData = new FormData();
+    formData.append('file', blobInfo.blob(), blobInfo.filename());
+    formData.append(rvt, $('textarea.custom-tinymce:first').parents('form').find('input[name="' + rvt + '"]').val());
+    $.ajax({
+        url: `${location.pathname}?handler=${url}`,
+        data: formData,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data === false) {
+                failure('خطایی به وجود آمد');
+            } else {
+                success(data.location);
+            }
+        },
+        error: function () {
+            failure('خطایی به وجود آمد');
+        }
+    });
+};
 function initializeTinyMCE() {
 
-    if ($('textarea.custom-tinymce').length > 0) {
-        tinymce.remove('textarea.custom-tinymce');
-        tinymce.init({
-            selector: 'textarea.custom-tinymce',
-            setup: function (editor) {
-                editor.on('blur', function (e) {
-                    var elementId = $(e.target.targetElm).attr('id');
-                    $(e.target.formElement).validate().element(`#${elementId}`);
-                });
-            },
-            height: 300,
-            max_height: 500,
-            language: 'fa_IR',
-            language_url: '/js/fa_IR.js',
-            //content_style: 'body {font-family: Vazir}',
-            plugins: 'link table preview wordcount',
-            toolbar: [
-                {
-                    name: 'history', items: ['undo', 'redo', 'preview']
+    $('textarea.custom-tinymce').each(function() {
+
+        var textareaId = `#${$(this).attr('id')}`;
+        if ($('textarea.custom-tinymce').length > 0) {
+            tinymce.remove(textareaId);
+            tinymce.init({
+                selector: textareaId,
+                setup: function (editor) {
+                    editor.on('blur', function (e) {
+                        var elementId = $(e.target.targetElm).attr('id');
+                        $(e.target.formElement).validate().element(`#${elementId}`);
+                    });
                 },
-                {
-                    name: 'styles', items: ['styleselect']
-                },
-                {
-                    name: 'formatting', items: ['bold', 'italic', 'underline', 'link']
-                },
-                {
-                    name: 'alignment', items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify', 'forecolor', 'backcolor']
-                },
-                {
-                    name: 'table', items: ['table', 'wordcount']
-                },
-                {
-                    name: 'indentation', items: ['outdent', 'indent']
-                }
-            ],
-            // menubar: false,
-            branding: false
-        });
-    }
+                min_height: 300,
+                max_height: 500,
+                language: 'fa_IR',
+                language_url: '/js/fa_IR.js',
+                content_style: 'body {font-family: Vazir}',
+                plugins: 'link table preview wordcount autoresize',
+                toolbar: [
+                    {
+                        name: 'history', items: ['undo', 'redo', 'preview']
+                    },
+                    {
+                        name: 'styles', items: ['styleselect']
+                    },
+                    {
+                        name: 'formatting', items: ['bold', 'italic', 'underline', 'link']
+                    },
+                    {
+                        name: 'alignment', items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify', 'forecolor', 'backcolor']
+                    },
+                    {
+                        name: 'table', items: ['table', 'wordcount']
+                    },
+                    {
+                        name: 'indentation', items: ['outdent', 'indent']
+                    }
+                ],
+                // menubar: false,
+                branding: false
+            });
+        }
+    });
+
+ 
 
 }
 
-initializeTinyMCE();
+
 
 document.addEventListener('focusin', function (e) {
     if (e.target.closest('.tox-tinymce-aux, .moxman-window, .tam-assetmanager-root') !== null) {
@@ -166,8 +197,8 @@ document.addEventListener('focusin', function (e) {
 });
 
 function initializeSelect2() {
-    if ($('.custom-select2').length > 0) {
-        $('.custom-select2').select2({
+    if ($('.modal .custom-select2').length > 0) {
+        $('.modal .custom-select2').select2({
             theme: 'bootstrap-5',
             dropdownParent: $('#form-modal-place'),
 
@@ -184,7 +215,6 @@ function initializeSelect2WithoutModal() {
 
 }
 
-initializeSelect2WithoutModal();
 
 // Validation
 
@@ -392,6 +422,7 @@ function activatingModalForm() {
         if (customtitle == undefined) {
             customtitle = $(this).text().trim();
         }
+        appendFormModalPlaceToBody();
         $('#form-modal-place .modal-header h5').html(customtitle);
         showLoading();
         $.get(Url, function (data) {
@@ -666,7 +697,6 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
         url: url,
         data: formdata,
         type: 'Get',
-        enctype: 'multipart/form-data',
         dataType: 'json',
         beforeSend: function () {
             showLoading();
@@ -760,10 +790,9 @@ function activatingInputAttributes() {
     $('input[data-val-isimage]').attr('accept', 'image/*');
 }
 
-activatingInputAttributes();
 
 // نمایش پیش نمایش عکس
-$('.image-preivew-input').change(function () {
+$('.image-preivew-input').change(function() {
     var selectedFile = this.files[0];
     var imagePreviewBox = $(this).attr('image-preview-box');
     if (selectedFile && selectedFile.size > 0) {
@@ -773,4 +802,20 @@ $('.image-preivew-input').change(function () {
         $(`#${imagePreviewBox} img`).attr('src', '');
         $(`#${imagePreviewBox}`).addClass('d-none');
     }
-})
+});
+
+
+$(function() {
+    activatingInputAttributes();
+    initializeSelect2WithoutModal();
+    initializeTinyMCE();
+    enablingTooltips();
+    $('textarea[add-image-plugin="true"]').each(function() {
+
+        var elementId = $(this).attr('id');
+        var currentTinyMce = tinymce.get(elementId);
+        currentTinyMce.settings.plugins += ' image';
+        currentTinyMce.settings.toolbar[4].items.push('image');
+        currentTinyMce.settings.image_title = true;
+    });
+});

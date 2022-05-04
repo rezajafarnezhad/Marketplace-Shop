@@ -11,37 +11,122 @@
         </div>
     </div>
     <div class="card-body">
-        <nav>
-            <div class="nav nav-tabs nav-fill" id="nav-tab">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#product-category" type="button" role="tab" aria-controls="nav-home" aria-selected="true">انتخاب گروه کالا</button>
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">تب دوم</button>
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contract" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">تب سوم</button>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="product-category">
-                    <div class="card overflow-hidden">
-                        <div class="card-body row flex-nowrap overflow-auto">
-                        </div>
-                        <div class="row px-4 my-3">
-                            <div class="col-lg-9 d-flex align-items-center rounded-1 bg-secondary text-white rem0and9 py-3 py-lg-0 mb-3 mb-lg-0">
-                                <span>گروه کالایی انتخابی شما : &nbsp;</span>
-                                <span id="selected-categories-for-add-product">
-                                </span>
+        <form method="post">
+            <nav>
+                <div class="nav nav-tabs nav-fill" id="add-product-tab">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#product-category" type="button" role="tab" aria-controls="nav-home" aria-selected="true">انتخاب گروه کالا</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-info" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">درج اطلاعات کالا</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#specialty-check" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">بررسی تخصصی</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contract" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">تب سوم</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="product-category">
+                        <div class="card overflow-hidden">
+                            <div class="card-body row flex-nowrap overflow-auto">
                             </div>
-                            <div class="col-lg-3 text-center text-lg-start">
-                                <button disabled="disabled" class="btn btn-light" id="select-product-category-button">انتخاب گروه کالا</button>
-                                <button class="btn btn-outline-danger" id="reset-product-category-button">
-                                    <i class="bi bi-x-lg"></i>
-                                </button>
+                            <div class="row px-4 my-3">
+                                <div class="col-lg-9 d-flex align-items-center rounded-1 bg-secondary text-white rem0and9 py-3 py-lg-0 mb-3 mb-lg-0">
+                                    <span>گروه کالایی انتخابی شما : &nbsp;</span>
+                                    <span id="selected-categories-for-add-product">
+                                    </span>
+                                </div>
+                                <div class="col-lg-3 text-center text-lg-start">
+                                    <button type="button" disabled="disabled" class="btn btn-light" id="select-product-category-button">انتخاب گروه کالا</button>
+                                    <button class="btn btn-outline-danger" id="reset-product-category-button">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="product-info">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <br />
+                                    <input class="form-check-input" asp-for="Product.IsFake">
+                                    <label class="form-check-label" asp-for="Product.IsFake">
+                                        نشان کالای غیر اصل
+                                        (
+                                        <span class="badge bg-light text-dark">
+                                            غیر اصل
+                                        </span>
+                                        )
+                                        <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="با انتخاب این گزینه، کلمه “غیراصل” در کنار عنوان کالا و نشان “غیراصل” در کنار تصویر کالای شما در سایت قرار خواهد گرفت. برند کالا باید “متفرقه” درج شود. در صورت فروش کالای غیراصل بدون این نشان، مطابق با قوانین جریمه خواهید شد."></i>
+                                    </label>
+                                </div>
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.BrandId">
+                                        <div>اصالت کالا</div>
+                                        <a id="request-new-brand-url" asp-page-handler="RequestForAddBrand" class="text-info border-bottom-dashed show-modal-form-button">
+                                            درخواست برند جدید
+                                        </a>
+                                    </label>
+                                    <select class="custom-select2 form-select" asp-for="Product.BrandId"></select>
+                                    <span class="span-error-message" asp-validation-for="Product.BrandId"></span>
+                                </div>
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackWidth">وزن بسته بندی(گرم)</label>
+                                    <input class="form-control" asp-for="Product.PackWidth" />
+                                    <span class="span-error-message" asp-validation-for="Product.PackWidth"></span>
+                                </div>
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackWidth">عرض بسته بندی(سانتی متر)</label>
+                                    <input class="form-control" asp-for="Product.PackWidth" />
+                                    <span class="span-error-message" asp-validation-for="Product.PackWidth"></span>
+                                </div>
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackHeight">ارتفاع بسته بندی(سانتی متر)</label>
+                                    <input class="form-control" asp-for="Product.PackHeight" />
+                                    <span class="span-error-message" asp-validation-for="Product.PackHeight"></span>
+                                </div>
+                                <div class="my-2 col-md-6 col-lg-4">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackLength">طول بسته بندی(سانتی متر)</label>
+                                    <input class="form-control" asp-for="Product.PackLength" />
+                                    <span class="span-error-message" asp-validation-for="Product.PackLength"></span>
+                                </div>
+                                <div class="my-2 col-md-12 col-lg-12">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.ShortDescription"></label>
+                                    <textarea add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn btn-info">ثبت</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="specialty-check">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="my-2">
+                                    <label class="d-flex justify-content-between form-label" asp-for="Product.SpecialtyCheck">
+                                    </label>
+                                    <textarea add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
+                                </div>
+                                <button class="btn btn-primary">send</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </form>
     </div>
 </div>
+
+@section Scripts
+{
+
+<partial name="_ValidationScriptsPartial" />
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/select2/js/i18n/fa.min.js"></script>
+<script src="~/lib/tinymce/tinymce.min.js"></script>
+}
 @section CustomScripts
 {
-    <script src="~/Pages/SellerPanel/Product/Create.cshtml.js"></script>
+<script src="~/Pages/SellerPanel/Product/Create.cshtml.js"></script>
+}
+@section Styles
+{
+<link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
 }

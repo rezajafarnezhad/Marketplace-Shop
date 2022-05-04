@@ -44,6 +44,14 @@
                     <span class="span-error-message" asp-validation-for="ShowBrands.SearchBrands.BrandLinkEn"></span>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowBrands.SearchBrands.IsConfirmed"></label>
+                    <select class="form-select" asp-for="ShowBrands.SearchBrands.IsConfirmed">
+                        <option value="">همه</option>
+                        <option value="true">تایید شده</option>
+                        <option value="false">تایید نشده</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="ShowBrands.SearchBrands.IsIranianBrand"></label>
                     <select class="form-select" asp-for="ShowBrands.SearchBrands.IsIranianBrand">
                         <option value="">همه</option>

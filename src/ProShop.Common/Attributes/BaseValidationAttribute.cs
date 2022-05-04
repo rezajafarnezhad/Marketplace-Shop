@@ -2,6 +2,7 @@
 
 namespace ProShop.Common.Attributes;
 
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
 public class BaseValidationAttribute : ValidationAttribute
 {
     protected bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)

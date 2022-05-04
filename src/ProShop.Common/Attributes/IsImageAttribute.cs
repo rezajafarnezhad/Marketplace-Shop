@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ProShop.Common.Attributes;
 
+
 public class IsImageAttribute : BaseValidationAttribute, IClientModelValidator
 {
     private readonly string[] _allowExtensions = new[]

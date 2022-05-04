@@ -1,5 +1,5 @@
 ﻿fillDataTable();
-appendFormModalPlaceToBody();
+
 
 
 var brandBox =

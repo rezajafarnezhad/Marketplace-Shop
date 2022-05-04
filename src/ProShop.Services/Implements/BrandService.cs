@@ -34,6 +34,10 @@ public class BrandService : GenericService<Brand>, IBrandService
         if (!string.IsNullOrWhiteSpace(model.SearchBrands.BrandLinkEn))
             brands = _brands.Where(c => c.BrandLinkEn.Contains(model.SearchBrands.BrandLinkEn.Trim()));
 
+
+        if (model.SearchBrands.IsConfirmed != null)
+            brands = brands.Where(c => c.IsConfirmed == model.SearchBrands.IsConfirmed.Value);
+
         switch (model.SearchBrands.DeletedStatus)
         {
 
@@ -48,6 +52,7 @@ public class BrandService : GenericService<Brand>, IBrandService
                 brands = brands.Where(c => !c.IsDeleted);
                 break;
         }
+       
 
         if (model.SearchBrands.IsIranianBrand != null)
             brands = brands.Where(c => c.IsIranianBrand == model.SearchBrands.IsIranianBrand.Value);
@@ -133,5 +138,24 @@ public class BrandService : GenericService<Brand>, IBrandService
             .Select(c => c.Id)
             .ToListAsync();
 
+    }
+    public Task<Dictionary<long, string>> GetBrandsByCategoryId(long categoryId)
+    {
+        return _brands.SelectMany(c => c.CategoryBrands)
+            .Where(c => c.CategoryId == categoryId)
+            .Include(c=>c.Brand)
+            .ToDictionaryAsync(c => c.BrandId, c => c.Brand.TitleFa + " " + c.Brand.TitleEn);
+    }
+
+    public async Task<BrandDetailsViewModel> GetBrandDetails(long brandId)
+    {
+        return await _mapper.ProjectTo<BrandDetailsViewModel>(_brands)
+            .SingleOrDefaultAsync(c => c.Id == brandId);
+    }
+
+    public async Task<Brand> GetInActiveBrand(long brandId)
+    {
+        return await _brands.Where(c => c.IsConfirmed == false)
+            .SingleOrDefaultAsync(c => c.Id == brandId);
     }
 }

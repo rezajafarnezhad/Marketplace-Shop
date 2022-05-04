@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ProShop.Common;
 using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
@@ -19,22 +20,25 @@ namespace ProShop.web.Pages.AdminPanel.Category
         private readonly IUploadFileService _uploadFileService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBrandService _brandService;
-        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService)
+        private readonly IMapper _mapper;
+        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper)
         {
             _categoryService = categoryService;
             _unitOfWork = unitOfWork;
             _uploadFileService = uploadFileService;
             _brandService = brandService;
+            _mapper = mapper;
         }
 
         #endregion
 
+        [BindProperty(SupportsGet = true)]
         public ShowCategoriesViewModel CategoriesViewModel { get; set; } = new();
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnGetGetDataTableAsync(ShowCategoriesViewModel categoriesViewModel)
+        public async Task<IActionResult> OnGetGetDataTableAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -45,7 +49,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 });
             }
 
-            return Partial("_List", await _categoryService.GetCategories(categoriesViewModel));
+            return Partial("_List", await _categoryService.GetCategories(CategoriesViewModel));
         }
 
 
@@ -84,16 +88,11 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 picturefileName = model.Picture.GenerateFileName();
             }
 
-            var _category = new Entities.Category()
-            {
-                Title = model.Title,
-                Slug = model.Slug,
-                Description = model.Description,
-                IsShowInMenus = model.IsShowInMenus,
-                ParentId = model.ParentId is 0 ? null : model.ParentId,
-                IsDeleted = false,
-                Picture = picturefileName
-            };
+            var _category = _mapper.Map<Entities.Category>(model);
+            if (model.ParentId is 0)
+                _category.ParentId = null;
+
+            _category.Picture = picturefileName;
 
             var result = await _categoryService.AddAsync(_category);
             if (!result.Ok)
@@ -159,6 +158,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
             _category.ParentId = model.ParentId is 0 ? null : model.ParentId;
             _category.Description = model.Description;
             _category.IsShowInMenus = model.IsShowInMenus;
+            _category.CanAddFakeProduct = model.CanAddFakeProduct;
 
 
             var result = await _categoryService.Update(_category);

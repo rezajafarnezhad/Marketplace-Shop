@@ -125,8 +125,15 @@ span.select2-dropdown.select2-dropdown--below {
     border-radius: 12px;
 }
 
+.cardidSizeInPanel {
+    width:235px;
+    height:382px;
+    border:;
+    border-radius: 12px;
+}
+
 #selected-brands-box {
     overflow-y: auto;
     min-height: 46px;
-    max-height: 186px;
+    max-height: 184px;
 }

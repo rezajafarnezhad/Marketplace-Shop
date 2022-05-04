@@ -12,8 +12,8 @@
                     <th>@Html.DisplayNameFor(x => x.Brands[0].IsIranianBrand)</th>
                     <th>@Html.DisplayNameFor(x => x.Brands[0].LogoPicture)</th>
                     <th>@Html.DisplayNameFor(x => x.Brands[0].BrandRegistrationPicture)</th>
-                    <th>@Html.DisplayNameFor(x => x.Brands[0].JudiciaryLink)</th>
                     <th>@Html.DisplayNameFor(x => x.Brands[0].BrandLinkEn)</th>
+                    <th>@Html.DisplayNameFor(x => x.Brands[0].IsConfirmed)</th>
                     <th class="text-center">عملیات</th>
                 </tr>
             </thead>
@@ -61,21 +61,41 @@
                                 <a href="@Item.JudiciaryLink" target="_blank">@Item.JudiciaryLink</a>
                             }
                         </td>
-                        <td>
-                            @if (Item.BrandLinkEn is null)
+                        <td class="text-center">
+                            @if (Item.IsConfirmed)
                             {
-                                @:ثبت نشده است
+
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-check2-circle text-success"></span>
+                                </div>
                             }
                             else
                             {
-                                <a href="@Item.BrandLinkEn" target="_blank">@Item.BrandLinkEn</a>
+                                <div class="d-grid fs-4">
+                                    <span class="bi bi-exclamation-circle text-danger"></span>
+                                </div>
                             }
                         </td>
                         <td class="text-center">
-                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-warning btn-sm show-modal-form-button">
+                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-warning btn-sm m-1 d-inline-block show-modal-form-button">
                                 ویرایش
                                 <span class="bi bi-eraser"></span>
-                            </a>
+                            </a> 
+                            @if (Item.IsConfirmed)
+                            {
+                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="جزییات برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-primary m-1 btn-sm d-inline-block show-modal-form-button">
+                                  جزییات برند
+                                    <span class="bi bi-info"></span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="فعال کردن برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-success btn-sm m-1 d-inline-block show-modal-form-button">
+                                   فعال کردن
+                                    <span class="bi bi-check-square"></span>
+                                </a>
+                            }
+
                         </td>
 
                     </tr>

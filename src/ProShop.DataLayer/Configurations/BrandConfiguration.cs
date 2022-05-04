@@ -22,5 +22,8 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
         builder.HasIndex(c => (new { c.TitleEn})).IsUnique();
         builder.HasIndex(c => (new { c.TitleFa})).IsUnique();
 
+        builder.HasOne(c => c.Seller)
+            .WithMany(c => c.Brands)
+            .HasForeignKey(c => c.SellerId);
     }
 }

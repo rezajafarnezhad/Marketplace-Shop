@@ -86,7 +86,7 @@
                                 افزودن زیر دسته
                                 <span class="bi bi-diagram-3-fill"></span>
                             </a>
-                            <a asp-page-handler="AddBrand" asp-route-categoryId="@Item.Id" class="btn btn-secondary btn-sm d-inline-block  show-modal-form-button">
+                            <a asp-page-handler="AddBrand" asp-route-categoryId="@Item.Id" class="btn btn-secondary m-2 btn-sm d-inline-block  show-modal-form-button">
                                 افزودن برند
                                 <span class="bi bi-globe2"></span>
                             </a>
@@ -108,7 +108,7 @@
         </table>
 
         <!-- Pagination -->
-    <hr />
+   <hr />
         <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
             <div class="btn-group me-2">
                 @if (Model.Pagination.CurrentPage != 1)
@@ -121,7 +121,7 @@
                 @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }

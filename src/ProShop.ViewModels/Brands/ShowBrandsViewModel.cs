@@ -40,6 +40,9 @@ public class ShowBrandViewModel
 
     [Display(Name = "لینک سایت معتبر خارجی")]
     public string BrandLinkEn { get; set; }
+    
+    [Display(Name = "وضعیت")]
+    public bool IsConfirmed { get; set; }
 }
 
 public class SearchBrandsViewModel
@@ -59,6 +62,9 @@ public class SearchBrandsViewModel
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string BrandLinkEn { get; set; }
 
+    [Display(Name = "تایید شده / نشده")]
+    public bool? IsConfirmed { get; set; }
+    
     [Display(Name = "وضعیت حذف شده ها")]
     public DeletedStatus DeletedStatus { get; set; }
 

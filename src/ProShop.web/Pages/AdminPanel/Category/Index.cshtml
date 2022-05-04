@@ -21,9 +21,9 @@
         </div>
 
         <form class="alert alert-secondary Search-form-via-ajax">
-            <input type="hidden" asp-for="CategoriesViewModel.Pagination.CurrentPage"  />
+            <input type="hidden"  asp-for="CategoriesViewModel.Pagination.CurrentPage"  />
             <input type="hidden" asp-for="CategoriesViewModel.Pagination.PageCount"  />
-            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
 
             <h5>
                 جستجو در
@@ -78,7 +78,7 @@
 
 @section Scripts
 {
-<partial name="_ValidationScriptsPartial"  />
+    <partial name="_ValidationScriptsPartial"  />
 <script src="~/lib/tinymce/tinymce.min.js"></script>
 <script src="~/lib/select2/js/select2.min.js"></script>
 <script src="~/lib/select2/js/i18n/fa.min.js"></script>

@@ -19,6 +19,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/BrnadDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxCcm5hZERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Brand/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxCcmFuZFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -97,6 +101,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_RequestForAddBrandPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfUmVxdWVzdEZvckFkZEJyYW5kUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_SelectProductCategoryPartial.cshtml]

@@ -42,6 +42,9 @@ public class AddCategoryViewModel
 
     [Display(Name = "نمایش در منو های اصلی")] 
     public bool IsShowInMenus { get; set; }
+
+    [Display(Name = "آیا میتوان کالای غیر اصل اضافه کرد ؟")]
+    public bool CanAddFakeProduct { get; set; }
     
     [Display(Name = "سردسته")]
 

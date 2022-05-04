@@ -10,8 +10,14 @@ public class Brand : EntityBase, IAuditableEntity
     public string BrandRegistrationPicture { get; set; }
     public string JudiciaryLink { get; set; }
     public string BrandLinkEn { get; set; }
+    public bool IsConfirmed { get; set; }
 
-    public ICollection<CategoryBrand> CategoryBrands { get; set; }
+    /// <summary>
+    /// فروشتده پیشنهاد دهنده این برند
+    /// </summary>
+    public long? SellerId { get; set; }
+    public Seller Seller { get; set; }
+    public ICollection<CategoryBrand> CategoryBrands { get; set; } = new List<CategoryBrand>();
 
 
 }

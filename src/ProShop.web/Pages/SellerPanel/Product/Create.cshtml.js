@@ -1,5 +1,5 @@
-
-
+﻿
+activatingModalForm();
 function getCategories() {
 
     GetHtmlWithAjax(`${location.pathname}?handler=GetCategories`, null, 'showCategories', null);
@@ -7,7 +7,23 @@ function getCategories() {
 $(function () {
 
     getCategories();
+
+    var specialtyCheckTinyMce = tinymce.get('Product_SpecialtyCheck');
+    specialtyCheckTinyMce.settings.images_upload_handler = uploadSpecialtyCheckImages;
+    specialtyCheckTinyMce.settings.max_height = 1000;
+
+    var shortDescriptionTinyMce = tinymce.get('Product_ShortDescription');
+    shortDescriptionTinyMce.settings.images_upload_handler = uploadShortDescriptionImages;
+
 });
+
+function uploadSpecialtyCheckImages(blobInfo, success, failure, progress) {
+    sendTinyMceImagesToServer(blobInfo, success, failure, progress, 'UploadSpecialtyCheckImages');
+}
+
+function uploadShortDescriptionImages(blobInfo, success, failure, progress) {
+    sendTinyMceImagesToServer(blobInfo, success, failure, progress, 'UploadShortDescriptionImages');
+}
 
 
 var selectedCategoriesIds = [];
@@ -78,5 +94,50 @@ function showCategories(data) {
             getCategories();
         }
 
+    });
+}
+
+var requestNewBrandUrl = $('#request-new-brand-url').attr('href');
+
+$('#select-product-category-button').click(function () {
+
+  var categoryId = $('#product-category div.list-group.col-3:last button.active').attr('category-Id');
+    getDateWithAjax(`${location.pathname}?handler=GetCategoryBrands`, { categoryId: categoryId},'showCategoryBrands' )
+    getDateWithAjax(`${location.pathname}?handler=CanAddFakeProduct`, { categoryId: categoryId }, 'changeIsFakeStatus')
+    $('#request-new-brand-url').attr('href', requestNewBrandUrl + '&categoryId=' + categoryId);
+
+});
+
+
+function showCategoryBrands(message,data) {
+
+    $('#add-product-tab button[data-bs-target="#product-info"]').tab('show');
+
+    $('#Product_BrandId option').remove();
+
+    $('#Product_BrandId').append('<option value="0">انتخاب کنید</option>');
+
+    $.each(data, function (Key, value) {
+        $('#Product_BrandId').append(`<option value="${Key}">${value}</option>`);
+    })
+}
+
+function changeIsFakeStatus(message,data) {
+
+    if (data === false) {
+        $('#Product_IsFake').attr('disabled', 'disabled');
+        $('#Product_IsFake').prop('checked', false);
+    } else {
+
+        $('#Product_IsFake').removeAttr('disabled');
+    }
+}
+
+function actionsAfterLoadModalForm() {
+    var IsIranianBrand = $('#IsIranianBrand').is(':checked');
+    $('#IsIranianBrand').parents('.form-switch').find('label').html(IsIranianBrand ? 'ایرانی' : 'خارجی');
+    $('#IsIranianBrand').change(function () {
+        var textReplace = this.checked ? 'ایرانی' : 'خارجی';
+        $(this).parents('.form-switch').find('label').html(textReplace);
     });
 }

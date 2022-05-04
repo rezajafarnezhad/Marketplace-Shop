@@ -121,6 +121,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
             ParentId = c.ParentId,
             Description = c.Description,
             IsShowInMenus = c.IsShowInMenus,
+            CanAddFakeProduct = c.CanAddFakeProduct,
             SelectedPicture = c.Picture,
 
 
@@ -178,8 +179,9 @@ public class CategoryService : GenericService<Category>, ICategoryService
 
     public async Task<List<string>> GetCategoryBrands(long categoryId)
     {
-        return await _categories.Where(c => c.Id == categoryId)
+        return await _categories
             .SelectMany(c => c.CategoryBrands)
+            .Where(c => c.CategoryId == categoryId)
             .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn).ToListAsync();
     }
 
@@ -188,5 +190,10 @@ public class CategoryService : GenericService<Category>, ICategoryService
     {
         return await _categories.Include(c => c.CategoryBrands)
             .SingleOrDefaultAsync(c => c.Id == categotyId);
+    }
+
+    public async Task<bool> CanAddFakeProduct(long categoryId)
+    {
+        return await _categories.Where(c => c.Id == categoryId).AnyAsync(c => c.CanAddFakeProduct);
     }
 }

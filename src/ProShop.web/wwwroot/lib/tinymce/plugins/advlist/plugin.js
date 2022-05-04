@@ -1,193 +1,203 @@
 /**
- * TinyMCE version 6.0.1 (2022-03-23)
+ * Copyright (c) Tiny Technologies, Inc. All rights reserved.
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
+ * For commercial licenses see https://www.tiny.cloud/
+ *
+ * Version: 5.10.2 (2021-11-17)
  */
-
 (function () {
     'use strict';
 
     var global$1 = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-    const applyListFormat = (editor, listName, styleValue) => {
-      const cmd = listName === 'UL' ? 'InsertUnorderedList' : 'InsertOrderedList';
+    var applyListFormat = function (editor, listName, styleValue) {
+      var cmd = listName === 'UL' ? 'InsertUnorderedList' : 'InsertOrderedList';
       editor.execCommand(cmd, false, styleValue === false ? null : { 'list-style-type': styleValue });
     };
 
-    const register$2 = editor => {
-      editor.addCommand('ApplyUnorderedListStyle', (ui, value) => {
+    var register$1 = function (editor) {
+      editor.addCommand('ApplyUnorderedListStyle', function (ui, value) {
         applyListFormat(editor, 'UL', value['list-style-type']);
       });
-      editor.addCommand('ApplyOrderedListStyle', (ui, value) => {
+      editor.addCommand('ApplyOrderedListStyle', function (ui, value) {
         applyListFormat(editor, 'OL', value['list-style-type']);
       });
     };
 
-    const option = name => editor => editor.options.get(name);
-    const register$1 = editor => {
-      const registerOption = editor.options.register;
-      registerOption('advlist_number_styles', {
-        processor: 'string[]',
-        default: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman'.split(',')
-      });
-      registerOption('advlist_bullet_styles', {
-        processor: 'string[]',
-        default: 'default,circle,square'.split(',')
-      });
-    };
-    const getNumberStyles = option('advlist_number_styles');
-    const getBulletStyles = option('advlist_bullet_styles');
-
     var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
 
-    const isNullable = a => a === null || a === undefined;
-    const isNonNullable = a => !isNullable(a);
-
-    class Optional {
-      constructor(tag, value) {
-        this.tag = tag;
-        this.value = value;
-      }
-      static some(value) {
-        return new Optional(true, value);
-      }
-      static none() {
-        return Optional.singletonNone;
-      }
-      fold(onNone, onSome) {
-        if (this.tag) {
-          return onSome(this.value);
-        } else {
-          return onNone();
-        }
-      }
-      isSome() {
-        return this.tag;
-      }
-      isNone() {
-        return !this.tag;
-      }
-      map(mapper) {
-        if (this.tag) {
-          return Optional.some(mapper(this.value));
-        } else {
-          return Optional.none();
-        }
-      }
-      bind(binder) {
-        if (this.tag) {
-          return binder(this.value);
-        } else {
-          return Optional.none();
-        }
-      }
-      exists(predicate) {
-        return this.tag && predicate(this.value);
-      }
-      forall(predicate) {
-        return !this.tag || predicate(this.value);
-      }
-      filter(predicate) {
-        if (!this.tag || predicate(this.value)) {
-          return this;
-        } else {
-          return Optional.none();
-        }
-      }
-      getOr(replacement) {
-        return this.tag ? this.value : replacement;
-      }
-      or(replacement) {
-        return this.tag ? this : replacement;
-      }
-      getOrThunk(thunk) {
-        return this.tag ? this.value : thunk();
-      }
-      orThunk(thunk) {
-        return this.tag ? this : thunk();
-      }
-      getOrDie(message) {
-        if (!this.tag) {
-          throw new Error(message !== null && message !== void 0 ? message : 'Called getOrDie on None');
-        } else {
-          return this.value;
-        }
-      }
-      static from(value) {
-        return isNonNullable(value) ? Optional.some(value) : Optional.none();
-      }
-      getOrNull() {
-        return this.tag ? this.value : null;
-      }
-      getOrUndefined() {
-        return this.value;
-      }
-      each(worker) {
-        if (this.tag) {
-          worker(this.value);
-        }
-      }
-      toArray() {
-        return this.tag ? [this.value] : [];
-      }
-      toString() {
-        return this.tag ? `some(${ this.value })` : 'none()';
-      }
-    }
-    Optional.singletonNone = new Optional(false);
-
-    const isChildOfBody = (editor, elm) => {
-      return editor.dom.isChildOf(elm, editor.getBody());
+    var getNumberStyles = function (editor) {
+      var styles = editor.getParam('advlist_number_styles', 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman');
+      return styles ? styles.split(/[ ,]/) : [];
     };
-    const isTableCellNode = node => {
+    var getBulletStyles = function (editor) {
+      var styles = editor.getParam('advlist_bullet_styles', 'default,circle,square');
+      return styles ? styles.split(/[ ,]/) : [];
+    };
+
+    var noop = function () {
+    };
+    var constant = function (value) {
+      return function () {
+        return value;
+      };
+    };
+    var identity = function (x) {
+      return x;
+    };
+    var never = constant(false);
+    var always = constant(true);
+
+    var none = function () {
+      return NONE;
+    };
+    var NONE = function () {
+      var call = function (thunk) {
+        return thunk();
+      };
+      var id = identity;
+      var me = {
+        fold: function (n, _s) {
+          return n();
+        },
+        isSome: never,
+        isNone: always,
+        getOr: id,
+        getOrThunk: call,
+        getOrDie: function (msg) {
+          throw new Error(msg || 'error: getOrDie called on none.');
+        },
+        getOrNull: constant(null),
+        getOrUndefined: constant(undefined),
+        or: id,
+        orThunk: call,
+        map: none,
+        each: noop,
+        bind: none,
+        exists: never,
+        forall: always,
+        filter: function () {
+          return none();
+        },
+        toArray: function () {
+          return [];
+        },
+        toString: constant('none()')
+      };
+      return me;
+    }();
+    var some = function (a) {
+      var constant_a = constant(a);
+      var self = function () {
+        return me;
+      };
+      var bind = function (f) {
+        return f(a);
+      };
+      var me = {
+        fold: function (n, s) {
+          return s(a);
+        },
+        isSome: always,
+        isNone: never,
+        getOr: constant_a,
+        getOrThunk: constant_a,
+        getOrDie: constant_a,
+        getOrNull: constant_a,
+        getOrUndefined: constant_a,
+        or: self,
+        orThunk: self,
+        map: function (f) {
+          return some(f(a));
+        },
+        each: function (f) {
+          f(a);
+        },
+        bind: bind,
+        exists: bind,
+        forall: bind,
+        filter: function (f) {
+          return f(a) ? me : NONE;
+        },
+        toArray: function () {
+          return [a];
+        },
+        toString: function () {
+          return 'some(' + a + ')';
+        }
+      };
+      return me;
+    };
+    var from = function (value) {
+      return value === null || value === undefined ? NONE : some(value);
+    };
+    var Optional = {
+      some: some,
+      none: none,
+      from: from
+    };
+
+    var isChildOfBody = function (editor, elm) {
+      return editor.$.contains(editor.getBody(), elm);
+    };
+    var isTableCellNode = function (node) {
       return node && /^(TH|TD)$/.test(node.nodeName);
     };
-    const isListNode = editor => node => {
-      return node && /^(OL|UL|DL)$/.test(node.nodeName) && isChildOfBody(editor, node);
+    var isListNode = function (editor) {
+      return function (node) {
+        return node && /^(OL|UL|DL)$/.test(node.nodeName) && isChildOfBody(editor, node);
+      };
     };
-    const getSelectedStyleType = editor => {
-      const listElm = editor.dom.getParent(editor.selection.getNode(), 'ol,ul');
-      const style = editor.dom.getStyle(listElm, 'listStyleType');
+    var getSelectedStyleType = function (editor) {
+      var listElm = editor.dom.getParent(editor.selection.getNode(), 'ol,ul');
+      var style = editor.dom.getStyle(listElm, 'listStyleType');
       return Optional.from(style);
     };
 
-    const findIndex = (list, predicate) => {
-      for (let index = 0; index < list.length; index++) {
-        const element = list[index];
+    var findIndex = function (list, predicate) {
+      for (var index = 0; index < list.length; index++) {
+        var element = list[index];
         if (predicate(element)) {
           return index;
         }
       }
       return -1;
     };
-    const styleValueToText = styleValue => {
-      return styleValue.replace(/\-/g, ' ').replace(/\b\w/g, chr => {
+    var styleValueToText = function (styleValue) {
+      return styleValue.replace(/\-/g, ' ').replace(/\b\w/g, function (chr) {
         return chr.toUpperCase();
       });
     };
-    const isWithinList = (editor, e, nodeName) => {
-      const tableCellIndex = findIndex(e.parents, isTableCellNode);
-      const parents = tableCellIndex !== -1 ? e.parents.slice(0, tableCellIndex) : e.parents;
-      const lists = global.grep(parents, isListNode(editor));
+    var isWithinList = function (editor, e, nodeName) {
+      var tableCellIndex = findIndex(e.parents, isTableCellNode);
+      var parents = tableCellIndex !== -1 ? e.parents.slice(0, tableCellIndex) : e.parents;
+      var lists = global.grep(parents, isListNode(editor));
       return lists.length > 0 && lists[0].nodeName === nodeName;
     };
-    const makeSetupHandler = (editor, nodeName) => api => {
-      const nodeChangeHandler = e => {
-        api.setActive(isWithinList(editor, e, nodeName));
+    var makeSetupHandler = function (editor, nodeName) {
+      return function (api) {
+        var nodeChangeHandler = function (e) {
+          api.setActive(isWithinList(editor, e, nodeName));
+        };
+        editor.on('NodeChange', nodeChangeHandler);
+        return function () {
+          return editor.off('NodeChange', nodeChangeHandler);
+        };
       };
-      editor.on('NodeChange', nodeChangeHandler);
-      return () => editor.off('NodeChange', nodeChangeHandler);
     };
-    const addSplitButton = (editor, id, tooltip, cmd, nodeName, styles) => {
+    var addSplitButton = function (editor, id, tooltip, cmd, nodeName, styles) {
       editor.ui.registry.addSplitButton(id, {
-        tooltip,
+        tooltip: tooltip,
         icon: nodeName === 'OL' ? 'ordered-list' : 'unordered-list',
         presets: 'listpreview',
         columns: 3,
-        fetch: callback => {
-          const items = global.map(styles, styleValue => {
-            const iconStyle = nodeName === 'OL' ? 'num' : 'bull';
-            const iconName = styleValue === 'disc' || styleValue === 'decimal' ? 'default' : styleValue;
-            const itemValue = styleValue === 'default' ? '' : styleValue;
-            const displayText = styleValueToText(styleValue);
+        fetch: function (callback) {
+          var items = global.map(styles, function (styleValue) {
+            var iconStyle = nodeName === 'OL' ? 'num' : 'bull';
+            var iconName = styleValue === 'disc' || styleValue === 'decimal' ? 'default' : styleValue;
+            var itemValue = styleValue === 'default' ? '' : styleValue;
+            var displayText = styleValueToText(styleValue);
             return {
               type: 'choiceitem',
               value: itemValue,
@@ -197,50 +207,55 @@
           });
           callback(items);
         },
-        onAction: () => editor.execCommand(cmd),
-        onItemAction: (_splitButtonApi, value) => {
+        onAction: function () {
+          return editor.execCommand(cmd);
+        },
+        onItemAction: function (_splitButtonApi, value) {
           applyListFormat(editor, nodeName, value);
         },
-        select: value => {
-          const listStyleType = getSelectedStyleType(editor);
-          return listStyleType.map(listStyle => value === listStyle).getOr(false);
+        select: function (value) {
+          var listStyleType = getSelectedStyleType(editor);
+          return listStyleType.map(function (listStyle) {
+            return value === listStyle;
+          }).getOr(false);
         },
         onSetup: makeSetupHandler(editor, nodeName)
       });
     };
-    const addButton = (editor, id, tooltip, cmd, nodeName, _styles) => {
+    var addButton = function (editor, id, tooltip, cmd, nodeName, _styles) {
       editor.ui.registry.addToggleButton(id, {
         active: false,
-        tooltip,
+        tooltip: tooltip,
         icon: nodeName === 'OL' ? 'ordered-list' : 'unordered-list',
         onSetup: makeSetupHandler(editor, nodeName),
-        onAction: () => editor.execCommand(cmd)
+        onAction: function () {
+          return editor.execCommand(cmd);
+        }
       });
     };
-    const addControl = (editor, id, tooltip, cmd, nodeName, styles) => {
+    var addControl = function (editor, id, tooltip, cmd, nodeName, styles) {
       if (styles.length > 1) {
         addSplitButton(editor, id, tooltip, cmd, nodeName, styles);
       } else {
         addButton(editor, id, tooltip, cmd, nodeName);
       }
     };
-    const register = editor => {
+    var register = function (editor) {
       addControl(editor, 'numlist', 'Numbered list', 'InsertOrderedList', 'OL', getNumberStyles(editor));
       addControl(editor, 'bullist', 'Bullet list', 'InsertUnorderedList', 'UL', getBulletStyles(editor));
     };
 
-    var Plugin = () => {
-      global$1.add('advlist', editor => {
+    function Plugin () {
+      global$1.add('advlist', function (editor) {
         if (editor.hasPlugin('lists')) {
-          register$1(editor);
           register(editor);
-          register$2(editor);
+          register$1(editor);
         } else {
           console.error('Please use the Lists plugin together with the Advanced List plugin.');
         }
       });
-    };
+    }
 
     Plugin();
 
-})();
+}());

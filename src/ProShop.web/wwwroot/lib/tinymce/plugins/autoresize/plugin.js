@@ -1,50 +1,74 @@
 /**
- * TinyMCE version 6.0.1 (2022-03-23)
+ * Copyright (c) Tiny Technologies, Inc. All rights reserved.
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
+ * For commercial licenses see https://www.tiny.cloud/
+ *
+ * Version: 5.10.2 (2021-11-17)
  */
-
 (function () {
     'use strict';
 
-    const Cell = initial => {
-      let value = initial;
-      const get = () => {
+    var Cell = function (initial) {
+      var value = initial;
+      var get = function () {
         return value;
       };
-      const set = v => {
+      var set = function (v) {
         value = v;
       };
       return {
-        get,
-        set
+        get: get,
+        set: set
       };
     };
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.PluginManager');
-
-    var global = tinymce.util.Tools.resolve('tinymce.Env');
-
-    const fireResizeEditor = editor => editor.dispatch('ResizeEditor');
-
-    const option = name => editor => editor.options.get(name);
-    const register$1 = editor => {
-      const registerOption = editor.options.register;
-      registerOption('autoresize_overflow_padding', {
-        processor: 'number',
-        default: 1
-      });
-      registerOption('autoresize_bottom_margin', {
-        processor: 'number',
-        default: 50
-      });
+    var hasOwnProperty = Object.hasOwnProperty;
+    var has = function (obj, key) {
+      return hasOwnProperty.call(obj, key);
     };
-    const getMinHeight = option('min_height');
-    const getMaxHeight = option('max_height');
-    const getAutoResizeOverflowPadding = option('autoresize_overflow_padding');
-    const getAutoResizeBottomMargin = option('autoresize_bottom_margin');
 
-    const isFullscreen = editor => editor.plugins.fullscreen && editor.plugins.fullscreen.isFullscreen();
-    const toggleScrolling = (editor, state) => {
-      const body = editor.getBody();
+    var global$2 = tinymce.util.Tools.resolve('tinymce.PluginManager');
+
+    var global$1 = tinymce.util.Tools.resolve('tinymce.Env');
+
+    var global = tinymce.util.Tools.resolve('tinymce.util.Delay');
+
+    var fireResizeEditor = function (editor) {
+      return editor.fire('ResizeEditor');
+    };
+
+    var getAutoResizeMinHeight = function (editor) {
+      return editor.getParam('min_height', editor.getElement().offsetHeight, 'number');
+    };
+    var getAutoResizeMaxHeight = function (editor) {
+      return editor.getParam('max_height', 0, 'number');
+    };
+    var getAutoResizeOverflowPadding = function (editor) {
+      return editor.getParam('autoresize_overflow_padding', 1, 'number');
+    };
+    var getAutoResizeBottomMargin = function (editor) {
+      return editor.getParam('autoresize_bottom_margin', 50, 'number');
+    };
+    var shouldAutoResizeOnInit = function (editor) {
+      return editor.getParam('autoresize_on_init', true, 'boolean');
+    };
+
+    var isFullscreen = function (editor) {
+      return editor.plugins.fullscreen && editor.plugins.fullscreen.isFullscreen();
+    };
+    var wait = function (editor, oldSize, times, interval, callback) {
+      global.setEditorTimeout(editor, function () {
+        resize(editor, oldSize);
+        if (times--) {
+          wait(editor, oldSize, times, interval, callback);
+        } else if (callback) {
+          callback();
+        }
+      }, interval);
+    };
+    var toggleScrolling = function (editor, state) {
+      var body = editor.getBody();
       if (body) {
         body.style.overflowY = state ? '' : 'hidden';
         if (!state) {
@@ -52,22 +76,21 @@
         }
       }
     };
-    const parseCssValueToInt = (dom, elm, name, computed) => {
-      const value = parseInt(dom.getStyle(elm, name, computed), 10);
+    var parseCssValueToInt = function (dom, elm, name, computed) {
+      var value = parseInt(dom.getStyle(elm, name, computed), 10);
       return isNaN(value) ? 0 : value;
     };
-    const shouldScrollIntoView = trigger => {
+    var shouldScrollIntoView = function (trigger) {
       if ((trigger === null || trigger === void 0 ? void 0 : trigger.type.toLowerCase()) === 'setcontent') {
-        const setContentEvent = trigger;
+        var setContentEvent = trigger;
         return setContentEvent.selection === true || setContentEvent.paste === true;
       } else {
         return false;
       }
     };
-    const resize = (editor, oldSize, trigger) => {
-      var _a;
-      const dom = editor.dom;
-      const doc = editor.getDoc();
+    var resize = function (editor, oldSize, trigger) {
+      var dom = editor.dom;
+      var doc = editor.getDoc();
       if (!doc) {
         return;
       }
@@ -75,23 +98,22 @@
         toggleScrolling(editor, true);
         return;
       }
-      const docEle = doc.documentElement;
-      const resizeBottomMargin = getAutoResizeBottomMargin(editor);
-      const minHeight = (_a = getMinHeight(editor)) !== null && _a !== void 0 ? _a : editor.getElement().offsetHeight;
-      let resizeHeight = minHeight;
-      const marginTop = parseCssValueToInt(dom, docEle, 'margin-top', true);
-      const marginBottom = parseCssValueToInt(dom, docEle, 'margin-bottom', true);
-      let contentHeight = docEle.offsetHeight + marginTop + marginBottom + resizeBottomMargin;
+      var docEle = doc.documentElement;
+      var resizeBottomMargin = getAutoResizeBottomMargin(editor);
+      var resizeHeight = getAutoResizeMinHeight(editor);
+      var marginTop = parseCssValueToInt(dom, docEle, 'margin-top', true);
+      var marginBottom = parseCssValueToInt(dom, docEle, 'margin-bottom', true);
+      var contentHeight = docEle.offsetHeight + marginTop + marginBottom + resizeBottomMargin;
       if (contentHeight < 0) {
         contentHeight = 0;
       }
-      const containerHeight = editor.getContainer().offsetHeight;
-      const contentAreaHeight = editor.getContentAreaContainer().offsetHeight;
-      const chromeHeight = containerHeight - contentAreaHeight;
-      if (contentHeight + chromeHeight > minHeight) {
+      var containerHeight = editor.getContainer().offsetHeight;
+      var contentAreaHeight = editor.getContentAreaContainer().offsetHeight;
+      var chromeHeight = containerHeight - contentAreaHeight;
+      if (contentHeight + chromeHeight > getAutoResizeMinHeight(editor)) {
         resizeHeight = contentHeight + chromeHeight;
       }
-      const maxHeight = getMaxHeight(editor);
+      var maxHeight = getAutoResizeMaxHeight(editor);
       if (maxHeight && resizeHeight > maxHeight) {
         resizeHeight = maxHeight;
         toggleScrolling(editor, true);
@@ -99,26 +121,26 @@
         toggleScrolling(editor, false);
       }
       if (resizeHeight !== oldSize.get()) {
-        const deltaSize = resizeHeight - oldSize.get();
+        var deltaSize = resizeHeight - oldSize.get();
         dom.setStyle(editor.getContainer(), 'height', resizeHeight + 'px');
         oldSize.set(resizeHeight);
         fireResizeEditor(editor);
-        if (global.browser.isSafari() && (global.os.isMacOS() || global.os.isiOS())) {
-          const win = editor.getWin();
+        if (global$1.browser.isSafari() && global$1.mac) {
+          var win = editor.getWin();
           win.scrollTo(win.pageXOffset, win.pageYOffset);
         }
         if (editor.hasFocus() && shouldScrollIntoView(trigger)) {
           editor.selection.scrollIntoView();
         }
-        if ((global.browser.isSafari() || global.browser.isChromium()) && deltaSize < 0) {
+        if (global$1.webkit && deltaSize < 0) {
           resize(editor, oldSize, trigger);
         }
       }
     };
-    const setup = (editor, oldSize) => {
-      editor.on('init', () => {
-        const overflowPadding = getAutoResizeOverflowPadding(editor);
-        const dom = editor.dom;
+    var setup = function (editor, oldSize) {
+      editor.on('init', function () {
+        var overflowPadding = getAutoResizeOverflowPadding(editor);
+        var dom = editor.dom;
         dom.setStyles(editor.getDoc().documentElement, { height: 'auto' });
         dom.setStyles(editor.getBody(), {
           'paddingLeft': overflowPadding,
@@ -126,31 +148,37 @@
           'min-height': 0
         });
       });
-      editor.on('NodeChange SetContent keyup FullscreenStateChanged ResizeContent', e => {
+      editor.on('NodeChange SetContent keyup FullscreenStateChanged ResizeContent', function (e) {
         resize(editor, oldSize, e);
       });
+      if (shouldAutoResizeOnInit(editor)) {
+        editor.on('init', function () {
+          wait(editor, oldSize, 20, 100, function () {
+            wait(editor, oldSize, 5, 1000);
+          });
+        });
+      }
     };
 
-    const register = (editor, oldSize) => {
-      editor.addCommand('mceAutoResize', () => {
+    var register = function (editor, oldSize) {
+      editor.addCommand('mceAutoResize', function () {
         resize(editor, oldSize);
       });
     };
 
-    var Plugin = () => {
-      global$1.add('autoresize', editor => {
-        register$1(editor);
-        if (!editor.options.isSet('resize')) {
-          editor.options.set('resize', false);
+    function Plugin () {
+      global$2.add('autoresize', function (editor) {
+        if (!has(editor.settings, 'resize')) {
+          editor.settings.resize = false;
         }
         if (!editor.inline) {
-          const oldSize = Cell(0);
+          var oldSize = Cell(0);
           register(editor, oldSize);
           setup(editor, oldSize);
         }
       });
-    };
+    }
 
     Plugin();
 
-})();
+}());
