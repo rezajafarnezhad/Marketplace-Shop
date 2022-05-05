@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="my-2 col-md-12 col-lg-12">
                                     <label class="d-flex justify-content-between form-label" asp-for="Product.ShortDescription"></label>
-                                    <textarea add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
+                                    <textarea upload-image-url="UploadShortDescriptionImages" add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
                                 </div>
                             </div>
                             <button class="btn btn-info">ثبت</button>
@@ -101,7 +101,7 @@
                                 <div class="my-2">
                                     <label class="d-flex justify-content-between form-label" asp-for="Product.SpecialtyCheck">
                                     </label>
-                                    <textarea add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
+                                    <textarea upload-image-url="UploadSpecialtyCheckImages" add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
                                 </div>
                                 <button class="btn btn-primary">send</button>
                             </div>

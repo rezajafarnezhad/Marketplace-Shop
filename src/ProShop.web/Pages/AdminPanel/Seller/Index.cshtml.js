@@ -1,6 +1,9 @@
-﻿fillDataTable();
-appendHtmlModalPlaceToBody();
+﻿
+$(function () {
+    fillDataTable();
+    appendHtmlModalPlaceToBody();
 
+});
 function getSellerDetails(e) {
 
     var SellerId = $(e).attr('sellerId');

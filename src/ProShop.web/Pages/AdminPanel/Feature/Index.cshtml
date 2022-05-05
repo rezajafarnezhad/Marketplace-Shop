@@ -12,7 +12,12 @@
         </h5>
 
         <div class="d-grid d-lg-block mb-2 text-end">
-            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button">
+          
+            <a  asp-page-handler="Add" id="add-feature-for-selected-category" class="btn btn-outline-secondary show-modal-form-button d-none text-start">
+              
+            </a>
+
+            <a id="add-feature-for-category" asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button">
                 افزودن ویژگی دسته بندی
                 <span class="bi bi-plus-circle mt-5"></span>
             </a>

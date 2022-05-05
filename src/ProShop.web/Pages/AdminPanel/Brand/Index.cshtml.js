@@ -1,6 +1,7 @@
-﻿fillDataTable();
+﻿$(function () {
+    fillDataTable();
 
-
+});
 
 function actionsAfterLoadModalForm() {
     var IsIranianBrand = $('#IsIranianBrand').is(':checked');

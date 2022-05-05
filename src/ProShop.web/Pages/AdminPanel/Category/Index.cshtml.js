@@ -1,6 +1,8 @@
-﻿fillDataTable();
+﻿
+$(function () {
+    fillDataTable();
 
-
+});
 
 var brandBox =
     ` <div class="btn-group mb-3">

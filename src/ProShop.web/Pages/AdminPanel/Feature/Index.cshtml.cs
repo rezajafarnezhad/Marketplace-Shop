@@ -64,11 +64,12 @@ namespace ProShop.web.Pages.AdminPanel.Feature
             return Json(new JsonResultOperation(true, "ویژگی دسته بندی مورد نظر با موفقیت حذف شد"));
 
         }
-        public async Task<IActionResult> OnGetAdd()
+        public async Task<IActionResult> OnGetAdd(long categoryId)
         {
             var categories = _categoryService.GetCategoriesToShowInSelectBox();
             var model = new AddFeatureViewModel()
             {
+                CategoryId = categoryId,
                 Categories = categories.CreateSelectListItem()
             };
             return Partial("Add", model);
