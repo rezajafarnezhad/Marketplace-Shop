@@ -11,13 +11,15 @@
         </div>
     </div>
     <div class="card-body">
-        <form method="post">
+        <form method="post" call-function-in-the-end="CreateProduct" asp-page="./Create" class="public-ajax-form">
             <nav>
                 <div class="nav nav-tabs nav-fill" id="add-product-tab">
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#product-category" type="button" role="tab" aria-controls="nav-home" aria-selected="true">انتخاب گروه کالا</button>
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-info" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">درج اطلاعات کالا</button>
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#specialty-check" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">بررسی تخصصی</button>
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contract" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">تب سوم</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Productfeatures" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">ویژگی های کالا</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-images" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">بارگذاری تصاویر</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-Title" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">عنوان کالا</button>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="product-category">
@@ -59,36 +61,38 @@
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
                                     <label class="d-flex justify-content-between form-label" asp-for="Product.BrandId">
-                                        <div>اصالت کالا</div>
-                                        <a id="request-new-brand-url" asp-page-handler="RequestForAddBrand" class="text-info border-bottom-dashed show-modal-form-button">
+                                        <div>برند کالا</div>
+                                        <a id="request-new-brand-url" asp-page-handler="RequestForAddBrand" class="text-info border-bottom-dashed show-modal-form-button" functionNameToCallInTheEnd="RequestForAddBrandFunction">
                                             درخواست برند جدید
                                         </a>
                                     </label>
-                                    <select class="custom-select2 form-select" asp-for="Product.BrandId"></select>
-                                    <span class="span-error-message" asp-validation-for="Product.BrandId"></span>
+                                    <select class="form-select custom-select2" asp-for="Product.BrandId">
+                                        <option value="0">انتخاب کنید</option>
+                                    </select>
+                                    <span asp-validation-for="Product.BrandId" class="span-error-message"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackWidth">وزن بسته بندی(گرم)</label>
+                                    <label class="form-label" asp-for="Product.PackWidth">وزن بسته بندی(گرم)</label>
                                     <input class="form-control" asp-for="Product.PackWidth" />
                                     <span class="span-error-message" asp-validation-for="Product.PackWidth"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackWidth">عرض بسته بندی(سانتی متر)</label>
+                                    <label class="form-label" asp-for="Product.PackWidth">عرض بسته بندی(سانتی متر)</label>
                                     <input class="form-control" asp-for="Product.PackWidth" />
                                     <span class="span-error-message" asp-validation-for="Product.PackWidth"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackHeight">ارتفاع بسته بندی(سانتی متر)</label>
+                                    <label class="form-label" asp-for="Product.PackHeight">ارتفاع بسته بندی(سانتی متر)</label>
                                     <input class="form-control" asp-for="Product.PackHeight" />
                                     <span class="span-error-message" asp-validation-for="Product.PackHeight"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.PackLength">طول بسته بندی(سانتی متر)</label>
+                                    <label class="form-label" asp-for="Product.PackLength">طول بسته بندی(سانتی متر)</label>
                                     <input class="form-control" asp-for="Product.PackLength" />
                                     <span class="span-error-message" asp-validation-for="Product.PackLength"></span>
                                 </div>
                                 <div class="my-2 col-md-12 col-lg-12">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.ShortDescription"></label>
+                                    <label class="form-label" asp-for="Product.ShortDescription"></label>
                                     <textarea upload-image-url="UploadShortDescriptionImages" add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
                                 </div>
                             </div>
@@ -99,11 +103,53 @@
                         <div class="card">
                             <div class="card-body row">
                                 <div class="my-2">
-                                    <label class="d-flex justify-content-between form-label" asp-for="Product.SpecialtyCheck">
+                                    <label class="form-label" asp-for="Product.SpecialtyCheck">
                                     </label>
                                     <textarea upload-image-url="UploadSpecialtyCheckImages" add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
                                 </div>
                                 <button class="btn btn-primary">send</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Productfeatures">
+                        <div class="card">
+                            <div class="card-body row">
+
+                                <button class="btn btn-primary">send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="product-images">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="my-2">
+                                    <label class="form-label" asp-for="Product.ProductImageFiles"></label>
+                                    <input class="form-control multiple-images-preivew-input" asp-for="Product.ProductImageFiles" images-preview-box="product-images-preview-box" />
+                                    <span class="span-error-message" asp-validation-for="Product.ProductImageFiles"></span>
+                                </div>
+                                <div class="my-2" id="product-images-preview-box" style="display: contents">
+                                </div>
+                                <button class="btn btn-primary mt-5">send</button>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="tab-pane fade" id="product-Title">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="my-2 col-md-6">
+                                    <label class="form-label" asp-for="Product.PersianTitle"></label>
+                                  
+                                    <input placeholder="ماهیت کالا + برند کالا + کلمه &quot;مدل&quot; + مدل کالا" asp-for="Product.PersianTitle" class="form-control" />
+                                    <span class="span-error-message" asp-validation-for="Product.PersianTitle"></span>
+                                </div>
+                                <div class="my-2 col-md-6">
+                                    <label class="form-label" asp-for="Product.EnglishTitle"></label>
+                                    <input class="form-control" asp-for="Product.EnglishTitle" />
+                                    <span class="span-error-message" asp-validation-for="Product.EnglishTitle"></span>
+                                </div>
+                                <button class="btn btn-primary mt-5">send</button>
                             </div>
                         </div>
                     </div>

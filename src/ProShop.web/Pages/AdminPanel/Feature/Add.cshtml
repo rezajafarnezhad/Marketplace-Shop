@@ -1,6 +1,6 @@
 ﻿@model ProShop.ViewModels.Features.AddFeatureViewModel
 
-<form close-when-done="false" class="alert alert-secondary custom-ajax-form" asp-page-handler="Add" method="post">
+<form close-when-done="false" call-function-in-the-end="CreateFeature" class="alert alert-secondary custom-ajax-form" asp-page-handler="Add" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
         <div class="col-6 col-sm-12 col-lg-6 my-2">

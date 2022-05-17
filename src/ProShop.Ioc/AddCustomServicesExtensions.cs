@@ -60,6 +60,7 @@ public static class AddCustomServicesExtensions
         services.AddScoped<IProvinceAndCityService, ProvinceAndCityService>();
         services.AddScoped<ISellerService,SellerService>();
         services.AddScoped<IBrandService, BrandService>();
+        services.AddScoped<IFeatureConstantValuesService,FeatureConstantValuesService>();
 
         #region Html sanitizer
         IHtmlSanitizer sanitizer = new HtmlSanitizer();

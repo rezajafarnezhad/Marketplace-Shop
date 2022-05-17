@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using ProShop.Common.Attributes;
 
 public static class ExpressionHelpers
 {
@@ -22,5 +23,92 @@ public static class ExpressionHelpers
         IOrderedQueryable<T> result = null;
         result = isAsc == "Asc" ? query.OrderBy(exp) : query.OrderByDescending(exp);
         return result;
+    }
+
+    public static IQueryable<T> CreateContainsExpressions<T>(this IQueryable<T> query, object model)
+    {
+        var result = query;
+        var propertiesToSearch = model.GetType().GetProperties()
+            .Where(c => Attribute.IsDefined(c, typeof(ContainsSearchAttribute))).ToList();
+        if (propertiesToSearch.Count > 0)
+        {
+            foreach (var propertyInfo in propertiesToSearch)
+            {
+                var propertyValue = propertyInfo.GetValue(model);
+                if (!string.IsNullOrWhiteSpace(propertyValue?.ToString()))
+                {
+                    var parameter = Expression.Parameter(typeof(T));
+                    var property = Expression.Property(parameter, propertyInfo.Name);
+                    if (propertyValue is string)
+                        propertyValue = propertyValue.ToString()?.Trim();
+
+                    var constantValue = Expression.Constant(propertyValue);
+                    var method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                    var containsMethodExp = Expression.Call(property, method, constantValue);
+                    var exp = Expression.Lambda<Func<T, bool>>(containsMethodExp, parameter);
+                    result = result.Where(exp);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static IQueryable<T> CreateEqualExpressions<T>(this IQueryable<T> query, object model)
+    {
+        var result = query;
+        var propertiesToSearch = model.GetType().GetProperties()
+            .Where(c => Attribute.IsDefined(c, typeof(EqualSearchAttribute))).ToList();
+        if (propertiesToSearch.Count > 0)
+        {
+            foreach (var propertyInfo in propertiesToSearch)
+            {
+                var propertyValue = propertyInfo.GetValue(model);
+                if (!string.IsNullOrWhiteSpace(propertyValue?.ToString()))
+                {
+                    var parameter = Expression.Parameter(typeof(T));
+                    var property = Expression.Property(parameter, propertyInfo.Name);
+                    if (propertyValue is string)
+                        propertyValue = propertyValue.ToString()?.Trim();
+
+                    var constantValue = Expression.Constant(propertyValue);
+                    var equal = Expression.Equal(property, constantValue);
+                    var exp = Expression.Lambda<Func<T, bool>>(equal, parameter);
+                    result = result.Where(exp);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static IQueryable<T> CreateDeletedStatusExpression<T>(this IQueryable<T> query, object model)
+    {
+        var result = query;
+        var deletedStatusValue = model.GetType().GetProperty("DeletedStatus")!.GetValue(model)!.ToString();
+        if (deletedStatusValue != "True")
+        {
+            var finalValue = deletedStatusValue == "OnlyDeleted";
+            var parameter = Expression.Parameter(typeof(T));
+            var property = Expression.Property(parameter, "IsDeleted");
+            var constantValue = Expression.Constant(finalValue);
+            var equal = Expression.Equal(property, constantValue);
+            var exp = Expression.Lambda<Func<T, bool>>(equal, parameter);
+            result = result.Where(exp);
+
+        }
+        return result;
+    }
+
+    public static IQueryable<T> CreateSearchExpressions<T>(this IQueryable<T> query, object model,bool callDeletedStatusExpression = true)
+    {
+        var equalExpressions = CreateEqualExpressions(query, model);
+        var containsExpressions = CreateContainsExpressions(equalExpressions, model);
+        if (callDeletedStatusExpression)
+        {
+            return CreateDeletedStatusExpression(containsExpressions, model);
+        }
+
+        return containsExpressions;
     }
 }

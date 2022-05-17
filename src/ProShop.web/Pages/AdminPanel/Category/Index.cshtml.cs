@@ -212,12 +212,10 @@ namespace ProShop.web.Pages.AdminPanel.Category
             _Category.CategoryBrands.Clear();
             model.Brands = model.Brands.Distinct().ToList();
             var brandIdes = await _brandService.GetBrandIdsByList(model.Brands);
-            brandIdes.ForEach(bid=>_Category.CategoryBrands.Add(new CategoryBrand()
+            brandIdes.ForEach(bid=> _Category.CategoryBrands.Add(new CategoryBrand()
             {
                 BrandId = bid,
-                
             }));
-
             await _unitOfWork.SaveChangesAsync();
             return Json(new JsonResultOperation(true, "برند های مورد نظر با موفقیت به دسته بندی مذکور اضافه گردید"));
         }

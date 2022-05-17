@@ -19,12 +19,12 @@ public class FeatureService : GenericService<Feature>, IFeatureService
     {
         var features = _features.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(model.SearchFeature.Title))
-            features = features.Where(c => c.Title.Contains(model.SearchFeature.Title));
+        features = features.CreateContainsExpressions(model.SearchFeature);
 
-        features = features.SelectMany(c => c.CategoryFeatures)
-            .Where(c => c.CategoryId == model.SearchFeature.CategoryId)
-            .Select(c => c.Feature);
+        features = features.SelectMany(x => x.CategoryFeatures)
+            .Where(x => x.CategoryId == model.SearchFeature.CategoryId)
+            .Select(x => x.Feature);
+
 
         features = features.CreateOrderByExpression(model.SearchFeature.Sorting.ToString(),
             model.SearchFeature.SortingOrder.ToString());
@@ -62,17 +62,4 @@ public class FeatureService : GenericService<Feature>, IFeatureService
        
         return data;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

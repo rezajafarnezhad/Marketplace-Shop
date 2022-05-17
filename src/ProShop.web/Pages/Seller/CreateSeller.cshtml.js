@@ -123,7 +123,7 @@ function putCitiesInTheSelectBox(message,data) {
 
     $('#CreateSeller_CityId option').remove();
 
-    $('#CreateSeller_CityId').append('<option value="0">اتنخاب کنید</option>');
+    $('#CreateSeller_CityId').append('<option value="0">انتخاب کنید</option>');
 
     $.each(data, function (Key, value) {
         $('#CreateSeller_CityId').append(`<option value="${Key}">${value}</option>`);

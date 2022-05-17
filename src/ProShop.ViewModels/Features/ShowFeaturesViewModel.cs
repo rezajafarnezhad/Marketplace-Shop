@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ProShop.Common.Attributes;
 using ProShop.Common.Constants;
 
 namespace ProShop.ViewModels.Features;
@@ -24,8 +25,9 @@ public class SearchFeatureViewModel
     public long CategoryId { get; set; }
 
     [Display(Name = "عنوان")]
+    [ContainsSearch]
     [MaxLength(150,ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
-    public string? Title { get; set; }
+    public string Title { get; set; }
 
     public List<SelectListItem> Categories { get; set; } = new();
 

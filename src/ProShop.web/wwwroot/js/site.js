@@ -139,7 +139,7 @@ function sendTinyMceImagesToServer(blobInfo, success, failure, progress, url) {
 };
 function initializeTinyMCE() {
 
-    $('textarea.custom-tinymce').each(function() {
+    $('textarea.custom-tinymce').each(function () {
 
         var textareaId = `#${$(this).attr('id')}`;
         if ($('textarea.custom-tinymce').length > 0) {
@@ -184,7 +184,7 @@ function initializeTinyMCE() {
         }
     });
 
- 
+
 
 }
 
@@ -282,14 +282,17 @@ if (jQuery.validator) {
 
     // isImage
     jQuery.validator.addMethod('isImage', function (value, element, param) {
-        var selectedFile = element.files[0];
-        if (selectedFile === undefined) {
+        var selectedFiles = element.files;
+        if (selectedFiles[0] === undefined) {
             return true;
         }
         var whiteListExtensions = $(element).data('val-whitelistextensions').split(',');
-        if (!whiteListExtensions.includes(selectedFile.type)) {
-            return false;
+        for (var counter = 0; counter < selectedFiles.length; counter++) {
+            if (!whiteListExtensions.includes(selectedFiles[counter].type)) {
+                return false;
+            }
         }
+
         var currentElementId = $(element).attr('id');
         var currentForm = $(element).parents('form');
 
@@ -298,16 +301,21 @@ if (jQuery.validator) {
             return false;
         }
 
-        if ($('#image-preview-box-temp').length === 0) {
-            $('body').append('<img class="d-none" id="image-preview-box-temp" />');
+        $('[id^="image-preview-box-temp"]').remove();
+
+        for (var counter = 0; counter < selectedFiles.length; counter++) {
+            $('body').append(`<img class="d-none" id="image-preview-box-temp-${counter}" />`);
         }
-        $('#image-preview-box-temp').attr('src', URL.createObjectURL(selectedFile));
-        $('#image-preview-box-temp').off('error');
-        $('#image-preview-box-temp').on('error',
-            function () {
-                imageInputsWithProblems.push(currentElementId);
-                currentForm.validate().element(`#${currentElementId}`);
-            });
+
+        for (var counter = 0; counter < selectedFiles.length; counter++) {
+            $(`#image-preview-box-temp-${counter}`).attr('src', URL.createObjectURL(selectedFiles[counter]));
+            $(`#image-preview-box-temp-${counter}`).off('error');
+            $(`#image-preview-box-temp-${counter}`).on('error',
+                function () {
+                    imageInputsWithProblems.push(currentElementId);
+                    currentForm.validate().element(`#${currentElementId}`);
+                });
+        }
         return true;
     });
     jQuery.validator.unobtrusive.adapters.addBool('isImage');
@@ -401,8 +409,8 @@ function initializingAutocomplete() {
             source: `${location.pathname}?handler=AutocompleteSearch`,
             minLength: 2,
             delay: 500,
-            select: function(event, ui) {
-                window['onAutocompleteSelect'](event , ui);
+            select: function (event, ui) {
+                window['onAutocompleteSelect'](event, ui);
 
             }
         });
@@ -419,6 +427,7 @@ function activatingModalForm() {
         e.preventDefault();
         var Url = $(this).attr('href');
         var customtitle = $(this).attr('custom-title');
+        var functionNameToCallInTheEnd = $(this).attr('functionNameToCallInTheEnd');
         if (customtitle == undefined) {
             customtitle = $(this).text().trim();
         }
@@ -437,8 +446,8 @@ function activatingModalForm() {
                 initializeTinyMCE();
                 activatingInputAttributes();
                 initializeSelect2();
-                if (typeof actionsAfterLoadModalForm === 'function') {
-                    actionsAfterLoadModalForm();
+                if (typeof window[functionNameToCallInTheEnd] === 'function') {
+                    window[functionNameToCallInTheEnd](data);
                 }
                 $("#form-modal-place").modal("show");
             }
@@ -464,6 +473,7 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
     e.preventDefault();
     var currentForm = $(this);
     var closewhedone = currentForm.attr('close-when-done');
+    var functionName = currentForm.attr('call-function-in-the-end');
     var formAction = currentForm.attr("action");
     var formdata = new FormData(this);
     $.ajax({
@@ -492,6 +502,10 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
                     $("#form-modal-place").modal("hide");
                 }
                 showToastr('success', data.message);
+                if (functionName) {
+                    window[functionName](data.message, data.data);
+
+                }
             }
         },
         complete: function () {
@@ -537,23 +551,23 @@ function fillDataTable() {
 
     const formData = currentForm.serializeArray();
 
-    $.get(`${location.pathname}?handler=GetDataTable`, formData, function(data, status) {
-            if (data.isSuccessful === false) {
-                fillValidationForm(data.data, currentForm);
-                showToastr('warning', data.message);
-            } else {
-                $('.read-data-table').append(data);
-                activatingPagination();
-                activatingGotoPage();
-                activatingModalForm();
-                activatingPageCount();
-                activatingDeleteButtons();
-                enablingTooltips();
-                activatingGetHtmlWithAjax();
-            }
-        }).fail(function() {
+    $.get(`${location.pathname}?handler=GetDataTable`, formData, function (data, status) {
+        if (data.isSuccessful === false) {
+            fillValidationForm(data.data, currentForm);
+            showToastr('warning', data.message);
+        } else {
+            $('.read-data-table').append(data);
+            activatingPagination();
+            activatingGotoPage();
+            activatingModalForm();
+            activatingPageCount();
+            activatingDeleteButtons();
+            enablingTooltips();
+            activatingGetHtmlWithAjax();
+        }
+    }).fail(function () {
         ShowErrorMessage();
-    }).always(function() {
+    }).always(function () {
         $('.Search-form-loading').removeAttr('disabled');
         $('.data-table-loading').addClass('d-none');
     });
@@ -733,19 +747,12 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
 // شما نیز ایمیل را وارد میکنید
 // اما در قسمت بالای صفحه همچنان متن "لطفا ایمیل را وارد کنید" وجود دارد
 // برای اینکه این مشکل حل شود از این کد استفاده میکنیم
-$('form input').blur(function () {
+
+$(document).on('change', 'form input.custom-md-persian-datepicker,form select,form input[type="checkbox"] ,input[type="file"] ', function () {
     $(this).parents('form').valid();
 });
 
-$('form input.custom-md-persian-datepicker').change(function () {
-    $(this).parents('form').valid();
-});
-
-$('form select').change(function () {
-    $(this).parents('form').valid();
-});
-
-$('form input[type="checkbox"] ,input[type="file"] ').change(function () {
+$(document).on('blur', 'form input', function () {
     $(this).parents('form').valid();
 });
 
@@ -758,6 +765,10 @@ function activatingGetHtmlWithAjax() {
         window[funcToCall](this);
     });
 }
+
+
+
+
 
 // خواندن صفحات
 // html
@@ -795,7 +806,7 @@ function activatingInputAttributes() {
 
 
 // نمایش پیش نمایش عکس
-$('.image-preivew-input').change(function() {
+$('.image-preivew-input').change(function () {
     var selectedFile = this.files[0];
     var imagePreviewBox = $(this).attr('image-preview-box');
     if (selectedFile && selectedFile.size > 0) {
@@ -807,13 +818,61 @@ $('.image-preivew-input').change(function() {
     }
 });
 
+//چند عکسی پیش نمایش 
+$('.multiple-images-preivew-input').change(function () {
 
-$(function() {
+    var selectedFiles = this.files;
+    var imagesPreviewBox = $(this).attr('images-preview-box');
+    $(`#${imagesPreviewBox}`).html('');
+    if (selectedFiles && selectedFiles.length > 0) {
+        $(`#${imagesPreviewBox}`).removeClass('d-none');
+        for (var i = 0; i < selectedFiles.length; i++) {
+
+            $(`#${imagesPreviewBox}`).append(`
+        <div class="my-2 col-md-3 text-center content_img">
+        <img class="Images_preview" idImg="image-preview-box-temp-${i}" src="" "/>
+ <div>جهت حدف کلیک کنید</div>
+        </div>`);
+            $(`#${imagesPreviewBox} img:last`).attr('src', URL.createObjectURL(selectedFiles[i]));
+        }
+    } else {
+        $(`#${imagesPreviewBox}`).html('');
+        $(`#${imagesPreviewBox}`).addClass('d-none');
+    }
+});
+
+
+$(document).on('click', '.Images_preview', function () {
+
+    var ImageID = $(this).attr('idImg');
+
+    Swal.fire({
+        title: 'اعلان',
+        text: 'آیا مطمئن به حذف هستید ؟',
+        icon: 'warning',
+        confirmButtonText: 'بله',
+        showDenyButton: true,
+        denyButtonText: 'خیر',
+        confirmButtonColor: '#067719',
+        allowOutsideClick: false
+
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $(`[id^='${ImageID}']`).remove();
+            $(this).parent('.content_img').remove();
+
+        }
+    });
+
+});
+
+
+$(function () {
     activatingInputAttributes();
     initializeSelect2WithoutModal();
     initializeTinyMCE();
     enablingTooltips();
-    $('textarea[add-image-plugin="true"]').each(function() {
+    $('textarea[add-image-plugin="true"]').each(function () {
 
         var elementId = $(this).attr('id');
         var currentTinyMce = tinymce.get(elementId);

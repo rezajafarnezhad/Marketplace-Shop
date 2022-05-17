@@ -8,6 +8,7 @@ using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Brands;
+using ProShop.ViewModels.CategoryFeatures;
 using ProShop.ViewModels.Product;
 
 namespace ProShop.web.Pages.SellerPanel.Product;
@@ -21,8 +22,11 @@ public class CreateModel : SellerPanelBase
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUploadFileService _fileService;
     private readonly ISellerService  _sellerService;
+    private readonly ICategoryFeatureService _categoryFeatureService;
+  
+    [BindProperty]
     public AddProductViewModel Product { get; set; }
-    public CreateModel(ICategoryService categoryService, IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService, ISellerService sellerService)
+    public CreateModel(ICategoryService categoryService, IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService, ISellerService sellerService, ICategoryFeatureService categoryFeatureService)
     {
         _categoryService = categoryService;
         _brandService = brandService;
@@ -30,7 +34,23 @@ public class CreateModel : SellerPanelBase
         _unitOfWork = unitOfWork;
         _fileService = fileService;
         _sellerService = sellerService;
+        _categoryFeatureService = categoryFeatureService;
     }
+
+    public void OnGet()
+    {
+
+    }
+
+    public IActionResult OnPost()
+    {
+        return Json(new JsonResultOperation(true, "")
+        {
+            Data = ""
+        });
+
+    }
+
 
     public async Task<IActionResult> OnGetGetCategories(long[]? selectedCategoriesIds)
     {
@@ -154,5 +174,11 @@ public class CreateModel : SellerPanelBase
             });
         }
         return Json(false);
+    }
+
+    public async Task<IActionResult> OnGetGetCategoryFeatures(long categoryId)
+    {
+        var model = await _categoryFeatureService.GetCategoryFeatures(categoryId);
+        return Partial("_showCategoryFeaturesPartial",model);
     }
 }

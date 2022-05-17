@@ -3,6 +3,8 @@ using ProShop.Common.Helpers;
 using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Categories;
+using ProShop.ViewModels.CategoryFeatures;
+using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Sellers;
 
 namespace ProShop.web.Mappings;
@@ -48,6 +50,14 @@ public class MappingProfile : Profile
             .AddTransform<string>(str => str != null ? str.Trim() : null);
         
         this.CreateMap<Entities.Brand ,BrandDetailsViewModel>();
-            
+        this.CreateMap<Entities.CategoryFeature,CategoryFeatureForCreateProductViewModel>();
+        this.CreateMap<Entities.FeatureConstantValue,ShowFeatureConstantValueViewModel>();
+
+        this.CreateMap<AddFeatureConstantValue,Entities.FeatureConstantValue>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.FeatureConstantValue,EditFeatureConstantValue>();
+        this.CreateMap<EditFeatureConstantValue,Entities.FeatureConstantValue>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
     }
 }

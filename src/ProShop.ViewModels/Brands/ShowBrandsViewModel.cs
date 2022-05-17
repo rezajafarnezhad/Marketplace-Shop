@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProShop.Common.Attributes;
 using ProShop.Common.Constants;
 
 namespace ProShop.ViewModels.Brands;
@@ -48,21 +49,26 @@ public class ShowBrandViewModel
 public class SearchBrandsViewModel
 {
     [Display(Name = "نام فارسی برند")]
+    [ContainsSearch]
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string TitleFa { get; set; }
 
     [Display(Name = "نام انگلیسی برند")]
+    [ContainsSearch]
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string TitleEn { get; set; }
 
     [Display(Name = "نوع برند")]
+    [EqualSearch]
     public bool? IsIranianBrand { get; set; }
 
     [Display(Name = "لینک سایت معتبر خارجی")]
+    [ContainsSearch]
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string BrandLinkEn { get; set; }
 
     [Display(Name = "تایید شده / نشده")]
+    [EqualSearch]
     public bool? IsConfirmed { get; set; }
     
     [Display(Name = "وضعیت حذف شده ها")]

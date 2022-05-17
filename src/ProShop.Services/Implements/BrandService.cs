@@ -25,38 +25,7 @@ public class BrandService : GenericService<Brand>, IBrandService
 
         #region Search
 
-        if (!string.IsNullOrWhiteSpace(model.SearchBrands.TitleFa))
-            brands = _brands.Where(c => c.TitleFa.Contains(model.SearchBrands.TitleFa.Trim()));
-        
-        if (!string.IsNullOrWhiteSpace(model.SearchBrands.TitleEn))
-            brands = _brands.Where(c => c.TitleEn.Contains(model.SearchBrands.TitleEn.Trim())); 
-        
-        if (!string.IsNullOrWhiteSpace(model.SearchBrands.BrandLinkEn))
-            brands = _brands.Where(c => c.BrandLinkEn.Contains(model.SearchBrands.BrandLinkEn.Trim()));
-
-
-        if (model.SearchBrands.IsConfirmed != null)
-            brands = brands.Where(c => c.IsConfirmed == model.SearchBrands.IsConfirmed.Value);
-
-        switch (model.SearchBrands.DeletedStatus)
-        {
-
-            case DeletedStatus.True:
-                break;
-
-            case DeletedStatus.OnlyDeleted:
-                brands = brands.Where(c => c.IsDeleted);
-                break;
-
-            default:
-                brands = brands.Where(c => !c.IsDeleted);
-                break;
-        }
-       
-
-        if (model.SearchBrands.IsIranianBrand != null)
-            brands = brands.Where(c => c.IsIranianBrand == model.SearchBrands.IsIranianBrand.Value);
-        
+        brands = brands.CreateSearchExpressions(model.SearchBrands);
 
         #region Sorting
 

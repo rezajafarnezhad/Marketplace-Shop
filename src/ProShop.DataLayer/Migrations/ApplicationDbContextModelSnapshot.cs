@@ -334,6 +334,65 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("Features", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.FeatureConstantValue", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FeatureId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("FeatureConstantValue", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.Identity.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -1029,6 +1088,25 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Feature");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.FeatureConstantValue", b =>
+                {
+                    b.HasOne("ProShop.Entities.Category", "Category")
+                        .WithMany("FeatureConstantValues")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Feature", "Feature")
+                        .WithMany("FeatureConstantValues")
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Feature");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Identity.RoleClaim", b =>
                 {
                     b.HasOne("ProShop.Entities.Identity.Role", "Role")
@@ -1140,11 +1218,15 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("CategoryFeatures");
 
                     b.Navigation("ChildCategory");
+
+                    b.Navigation("FeatureConstantValues");
                 });
 
             modelBuilder.Entity("ProShop.Entities.Feature", b =>
                 {
                     b.Navigation("CategoryFeatures");
+
+                    b.Navigation("FeatureConstantValues");
                 });
 
             modelBuilder.Entity("ProShop.Entities.Identity.Role", b =>

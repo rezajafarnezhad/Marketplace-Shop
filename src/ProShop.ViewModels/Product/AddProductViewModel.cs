@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using ProShop.Common.Attributes;
 using ProShop.Common.Constants;
 
 namespace ProShop.ViewModels.Product;
@@ -42,4 +44,20 @@ public class AddProductViewModel
     
     [Display(Name = "بررسی تخصصی")]
     public string SpecialtyCheck { get; set; }
+
+    [Display(Name = "تصاویر محصول")]
+    [FileRequired("تصاویر محصول")]
+    [IsImage("تصاویر محصول")]
+    [MaxFileSize("تصویر", 3)]
+    public List<IFormFile> ProductImageFiles { get; set; }
+
+    [Display(Name = "نام فارسی کالا")]
+    [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
+    [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
+    public string PersianTitle { get; set; }
+
+    [Display(Name = "نام انگلیسی کالا")]
+    [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
+    [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
+    public string EnglishTitle { get; set; }
 }
