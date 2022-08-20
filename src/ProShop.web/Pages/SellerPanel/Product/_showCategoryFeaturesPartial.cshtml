@@ -1,12 +1,28 @@
 ﻿
-@model List<ProShop.ViewModels.CategoryFeatures.CategoryFeatureForCreateProductViewModel>
+@model ProShop.ViewModels.CategoryFeatures.ProductFeaturesForCreateProductViewModel
 
 
-@foreach (var item in Model)
+@foreach (var item in Model.Features)
 {
     <div class="my-2 col-md-6 col-lg-4">
         <label class="form-label">@item.FeatureTitle</label>
-        <input class="form-control" />
+        
+        @if (Model.FeaturesConstantValues.Any(c=>c.FeatureId == item.FeatureId))
+        {
+            <select class="form-select custom-select2" multiple="multiple">
+                @foreach (var constantValue in Model.FeaturesConstantValues.Where(c => c.FeatureId == item.FeatureId))
+                {
+                    <option value="@constantValue.Value">@constantValue.Value</option>
+                }
+            </select>
+        }
+        else
+        {
+            <input  class="form-control" />
+
+        }
+
         <span class="span-error-message"></span>
     </div>
 }
+<button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>

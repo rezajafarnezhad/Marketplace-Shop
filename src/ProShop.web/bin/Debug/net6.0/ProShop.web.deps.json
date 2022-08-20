@@ -9,7 +9,9 @@
       "ProShop.web/1.0.0": {
         "dependencies": {
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
+          "ProShop.DataLayer": "1.0.0",
           "ProShop.Ioc": "1.0.0",
+          "ProShop.Services": "1.0.0",
           "ProShop.ViewModels": "1.0.0"
         },
         "runtime": {

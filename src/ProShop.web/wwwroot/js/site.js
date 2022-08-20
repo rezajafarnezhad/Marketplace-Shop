@@ -96,6 +96,51 @@ function showToastr(status, message) {
 // End toastr
 
 
+function ShowSweetAlert2(text, functionToCallAfterConfirm, functionToCallAfterReject) {
+
+    Swal.fire({
+        title: 'توجه',
+        text: text,
+        icon: 'warning',
+        confirmButtonText: 'بله',
+        showDenyButton: true,
+        denyButtonText: 'خیر',
+        confirmButtonColor: '#067719',
+        allowOutsideClick: false
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            window[functionToCallAfterConfirm]();
+
+        } else {
+            window[functionToCallAfterReject]();
+        }
+    });
+
+}
+
+function ShowMessageErrorForUploadFiles(text, functionToCallAfterConfirm) {
+
+    Swal.fire({
+        title: 'توجه',
+        text: text,
+        icon: 'info',
+        confirmButtonText: 'متوجه شدم',
+        confirmButtonColor: '#067719',
+        allowOutsideClick: false
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            window[functionToCallAfterConfirm]();
+        }
+    });
+
+}
+
 //ToolTip
 
 function enablingTooltips() {
@@ -264,17 +309,32 @@ if (jQuery.validator) {
     }
 
     jQuery.validator.addMethod("fileRequired", function (value, element, param) {
-        if (element.files[0] != null)
-            return element.files[0].size > 0;
+        var filesLength = element.files.length;
+        if (filesLength > 0) {
+            for (var i = 0; i < filesLength; i++) {
+                if (element.files[0].size === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
         return false;
     });
     jQuery.validator.unobtrusive.adapters.addBool("fileRequired");
 
     // allowExtensions
     jQuery.validator.addMethod('allowExtensions', function (value, element, param) {
-        if (element.files[0] != null) {
-            var whiteListExtensions = $(element).data('val-whitelistextensions').split(',');
-            return whiteListExtensions.includes(element.files[0].type);
+        var selectedFiles = element.files;
+        if (selectedFiles[0] === undefined) {
+            return true;
+        }
+        var whiteListExtensions = $(element).data('val-whitelistextensions').split(',');
+        for (var counter = 0; counter < selectedFiles.length; counter++) {
+            var currentFile = selectedFiles[counter];
+            if (currentFile != null) {
+                if (!whiteListExtensions.includes(currentFile.type))
+                    return false;
+            }
         }
         return true;
     });
@@ -292,6 +352,8 @@ if (jQuery.validator) {
                 return false;
             }
         }
+
+        ///
 
         var currentElementId = $(element).attr('id');
         var currentForm = $(element).parents('form');
@@ -323,10 +385,20 @@ if (jQuery.validator) {
 
     // maxFileSize
     jQuery.validator.addMethod('maxFileSize', function (value, element, param) {
-        if (element.files[0] != null) {
-            var maxFileSize = $(element).data('val-maxsize');
-            var selectedFileSize = element.files[0].size;
-            return maxFileSize >= selectedFileSize;
+
+        var selectedFiles = element.files;
+        if (selectedFiles[0] === undefined) {
+            return true;
+        }
+
+        var maxFileSize = $(element).data('val-maxsize');
+        for (var counter = 0; counter < selectedFiles.length; counter++) {
+            var currentFile = selectedFiles[counter];
+            if (currentFile != null) {
+                var currentFileSize = currentFile.size;
+                if (currentFileSize > maxFileSize)
+                    return false;
+            }
         }
         return true;
     });
@@ -732,6 +804,8 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
         error: function () {
             ShowErrorMessage();
         }
+
+       
 
     });
 }

@@ -14,12 +14,14 @@ using DNTCommon.Web.Core;
 using Ganss.XSS;
 using UploadFileService = ProShop.Services.Implements.UploadFileService;
 
+
 namespace ProShop.Ioc;
 
 public static class AddCustomServicesExtensions
 {
     public static IServiceCollection AddCustomServices(this IServiceCollection services)
     {
+        services.AddScoped<IViewRenderService, ViewRenderService>();
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<IPrincipal>(provider =>

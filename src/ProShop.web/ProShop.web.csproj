@@ -9,7 +9,9 @@
 	
 
 	<ItemGroup>
+		<ProjectReference Include="..\ProShop.DataLayer\ProShop.DataLayer.csproj" />
 		<ProjectReference Include="..\ProShop.Ioc\ProShop.Ioc.csproj" />
+		<ProjectReference Include="..\ProShop.Services\ProShop.Services.csproj" />
 		<ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />
 	</ItemGroup>
 

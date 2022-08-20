@@ -9,6 +9,7 @@ using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.CategoryFeatures;
+using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Product;
 
 namespace ProShop.web.Pages.SellerPanel.Product;
@@ -21,12 +22,16 @@ public class CreateModel : SellerPanelBase
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUploadFileService _fileService;
-    private readonly ISellerService  _sellerService;
+    private readonly ISellerService _sellerService;
     private readonly ICategoryFeatureService _categoryFeatureService;
-  
+    private readonly IFeatureConstantValuesService _featureConstantValuesService;
+    private readonly IViewRenderService _viewRenderService;
+
+
+
     [BindProperty]
     public AddProductViewModel Product { get; set; }
-    public CreateModel(ICategoryService categoryService, IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService, ISellerService sellerService, ICategoryFeatureService categoryFeatureService)
+    public CreateModel(ICategoryService categoryService, IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService, ISellerService sellerService, ICategoryFeatureService categoryFeatureService, IFeatureConstantValuesService featureConstantValuesService, IViewRenderService viewRenderService)
     {
         _categoryService = categoryService;
         _brandService = brandService;
@@ -35,6 +40,8 @@ public class CreateModel : SellerPanelBase
         _fileService = fileService;
         _sellerService = sellerService;
         _categoryFeatureService = categoryFeatureService;
+        _featureConstantValuesService = featureConstantValuesService;
+        _viewRenderService = viewRenderService;
     }
 
     public void OnGet()
@@ -58,29 +65,33 @@ public class CreateModel : SellerPanelBase
         return Partial("_SelectProductCategoryPartial", result);
     }
 
-    public async Task<IActionResult> OnGetGetCategoryBrands(long categoryId)
+   
+
+    public async Task<IActionResult> OnGetCategoryInfo(long categoryId)
     {
         if (categoryId < 1)
             return Json(new JsonResultOperation(false));
 
-        var Brands = await _brandService.GetBrandsByCategoryId(categoryId);
-        return Json(new JsonResultOperation(true, "")
+        var CategoryFeatureModel = new ProductFeaturesForCreateProductViewModel()
         {
-            Data = Brands
+            Features = await _categoryFeatureService.GetCategoryFeatures(categoryId),
+            FeaturesConstantValues = await _featureConstantValuesService.GetFeatureConstantValuesByCategoryId(categoryId)
+        };
+        
+        var model = new
+        {
+            Brands = await _brandService.GetBrandsByCategoryId(categoryId),
+            CanAddFakeProduct = await _categoryService.CanAddFakeProduct(categoryId),
+            CategoryFeaturs=
+                await _viewRenderService.RenderViewToStringAsync("~/Pages/SellerPanel/Product/_showCategoryFeaturesPartial.cshtml",CategoryFeatureModel)
+        };
 
+        return Json(new JsonResultOperation(true, string.Empty)
+        {
+            Data = model
         });
 
     }
-
-    public async Task<IActionResult> OnGetCanAddFakeProduct(long categoryId)
-    {
-
-        return Json(new JsonResultOperation(true, "")
-        {
-            Data = await _categoryService.CanAddFakeProduct(categoryId)
-        });
-    }
-
 
     public async Task<IActionResult> OnGetRequestForAddBrand(long categoryId)
     {
@@ -88,7 +99,7 @@ public class CreateModel : SellerPanelBase
         {
             CategoryId = categoryId
         };
-        return Partial("_RequestForAddBrandPartial",model);
+        return Partial("_RequestForAddBrandPartial", model);
     }
     public async Task<IActionResult> OnPostCheckForTitleFa(string titlefa)
     {
@@ -148,7 +159,7 @@ public class CreateModel : SellerPanelBase
         return Json(new JsonResultOperation(true, "برند ثبت شد و پس از تایید کارشناسان قابل دسترسی است، مراتب از طریق ایمیل به شما اطلاع رسانی خواهد شد"));
     }
 
-    public IActionResult OnPostUploadSpecialtyCheckImages([IsImage("")]IFormFile file)
+    public IActionResult OnPostUploadSpecialtyCheckImages([IsImage] IFormFile file)
     {
         if (ModelState.IsValid && file.IsFileUploaded())
         {
@@ -160,9 +171,9 @@ public class CreateModel : SellerPanelBase
             });
         }
         return Json(false);
-    } 
-    
-    public IActionResult OnPostUploadShortDescriptionImages([IsImage("")]IFormFile file)
+    }
+
+    public IActionResult OnPostUploadShortDescriptionImages([IsImage] IFormFile file)
     {
         if (ModelState.IsValid && file.IsFileUploaded())
         {
@@ -176,9 +187,5 @@ public class CreateModel : SellerPanelBase
         return Json(false);
     }
 
-    public async Task<IActionResult> OnGetGetCategoryFeatures(long categoryId)
-    {
-        var model = await _categoryFeatureService.GetCategoryFeatures(categoryId);
-        return Partial("_showCategoryFeaturesPartial",model);
-    }
+    
 }

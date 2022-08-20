@@ -18,6 +18,7 @@ public class Brand : EntityBase, IAuditableEntity
     public long? SellerId { get; set; }
     public Seller Seller { get; set; }
     public ICollection<CategoryBrand> CategoryBrands { get; set; } = new List<CategoryBrand>();
+    public ICollection<Product> Products{ get; set; }
 
 
 }

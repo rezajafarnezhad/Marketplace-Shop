@@ -95,17 +95,17 @@ public class CreateSellerViewModel
     public string? AboutSeller { get; set; }
 
     [Display(Name = "لوگو فروشگاه")]
-    [IsImage("لوگو فروشگاه")]
-    [MaxFileSize("لوگو فروشگاه", 1)]
+    [MaxFileSize(1)]
+    [IsImage]
     public IFormFile? LogoFile { get; set; }
 
     /// <summary>
     /// عکس کارت ملی
     /// </summary>
     [Display(Name = "تصویر کارت ملی")]
-    [FileRequired("تصویر کارت ملی")]
-    [IsImage("تصویر کارت ملی")]
-    [MaxFileSize("تصویر کارت ملی", 1)]
+    [FileRequired]
+    [IsImage]
+    [MaxFileSize(2)]
     public IFormFile IdCartPictureFile { get; set; }
 
     [Display(Name = "شماره شبا")]

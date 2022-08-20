@@ -5,39 +5,74 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 namespace ProShop.Common.Attributes;
 public class MaxFileSizeAttribute : BaseValidationAttribute, IClientModelValidator
 {
+    private readonly bool _multiplePicture;
     private readonly int _maxFileSize;
-    private readonly string _errorMessage;
+    private readonly int _maxFileSizeInByte;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="maxFileSize">By MG</param>
     /// <param name="displayName"></param>
-    public MaxFileSizeAttribute(string displayName, int maxFileSize)
+    public MaxFileSizeAttribute(int maxFileSize, bool multiplePicture = false)
     {
-        _maxFileSize = maxFileSize * 1024 * 1024;
-        _errorMessage = $"اندازه {displayName} نباید بیشتر از {maxFileSize} مگابایت باشد";
+        _multiplePicture = multiplePicture;
+        _maxFileSize = maxFileSize;
+        _maxFileSizeInByte = maxFileSize * 1024 * 1024;
+        ErrorMessage = "اندازه {0} نباید بیشتر از {1} مگابایت باشد";
     }
 
     protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
     {
-        var file = value as IFormFile;
-        if (file != null && file.Length > 0)
+        var displayName = validationContext.DisplayName;
+        ErrorMessage = ErrorMessage.Replace("{0}", displayName);
+        ErrorMessage = ErrorMessage.Replace("{1}", _maxFileSize.ToString());
+
+        if (_multiplePicture)
         {
-            if (file.Length > _maxFileSize)
-            {
-                return new ValidationResult(_errorMessage);
-            }
+            ErrorMessage = ErrorMessage.Replace("باشد", "باشند");
         }
 
+
+
+        var files = value as List<IFormFile>;
+
+        if (files is { Count: > 0 })
+        {
+            for (int counter = 0; counter < files.Count; counter++)
+            {
+                var currentFile = files[counter];
+                if (currentFile is { Length: > 0 })
+                {
+                    if (currentFile.Length > _maxFileSizeInByte)
+                    {
+                        return new ValidationResult(ErrorMessage);
+                    }
+                }
+            }
+        }
         return ValidationResult.Success;
     }
 
     public void AddValidation(ClientModelValidationContext context)
     {
+        var displayName = context.ModelMetadata.ContainerMetadata
+            .ModelType.GetProperty(context.ModelMetadata.PropertyName)
+            .GetCustomAttributes(typeof(DisplayAttribute), false)
+            .Cast<DisplayAttribute>()
+            .FirstOrDefault()?.Name;
+        ErrorMessage = ErrorMessage.Replace("{0}", displayName);
+        ErrorMessage = ErrorMessage.Replace("{1}", _maxFileSize.ToString());
+
+        if (_multiplePicture)
+        {
+            ErrorMessage = ErrorMessage.Replace("باشد", "باشند");
+        }
+
+
         MergeAttribute(context.Attributes, "data-val", "true");
-        MergeAttribute(context.Attributes, "data-val-maxFileSize", _errorMessage);
-        MergeAttribute(context.Attributes, "data-val-maxsize", _maxFileSize.ToString());
+        MergeAttribute(context.Attributes, "data-val-maxFileSize", ErrorMessage);
+        MergeAttribute(context.Attributes, "data-val-maxsize", _maxFileSizeInByte.ToString());
     }
 }

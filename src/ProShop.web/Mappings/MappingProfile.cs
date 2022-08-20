@@ -57,7 +57,10 @@ public class MappingProfile : Profile
             .AddTransform<string>(str => str != null ? str.Trim() : null);
 
         this.CreateMap<Entities.FeatureConstantValue,EditFeatureConstantValue>();
+
         this.CreateMap<EditFeatureConstantValue,Entities.FeatureConstantValue>()
             .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.FeatureConstantValue,ShowCategoryFeatureConstantValueViewModel>();
     }
 }

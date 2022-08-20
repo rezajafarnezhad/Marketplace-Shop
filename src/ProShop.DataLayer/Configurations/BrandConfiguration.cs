@@ -18,12 +18,17 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
         builder.Property(c => c.JudiciaryLink).HasMaxLength(200);
         builder.Property(c => c.BrandRegistrationPicture).HasMaxLength(200);
         builder.Property(c => c.BrandLinkEn).HasMaxLength(200);
-        
-        builder.HasIndex(c => (new { c.TitleEn})).IsUnique();
-        builder.HasIndex(c => (new { c.TitleFa})).IsUnique();
+
+        builder.HasIndex(c => (new { c.TitleEn })).IsUnique();
+        builder.HasIndex(c => (new { c.TitleFa })).IsUnique();
 
         builder.HasOne(c => c.Seller)
             .WithMany(c => c.Brands)
             .HasForeignKey(c => c.SellerId);
+
+        builder.HasMany(c => c.Products)
+            .WithOne(c => c.Brand)
+            .HasForeignKey(c => c.BrandId);
     }
 }
+

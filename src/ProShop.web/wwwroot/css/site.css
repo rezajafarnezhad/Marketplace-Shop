@@ -64,6 +64,9 @@ a{
 .pointer-cursor {
     cursor: pointer;
 }
+.not-allowed-cursor{
+    cursor: not-allowed;
+}
 
 .rem1and3{
     font-size: 1.3rem;

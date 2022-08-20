@@ -38,13 +38,13 @@ public class EditBrandViewModel
     public bool IsIranianBrand { get; set; }
 
     [Display(Name = "لوگوی برند")]
-    [MaxFileSize("لوگوی برند", 2)]
-    [IsImage("لوگوی برند")]
+    [MaxFileSize(2)]
+    [IsImage]
     public IFormFile? NewLogoPicture { get; set; }
 
     [Display(Name = "برگه ثبت برند")]
-    [MaxFileSize("برگه ثبت برند", 3)]
-    [IsImage("برگه ثبت برند")]
+    [MaxFileSize(3)]
+    [IsImage]
     public IFormFile? NewBrandRegistrationPicture { get; set; }
 
     [Display(Name = "لینک سایت قوه قضاییه")]

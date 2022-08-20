@@ -6,27 +6,42 @@ namespace ProShop.Common.Attributes;
 
 public class FileRequiredAttribute : BaseValidationAttribute, IClientModelValidator
 {
-    private readonly string _errorMessage;
-
-    public FileRequiredAttribute(string displayName)
+    public FileRequiredAttribute()
     {
-        _errorMessage = $"لطفا {displayName} را وارد نمایید";
+        ErrorMessage = "لطفا {0} را وارد نمایید";
     }
 
     protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
     {
-        var file = value as IFormFile;
-        if (file == null || file.Length == 0)
+        var displayName = validationContext.DisplayName;
+        ErrorMessage = ErrorMessage.Replace("{0}", displayName);
+
+        var files = value as List<IFormFile>;
+        if (files == null || files.Count == 0)
         {
-            return new ValidationResult(_errorMessage);
+            return new ValidationResult(ErrorMessage);
+        }
+        foreach (var file in files)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return new ValidationResult(ErrorMessage);
+            }
         }
         return ValidationResult.Success;
     }
 
     public void AddValidation(ClientModelValidationContext context)
     {
+        var displayName = context.ModelMetadata.ContainerMetadata
+            .ModelType.GetProperty(context.ModelMetadata.PropertyName)
+            .GetCustomAttributes(typeof(DisplayAttribute), false)
+            .Cast<DisplayAttribute>()
+            .FirstOrDefault()?.Name;
+        ErrorMessage = ErrorMessage.Replace("{0}", displayName);
+
         MergeAttribute(context.Attributes, "data-val", "true");
-        MergeAttribute(context.Attributes, "data-val-fileRequired", _errorMessage);
+        MergeAttribute(context.Attributes, "data-val-fileRequired", ErrorMessage);
     }
 }

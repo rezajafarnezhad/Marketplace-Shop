@@ -45,19 +45,24 @@ public class AddProductViewModel
     [Display(Name = "بررسی تخصصی")]
     public string SpecialtyCheck { get; set; }
 
-    [Display(Name = "تصاویر محصول")]
-    [FileRequired("تصاویر محصول")]
-    [IsImage("تصاویر محصول")]
-    [MaxFileSize("تصویر", 3)]
-    public List<IFormFile> ProductImageFiles { get; set; }
-
     [Display(Name = "نام فارسی کالا")]
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string PersianTitle { get; set; }
 
     [Display(Name = "نام انگلیسی کالا")]
-    [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [MaxLength(200, ErrorMessage = AttributesErrorMessages.MaxLengthMessage)]
     public string EnglishTitle { get; set; }
+
+    [Display(Name = "تصاویر محصول")]
+    [IsImage(true)]
+    [FileRequired]
+    [MaxFileSize(3,true)]
+    public List<IFormFile> ProductImageFiles { get; set; }
+    
+    
+    [Display(Name = "ویدیو محصول")]
+    [MaxFileSize(10,true)]
+    [AllowExtensions(new[] { "mp4" }, new[] { "video/mp4" },true )]
+    public List<IFormFile> ProductVideoFiles { get; set; }
 }

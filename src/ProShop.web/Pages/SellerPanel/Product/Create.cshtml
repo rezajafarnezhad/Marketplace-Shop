@@ -11,7 +11,8 @@
         </div>
     </div>
     <div class="card-body">
-        <form method="post" call-function-in-the-end="CreateProduct" asp-page="./Create" class="public-ajax-form">
+        <form method="post" id="Create-Product-Form" call-function-in-the-end="CreateProduct" asp-page="./Create" class="public-ajax-form">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <nav>
                 <div class="nav nav-tabs nav-fill" id="add-product-tab">
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#product-category" type="button" role="tab" aria-controls="nav-home" aria-selected="true">انتخاب گروه کالا</button>
@@ -19,6 +20,7 @@
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#specialty-check" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">بررسی تخصصی</button>
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Productfeatures" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">ویژگی های کالا</button>
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-images" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">بارگذاری تصاویر</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-videos" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">بارگذاری ویدیو</button>
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#product-Title" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">عنوان کالا</button>
                 </div>
                 <div class="tab-content">
@@ -72,9 +74,9 @@
                                     <span asp-validation-for="Product.BrandId" class="span-error-message"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
-                                    <label class="form-label" asp-for="Product.PackWidth">وزن بسته بندی(گرم)</label>
-                                    <input class="form-control" asp-for="Product.PackWidth" />
-                                    <span class="span-error-message" asp-validation-for="Product.PackWidth"></span>
+                                    <label class="form-label" asp-for="Product.PackWeight">وزن بسته بندی(گرم)</label>
+                                    <input class="form-control" asp-for="Product.PackWeight" />
+                                    <span class="span-error-message" asp-validation-for="Product.PackWeight"></span>
                                 </div>
                                 <div class="my-2 col-md-6 col-lg-4">
                                     <label class="form-label" asp-for="Product.PackWidth">عرض بسته بندی(سانتی متر)</label>
@@ -96,7 +98,7 @@
                                     <textarea upload-image-url="UploadShortDescriptionImages" add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
                                 </div>
                             </div>
-                            <button class="btn btn-info">ثبت</button>
+                            <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="specialty-check">
@@ -107,7 +109,8 @@
                                     </label>
                                     <textarea upload-image-url="UploadSpecialtyCheckImages" add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
                                 </div>
-                                <button class="btn btn-primary">send</button>
+                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+
                             </div>
                         </div>
                     </div>
@@ -115,7 +118,7 @@
                         <div class="card">
                             <div class="card-body row">
 
-                                <button class="btn btn-primary">send</button>
+                          
                             </div>
                         </div>
                     </div>
@@ -124,23 +127,47 @@
                         <div class="card">
                             <div class="card-body row">
                                 <div class="my-2">
-                                    <label class="form-label" asp-for="Product.ProductImageFiles"></label>
+                                    <h5 class="d-inline">
+                                        <label class="form-label" asp-for="Product.ProductImageFiles"> </label>
+                                        (
+                                        <i class="bi bi-info-circle text-primary " data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="اولین تصویر , به عنوان تصویر اصلی محصول در نظر گرفته میشود.">
+                                            <span class="badge text-primary">
+                                                توجه
+                                            </span>
+                                        </i>
+                                        )
+                                    </h5>
                                     <input class="form-control multiple-images-preivew-input" asp-for="Product.ProductImageFiles" images-preview-box="product-images-preview-box" />
                                     <span class="span-error-message" asp-validation-for="Product.ProductImageFiles"></span>
                                 </div>
                                 <div class="my-2" id="product-images-preview-box" style="display: contents">
                                 </div>
-                                <button class="btn btn-primary mt-5">send</button>
+                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+
                             </div>
                         </div>
-                    </div> 
-                    
+                    </div>
+
+                    <div class="tab-pane fade" id="product-videos">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="my-2">
+                                    <label class="form-label" asp-for="Product.ProductVideoFiles"></label>
+                                    <input asp-for="Product.ProductVideoFiles" class="form-control" />
+                                    <span class="span-error-message" asp-validation-for="Product.ProductVideoFiles"></span>
+                                </div>
+                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-pane fade" id="product-Title">
                         <div class="card">
                             <div class="card-body row">
                                 <div class="my-2 col-md-6">
                                     <label class="form-label" asp-for="Product.PersianTitle"></label>
-                                  
+
                                     <input placeholder="ماهیت کالا + برند کالا + کلمه &quot;مدل&quot; + مدل کالا" asp-for="Product.PersianTitle" class="form-control" />
                                     <span class="span-error-message" asp-validation-for="Product.PersianTitle"></span>
                                 </div>
@@ -149,7 +176,7 @@
                                     <input class="form-control" asp-for="Product.EnglishTitle" />
                                     <span class="span-error-message" asp-validation-for="Product.EnglishTitle"></span>
                                 </div>
-                                <button class="btn btn-primary mt-5">send</button>
+                              
                             </div>
                         </div>
                     </div>
@@ -160,19 +187,19 @@
 </div>
 
 @section Scripts
-{
+    {
 
-<partial name="_ValidationScriptsPartial" />
-<script src="~/lib/select2/js/select2.min.js"></script>
-<script src="~/lib/select2/js/i18n/fa.min.js"></script>
-<script src="~/lib/tinymce/tinymce.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
 }
-@section CustomScripts
-{
-<script src="~/Pages/SellerPanel/Product/Create.cshtml.js"></script>
+    @section CustomScripts
+    {
+    <script src="~/Pages/SellerPanel/Product/Create.cshtml.js"></script>
 }
-@section Styles
-{
-<link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
-<link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
+    @section Styles
+    {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
 }

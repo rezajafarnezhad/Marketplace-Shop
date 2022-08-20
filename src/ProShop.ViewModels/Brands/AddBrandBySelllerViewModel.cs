@@ -38,14 +38,14 @@ public class AddBrandBySelllerViewModel
     public bool IsIranianBrand { get; set; }
 
     [Display(Name = "لوگوی برند")]
-    [FileRequired("لوگوی برند")]
-    [MaxFileSize("لوگوی برند", 2)]
-    [IsImage("لوگوی برند")]
+    [FileRequired]
+    [MaxFileSize(2)]
+    [IsImage]
     public IFormFile LogoPicture { get; set; }
 
     [Display(Name = "برگه ثبت برند")]
-    [MaxFileSize("برگه ثبت برند", 3)]
-    [IsImage("برگه ثبت برند")]
+    [MaxFileSize(3)]
+    [IsImage]
     public IFormFile BrandRegistrationPicture { get; set; }
 
     [Display(Name = "لینک سایت قوه قضاییه")]
