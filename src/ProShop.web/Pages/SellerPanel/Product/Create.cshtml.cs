@@ -57,7 +57,7 @@ public class CreateModel : SellerPanelBase
     }
 
 
-    [BindProperty]
+    
     public AddProductViewModel Product { get; set; }
 
     public void OnGet()
@@ -65,7 +65,7 @@ public class CreateModel : SellerPanelBase
 
     }
 
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(AddProductViewModel Product)
     {
         if (!ModelState.IsValid)
         {

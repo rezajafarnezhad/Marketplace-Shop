@@ -71,10 +71,9 @@ public class MappingProfile : Profile
     
         this.CreateMap<Entities.FeatureConstantValue,FeatureConstantValueForCreateProductViewModel>();
         this.CreateMap<Product, ShowProductViewModel>()
-             .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName)); 
-        
-        this.CreateMap<Product, ProductDetailsViewModel>()
-             .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName));
+             .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
+
+        this.CreateMap<Product, ProductDetailsViewModel>();
              
 
 

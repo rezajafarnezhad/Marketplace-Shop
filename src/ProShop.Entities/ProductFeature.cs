@@ -10,7 +10,4 @@ public class ProductFeature:EntityBase , IAuditableEntity
 
     public Product Product { get; set; }
     public Feature Feature { get; set; }
-
-
-
 }

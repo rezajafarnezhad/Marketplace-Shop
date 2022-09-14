@@ -89,7 +89,7 @@ public class IndexModel : PageBase
         await _unitOfWork.SaveChangesAsync();
         foreach (var item in product.ProductMedia)
         {
-            _uploadFileService.DeleteFile(item.FileName, "Images", "Products");
+            _uploadFileService.DeleteFile(item.FileName, item.IsVideo ? "Videos":"Images", "Products");
         }
         return Json(new JsonResultOperation(true, "محصول مورد نظر حذف شد"));
 

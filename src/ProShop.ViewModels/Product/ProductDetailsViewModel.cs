@@ -6,7 +6,7 @@ namespace ProShop.ViewModels.Product;
 
 public class ProductDetailsViewModel
 {
-   
+
     public long Id { get; set; }
 
     [Display(Name = "دلیل رد شدن محصول")]
@@ -51,8 +51,8 @@ public class ProductDetailsViewModel
 
     public string CategoryTitle { get; set; }
 
-    [Display(Name = "عکس اصلی محصول")]
-    public string MainPicture { get; set; }
+    public List<ProductMedia> ProductMedia { get; set; } = new List<ProductMedia>();
+    public List<ProductFeature> ProductFeatures { get; set; } = new List<ProductFeature>();
 }
 
 

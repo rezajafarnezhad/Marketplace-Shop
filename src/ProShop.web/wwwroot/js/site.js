@@ -763,6 +763,7 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
         processData: false,
         contentType: false,
         beforeSend: function () {
+            $('#html-modal-place').modal('hide');
             showLoading();
         },
         success: function (data, status) {
