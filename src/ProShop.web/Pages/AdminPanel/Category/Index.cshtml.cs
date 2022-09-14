@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc;
 using ProShop.Common;
 using ProShop.Common.Constants;
@@ -21,13 +22,15 @@ namespace ProShop.web.Pages.AdminPanel.Category
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBrandService _brandService;
         private readonly IMapper _mapper;
-        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper)
+        private readonly IHtmlSanitizer _htmlSanitizer;
+        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper,IHtmlSanitizer htmlSanitizer)
         {
             _categoryService = categoryService;
             _unitOfWork = unitOfWork;
             _uploadFileService = uploadFileService;
             _brandService = brandService;
             _mapper = mapper;
+            _htmlSanitizer = htmlSanitizer;
         }
 
         #endregion
@@ -89,6 +92,9 @@ namespace ProShop.web.Pages.AdminPanel.Category
             }
 
             var _category = _mapper.Map<Entities.Category>(model);
+
+            _category.Description = _htmlSanitizer.Sanitize(_category.Description);
+
             if (model.ParentId is 0)
                 _category.ParentId = null;
 

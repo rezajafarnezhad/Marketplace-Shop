@@ -13,8 +13,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
 {
 
     private readonly DbSet<Category> _categories;
-    public CategoryService(IUnitOfWork uow)
-        : base(uow)
+    public CategoryService(IUnitOfWork uow) : base(uow)
     {
         _categories = uow.Set<Category>();
     }
@@ -185,6 +184,12 @@ public class CategoryService : GenericService<Category>, ICategoryService
             .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn).ToListAsync();
     }
 
+    public async Task<Dictionary<long,string>> GetCategoriesWithNoChild()
+    {
+        return await _categories.Where(c => !c.ChildCategory.Any())
+            .ToDictionaryAsync(c=>c.Id, c=>c.Title);
+    }
+
 
     public async Task<Category> GetCategoryWithItsBrands(long categotyId)
     {
@@ -196,4 +201,33 @@ public class CategoryService : GenericService<Category>, ICategoryService
     {
         return await _categories.Where(c => c.Id == categoryId).AnyAsync(c => c.CanAddFakeProduct);
     }
+
+
+    public async Task<(bool issuccessful, List<long> categoryIds)> GetCategoryParentIds(long categoryId)
+    {
+
+        if (!await IsExistsBy(nameof(Entities.Category.Id), categoryId))
+            return (false, new List<long>());
+
+        if (await _categories.AnyAsync(c => c.ParentId == categoryId))
+            return (false, new List<long>());
+
+
+        var result = new List<long>() { categoryId };
+        var currentCategoryId = categoryId;
+        while (true)
+        {
+            var categoryToAdd = await _categories.Select(c => new { c.Id, c.ParentId }).SingleOrDefaultAsync(c => c.Id == currentCategoryId);
+            if (categoryToAdd.ParentId is null)
+            {
+                break;
+            }
+
+            currentCategoryId = categoryToAdd.ParentId.Value;
+            result.Add(categoryToAdd.ParentId.Value);
+        }
+
+        return (true, result);
+    }
 }
+

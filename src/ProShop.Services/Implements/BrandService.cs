@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProShop.DataLayer.Context;
+using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
-using ProShop.ViewModels;
 using ProShop.ViewModels.Brands;
 
 namespace ProShop.Services.Implements;
 
-public class BrandService : GenericService<Brand>, IBrandService
+public class BrandService : GenericService<Entities.Brand>,IBrandService
 {
 
-    private readonly DbSet<Brand> _brands;
+    private readonly DbSet<Entities.Brand> _brands;
     private readonly IMapper _mapper;
     public BrandService(IUnitOfWork uow, IMapper mapper) : base(uow)
     {
         _mapper = mapper;
-        _brands = uow.Set<Brand>();
+        _brands = uow.Set<Entities.Brand>();
     }
 
 
@@ -47,15 +47,15 @@ public class BrandService : GenericService<Brand>, IBrandService
         };
     }
 
-    public override async Task<DuplicateColumns> AddAsync(Brand entity)
+    public override async Task<DuplicateColumns> AddAsync(Entities.Brand entity)
     {
         var result = new List<string>();
 
         if (await _brands.AnyAsync(c => c.TitleFa == entity.TitleFa))
-            result.Add(nameof(Brand.TitleFa)); 
+            result.Add(nameof(Entities.Brand.TitleFa)); 
         
         if (await _brands.AnyAsync(c => c.TitleEn == entity.TitleEn))
-            result.Add(nameof(Brand.TitleEn));
+            result.Add(nameof(Entities.Brand.TitleEn));
 
         if (!result.Any())
             await base.AddAsync(entity);
@@ -72,16 +72,16 @@ public class BrandService : GenericService<Brand>, IBrandService
             .SingleOrDefaultAsync(c => c.Id == Id);
     }
 
-    public override async Task<DuplicateColumns> Update(Brand entity)
+    public override async Task<DuplicateColumns> Update(Entities.Brand entity)
     {
         var query = _brands.Where(c => c.Id != entity.Id);
         var result = new List<string>();
 
         if (await query.AnyAsync(c => c.TitleFa == entity.TitleFa))
-            result.Add(nameof(Brand.TitleFa));
+            result.Add(nameof(Entities.Brand.TitleFa));
 
         if (await query.AnyAsync(c => c.TitleEn == entity.TitleEn))
-            result.Add(nameof(Brand.TitleEn));
+            result.Add(nameof(Entities.Brand.TitleEn));
 
         if (!result.Any())
             await base.Update(entity);
@@ -122,7 +122,7 @@ public class BrandService : GenericService<Brand>, IBrandService
             .SingleOrDefaultAsync(c => c.Id == brandId);
     }
 
-    public async Task<Brand> GetInActiveBrand(long brandId)
+    public async Task<Entities.Brand> GetInActiveBrand(long brandId)
     {
         return await _brands.Where(c => c.IsConfirmed == false)
             .SingleOrDefaultAsync(c => c.Id == brandId);

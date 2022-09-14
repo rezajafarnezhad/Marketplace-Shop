@@ -10,7 +10,7 @@
         </div>
         <div class="col-6 col-sm-12 col-lg-6 my-2">
             <label class="form-label" asp-for="Title"></label>
-            <input class="autocomplete form-control" asp-for="Title" />
+            <input autocomplete-search-url="@(Url.Page("./Index","AutocompleteSearch"))" class="autocomplete form-control" asp-for="Title" />
             <span class="span-error-message" asp-validation-for="Title"></span>
         </div>
         <div class="col-12 my-2">

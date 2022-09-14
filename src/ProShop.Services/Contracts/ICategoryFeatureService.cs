@@ -11,4 +11,5 @@ public interface ICategoryFeatureService : IGenericService<CategoryFeature>
     Task<List<CategoryFeatureForCreateProductViewModel>> GetCategoryFeatures(long categoryId);
     Task<Dictionary<long, string>> GetCategoryFeatureBy(long categoryId);
     Task<bool> CheckCategoryFeature(long categoryId, long featureId);
+    Task<bool> CheckCategoryFeaturesCount(long categoryId, List<long> featuresIds);
 }

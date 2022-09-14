@@ -16,11 +16,11 @@ namespace ProShop.Common.IdentityToolkit
         /// </summary>
 
 
-        public static void AddErrorsFromResult(this ModelStateDictionary modelState , IdentityResult result)
+        public static void AddErrorsFromResult(this ModelStateDictionary modelState, IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
-                modelState.AddModelError(string.Empty,error.Description);
+                modelState.AddModelError(string.Empty, error.Description);
             }
 
         }
@@ -29,7 +29,7 @@ namespace ProShop.Common.IdentityToolkit
         public static List<string> GetModelStateErrors(this ModelStateDictionary modelState)
         {
             return modelState.Keys.SelectMany(k => modelState[k].Errors)
-                .Select(m => m.ErrorMessage).OrderByDescending(c=>c).ToList();
+                .Select(m => m.ErrorMessage).OrderByDescending(c => c).ToList();
         }
 
         public static string DumpErrors(this IdentityResult result, bool useHtmlNewLine = false)
@@ -92,5 +92,13 @@ namespace ProShop.Common.IdentityToolkit
             }
             return null;
         }
+
+        public static long GetLoggedUserId(this IIdentity identity)
+        {
+            var userIdValue = identity.GetUserClaimValue(ClaimTypes.NameIdentifier);
+
+            return long.Parse(userIdValue, NumberStyles.Number, CultureInfo.InvariantCulture);
+            
+         }
     }
 }

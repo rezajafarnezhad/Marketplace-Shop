@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using ProShop.Common.Helpers;
+using ProShop.Entities;
 using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
 using ProShop.ViewModels.FeatureConstantValue;
+using ProShop.ViewModels.Product;
 using ProShop.ViewModels.Sellers;
 
 namespace ProShop.web.Mappings;
@@ -31,36 +33,69 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.ProvinceAndCity, options => options.MapFrom(src => $"{src.Province.Title} - {src.City.Title}"))
             .ForMember(dest => dest.CreatedDateTime, options => options.MapFrom(src => src.CreatedDateTime.ToLongPersianDate()));
 
-        this.CreateMap<Entities.Seller,SellerDetailsViewModel>()
+        this.CreateMap<Entities.Seller, SellerDetailsViewModel>()
             .ForMember(dest => dest.CreatedDateTime, options => options.MapFrom(src => src.CreatedDateTime.ToLongPersianDate()));
 
 
         this.CreateMap<Entities.Brand, ShowBrandViewModel>();
-        this.CreateMap<AddBrandViewModel,Entities.Brand>()
+        this.CreateMap<AddBrandViewModel, Entities.Brand>()
             .AddTransform<string>(str => str != null ? str.Trim() : null);
-        
+
         this.CreateMap<AddBrandBySelllerViewModel, Entities.Brand>()
-            .AddTransform<string>(str => str != null ? str.Trim() : null); 
-      
-        this.CreateMap<Entities.Brand,EditBrandViewModel>().ReverseMap()
             .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.Brand, EditBrandViewModel>().ReverseMap()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+
+        this.CreateMap<AddCategoryViewModel, Entities.Category>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.Brand, BrandDetailsViewModel>();
+        this.CreateMap<Entities.CategoryFeature, CategoryFeatureForCreateProductViewModel>();
+        this.CreateMap<Entities.FeatureConstantValue, ShowFeatureConstantValueViewModel>();
+
+        this.CreateMap<AddFeatureConstantValue, Entities.FeatureConstantValue>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.FeatureConstantValue, EditFeatureConstantValue>();
+
+        this.CreateMap<EditFeatureConstantValue, Entities.FeatureConstantValue>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+
+        this.CreateMap<Entities.FeatureConstantValue, ShowCategoryFeatureConstantValueViewModel>();
+
+        this.CreateMap<AddProductViewModel, Product>()
+             .ForMember(dest => dest.SpecialCheck, options => options.MapFrom(src => src.SpecialtyCheck))
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
+    
+        this.CreateMap<Entities.FeatureConstantValue,FeatureConstantValueForCreateProductViewModel>();
+        this.CreateMap<Product, ShowProductViewModel>()
+             .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName)); 
         
-        
-        this.CreateMap<AddCategoryViewModel,Entities.Category>()
-            .AddTransform<string>(str => str != null ? str.Trim() : null);
-        
-        this.CreateMap<Entities.Brand ,BrandDetailsViewModel>();
-        this.CreateMap<Entities.CategoryFeature,CategoryFeatureForCreateProductViewModel>();
-        this.CreateMap<Entities.FeatureConstantValue,ShowFeatureConstantValueViewModel>();
+        this.CreateMap<Product, ProductDetailsViewModel>()
+             .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName));
+             
 
-        this.CreateMap<AddFeatureConstantValue,Entities.FeatureConstantValue>()
-            .AddTransform<string>(str => str != null ? str.Trim() : null);
 
-        this.CreateMap<Entities.FeatureConstantValue,EditFeatureConstantValue>();
+            
 
-        this.CreateMap<EditFeatureConstantValue,Entities.FeatureConstantValue>()
-            .AddTransform<string>(str => str != null ? str.Trim() : null);
 
-        this.CreateMap<Entities.FeatureConstantValue,ShowCategoryFeatureConstantValueViewModel>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

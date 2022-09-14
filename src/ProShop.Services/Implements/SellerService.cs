@@ -168,6 +168,7 @@ public class SellerService : GenericService<Seller>, ISellerService
     public async Task<Seller> GetSellerToRemoveInManagingSeller(long Id)
     {
         return await _sellers.Where(c => c.DocumentStatus == DocumentStatus.AwaitingInitialApproval)
+            .Include(c=>c.User)
             .SingleOrDefaultAsync(c => c.Id == Id);
     }
 
@@ -176,5 +177,11 @@ public class SellerService : GenericService<Seller>, ISellerService
         return await _sellers.Where(c => c.UserId == userId).Select(c => c.Id).SingleAsync();
     }
 
-
+    public async Task<List<string>> GetShopNameForAutocomplete(string input)
+    {
+        return await _sellers.Where(c => c.ShopName.Contains(input))
+            .Take(20)
+            .Select(c => c.ShopName)
+            .ToListAsync();
+    }
 }

@@ -851,7 +851,6 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EnglishTitle")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -860,6 +859,9 @@ namespace ProShop.DataLayer.Migrations
 
                     b.Property<bool>("IsFake")
                         .HasColumnType("bit");
+
+                    b.Property<long>("MainCategoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ModifiedByBrowserName")
                         .HasMaxLength(1000)
@@ -892,15 +894,33 @@ namespace ProShop.DataLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("RejectReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SelerId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("SpecialCheck")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
+
+                    b.HasIndex("MainCategoryId");
+
+                    b.HasIndex("SelerId");
 
                     b.ToTable("Product", (string)null);
                 });
@@ -1404,7 +1424,23 @@ namespace ProShop.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProShop.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("MainCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Seller", "Seller")
+                        .WithMany("Products")
+                        .HasForeignKey("SelerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Brand");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("ProShop.Entities.ProductCategory", b =>
@@ -1509,6 +1545,8 @@ namespace ProShop.DataLayer.Migrations
 
                     b.Navigation("FeatureConstantValues");
 
+                    b.Navigation("Products");
+
                     b.Navigation("productCategories");
                 });
 
@@ -1560,6 +1598,8 @@ namespace ProShop.DataLayer.Migrations
             modelBuilder.Entity("ProShop.Entities.Seller", b =>
                 {
                     b.Navigation("Brands");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

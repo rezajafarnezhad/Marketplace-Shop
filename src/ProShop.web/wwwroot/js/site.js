@@ -476,17 +476,24 @@ function activatingDeleteButtons(isModalmode) {
 
 
 function initializingAutocomplete() {
-    if ($('.autocomplete').length > 0) {
-        $('.autocomplete').autocomplete({
-            source: `${location.pathname}?handler=AutocompleteSearch`,
+
+    $('.autocomplete').each(function () {
+
+        var CurrentsearchUrl = $(this).attr('autocomplete-search-url');
+       
+        var currentId = $(this).attr('id');
+        $(`#${currentId}`).autocomplete({
+            source: CurrentsearchUrl,
             minLength: 2,
             delay: 500,
             select: function (event, ui) {
+                if (typeof window['onAutocompleteSelect'] === 'function')
                 window['onAutocompleteSelect'](event, ui);
-
             }
         });
-    }
+    });
+
+    
 
 
 }
@@ -635,7 +642,7 @@ function fillDataTable() {
             activatingPageCount();
             activatingDeleteButtons();
             enablingTooltips();
-            activatingGetHtmlWithAjax();
+           
         }
     }).fail(function () {
         ShowErrorMessage();
@@ -708,7 +715,7 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
                 activatingPageCount();
                 activatingModalForm();
                 enablingTooltips();
-                activatingGetHtmlWithAjax();
+               
             }
 
         } else {
@@ -831,17 +838,12 @@ $(document).on('blur', 'form input', function () {
 });
 
 
-function activatingGetHtmlWithAjax() {
 
-    $('.get-html-with-ajax').click(function () {
+$(document).on('click', '.get-html-with-ajax', function () {
 
-        var funcToCall = $(this).attr('functionNameToCallOnClick');
-        window[funcToCall](this);
-    });
-}
-
-
-
+    var funcToCall = $(this).attr('functionNameToCallOnClick');
+    window[funcToCall](this);
+});
 
 
 // خواندن صفحات

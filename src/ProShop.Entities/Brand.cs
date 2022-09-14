@@ -4,6 +4,7 @@ public class Brand : EntityBase, IAuditableEntity
 {
     public string TitleFa { get; set; }
     public string TitleEn { get; set; }
+    public string FullTitle => $"{TitleFa} - {TitleEn}";
     public string Description { get; set; }
     public bool IsIranianBrand { get; set; }
     public string LogoPicture { get; set; }

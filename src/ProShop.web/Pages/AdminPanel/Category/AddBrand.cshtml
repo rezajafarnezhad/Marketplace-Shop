@@ -13,7 +13,7 @@
         <div class="col-12 my-2">
             <label class="form-label"> جستجو برند ها</label>
             <span class="bi bi-globe2"></span>
-            <input class="form-control autocomplete" id="search-brand" />
+            <input autocomplete-search-url="@(Url.Page("./Index","AutocompleteSearch"))" class="form-control autocomplete" id="search-brand" />
         </div>
         <p>
             برند های انتخاب شده برای این دسته بندی

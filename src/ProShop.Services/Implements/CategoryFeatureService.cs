@@ -47,5 +47,15 @@ namespace ProShop.Services.Implements
         {
             return await _categoryFeature.Where(c=>c.CategoryId == categoryId).AnyAsync(c => c.FeatureId == featureId);
         }
+
+
+        public async Task<bool> CheckCategoryFeaturesCount(long categoryId, List<long> featuresIds)
+        {
+            var _featuresCount = await _categoryFeature.Where(c => c.CategoryId == categoryId)
+                .CountAsync(c => featuresIds.Contains(c.FeatureId));
+            return _featuresCount == featuresIds.Count();
+
+
+        }
     }
 }

@@ -12,12 +12,15 @@ namespace ProShop.ViewModels.Product;
 
 public class AddProductViewModel
 {
+
+    public long MainCategoryId { get; set; }
+
     [Display(Name = "برند محصول")]
     [Range(1,long.MaxValue,ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     public long BrandId { get; set; }
 
     [Display(Name = "اصالت محصول")]
-    public bool IsFake { get; set; }
+    public bool? IsFake { get; set; }
 
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [Display(Name = "وزن بسته بندی")]
@@ -66,3 +69,7 @@ public class AddProductViewModel
     [AllowExtensions(new[] { "mp4" }, new[] { "video/mp4" },true )]
     public List<IFormFile> ProductVideoFiles { get; set; }
 }
+
+
+
+

@@ -7,9 +7,9 @@
     <div class="my-2 col-md-6 col-lg-4">
         <label class="form-label">@item.FeatureTitle</label>
         
-        @if (Model.FeaturesConstantValues.Any(c=>c.FeatureId == item.FeatureId))
+        @if (Model.FeaturesConstantValues.Count(c=>c.FeatureId == item.FeatureId)>0)
         {
-            <select class="form-select custom-select2" multiple="multiple">
+            <select name="ProductFeatureConstantValue@(item.FeatureId)"  class="form-select custom-select2" multiple="multiple">
                 @foreach (var constantValue in Model.FeaturesConstantValues.Where(c => c.FeatureId == item.FeatureId))
                 {
                     <option value="@constantValue.Value">@constantValue.Value</option>
@@ -18,10 +18,9 @@
         }
         else
         {
-            <input  class="form-control" />
+            <input name="ProductFeatureValue@(item.FeatureId)"  class="form-control" />
 
         }
-
         <span class="span-error-message"></span>
     </div>
 }

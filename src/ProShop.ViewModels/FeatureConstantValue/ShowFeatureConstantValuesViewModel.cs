@@ -38,7 +38,7 @@ public class SearchFeatureConstantValueViewModel
 
     [EqualSearch]
     [Display(Name = "دسته بندی")]
-    public long CategoryId { get; set; }
+    public long? CategoryId { get; set; }
 
     public List<SelectListItem> Categories { get; set; } = new();
 

@@ -12,11 +12,13 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.ToTable("Product");
         builder.HasKey(c => c.Id);
         builder.Property(c => c.PersianTitle).HasMaxLength(200).IsRequired();
-        builder.Property(c => c.EnglishTitle).HasMaxLength(200).IsRequired();
+        builder.Property(c => c.EnglishTitle).HasMaxLength(200);
         builder.Property(c => c.PackLength).IsRequired();
         builder.Property(c => c.PackWeight).IsRequired();
         builder.Property(c => c.Packwidth).IsRequired();
         builder.Property(c => c.PackLength).IsRequired();
+        builder.Property(c => c.Slug).HasMaxLength(200).IsRequired();
+        builder.Property(c => c.RejectReason);
 
 
         builder.HasMany(c => c.ProductMedia)
@@ -35,6 +37,16 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasOne(c => c.Brand)
             .WithMany(c => c.Products)
             .HasForeignKey(c => c.BrandId);
+
+
+         builder.HasOne(c => c.Seller)
+            .WithMany(c => c.Products)
+            .HasForeignKey(c => c.SelerId);
+        
+        builder.HasOne(c => c.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(c => c.MainCategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
 
 
     }

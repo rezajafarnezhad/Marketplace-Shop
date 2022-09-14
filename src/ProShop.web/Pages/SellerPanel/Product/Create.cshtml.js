@@ -151,7 +151,7 @@ function resetinputs() {
 
     RemoveImages();
     RemoveFiles();
-    $("#Create-Product-Form input").val('');
+    $("#Create-Product-Form input").not(`[name="${rvt}"] , #Product_MainCategoryId`).val('');
 
     tinymce.get("Product_SpecialtyCheck").setContent("<p>بررسی تخصصی محصول</p>");
     tinymce.get("Product_ShortDescription").setContent("<p>توضیحات کوتاه محصول</p>");
@@ -166,7 +166,7 @@ function emptyAllInputsAndShowOtherTabs() {
     categoryId = $('#product-category div.list-group.col-3:last button.active').attr('category-Id');
     getDateWithAjax(`${location.pathname}?handler=CategoryInfo`, { categoryId: categoryId }, 'CategoryInfo');
     $('#request-new-brand-url').attr('href', requestNewBrandUrl + '&categoryId=' + categoryId);
-
+    $('#Product_MainCategoryId').val(categoryId);
 }
 
 
@@ -232,4 +232,9 @@ function RequestForAddBrandFunction() {
 
 
 function CreateProduct(message, data) {
+
+    
+    showToastr('success', message);
+   location.href = '/SellerPanel/Product/CreateProductSuccessful';
+
 }

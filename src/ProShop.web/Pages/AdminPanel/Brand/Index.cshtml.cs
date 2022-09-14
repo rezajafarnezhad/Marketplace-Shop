@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProShop.Common.Constants;
@@ -16,12 +17,15 @@ public class IndexModel : PageBase
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUploadFileService _fileService;
-    public IndexModel(IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService)
+    private readonly IHtmlSanitizer _htmlSanitizer;
+    public IndexModel(IBrandService brandService, IMapper mapper, IUnitOfWork unitOfWork, IUploadFileService fileService, IHtmlSanitizer htmlSanitizer)
     {
         _brandService = brandService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _fileService = fileService;
+        _htmlSanitizer = htmlSanitizer;
+        
     }
 
     [BindProperty(SupportsGet = true)]
@@ -71,6 +75,7 @@ public class IndexModel : PageBase
 
         var BrandLogoName = model.LogoPicture.GenerateFileName();
         var _Brand = _mapper.Map<Entities.Brand>(model);
+        _Brand.Description = _htmlSanitizer.Sanitize(_Brand.Description);
         _Brand.LogoPicture = BrandLogoName;
         _Brand.IsConfirmed = true;
         string brandRegistrationPicture = null;

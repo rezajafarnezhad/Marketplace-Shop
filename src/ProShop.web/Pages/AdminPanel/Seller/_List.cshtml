@@ -2,7 +2,7 @@
 @using ProShop.Entities
 @using ProShop.Common.Helpers
 @model ProShop.ViewModels.Sellers.ShowSellersViewModel
-@if (Model.Sellers.Any())
+@if (Model.Sellers.Count > 0)
 {
     <div class="table-responsive data-table-body">
         <table class="table table-bordered table-striped table-hover">

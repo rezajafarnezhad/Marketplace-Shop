@@ -14,6 +14,6 @@ public interface ICategoryService : IGenericService<Category>
     Task<bool> CanAddFakeProduct(long categoryId);
 
 
-
-
+    Task<(bool issuccessful, List<long> categoryIds)> GetCategoryParentIds(long categoryId);
+    Task<Dictionary<long, string>> GetCategoriesWithNoChild();
 }

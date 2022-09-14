@@ -97,6 +97,7 @@ public class IndexModel : PageBase
         if (_seller is null)
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
+        _seller.User.IsSeller = false;
         _sellerService.Remove(_seller);
          await _unitOfWork.SaveChangesAsync();
         _fileService.DeleteFile(_seller.IdCartPicture, "images", "seller-id-cart-pictures");
