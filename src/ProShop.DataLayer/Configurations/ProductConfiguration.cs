@@ -19,6 +19,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(c => c.PackLength).IsRequired();
         builder.Property(c => c.Slug).HasMaxLength(200).IsRequired();
         builder.Property(c => c.RejectReason);
+        builder.HasIndex(c => (new { c.ProductCode })).IsUnique();
 
 
         builder.HasMany(c => c.ProductMedia)

@@ -17,6 +17,14 @@ public class CategoryBrandService : GenericService<Entities.CategoryBrand>, ICat
     public async Task<bool> CheckCategoryBrand(long categoryId, long brandId)
     {
         return await _categoryBrands.Where(c => c.CategoryId == categoryId)
-            .AnyAsync(c=>c.BrandId == brandId);
+            .AnyAsync(c => c.BrandId == brandId);
+    }
+
+    public async Task<(bool,byte)> GetCommissionPercentage(long brandId, long categoryId)
+    {
+        var data = await _categoryBrands.Where(c => c.CategoryId == categoryId && c.BrandId == brandId).SingleOrDefaultAsync();
+
+        return (data !=null,data?.CommissionPercentage ?? 0);
+
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
@@ -13,9 +15,17 @@ public class CategoryService : GenericService<Category>, ICategoryService
 {
 
     private readonly DbSet<Category> _categories;
-    public CategoryService(IUnitOfWork uow) : base(uow)
+    private readonly DbSet<Product> _products;
+    private readonly IHttpContextAccessor _httpContext;
+    private readonly ISellerService _sellerService;
+
+
+    public CategoryService(IUnitOfWork uow, IHttpContextAccessor httpContext, ISellerService sellerService) : base(uow)
     {
         _categories = uow.Set<Category>();
+        _products = uow.Set<Product>();
+        _httpContext = httpContext;
+        _sellerService = sellerService;
     }
 
 
@@ -181,13 +191,13 @@ public class CategoryService : GenericService<Category>, ICategoryService
         return await _categories
             .SelectMany(c => c.CategoryBrands)
             .Where(c => c.CategoryId == categoryId)
-            .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn).ToListAsync();
+            .Select(c => c.Brand.TitleFa + " " + c.Brand.TitleEn + "|||" + c.CommissionPercentage).ToListAsync();
     }
 
-    public async Task<Dictionary<long,string>> GetCategoriesWithNoChild()
+    public async Task<Dictionary<long, string>> GetCategoriesWithNoChild()
     {
         return await _categories.Where(c => !c.ChildCategory.Any())
-            .ToDictionaryAsync(c=>c.Id, c=>c.Title);
+            .ToDictionaryAsync(c => c.Id, c => c.Title);
     }
 
 
@@ -228,6 +238,24 @@ public class CategoryService : GenericService<Category>, ICategoryService
         }
 
         return (true, result);
+    }
+
+    public async Task<Dictionary<long, string>> GetSellerCategories()
+    {
+        var userId = _httpContext.HttpContext.User.Identity.GetLoggedUserId();
+        var SellerId = await _sellerService.GetSellerId(userId);
+
+        return await _products.Where(c => c.SelerId == SellerId)
+            .GroupBy(c => c.MainCategoryId)
+            .Select(c => new
+            {
+                c.Key,
+                c.First().Category.Title
+
+            }).ToDictionaryAsync(c => c.Key,c=>c.Title);
+
+
+
     }
 }
 

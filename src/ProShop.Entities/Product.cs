@@ -15,7 +15,7 @@ public class Product : EntityBase , IAuditableEntity
     public int PackHeight { get; set; }
     public string ShortDescription { get; set; }
     public string SpecialCheck { get; set; }
-
+    public int ProductCode { get; set; }
     public long BrandId { get; set; }
     public long SelerId { get; set; }
     public long MainCategoryId { get; set; }

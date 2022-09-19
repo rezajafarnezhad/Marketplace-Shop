@@ -38,7 +38,7 @@ public class AddCategoryViewModel
     [Display(Name = "تصویر")]
     [MaxFileSize(2)]
     [IsImage]
-    public IFormFile? Picture { get; set; }
+    public IFormFile Picture { get; set; }
 
     [Display(Name = "نمایش در منو های اصلی")] 
     public bool IsShowInMenus { get; set; }

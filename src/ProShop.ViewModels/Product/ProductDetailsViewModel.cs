@@ -13,6 +13,9 @@ public class ProductDetailsViewModel
     [MakeTinyMceRequired]
     public string RejectReason { get; set; }
 
+    [Display(Name = " کد محصول")]
+    public int ProductCode { get; set; }
+
     [Display(Name = "نام فارسی محصول")]
     public string PersianTitle { get; set; }
 
@@ -51,10 +54,20 @@ public class ProductDetailsViewModel
 
     public string CategoryTitle { get; set; }
 
-    public List<ProductMedia> ProductMedia { get; set; } = new List<ProductMedia>();
-    public List<ProductFeature> ProductFeatures { get; set; } = new List<ProductFeature>();
+    public List<ProductMediaForDetailProductViewModel> ProductMedia { get; set; }
+    public List<ProductFeatureForDetailProductViewModel> ProductFeatures { get; set; }
 }
 
 
+public class ProductMediaForDetailProductViewModel
+{
+    public string FileName { get; set; }
+    public bool IsVideo { get; set; }
+}
 
+public class ProductFeatureForDetailProductViewModel
+{
+    public string FeatureTitle { get; set; }
 
+    public string Value { get; set; }
+}

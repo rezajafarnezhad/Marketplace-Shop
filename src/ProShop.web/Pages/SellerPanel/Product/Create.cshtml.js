@@ -6,6 +6,26 @@ function getCategories() {
 }
 $(function () {
 
+    $('#Product_BrandId').change(function () {
+
+        var selectedbrandId = $(this).val();
+        if (selectedbrandId === 0) {
+            $('#commission-percentage-place-in-create-product').addClass('invisible');
+        } else {
+
+            var formToSend = {
+                brandId: selectedbrandId,
+                categoryid: categoryId
+            }
+
+            getDateWithAjax(`${location.pathname}?handler=GetCommissionPercentage`, formToSend, 'ShowCommissionPercentage');
+            $('#commission-percentage-place-in-create-product').removeClass('invisible');
+
+        }
+
+    });
+
+
     //Disabled all tabs except first
     $('#add-product-tab button:not(:first)').attr('disabled', 'disabled');
     $('#add-product-tab button:not(:first)').addClass('not-allowed-cursor');
@@ -28,19 +48,34 @@ $(function () {
 
     $("#Product_ProductImageFiles").on("change", function () {
         if ($("#Product_ProductImageFiles")[0].files.length > 10) {
-            ShowMessageErrorForUploadFiles('شما مجاز به آپلود حداکثر 10 تصویر برای محصول میباشید.','RemoveImages');
+            ShowMessageErrorForUploadFiles('شما مجاز به آپلود حداکثر 10 تصویر برای محصول میباشید.', 'RemoveImages');
         }
     });
 
     $("#Product_ProductVideoFiles").on("change", function () {
         if ($("#Product_ProductVideoFiles")[0].files.length > 3) {
-            ShowMessageErrorForUploadFiles('شما مجاز به آپلود حداکثر 3 ویدیو برای محصول میباشید.','RemoveFiles');
+            ShowMessageErrorForUploadFiles('شما مجاز به آپلود حداکثر 3 ویدیو برای محصول میباشید.', 'RemoveFiles');
         }
     });
 
 
-
 });
+
+
+function ShowCommissionPercentage(message, data) {
+
+    $('#commission-percentage-place-in-create-product').removeClass('invisible');
+    $('#commission-percentage-place-in-create-product').html(`
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="info:">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path> 
+  </svg>
+<div> 
+درصد کمیسیون فروش برای این دسته بندی و این برند    
+                                    <span class="text-danger">${data}</span>
+                                    درصد میباشد
+</div>
+                    `);
+}
 
 
 function RemoveImages() {
@@ -155,7 +190,8 @@ function resetinputs() {
 
     tinymce.get("Product_SpecialtyCheck").setContent("<p>بررسی تخصصی محصول</p>");
     tinymce.get("Product_ShortDescription").setContent("<p>توضیحات کوتاه محصول</p>");
-
+    $('#commission-percentage-place-in-create-product').html('');
+    $('#commission-percentage-place-in-create-product').addClass('invisible');
 
 
 }
@@ -182,6 +218,8 @@ function CategoryInfo(message, data) {
 
     //showCategoryBrands
 
+
+
     $('#add-product-tab button[data-bs-target="#product-info"]').tab('show');
 
     $('#Product_BrandId option').remove();
@@ -196,12 +234,12 @@ function CategoryInfo(message, data) {
 
     //changeIsFakeStatus
 
-
     if (data.canAddFakeProduct === false) {
         $('#Product_IsFake').attr('disabled', 'disabled');
         $('#Product_IsFake').prop('checked', false);
     } else {
 
+        $('#Product_IsFake').attr('type', 'checkbox');
         $('#Product_IsFake').removeAttr('disabled');
     }
 
@@ -233,8 +271,8 @@ function RequestForAddBrandFunction() {
 
 function CreateProduct(message, data) {
 
-    
+
     showToastr('success', message);
-   location.href = '/SellerPanel/Product/CreateProductSuccessful';
+    location.href = '/SellerPanel/Product/CreateProductSuccessful';
 
 }

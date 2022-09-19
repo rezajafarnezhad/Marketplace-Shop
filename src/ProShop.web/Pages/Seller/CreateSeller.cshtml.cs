@@ -46,6 +46,7 @@ public class CreateSellerModel : PageBase
     public CreateSellerViewModel CreateSeller { get; set; } = new();
     public async Task<IActionResult> OnGet(string phoneNumber)
     {
+        
         if (!await _userManager.CheckForUserIsSeller(phoneNumber))
         {
             return RedirectToPage("/Error");

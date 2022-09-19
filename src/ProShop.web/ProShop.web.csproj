@@ -6,7 +6,7 @@
 		<UserSecretsId>57f4f4d9-9bea-45df-b1b6-fecb75dd8670</UserSecretsId>
 	</PropertyGroup>
 
-	
+
 	
 
 	<ItemGroup>
@@ -19,5 +19,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
 	</ItemGroup>
+
+	
 
 </Project>

@@ -17,4 +17,6 @@ public class Category : EntityBase, IAuditableEntity
     public ICollection<FeatureConstantValue> FeatureConstantValues { get; set; } = new List<FeatureConstantValue>();
     public ICollection<ProductCategory> productCategories { get; set; }
     public ICollection<Product> Products { get; set; }
+    public ICollection<CategoryVarieant> categoryVarieants { get; set; }
+    
 }

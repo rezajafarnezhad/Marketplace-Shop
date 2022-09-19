@@ -1,0 +1,117 @@
+﻿@using ProShop.Entities
+@using ProShop.Common.Helpers
+@using ProShop.ViewModels
+@model ProShop.ViewModels.Product.ShowAllProductsInSellerPanelViewModel
+@if (Model.Products.Count > 0)
+{
+    <div class="table-responsive data-table-body">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+
+                    <th>@Html.DisplayNameFor(x => x.Products[0].Id)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].ProductCode)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].PersianTitle)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].CategoryTitle)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].MainPicure)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].BrandFullTitle)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].Status)</th>
+
+                    <th class="text-center">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Item in Model.Products)
+                {
+
+                    <tr>
+                        <td>@Item.Id</td>
+                        <td>@Item.ProductCode</td>
+                        <td>@Item.PersianTitle</td>
+                        <td>@Item.CategoryTitle</td>
+
+                        <td class="text-center">
+
+
+
+                            <img src="~/images/Products/@Item.MainPicure" alt="@Item.MainPicure" width="100" class="zoom" />
+
+
+                        </td>
+                        
+                        <td>@Item.BrandFullTitle</td>
+                        <td>
+
+                            @{
+                                string GetButtonClass(ProductStatus status) => status switch
+                                {
+                                    ProductStatus.Confirmed => "success",
+                                    ProductStatus.AwaitingInitialApproval => "warning",
+                                    _ => "danger"
+                                };
+                            }
+                            <div class="d-grid">
+                                <span class="btn btn-@GetButtonClass(Item.Status)" type="button">
+                                    @Item.Status.GetEnumDisplayName()
+                                </span>
+                            </div>
+
+                        </td>
+
+                        <td class="text-center">
+                            <button productId="@Item.Id" type="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax btn btn-info btn-sm">
+                                اطلاعات محصول
+                            </button>
+
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        <!-- Pagination -->
+        <hr />
+        <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
+            <div class="btn-group me-2">
+                @if (Model.pagination.CurrentPage != 1)
+                {
+                    <button value="1" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button value="@(Model.pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                }
+                @for (int counter = Model.pagination.StartPage; counter <= Model.pagination.EndPage; counter++)
+                {
+                    <button value="@counter" type="button"
+                    class="@(counter == Model.pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                        @counter
+                    </button>
+                }
+                @if (Model.pagination.CurrentPage != Model.pagination.PagesCount)
+                {
+                    <button value="@(Model.pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.pagination.PagesCount" value="@Model.pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-left"></i>
+                        @Model.pagination.PagesCount
+                    </button>
+                }
+            </div>
+            <div>
+                <select id="page-count-selectbox" class="form-control" asp-for="pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
+            </div>
+        </div>
+        <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
+            <div class="input-group">
+                <input id="page-number-input" value="@Model.pagination.CurrentPage" min="1" max="@Model.pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
+            </div>
+        </div>
+        <!-- End pagination -->
+    </div>
+}
+else
+{
+    <partial name="_RecordNotFound" />
+}

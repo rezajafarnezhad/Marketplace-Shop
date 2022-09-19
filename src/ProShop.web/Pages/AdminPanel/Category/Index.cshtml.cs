@@ -217,11 +217,26 @@ namespace ProShop.web.Pages.AdminPanel.Category
 
             _Category.CategoryBrands.Clear();
             model.Brands = model.Brands.Distinct().ToList();
-            var brandIdes = await _brandService.GetBrandIdsByList(model.Brands);
-            brandIdes.ForEach(bid=> _Category.CategoryBrands.Add(new CategoryBrand()
+            var brandsInDictionary = new Dictionary<string, byte>();
+            foreach (var item in model.Brands)
             {
-                BrandId = bid,
-            }));
+                var spilitBrands = item.Split("|||");
+                brandsInDictionary.Add(spilitBrands[0],byte.Parse(spilitBrands[1]));
+            }
+            var brands = await _brandService.GetBrandsByFullTitle(brandsInDictionary.Select(c=>c.Key).ToList());
+            if(brands.Count != model.Brands.Count)
+                return Json(new JsonResultOperation(false));
+
+            foreach (var item in brands)
+            {
+                _Category.CategoryBrands.Add(new CategoryBrand()
+                {
+                    BrandId = item.Key,
+                    CommissionPercentage = brandsInDictionary[item.Value] 
+              
+                }) ;
+            }
+
             await _unitOfWork.SaveChangesAsync();
             return Json(new JsonResultOperation(true, "برند های مورد نظر با موفقیت به دسته بندی مذکور اضافه گردید"));
         }

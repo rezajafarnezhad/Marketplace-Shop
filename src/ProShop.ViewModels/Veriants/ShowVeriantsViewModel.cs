@@ -1,0 +1,63 @@
+﻿using ProShop.Common.Attributes;
+using System.ComponentModel.DataAnnotations;
+
+
+namespace ProShop.ViewModels.Veriants;
+
+public class ShowVeriantsViewModel
+{
+    public List<ShowVeriantViewModel> Veriants { get; set; } = new();
+    public SearchVeriantsViewModel SearchVeriants { get; set; } = new();
+    public PaginationViewModel Pagination { get; set; }
+    = new();
+}
+
+public class ShowVeriantViewModel
+{
+    [Display(Name = "شناسه")]
+    public long Id { get; set; }
+
+    [Display(Name = "مقدار")]
+    public string Value { get; set; }
+
+    [Display(Name = "کد رنگ")]
+    public string ColorCode { get; set; }
+
+    [Display(Name = "رنگ / اندازه")]
+    public bool IsColor { get; set; }
+
+    [Display(Name = "وضعیت")]
+    public bool IsConfirmed { get; set; }
+}
+public class SearchVeriantsViewModel
+{
+    [ContainsSearch]
+    [Display(Name = "مقدار")]
+    public string Value { get; set; }
+
+    [ContainsSearch]
+    [Display(Name = "کد رنگ")]
+    public string ColorCode { get; set; }
+
+    [Display(Name = "وضعیت")]
+    public bool? IsConfirmed { get; set; }
+
+    [EqualSearch]
+    [Display(Name = "رنگ / اندازه")]
+    public bool? IsColor { get; set; }
+
+    [Display(Name = "نمایش بر اساس")]
+    public SortingVariants Sorting { get; set; }
+
+    [Display(Name = "مرتب سازی بر اساس")]
+    public SortingOrder SortingOrder { get; set; }
+}
+
+public enum SortingVariants
+{
+    [Display(Name = "شناسه")]
+    Id,
+
+    [Display(Name = "مقدار")]
+    Value
+}

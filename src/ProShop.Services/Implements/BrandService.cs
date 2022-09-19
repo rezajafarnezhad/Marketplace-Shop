@@ -2,12 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using ProShop.DataLayer.Context;
 using ProShop.DataLayer.Migrations;
-using ProShop.Entities;
 using ProShop.ViewModels.Brands;
 
 namespace ProShop.Services.Implements;
 
-public class BrandService : GenericService<Entities.Brand>,IBrandService
+public class BrandService : GenericService<Entities.Brand>, IBrandService
 {
 
     private readonly DbSet<Entities.Brand> _brands;
@@ -52,8 +51,8 @@ public class BrandService : GenericService<Entities.Brand>,IBrandService
         var result = new List<string>();
 
         if (await _brands.AnyAsync(c => c.TitleFa == entity.TitleFa))
-            result.Add(nameof(Entities.Brand.TitleFa)); 
-        
+            result.Add(nameof(Entities.Brand.TitleFa));
+
         if (await _brands.AnyAsync(c => c.TitleEn == entity.TitleEn))
             result.Add(nameof(Entities.Brand.TitleEn));
 
@@ -96,23 +95,23 @@ public class BrandService : GenericService<Entities.Brand>,IBrandService
     public async Task<List<string>> AutocompleteSearch(string term)
     {
         return await _brands.Where(c => c.TitleFa.Contains(term) || c.TitleEn.Contains(term))
+            .OrderBy(c => c.Id)
             .Take(20)
             .Select(c => c.TitleFa + " " + c.TitleEn).ToListAsync();
     }
 
-    public async Task<List<long>> GetBrandIdsByList(List<string> brandsTile)
+    public async Task<Dictionary<long, string>> GetBrandsByFullTitle(List<string> brandTitles)
     {
 
-        return await _brands.Where(c => brandsTile.Contains(c.TitleFa + " " + c.TitleEn))
-            .Select(c => c.Id)
-            .ToListAsync();
+        return await _brands.Where(c => brandTitles.Contains(c.TitleFa + " " + c.TitleEn))
+            .ToDictionaryAsync(c => c.Id, c => c.TitleFa + " " + c.TitleEn);
 
     }
     public Task<Dictionary<long, string>> GetBrandsByCategoryId(long categoryId)
     {
         return _brands.SelectMany(c => c.CategoryBrands)
             .Where(c => c.CategoryId == categoryId)
-            .Include(c=>c.Brand)
+            .Include(c => c.Brand)
             .ToDictionaryAsync(c => c.BrandId, c => c.Brand.TitleFa + " " + c.Brand.TitleEn);
     }
 

@@ -19,9 +19,13 @@ public class ShowProductViewModel
 
     [Display(Name = "عنوان فارسی محصول")]
     public string PersianTitle { get; set; }
-    
+
     [Display(Name = " دسته بندی اصلی")]
     public string CategoryTitle { get; set; }
+
+    [Display(Name = " کد محصول")]
+    public int ProductCode { get; set; }
+
 
     [Display(Name = "تصویر اصلی محصول")]
     public string MainPicure { get; set; }
@@ -57,6 +61,11 @@ public class SearchProducts
     [MaxLength(200)]
     public string ShopName { get; set; }
 
+    [EqualSearch]
+    [Display(Name = " کد محصول")]
+    public int? ProductCode { get; set; }
+
+
     [Display(Name = "وضعیت محصول")]
     public ProductStatus? Status { get; set; }
 
@@ -77,10 +86,10 @@ public enum SortingProducts
 
     [Display(Name = "نام فارسی محصول")]
     PersianTitle,
-    
+
     [Display(Name = "نام فروشنده محصول")]
     ShopName,
-    
+
     [Display(Name = "نام فارسی برند")]
-    BrandFa, 
+    BrandFa,
 }

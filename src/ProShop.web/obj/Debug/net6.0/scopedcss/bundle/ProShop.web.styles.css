@@ -33,6 +33,15 @@ margin-top: 9rem;
     width: 140px;
 
 }
+/* _content/ProShop.web/Pages/SellerPanel/Product/_ProductDetails.cshtml.rz.scp.css */
+
+
+
+[b-uu4icqylfz] .Show_Images_In_Product_details {
+    width: 23%; 
+    
+    border-radius: 18px;
+}
 /* _content/ProShop.web/Pages/Seller/CreateSeller.cshtml.rz.scp.css */
 #seller-contract[b-7jw3sehyj4] {
      height: 300px;

@@ -10,7 +10,13 @@
     }
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
-        <div class="col-12 my-2">
+        <div class="col-6 my-2">
+            <label class="form-label">درصد کمیسیون %</label>
+            <span class="bi "></span>
+            <input class="form-control" id="commission-percentage-input" type="number" value="0"/>
+        </div> 
+        
+        <div class="col-6 my-2">
             <label class="form-label"> جستجو برند ها</label>
             <span class="bi bi-globe2"></span>
             <input autocomplete-search-url="@(Url.Page("./Index","AutocompleteSearch"))" class="form-control autocomplete" id="search-brand" />
@@ -23,10 +29,15 @@
             {
                 foreach (var item in Model.Brands)
                 {
+                    var spilitbrand = item.Split("|||");
                     <div class="btn-group mb-3">
                         <button type="button" class="btn btn-outline-dark btn-sm">
-                            @item
+                            @spilitbrand[0]
                         </button>
+                        <button type="button" class="btn btn-success btn-sm">
+                           %
+                           @spilitbrand[1]
+                        </button> 
                         <button type="button" class="btn btn-danger btn-sm remove-selected-brands">
                             <i class="bi bi-x-lg"></i>
                         </button>

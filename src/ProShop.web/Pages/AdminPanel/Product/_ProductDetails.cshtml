@@ -13,7 +13,7 @@
         <div class="card-title">
             جزییات محصول
             <b>
-                <a href="@Model.Slug">
+                <a asp-page="/Product/Index" asp-route-productCode="@Model.ProductCode" asp-route-slug="@Model.Slug" target="_blank">
                     @Model.PersianTitle
                 </a>
             </b>
@@ -73,7 +73,7 @@
                     @foreach (var feature in Model.ProductFeatures)
                     {
                         <p>
-                            @feature.Feature.Title:
+                            @feature.FeatureTitle:
                             @foreach (var value in feature.Value.Split("|||"))
                             {
                                 <span class="badge bg-success">@value</span>

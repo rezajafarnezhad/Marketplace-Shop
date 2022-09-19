@@ -91,6 +91,7 @@ public class CreateModel : SellerPanelBase
 
         ProductToAdd.ShortDescription = _htmlSanitizer.Sanitize(ProductToAdd.ShortDescription);
         ProductToAdd.SpecialCheck = _htmlSanitizer.Sanitize(ProductToAdd.SpecialCheck);
+        ProductToAdd.ProductCode = await _productService.GetProductCode();
 
         // main Category Id
         ProductToAdd.MainCategoryId =  categoriesToAdd.categoryIds.First();
@@ -295,7 +296,7 @@ public class CreateModel : SellerPanelBase
         var model = new
         {
             Brands = await _brandService.GetBrandsByCategoryId(categoryId),
-            CanAddFakeProduct = await _categoryService.CanAddFakeProduct(categoryId),
+            canAddFakeProduct = await _categoryService.CanAddFakeProduct(categoryId),
             CategoryFeaturs =
                 await _viewRenderService.RenderViewToStringAsync("~/Pages/SellerPanel/Product/_showCategoryFeaturesPartial.cshtml", CategoryFeatureModel)
         };
@@ -386,6 +387,22 @@ public class CreateModel : SellerPanelBase
             });
         }
         return Json(false);
+    }
+  
+    public async Task<IActionResult> OnGetGetCommissionPercentage(long brandId , long categoryid)
+    {
+        if(brandId <1 || categoryid < 1)
+            return Json(new JsonResultOperation(false));
+
+        var data = await _categoryBrandService.GetCommissionPercentage(brandId, categoryid);
+
+        if(data.Item1 is false)
+            return Json(new JsonResultOperation(false));
+
+
+        return Json(new JsonResultOperation(true,String.Empty) { 
+        Data =data.Item2
+        });
     }
 
     public IActionResult OnPostUploadShortDescriptionImages([IsImage] IFormFile file)

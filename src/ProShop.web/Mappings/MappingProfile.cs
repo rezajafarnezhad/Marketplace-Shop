@@ -70,10 +70,19 @@ public class MappingProfile : Profile
             .AddTransform<string>(str => str != null ? str.Trim() : null);
     
         this.CreateMap<Entities.FeatureConstantValue,FeatureConstantValueForCreateProductViewModel>();
+        
         this.CreateMap<Product, ShowProductViewModel>()
+             .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
+        
+        this.CreateMap<Product, ShowProductInSellerPanelViewModel>()
+             .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
+        
+        this.CreateMap<Product, ShowAllProductInSellerPanelViewModel>()
              .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
 
         this.CreateMap<Product, ProductDetailsViewModel>();
+        this.CreateMap<ProductMedia, ProductMediaForDetailProductViewModel>();
+        this.CreateMap<ProductFeature, ProductFeatureForDetailProductViewModel>();
              
 
 

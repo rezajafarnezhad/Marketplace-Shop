@@ -20,7 +20,7 @@ public class AddProductViewModel
     public long BrandId { get; set; }
 
     [Display(Name = "اصالت محصول")]
-    public bool? IsFake { get; set; }
+    public bool? IsFake { get; set; } = false;
 
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
     [Display(Name = "وزن بسته بندی")]

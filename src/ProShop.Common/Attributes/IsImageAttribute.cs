@@ -43,13 +43,13 @@ public class IsImageAttribute : BaseValidationAttribute, IClientModelValidator
         {
             files = new List<IFormFile>() { value as IFormFile };
         }
-        if (files != null && files.Count > 0)
+        if (files is { Count: > 0 })
         {
             foreach (var file in files)
             {
                 if (file == null || file.Length == 0)
                 {
-                    return new ValidationResult(ErrorMessage);
+                    continue;
                 }
                 if (!_allowExtensions.Contains(file.ContentType))
                 {

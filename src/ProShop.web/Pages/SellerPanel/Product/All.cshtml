@@ -1,0 +1,93 @@
+﻿
+@page
+@using ProShop.ViewModels
+@model ProShop.web.Pages.SellerPanel.Product.AllModel
+@{
+    ViewData["Title"] = "تمامی محصولات";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+
+        <form class="alert alert-secondary  Search-form-via-ajax">
+            <input type="hidden" asp-for="Products.pagination.CurrentPage" />
+            <input type="hidden" asp-for="Products.pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.PersianTitle"></label>
+                    <input autocomplete-search-url="@(Url.Page("./All","AutocompleteSearchForPersianTitle"))" class="form-control autocomplete" asp-for="Products.SearchProducts.PersianTitle" />
+                    <span class="span-error-message" asp-validation-for="Products.SearchProducts.PersianTitle"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.ProductCode"></label>
+                    <input class="form-control" asp-for="Products.SearchProducts.ProductCode" />
+                    <span class="span-error-message" asp-validation-for="Products.SearchProducts.ProductCode"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.MainCategoryId"></label>
+                    <select class="form-control custom-select2" asp-for="Products.SearchProducts.MainCategoryId" asp-items="Model.Products.SearchProducts.Categories">
+                    </select>
+                </div>
+              
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.DeletedStatus"></label>
+                    <select class="form-control" asp-for="Products.SearchProducts.DeletedStatus" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.DeletedStatus>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.Sorting"></label>
+                    <select class="form-control" asp-for="Products.SearchProducts.Sorting" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.Product.SortingAllProductsInSellerPanel>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Products.SearchProducts.SortingOrder"></label>
+                    <select class="form-control" asp-for="Products.SearchProducts.SortingOrder" asp-items="Html.GetEnumSelectList<SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section CustomScripts
+    {
+    <script src="~/Pages/SellerPanel/Product/All.cshtml.js"></script>
+
+}
+
+    @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
+
+}
+    @section Styles
+    {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css" />
+
+}
