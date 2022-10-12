@@ -39,6 +39,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
         public ShowCategoriesViewModel CategoriesViewModel { get; set; } = new();
         public void OnGet()
         {
+          
         }
 
         public async Task<IActionResult> OnGetGetDataTableAsync()

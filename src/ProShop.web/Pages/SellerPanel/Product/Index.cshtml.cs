@@ -16,10 +16,12 @@ namespace ProShop.web.Pages.SellerPanel.Product
 
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
-        public IndexModel(ICategoryService categoryService, IProductService productService)
+        private readonly IProductVariantService _productVariantService;
+        public IndexModel(ICategoryService categoryService, IProductService productService, IProductVariantService productVariantService)
         {
             _categoryService = categoryService;
             _productService = productService;
+            _productVariantService = productVariantService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -56,6 +58,15 @@ namespace ProShop.web.Pages.SellerPanel.Product
 
             return Partial("_ProductDetails", data);
 
+        }
+
+        public async Task<IActionResult> OnGetGetProductVariants(long productId)
+        {
+            var data = await _productVariantService.GetProductVariants(productId);
+            if(data is null)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+            return Partial("_ProductVariants", data);
         }
     }
 

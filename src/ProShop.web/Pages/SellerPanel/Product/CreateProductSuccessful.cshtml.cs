@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ProShop.web.Pages.SellerPanel.Product
 {
-    public class CreateProductSuccessfulModel : PageModel
+    public class CreateProductSuccessfulModel : SellerPanelBase
     {
         public void OnGet()
         {

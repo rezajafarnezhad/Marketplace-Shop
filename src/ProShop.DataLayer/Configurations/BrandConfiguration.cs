@@ -32,3 +32,4 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
     }
 }
 
+

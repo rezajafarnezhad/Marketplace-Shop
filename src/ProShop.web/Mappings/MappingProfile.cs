@@ -6,8 +6,11 @@ using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
 using ProShop.ViewModels.FeatureConstantValue;
+using ProShop.ViewModels.Garantee;
 using ProShop.ViewModels.Product;
+using ProShop.ViewModels.ProductVariant;
 using ProShop.ViewModels.Sellers;
+using ProShop.ViewModels.Veriants;
 
 namespace ProShop.web.Mappings;
 
@@ -68,25 +71,41 @@ public class MappingProfile : Profile
         this.CreateMap<AddProductViewModel, Product>()
              .ForMember(dest => dest.SpecialCheck, options => options.MapFrom(src => src.SpecialtyCheck))
             .AddTransform<string>(str => str != null ? str.Trim() : null);
-    
-        this.CreateMap<Entities.FeatureConstantValue,FeatureConstantValueForCreateProductViewModel>();
-        
+
+        this.CreateMap<Entities.FeatureConstantValue, FeatureConstantValueForCreateProductViewModel>();
+
         this.CreateMap<Product, ShowProductViewModel>()
              .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
-        
+
         this.CreateMap<Product, ShowProductInSellerPanelViewModel>()
              .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
-        
+
         this.CreateMap<Product, ShowAllProductInSellerPanelViewModel>()
              .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName));
 
         this.CreateMap<Product, ProductDetailsViewModel>();
         this.CreateMap<ProductMedia, ProductMediaForDetailProductViewModel>();
         this.CreateMap<ProductFeature, ProductFeatureForDetailProductViewModel>();
-             
+        this.CreateMap<Entities.Variant, ShowVeriantViewModel>();
+        this.CreateMap<Entities.Garantee, ShowGarantieeViewModel>();
+        this.CreateMap<Entities.CategoryVarieant, ShowCategoryVariantInAddVariantViewModel>();
+
+        this.CreateMap<Entities.Product, AddVariantViewModel>()
+           .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Id))
+           .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName))
+           .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.PersianTitle))
+           .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants))
+           .ForMember(dest => dest.CommissionPercentage, options =>
+             options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
 
 
-            
+        this.CreateMap<AddVariantViewModel,Entities.ProductVariant>();
+        this.CreateMap<Entities.ProductVariant,ShowProductVariantViewModel>()
+             .ForMember(dest => dest.GatanteeFullTitle, options => options.MapFrom(src => src.Garantee.FullTitle));
+        this.CreateMap<Entities.ProductVariant, ShowProductVariantInCreateConsignmentViewModel>();
+        this.CreateMap<Entities.ProductVariant, GetProductVariantInCreateConsignmentViewModel>();
+
+
 
 
 

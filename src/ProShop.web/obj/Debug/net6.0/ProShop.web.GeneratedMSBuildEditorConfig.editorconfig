@@ -83,6 +83,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxGZWF0dXJlXF9MaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Garantee/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxHYXJhbnRlZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Garantee/_List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxHYXJhbnRlZVxfTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -107,6 +115,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxTZWxsZXJcX1NlbGxlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Variant/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxWYXJpYW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Variant/_List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxWYXJpYW50XF9MaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -125,6 +141,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Product/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Consignment/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcQ29uc2lnbm1lbnRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Consignment/_productVariantTrPar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcQ29uc2lnbm1lbnRcX3Byb2R1Y3RWYXJpYW50VHJQYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Error404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcRXJyb3I0MDQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Index.cshtml]
@@ -147,12 +175,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/SuccessfulProductVariant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxTdWNjZXNzZnVsUHJvZHVjdFZhcmlhbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_ListAll.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfTGlzdEFsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_ProductVariants.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfUHJvZHVjdFZhcmlhbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_RequestForAddBrandPartial.cshtml]
@@ -234,6 +270,10 @@ build_metadata.AdditionalFiles.CssScope = b-xhvhmgknev
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Identity/RegisterLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUmVnaXN0ZXJMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-2p4pf41uk5
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/AddVariant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBZGRWYXJpYW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-l9zynfn6xc
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/_ProductDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfUHJvZHVjdERldGFpbHMuY3NodG1s

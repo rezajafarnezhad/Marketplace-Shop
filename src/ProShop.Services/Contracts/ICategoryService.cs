@@ -17,4 +17,6 @@ public interface ICategoryService : IGenericService<Category>
     Task<(bool issuccessful, List<long> categoryIds)> GetCategoryParentIds(long categoryId);
     Task<Dictionary<long, string>> GetCategoriesWithNoChild();
     Task<Dictionary<long, string>> GetSellerCategories();
+
+    
 }

@@ -1,0 +1,60 @@
+﻿@using ProShop.Entities
+@model List<ProShop.ViewModels.ProductVariant.ShowProductVariantViewModel>
+
+
+
+
+<div class="card">
+    <div class="card-body">
+
+        @if (Model.Count > 0)
+        {
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(c=>c[0].VariantCode)</th>
+                        <th scope="col">@Html.DisplayNameFor(c=>c[0].VariantValue)</th>
+                        <th scope="col">@Html.DisplayNameFor(c=>c[0].GatanteeFullTitle)</th>
+                        <th scope="col">@Html.DisplayNameFor(c=>c[0].Price)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var Item in Model)
+                    {
+                        <tr>
+                            <td class="table-success">@Item.VariantCode</td>
+
+                            <td class="table-success">
+                                
+                                @Item.VariantValue
+                                @if (Item.VariantIsColor)
+                                {
+                                    <span class="rounded" style="background: @Item.VariantColorCode">
+                                        &nbsp;
+                                        &nbsp;
+                                        &nbsp;
+                                    </span>
+                                }
+
+                            </td>
+                            <td class="table-success">@Item.GatanteeFullTitle</td>
+                            <td class="table-success">@Item.Price.ToString("N0") تومان</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+            </table>
+
+
+        }
+        else
+        {
+            <partial name="_RecordNotFound"></partial>
+        }
+
+    </div>
+</div>

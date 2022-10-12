@@ -1,4 +1,7 @@
-﻿namespace ProShop.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace ProShop.Entities;
 
 public class Variant : EntityBase, IAuditableEntity
 {

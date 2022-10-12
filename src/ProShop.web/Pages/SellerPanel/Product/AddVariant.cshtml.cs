@@ -1,0 +1,75 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using ProShop.Common.Constants;
+using ProShop.Common.Helpers;
+using ProShop.Common.IdentityToolkit;
+using ProShop.DataLayer.Context;
+using ProShop.DataLayer.Migrations;
+using ProShop.Services.Contracts;
+using ProShop.ViewModels.Veriants;
+
+namespace ProShop.web.Pages.SellerPanel.Product;
+
+public class AddVariantModel : SellerPanelBase
+{
+
+    private readonly IProductService _productService;
+    private readonly ISellerService _sellerService;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork unitOfWork;
+    private readonly IProductVariantService _productVariantService;
+    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null)
+    {
+        _productService = productService;
+        _sellerService = sellerService;
+        _mapper = mapper;
+        _productVariantService = productVariantService;
+        this.unitOfWork = unitOfWork;
+    }
+
+    [BindProperty]
+    public AddVariantViewModel Variant { get; set; } = new();
+
+    public async Task<IActionResult> OnGet(long ProductId)
+    {
+
+        var data = await _productService.GetProductInfoForAddVeriant(ProductId);
+        if (data is null)
+            return RedirectToPage(PublicConstantStrings.Error404PageName);
+
+        Variant = data;
+        return Page();
+    }
+
+
+    public async Task<IActionResult> OnPost()
+    {
+
+        if (!ModelState.IsValid)
+            return Json(new JsonResultOperation(false, PublicConstantStrings.ModelStateErrorMessage)
+            {
+                Data = ModelState.GetModelStateErrors()
+
+            });
+
+
+        var userId = User.Identity.GetLoggedUserId();
+        var sellerId = await _sellerService.GetSellerId(userId);
+
+        var ProductVaraintToAdd = _mapper.Map<Entities.ProductVariant>(Variant);
+        ProductVaraintToAdd.SellerId = sellerId;
+        ProductVaraintToAdd.VariantCode = await _productVariantService.GetVariantCodeForCreateProductVariant();
+        
+        if(await _productVariantService.existsProductVariant(ProductVaraintToAdd.ProductId, ProductVaraintToAdd.GaranteeId, ProductVaraintToAdd.VariantId))
+        {
+            return Json(new JsonResultOperation(false,"این مشخصات قبلا برای این محصول ثبت شده"));
+        }
+        await _productVariantService.AddAsync(ProductVaraintToAdd);
+        await unitOfWork.SaveChangesAsync();
+
+
+        return Json(new JsonResultOperation(true, "تنوغ محصول با موفقیت اضافه شد"));
+
+    }
+}

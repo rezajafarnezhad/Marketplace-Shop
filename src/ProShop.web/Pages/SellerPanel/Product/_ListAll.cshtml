@@ -59,9 +59,13 @@
                         </td>
 
                         <td class="text-center">
-                            <button productId="@Item.Id" type="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax btn btn-info btn-sm">
+                            <button productId="@Item.Id" type="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax button-72">
                                 اطلاعات محصول
                             </button>
+
+                            <a class="button-72" asp-page="./AddVariant" asp-route-ProductId="@Item.Id">
+                                شما هم فروشنده شوید
+                            </a>
 
                         </td>
 

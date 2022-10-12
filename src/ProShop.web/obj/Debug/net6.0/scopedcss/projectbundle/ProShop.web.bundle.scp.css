@@ -33,6 +33,15 @@ margin-top: 9rem;
     width: 140px;
 
 }
+/* _content/ProShop.web/Pages/SellerPanel/Product/AddVariant.cshtml.rz.scp.css */
+#all-variant-box[b-l9zynfn6xc] {
+    max-height: 158px;
+    overflow-y: auto;
+}
+
+[b-l9zynfn6xc] .main-image-AddVariant {
+    max-width: 80%;
+}
 /* _content/ProShop.web/Pages/SellerPanel/Product/_ProductDetails.cshtml.rz.scp.css */
 
 

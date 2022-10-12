@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HIIVDy3u9okz/aAdsSo0RlEx5RbK4E9wo5VTXT8ZWo0=",
+  "Hash": "UHBcymixk0YyaxJXfqdWxPA2u/E38pa38iQLPSu8gIw=",
   "Source": "ProShop.web",
   "BasePath": "_content/ProShop.web",
   "Mode": "Default",
@@ -119,6 +119,23 @@
       "OriginalItemSpec": "Pages\\AdminPanel\\FeatureConstantValue\\Index.cshtml.js"
     },
     {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\AdminPanel\\Garantee\\Index.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/AdminPanel/Garantee/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\AdminPanel\\Garantee\\Index.cshtml.js"
+    },
+    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\AdminPanel\\Product\\Index.cshtml.js",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -151,6 +168,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "Pages\\AdminPanel\\Seller\\Index.cshtml.js"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\AdminPanel\\Variant\\Index.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/AdminPanel/Variant/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\AdminPanel\\Variant\\Index.cshtml.js"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Identity\\LoginWithPhoneNumber.cshtml.js",
@@ -236,6 +270,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "Pages\\Seller\\Register.cshtml.js"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\SellerPanel\\Consignment\\Create.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/SellerPanel/Consignment/Create.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\SellerPanel\\Consignment\\Create.cshtml.js"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\SellerPanel\\Product\\AddVariant.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/SellerPanel/Product/AddVariant.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\SellerPanel\\Product\\AddVariant.cshtml.js"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\SellerPanel\\Product\\All.cshtml.js",
@@ -1205,6 +1273,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Categories\\fb809644e2cc4b76a8bdef32e6aa4842.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\3e0ae06f5011470b9d75b5fcd7c09e64.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Garantee/3e0ae06f5011470b9d75b5fcd7c09e64.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Garantee\\3e0ae06f5011470b9d75b5fcd7c09e64.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\03c3cf310f2848cd967a63e2e00808b8.jpg",

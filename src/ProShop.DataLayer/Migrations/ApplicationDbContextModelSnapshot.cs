@@ -149,6 +149,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<bool>("IsShowInMenus")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsVariantColor")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ModifiedByBrowserName")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -340,6 +343,122 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("CategoryVarieant", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Consignment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<byte>("ConsignmentStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("sellerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("sellerId");
+
+                    b.ToTable("Consignment", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ConsignmentItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ConsignmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ProductVariantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsignmentId");
+
+                    b.HasIndex("ProductVariantId", "ConsignmentId")
+                        .IsUnique();
+
+                    b.ToTable("ConsignmentItem", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.Feature", b =>
                 {
                     b.Property<long>("Id")
@@ -449,6 +568,66 @@ namespace ProShop.DataLayer.Migrations
                     b.HasIndex("FeatureId");
 
                     b.ToTable("FeatureConstantValue", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.Garantee", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("MonthCount")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Garantee", (string)null);
                 });
 
             modelBuilder.Entity("ProShop.Entities.Identity.Role", b =>
@@ -1135,6 +1314,80 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("ProductMedia", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("GaranteeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SellerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("VariantCode")
+                        .HasColumnType("int");
+
+                    b.Property<long>("VariantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GaranteeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("VariantCode")
+                        .IsUnique();
+
+                    b.HasIndex("VariantId");
+
+                    b.HasIndex("SellerId", "ProductId", "VariantId")
+                        .IsUnique();
+
+                    b.ToTable("ProductVariant", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.ProvinceAndCity", b =>
                 {
                     b.Property<long>("Id")
@@ -1476,6 +1729,36 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Variant");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Consignment", b =>
+                {
+                    b.HasOne("ProShop.Entities.Seller", "Seller")
+                        .WithMany("Consignments")
+                        .HasForeignKey("sellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ConsignmentItem", b =>
+                {
+                    b.HasOne("ProShop.Entities.Consignment", "Consignment")
+                        .WithMany("ConsignmentItems")
+                        .HasForeignKey("ConsignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.ProductVariant", "ProductVariant")
+                        .WithMany("ConsignmentItems")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Consignment");
+
+                    b.Navigation("ProductVariant");
+                });
+
             modelBuilder.Entity("ProShop.Entities.FeatureConstantValue", b =>
                 {
                     b.HasOne("ProShop.Entities.Category", "Category")
@@ -1634,6 +1917,41 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>
+                {
+                    b.HasOne("ProShop.Entities.Garantee", "Garantee")
+                        .WithMany()
+                        .HasForeignKey("GaranteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Product", "Product")
+                        .WithMany("ProductVariants")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Seller", "Seller")
+                        .WithMany("ProductVariants")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Variant", "Variant")
+                        .WithMany()
+                        .HasForeignKey("VariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Garantee");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
+
+                    b.Navigation("Variant");
+                });
+
             modelBuilder.Entity("ProShop.Entities.ProvinceAndCity", b =>
                 {
                     b.HasOne("ProShop.Entities.ProvinceAndCity", "Parent")
@@ -1694,6 +2012,11 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("productCategories");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Consignment", b =>
+                {
+                    b.Navigation("ConsignmentItems");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Feature", b =>
                 {
                     b.Navigation("CategoryFeatures");
@@ -1729,7 +2052,14 @@ namespace ProShop.DataLayer.Migrations
 
                     b.Navigation("ProductMedia");
 
+                    b.Navigation("ProductVariants");
+
                     b.Navigation("productCategories");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>
+                {
+                    b.Navigation("ConsignmentItems");
                 });
 
             modelBuilder.Entity("ProShop.Entities.ProvinceAndCity", b =>
@@ -1742,6 +2072,10 @@ namespace ProShop.DataLayer.Migrations
             modelBuilder.Entity("ProShop.Entities.Seller", b =>
                 {
                     b.Navigation("Brands");
+
+                    b.Navigation("Consignments");
+
+                    b.Navigation("ProductVariants");
 
                     b.Navigation("Products");
                 });

@@ -1,0 +1,89 @@
+﻿
+@page
+@using ProShop.ViewModels
+@model ProShop.web.Pages.AdminPanel.Garantee.IndexModel
+
+@{
+    ViewData["Title"] = "گارانتی ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+        <div class="d-grid d-lg-block mb-2 text-end">
+            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button" functionNameToCallInTheEnd="EditBrandFunction">
+                افزودن گارانتی
+                <span class="bi bi-plus-circle mt-5"></span>
+            </a>
+        </div>
+        <form class="alert alert-secondary  Search-form-via-ajax">
+            <input type="hidden" asp-for="Garanties.Pagination.CurrentPage" />
+            <input type="hidden" asp-for="Garanties.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Garanties.SearchGarantiee.Title"></label>
+                    <input class="form-control" asp-for="Garanties.SearchGarantiee.Title" />
+                    <span class="span-error-message" asp-validation-for="Garanties.SearchGarantiee.Title"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Garanties.SearchGarantiee.MonthCount"></label>
+                    <input class="form-control" asp-for="Garanties.SearchGarantiee.MonthCount" />
+                    <span class="span-error-message" asp-validation-for="Garanties.SearchGarantiee.MonthCount"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Garanties.SearchGarantiee.IsConfirmed"></label>
+                    <select class="form-select" asp-for="Garanties.SearchGarantiee.IsConfirmed">
+                        <option value="">همه</option>
+                        <option value="true">تایید شده</option>
+                        <option value="false">تایید نشده</option>
+                    </select>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Garanties.SearchGarantiee.Sorting"></label>
+                    <select class="form-select" asp-for="Garanties.SearchGarantiee.Sorting" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.Garantee.SortingGuarantees>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Garanties.SearchGarantiee.SortingOrder"></label>
+                    <select class="form-select" asp-for="Garanties.SearchGarantiee.SortingOrder" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section CustomScripts
+    {
+    <script src="~/Pages/AdminPanel/Garantee/Index.cshtml.js"></script>
+}
+
+    @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+}
+
+
+

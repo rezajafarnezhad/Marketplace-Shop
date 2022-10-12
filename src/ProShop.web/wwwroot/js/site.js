@@ -766,7 +766,7 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
             $('#html-modal-place').modal('hide');
             showLoading();
         },
-        success: function (data, status) {
+        success: function (data) {
 
             if (data.isSuccessful == false) {
                 /*var finalData = data.data != null ? data.data : [data.message];*/
@@ -786,6 +786,51 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
 
     });
 });
+
+
+// این فانکشن هر فرمی را به صورت پست به سمت سرور با استفاده از ایجکس
+// ارسال میکند ویک صفخه اج تی ام ال برگشت میزند
+$(document).on('submit', '.get-html-by-sending-form', function (e) {
+
+    e.preventDefault();
+    var currentForm = $(this);
+    var formAction = currentForm.attr("action");
+    var functionName = currentForm.attr("call-function-in-the-end");
+    var formdata = new FormData(this);
+    $.ajax({
+
+        url: formAction,
+        data: formdata,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $('#html-modal-place').modal('hide');
+            showLoading();
+        },
+        success: function (data) {
+
+            if (data.isSuccessful == false) {
+                /*var finalData = data.data != null ? data.data : [data.message];*/
+                var finalData = data.data || [data.message];
+                fillValidationForm(finalData, currentForm);
+                showToastr('warning', data.message);
+            } else {
+                window[functionName](data.data);
+            }
+        },
+        complete: function () {
+            hideLoading();
+        },
+        error: function () {
+            ShowErrorMessage();
+        }
+
+    });
+});
+
 
 // با استفاده از این فانکشن میتوانیم اطلاعاتی را از سمت سرور دریافت کنیم
 // برای مثال برای خواندن شهرستان های یک استان از این فانکشن استفاده میکنیم

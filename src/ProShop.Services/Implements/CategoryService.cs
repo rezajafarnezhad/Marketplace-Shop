@@ -253,9 +253,8 @@ public class CategoryService : GenericService<Category>, ICategoryService
                 c.First().Category.Title
 
             }).ToDictionaryAsync(c => c.Key,c=>c.Title);
-
-
-
     }
+
+   
 }
 

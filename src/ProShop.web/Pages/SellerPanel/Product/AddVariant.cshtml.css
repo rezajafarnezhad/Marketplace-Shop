@@ -1,0 +1,8 @@
+﻿﻿#all-variant-box {
+    max-height: 158px;
+    overflow-y: auto;
+}
+
+::deep .main-image-AddVariant {
+    max-width: 80%;
+}

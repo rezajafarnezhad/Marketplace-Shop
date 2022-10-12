@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ProShop.Common.IdentityToolkit;
@@ -7,6 +8,7 @@ using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels;
 using ProShop.ViewModels.Product;
+using ProShop.ViewModels.Veriants;
 
 namespace ProShop.Services.Implements;
 
@@ -103,14 +105,14 @@ public class ProductService : GenericService<Product>, IProductService
 
     public async Task<ShowProductsInSellerPanelViewModel> GetProductsInSellerPanel(ShowProductsInSellerPanelViewModel model)
     {
-        var userid =  _httpContext.HttpContext.User.Identity.GetLoggedUserId();
-        var SellerId = await _sellerService.GetSellerId(userid);
-        var Products = _products.AsNoTracking().Where(c => c.SelerId == SellerId).AsQueryable();
+        
+        var SellerId = await _sellerService.GetSellerId();
+        var Products = _products.AsNoTracking().Where(c => c.SelerId == SellerId || c.ProductVariants.Any(c=>c.SellerId == SellerId)).AsQueryable();
         #region Search Products
 
         var searchStatus = model.SearchProducts.Status;
-        if(searchStatus is not null)
-            Products = Products.Where(c=>c.Status == searchStatus);
+        if (searchStatus is not null)
+            Products = Products.Where(c => c.Status == searchStatus);
 
 
         Products = Products.CreateSearchExpressions(model.SearchProducts);
@@ -138,9 +140,10 @@ public class ProductService : GenericService<Product>, IProductService
         var paginationResult = await GenericPagination(Products, model.pagination);
 
 
-        return new ShowProductsInSellerPanelViewModel() { 
-        
-            Products= await _mapper.ProjectTo<ShowProductInSellerPanelViewModel>(paginationResult.Query).ToListAsync(),
+        return new ShowProductsInSellerPanelViewModel()
+        {
+
+            Products = await _mapper.ProjectTo<ShowProductInSellerPanelViewModel>(paginationResult.Query).ToListAsync(),
             pagination = paginationResult.Pagination,
 
         };
@@ -148,10 +151,10 @@ public class ProductService : GenericService<Product>, IProductService
 
     public async Task<ShowAllProductsInSellerPanelViewModel> GetAllProductsInSellerPanel(ShowAllProductsInSellerPanelViewModel model)
     {
-        var Products = _products.AsNoTracking().Where(c=>c.Status == ProductStatus.Confirmed).AsQueryable();
+        var Products = _products.AsNoTracking().Where(c => c.Status == ProductStatus.Confirmed).AsQueryable();
         #region Search Products
 
- 
+
 
         Products = Products.CreateSearchExpressions(model.SearchProducts);
 
@@ -205,7 +208,12 @@ public class ProductService : GenericService<Product>, IProductService
 
     public async Task<int> GetProductCode()
     {
-        var LastProductCode = await _products.OrderByDescending(c=>c.ProductCode).Select(c=>c.ProductCode).FirstOrDefaultAsync();
+        var LastProductCode = await _products.OrderByDescending(c => c.ProductCode).Select(c => c.ProductCode).FirstOrDefaultAsync();
         return LastProductCode + 1;
+    }
+
+    public async Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId)
+    {
+        return await _mapper.ProjectTo<AddVariantViewModel>(_products).SingleOrDefaultAsync(c => c.ProductId == productId);
     }
 }

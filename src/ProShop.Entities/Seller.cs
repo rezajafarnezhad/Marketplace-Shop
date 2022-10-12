@@ -73,6 +73,8 @@ public class Seller : EntityBase, IAuditableEntity
     public ProvinceAndCity City { get; set; }
     public List<Brand> Brands { get; set; }
     public List<Product> Products{ get; set; }
+    public List<ProductVariant> ProductVariants{ get; set; }
+    public List<Consignment> Consignments{ get; set; }
 }
 
 public enum DocumentStatus : byte

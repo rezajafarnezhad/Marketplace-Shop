@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
@@ -13,11 +15,13 @@ public class SellerService : GenericService<Seller>, ISellerService
 {
     private readonly DbSet<Seller> _sellers;
     private readonly IMapper _mapper;
-    public SellerService(IUnitOfWork uow, IMapper mapper)
+    private readonly IHttpContextAccessor _context;
+    public SellerService(IUnitOfWork uow, IMapper mapper, IHttpContextAccessor context)
         : base(uow)
     {
         _mapper = mapper;
         _sellers = uow.Set<Seller>();
+        _context = context;
     }
 
     public override async Task<DuplicateColumns> AddAsync(Seller entity)
@@ -175,6 +179,12 @@ public class SellerService : GenericService<Seller>, ISellerService
     public async Task<long> GetSellerId(long userId)
     {
         return await _sellers.Where(c => c.UserId == userId).Select(c => c.Id).SingleAsync();
+    } 
+    
+    public async Task<long> GetSellerId()
+    {
+        var userId = _context.HttpContext.User.Identity.GetLoggedUserId();
+        return await _sellers.Where(c => c.UserId == userId).Select(c => c.Id).SingleAsync();
     }
 
     public async Task<List<string>> GetShopNameForAutocomplete(string input)
@@ -185,3 +195,6 @@ public class SellerService : GenericService<Seller>, ISellerService
             .ToListAsync();
     }
 }
+
+
+
