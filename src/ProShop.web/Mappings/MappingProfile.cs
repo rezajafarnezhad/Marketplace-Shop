@@ -5,12 +5,15 @@ using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
+using ProShop.ViewModels.Consignments;
 using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Garantee;
 using ProShop.ViewModels.Product;
+using ProShop.ViewModels.ProductStock;
 using ProShop.ViewModels.ProductVariant;
 using ProShop.ViewModels.Sellers;
 using ProShop.ViewModels.Veriants;
+using ProShop.web.Pages.Inventory.ProductStock;
 
 namespace ProShop.web.Mappings;
 
@@ -105,17 +108,29 @@ public class MappingProfile : Profile
         this.CreateMap<Entities.ProductVariant, ShowProductVariantInCreateConsignmentViewModel>();
         this.CreateMap<Entities.ProductVariant, GetProductVariantInCreateConsignmentViewModel>();
 
+        this.CreateMap<Entities.Consignment, ShowConsignmentViewModel>()
+            .ForMember(dest => dest.DeliveryDate, options => options.MapFrom(src => src.DeliveryDate.ToLongPersianDate()));
+
+
+        this.CreateMap<Entities.ConsignmentItem, ShowConsignmentItemsViewModel>();
+
+        this.CreateMap<AddGarantee, Entities.Garantee>()
+            .AddTransform<string>(str => str != null ? str.Trim() : null);
 
 
 
 
+        long consignmentId = 0;
+        this.CreateMap<Entities.Consignment,ShowConsignmentDetailsViewModel>()
+             .ForMember(dest => dest.DeliveryDate,
+                options =>
+                    options.MapFrom(src => src.DeliveryDate.ToLongPersianDate()))
+             .ForMember(dest => dest.ConsignmentItems,
+            options =>
+                options.MapFrom(src => src.ConsignmentItems.Where(x => x.ConsignmentId == consignmentId))) ;
 
-
-
-
-
-
-
+        this.CreateMap<Entities.ConsignmentItem, ShowConsignmentItemsViewModel>();
+        this.CreateMap<AddProductStockByConsignmentViewModel, Entities.ProductStock>();
 
 
 

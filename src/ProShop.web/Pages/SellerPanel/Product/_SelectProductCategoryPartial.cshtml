@@ -9,7 +9,7 @@
     <div class="list-group col-3" category-row=@(counter++)>
         @foreach (var category in categories)
         {
-            <button category-Id="@category.Id" has-child="@category.HasChild.ToString().ToLower()" type="button" class="list-group-item list-group-item-action d-flex justify-content-between">
+            <button category-Id="@category.Id" has-child="@category.HasChild.ToString().ToLower()" type="button" class="buttonCategories list-group-item-action d-flex justify-content-between">
                 @category.Title
                 @if (category.HasChild)
                 {

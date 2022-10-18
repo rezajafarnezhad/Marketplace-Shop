@@ -5,5 +5,5 @@ using ProShop.ViewModels.Garantee;
 public interface IGaranteeService : IGenericService<Garantee>
 {
     Task<ShowGarantiesViewModel> GetGaranties(ShowGarantiesViewModel model);
-
+    Task<Dictionary<long, string>> GetGaranteesForAddProductVaraint();
 }

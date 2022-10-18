@@ -39,4 +39,9 @@ public class GaranteeService : GenericService<Entities.Garantee>, IGaranteeServi
             Pagination = paginationResult.Pagination,
         };
     }
+
+    public async Task<Dictionary<long, string>> GetGaranteesForAddProductVaraint()
+    {
+        return await _garanties.ToDictionaryAsync(c=>c.Id,c=>c.FullTitle);
+    }
 }

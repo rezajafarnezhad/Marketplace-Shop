@@ -190,6 +190,7 @@ public class SellerService : GenericService<Seller>, ISellerService
     public async Task<List<string>> GetShopNameForAutocomplete(string input)
     {
         return await _sellers.Where(c => c.ShopName.Contains(input))
+            .OrderByDescending(c=>c.ShopName)
             .Take(20)
             .Select(c => c.ShopName)
             .ToListAsync();

@@ -12,6 +12,7 @@ public class ConsignmentItemConfiguration : IEntityTypeConfiguration<Consignment
         builder.ToTable("ConsignmentItem");
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Count).IsRequired();
+        builder.Property(c => c.Barcode).HasMaxLength(40).IsRequired();
 
 
         builder.HasIndex(c => (new { c.ProductVariantId,c.ConsignmentId })).IsUnique();

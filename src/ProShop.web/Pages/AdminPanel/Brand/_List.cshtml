@@ -77,21 +77,21 @@
                             }
                         </td>
                         <td class="text-center">
-                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-warning btn-sm m-1 d-inline-block show-modal-form-button" functionNameToCallInTheEnd="EditBrandFunction">
-                                ویرایش
+                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn button7 show-modal-form-button" functionNameToCallInTheEnd="EditBrandFunction">
+                                <span>ویرایش</span>
                                 <span class="bi bi-eraser"></span>
-                            </a> 
+                            </a>
                             @if (Item.IsConfirmed)
                             {
-                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="جزییات برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-primary m-1 btn-sm d-inline-block show-modal-form-button">
-                                  جزییات برند
+                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="جزییات برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn button7 show-modal-form-button">
+                                    <span>جزییات برند</span>
                                     <span class="bi bi-info"></span>
                                 </a>
                             }
                             else
                             {
-                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="فعال کردن برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn btn-success btn-sm m-1 d-inline-block show-modal-form-button">
-                                   فعال کردن
+                                <a asp-page-handler="BrnadDetails" asp-route-brandId="@Item.Id" custom-title="فعال کردن برند &quot; @Item.TitleFa - @Item.TitleEn &quot;" class="btn button7 show-modal-form-button">
+                                    فعال کردن
                                     <span class="bi bi-check-square"></span>
                                 </a>
                             }
@@ -104,7 +104,7 @@
         </table>
 
         <!-- Pagination -->
-    <hr />
+        <hr />
         <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
             <div class="btn-group me-2">
                 @if (Model.Pagination.CurrentPage != 1)
@@ -141,7 +141,7 @@
             </div>
         </div>
         <!-- End pagination -->
-</div>
+    </div>
 }
 else
 {

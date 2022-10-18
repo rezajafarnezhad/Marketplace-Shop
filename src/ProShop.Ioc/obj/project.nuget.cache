@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+a7gJlv5/BjH+ToD/G4jd5EI6uMQte4L4ONqjZ2nuLfY2hfUsaxMjF3a/VTC4Le2N3rhh1pXa9O5zl8xJZpd/A==",
+  "dgSpecHash": "zqZuWbvw65wT/rN9OAjM6GGNrvk7yl/nrbY95sTfjrIs+9E+g7xM4bZjguHSz9EIKsRQ4hRbIo7ueN7KIoheXg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\mReza\\.nuget\\packages\\anglesharp.css\\0.16.3\\anglesharp.css.0.16.3.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\barcodelib\\2.4.0\\barcodelib.2.4.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\ben.demystifier\\0.4.1\\ben.demystifier.0.4.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntcommon.web.core\\3.3.0\\dntcommon.web.core.3.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntpersianutils.core\\5.4.1\\dntpersianutils.core.5.4.1.nupkg.sha512",
@@ -198,6 +199,7 @@
     "C:\\Users\\mReza\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\system.text.json\\5.0.2\\system.text.json.5.0.2.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

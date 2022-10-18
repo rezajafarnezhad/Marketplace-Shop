@@ -17,6 +17,7 @@ namespace ProShop.Services.Contracts.Identity
 
         Task<IdentityResult> SeedDatabaseWithAdminUserAsync();
         Task<IdentityResult> SeedSellerRole();
+        Task<IdentityResult> SeedWarehouseRole();
         Task<IdentityResult> SeedUserForSeller();
         Task SeedProvincesAndCities();
         Task SeedSeller();

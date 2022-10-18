@@ -1,0 +1,30 @@
+﻿@model ProShop.ViewModels.Garantee.AddGarantee
+
+<form method="post" asp-page-handler="Add" class="alert alert-secondary custom-ajax-form">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-lg-4 my-2">
+            <label class="form-label" asp-for="Title"></label>
+            <input class="form-control" asp-for="Title" />
+            <span class="span-error-message" asp-validation-for="Title"></span>
+        </div>
+        <div class="col-lg-4 my-2">
+            <label class="form-label" asp-for="MonthCount"></label>
+            <input class="form-control" asp-for="MonthCount" />
+            <span class="span-error-message" asp-validation-for="MonthCount"></span>
+        </div>
+        <div class="col-lg-4 my-2">
+            <label class="form-label" asp-for="Picture"></label>
+            <input class="form-control" asp-for="Picture" />
+            <span class="span-error-message" asp-validation-for="Picture"></span>
+        </div>
+        <div class="col-12 my-2">
+            <div class="d-grid d-lg-block">
+                <button type="submit" class="btn btn-info d-inline-flex align-items-center submit-custom-ajax-button">
+                    افزودن
+                    <span class="spinner-border spinner-border-sm  d-none ms-2"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

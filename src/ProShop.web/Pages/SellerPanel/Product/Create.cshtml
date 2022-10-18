@@ -5,12 +5,12 @@
 }
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header header-bg-Color">
         <div class="card-title">
             ایجاد محصول
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body margin-btm-100">
         <form method="post" id="Create-Product-Form" call-function-in-the-end="CreateProduct" asp-page="./Create" class="public-ajax-form">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Product.MainCategoryId" />
@@ -30,14 +30,14 @@
                             <div class="card-body row flex-nowrap overflow-auto">
                             </div>
                             <div class="row px-4 my-3">
-                                <div class="col-lg-9 d-flex align-items-center rounded-1 bg-secondary text-white rem0and9 py-3 py-lg-0 mb-3 mb-lg-0">
+                                <div class="col-lg-9 d-flex align-items-center rounded-1 bg-secondary color-gold rem0and9 py-3 py-lg-0 mb-3 mb-lg-0">
                                     <span>گروه کالایی انتخابی شما : &nbsp;</span>
                                     <span id="selected-categories-for-add-product">
                                     </span>
                                 </div>
                                 <div class="col-lg-3 text-center text-lg-start">
-                                    <button type="button" disabled="disabled" class="btn btn-light" id="select-product-category-button">انتخاب گروه کالا</button>
-                                    <button class="btn btn-outline-danger" type="submit" id="reset-product-category-button">
+                                    <button type="button" disabled="disabled" class="btn button-72" id="select-product-category-button">انتخاب گروه کالا</button>
+                                    <button class="btn btn-outline-danger" type="button" id="reset-product-category-button">
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                 </div>
@@ -50,7 +50,7 @@
                             <div class="card-body row">
                                 <div class="my-2 col-md-6 col-lg-4">
                                     <br />
-                                    <input class="form-check-input"  asp-for="Product.IsFake" >
+                                    <input class="form-check-input" asp-for="Product.IsFake">
                                     <label class="form-check-label" asp-for="Product.IsFake">
                                         نشان کالای غیر اصل
                                         (
@@ -62,7 +62,7 @@
                                            title="با انتخاب این گزینه، کلمه “غیراصل” در کنار عنوان کالا و نشان “غیراصل” در کنار تصویر کالای شما در سایت قرار خواهد گرفت. برند کالا باید “متفرقه” درج شود. در صورت فروش کالای غیراصل بدون این نشان، مطابق با قوانین جریمه خواهید شد."></i>
                                     </label>
                                 </div>
-                               
+
                                 <div class="my-2 col-md-6 col-lg-4">
                                     <label class="form-label" asp-for="Product.PackWeight">وزن بسته بندی(گرم)</label>
                                     <input class="form-control" asp-for="Product.PackWeight" />
@@ -83,7 +83,7 @@
                                     <input class="form-control" asp-for="Product.PackLength" />
                                     <span class="span-error-message" asp-validation-for="Product.PackLength"></span>
                                 </div>
-                                 <div class="my-2 col-md-6 col-lg-4">
+                                <div class="my-2 col-md-6 col-lg-4">
                                     <label class="d-flex justify-content-between form-label" asp-for="Product.BrandId">
                                         <span>برند کالا</span>
                                         <a id="request-new-brand-url" asp-page-handler="RequestForAddBrand" class="text-info border-bottom-dashed show-modal-form-button" functionNameToCallInTheEnd="RequestForAddBrandFunction">
@@ -94,18 +94,19 @@
                                         <option value="0">انتخاب کنید</option>
                                     </select>
                                     <span asp-validation-for="Product.BrandId" class="span-error-message"></span>
-                                   <div class="my-2 col-md-12 col-lg-12 alert alert-dark invisible" id="commission-percentage-place-in-create-product">
-                                      
-                                  </div>
+                                    <div class="my-2 col-md-12 col-lg-12 alert alert-dark invisible" id="commission-percentage-place-in-create-product">
+                                    </div>
                                 </div>
-                                
+
 
                                 <div class="my-2 col-md-12 col-lg-12">
                                     <label class="form-label" asp-for="Product.ShortDescription"></label>
                                     <textarea upload-image-url="UploadShortDescriptionImages" add-image-plugin="true" class="form-control custom-tinymce" asp-for="Product.ShortDescription"></textarea>
                                 </div>
+
+                                <button class="btn button-72 btn-next-tab mb-5" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+
                             </div>
-                            <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="specialty-check">
@@ -116,7 +117,7 @@
                                     </label>
                                     <textarea upload-image-url="UploadSpecialtyCheckImages" add-image-plugin="true" asp-for="Product.SpecialtyCheck" class="custom-tinymce"></textarea>
                                 </div>
-                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+                                    <button class="btn button-72 mb-5 btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
 
                             </div>
                         </div>
@@ -124,8 +125,6 @@
                     <div class="tab-pane fade" id="Productfeatures">
                         <div class="card">
                             <div class="card-body row">
-
-                          
                             </div>
                         </div>
                     </div>
@@ -150,7 +149,7 @@
                                 </div>
                                 <div class="my-2" id="product-images-preview-box" style="display: contents">
                                 </div>
-                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+                                <button class="btn button-72 mb-5 btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
 
                             </div>
                         </div>
@@ -164,7 +163,7 @@
                                     <input asp-for="Product.ProductVideoFiles" class="form-control" />
                                     <span class="span-error-message" asp-validation-for="Product.ProductVideoFiles"></span>
                                 </div>
-                                <button class="btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
+                                <button class="btn button-72 mb-5 btn-next-tab" type="button">مرحله بعد  <i class="bi bi-arrow-left-circle"></i> </button>
 
                             </div>
                         </div>
@@ -183,7 +182,7 @@
                                     <input class="form-control" asp-for="Product.EnglishTitle" />
                                     <span class="span-error-message" asp-validation-for="Product.EnglishTitle"></span>
                                 </div>
-                                <button class="btn-submit-product">تایید اطلاعات و ثبت محصول  <i class="bi bi-check-circle"></i> </button>
+                                <button class="btn button-72 mb-5 btn-submit-product">تایید اطلاعات و ثبت محصول  <i class="bi bi-check-circle"></i> </button>
                             </div>
                         </div>
                     </div>

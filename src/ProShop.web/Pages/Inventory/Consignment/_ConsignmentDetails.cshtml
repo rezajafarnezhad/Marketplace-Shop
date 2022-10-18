@@ -1,0 +1,104 @@
+﻿@using ProShop.Common.Helpers
+@model ProShop.ViewModels.Consignments.ShowConsignmentDetailsViewModel
+
+
+@{
+    string GetButtonClass(ConsignmentStatus status) => status switch
+    {
+        ConsignmentStatus.Received => "success",
+        ConsignmentStatus.ConfirmAndAwaitingForConsignment => "primary",
+        ConsignmentStatus.AwaitingApproval => "warning",
+        ConsignmentStatus.Rejected
+            or
+            ConsignmentStatus.Canceled => "danger",
+        _ => "danger"
+    };
+}
+<div class="alert alert-secondary">
+    <span class="btn btn-primary">
+        شناسه محموله:
+        @Model.Id
+    </span>
+    <span class="btn btn-primary">
+        تاریخ تحویل:
+        @Model.DeliveryDate
+    </span>
+    <span class="btn btn-@GetButtonClass(Model.ConsignmentStatus)">
+        @Model.ConsignmentStatus.GetEnumDisplayName()
+    </span>
+    <span class="btn btn-dark">@Model.SellerShopName</span>
+    <span>
+        <img src="data:image/png;base64, @FileHelpers.GenerateConsignmentBarcode(Model.Id.ToString(), Model.SellerShopName, Model.DeliveryDate)" />
+    </span>
+</div>
+<div class="alert alert-secondary">
+   
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        @Html.Raw(Model.Description)
+    }
+    else
+    {
+        @:بدون توضیح
+    }
+
+</div>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].Id)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].ProductVariantProductId)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].ProductVariantProductPersianTitle)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].ProductVariantVariantValue)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].ProductVariantPrice)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].Count)</th>
+                    <th>@Html.DisplayNameFor(x => x.ConsignmentItems[0].Barcode)</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var consignmentItem in Model.ConsignmentItems)
+                {
+                    <tr>
+                        <td class="table-primary">@consignmentItem.Id</td>
+                        <td class="table-primary">@consignmentItem.ProductVariantProductId</td>
+                        <td class="table-primary">@consignmentItem.ProductVariantProductPersianTitle</td>
+                        <td class="table-primary">
+                            @consignmentItem.ProductVariantVariantValue
+                            @if (consignmentItem.ProductVariantVariantIsColor)
+                            {
+                                <span class="rounded float-inline-start" style="background: @consignmentItem.ProductVariantVariantColorCode">
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                </span>
+                            }
+                        </td>
+                        <td class="table-primary">
+                            @consignmentItem.ProductVariantPrice.ToString("N0")
+                            تومان
+                        </td>
+                        <td class="table-primary">@consignmentItem.Count</td>
+                        <td class="table-primary text-center">
+                            <img src="data:image/png;base64, @FileHelpers.GenerateConsignmentItemBarcode(consignmentItem.Barcode, consignmentItem.ProductVariantProductPersianTitle, consignmentItem.ProductVariantVariantIsColor, consignmentItem.ProductVariantVariantValue)" />
+                        </td>
+
+                    </tr>
+                }
+        </table>
+        @if (Model.ConsignmentStatus == ConsignmentStatus.AwaitingApproval)
+        {
+            <form method="post" asp-page-handler="ConfirmConsignment" class="public-ajax-form" call-function-in-the-end="ConfirmationConsignmentFunc">
+                <input type="hidden" name="consignmentId" asp-for="@Model.Id" />
+                <div class="d-grid p-1">
+                    <button class="button-72" type="submit">
+                        تایید محموله
+                        <i class="bi bi-check-square"></i>
+                    </button>
+                </div>
+            </form>
+        }
+    </div>
+</div>

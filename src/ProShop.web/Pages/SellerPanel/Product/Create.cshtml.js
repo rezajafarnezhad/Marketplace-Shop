@@ -101,6 +101,7 @@ function showCategories(data) {
     selectedCategoriesIds.forEach(element => {
         var currentCategory = $('#product-category button[category-Id=' + element + ']');
         currentCategory.addClass('active');
+        currentCategory.addClass('aactive');
         var currentCategoryText = currentCategory.text().trim();
         $('#selected-categories-for-add-product').append(
             `<span> ${currentCategoryText} <i class="bi bi-chevron-left"></i></span>`
@@ -115,9 +116,12 @@ function showCategories(data) {
         for (var counter = selectedRow; counter <= selectedCategoriesIds.length; counter++) {
 
             $('#product-category div[category-row=' + counter + '] button').removeClass('active');
+            $('#product-category div[category-row=' + counter + '] button').removeClass('aactive');
         }
         $('#product-category div.card-body button[has-child=false]').removeClass('active');
+        $('#product-category div.card-body button[has-child=false]').removeClass('aactive');
         $(this).addClass('active');
+        $(this).addClass('aactive');
         selectedCategoriesIds = [];
         $('#product-category button.active').each(function () {
             selectedCategoriesIds.push($(this).attr('category-Id'));
@@ -128,11 +132,13 @@ function showCategories(data) {
     $('#product-category div.card-body button[has-child=false]').click(function () {
         var selectedRow = parseInt($(this).parent().attr('category-row'));
         $('#product-category div[category-row=' + selectedRow + '] button').removeClass('active');
+        $('#product-category div[category-row=' + selectedRow + '] button').removeClass('aactive');
         for (var counter = selectedRow; counter <= selectedCategoriesIds.length; counter++) {
             $('#product-category div[category-row=' + (counter + 1) + ']').remove();
         }
 
         $(this).addClass('active');
+        $(this).addClass('aactive');
         $('#selected-categories-for-add-product').html('');
         $('#product-category button.active').each(function () {
             var currentCategory = $(this);

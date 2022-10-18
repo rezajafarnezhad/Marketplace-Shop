@@ -61,10 +61,12 @@
                         <td class="text-center">
                             <button productId="@Item.Id" type="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax button-72">
                                 اطلاعات محصول
+                                <i class="bi bi-card-list"></i>
                             </button>
 
                             <a class="button-72" asp-page="./AddVariant" asp-route-ProductId="@Item.Id">
                                 شما هم فروشنده شوید
+                                <i class="bi bi-person-lines-fill"></i>
                             </a>
 
                         </td>

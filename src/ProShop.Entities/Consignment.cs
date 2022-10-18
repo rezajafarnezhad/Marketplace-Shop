@@ -13,6 +13,7 @@ public class Consignment : EntityBase, IAuditableEntity
 
     public Seller Seller { get; set; }
     public ICollection<ConsignmentItem> ConsignmentItems { get; set; } = new List<ConsignmentItem>();
+    public ICollection<ProductStock> ProductStocks { get; set; }
 }
 
 

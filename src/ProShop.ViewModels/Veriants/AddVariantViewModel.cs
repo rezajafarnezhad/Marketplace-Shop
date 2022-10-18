@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProShop.Common.Constants;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,6 +23,8 @@ public class AddVariantViewModel
     [Display(Name = "گارانتی")]
     [Range(1, long.MaxValue, ErrorMessage = AttributesErrorMessages.RegularExpressionMessage)]
     public long GaranteeId { get; set; }
+    public List<SelectListItem> Garantees { get; set; } = new();
+
 
 
     [Display(Name = "قیمت")]

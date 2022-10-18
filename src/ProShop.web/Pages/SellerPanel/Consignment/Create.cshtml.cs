@@ -105,10 +105,12 @@ public class CreateModel : SellerPanelBase
             {
                 Count = productCount,
                 ProductVariantId= productVariant.Id,
+                Barcode=$"{productVariant.Id}--{consignmentToAdd.sellerId}"
             });
         }
         await _consignmentService.AddAsync(consignmentToAdd);
         await unitOfWork.SaveChangesAsync();
+       
         return Json(new JsonResultOperation(true,"محموله مورد نظر ایجاد شد"));
     }
 

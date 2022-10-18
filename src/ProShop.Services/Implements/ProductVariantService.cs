@@ -47,6 +47,14 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
 
     public async Task<List<GetProductVariantInCreateConsignmentViewModel>> GetProductVariantsForCreateConsignmet(List<int> variantCodes)
     {
-        return await _mapper.ProjectTo<GetProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => variantCodes.Contains(c.VariantCode))).ToListAsync();
+        var sellerId = await _sellerService.GetSellerId();
+        return await _mapper.ProjectTo<GetProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => variantCodes.Contains(c.VariantCode)).Where(c=>c.SellerId == sellerId)).ToListAsync();
     }
+
+    public async Task<List<ProductVariant>> GetProductVariantsToAddCount(List<long> ids)
+    {
+        return await _productVariants.Where(c => ids.Contains(c.Id)).ToListAsync();
+    }
+
+   
 }

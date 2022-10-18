@@ -73,7 +73,7 @@ var maxCount = 100000;
 
 function CreateConsignment(message, data) {
 
-    alert("s");
+ 
     showToastr('success', message);
-    // location.href ="" ;
+    location.href = '/ConfirmationConsignment';
 }

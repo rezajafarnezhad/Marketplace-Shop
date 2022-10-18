@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ProShop.Common;
 using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
@@ -19,13 +20,15 @@ public class AddVariantModel : SellerPanelBase
     private readonly IMapper _mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly IProductVariantService _productVariantService;
-    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null)
+    private readonly IGaranteeService _garanteeService;
+    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null, IGaranteeService garanteeService = null)
     {
         _productService = productService;
         _sellerService = sellerService;
         _mapper = mapper;
         _productVariantService = productVariantService;
         this.unitOfWork = unitOfWork;
+        _garanteeService = garanteeService;
     }
 
     [BindProperty]
@@ -38,6 +41,8 @@ public class AddVariantModel : SellerPanelBase
         if (data is null)
             return RedirectToPage(PublicConstantStrings.Error404PageName);
 
+        var Garantees = await _garanteeService.GetGaranteesForAddProductVaraint();
+        data.Garantees = Garantees.CreateSelectListItem();
         Variant = data;
         return Page();
     }

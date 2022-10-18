@@ -9,4 +9,6 @@ public interface IProductVariantService : IGenericService<ProductVariant>
     Task<List<ShowProductVariantViewModel>> GetProductVariants(long productId);
     Task<List<GetProductVariantInCreateConsignmentViewModel>> GetProductVariantsForCreateConsignmet(List<int> variantCodes);
     Task<int> GetVariantCodeForCreateProductVariant();
+    Task<List<ProductVariant>> GetProductVariantsToAddCount(List<long> ids);
+  
 }

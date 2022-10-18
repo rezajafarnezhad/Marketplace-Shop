@@ -83,6 +83,11 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             {
                 throw new InvalidOperationException(sellerRole.DumpErrors());
             }
+            var WarehouseRole = identityDbSeedData.SeedWarehouseRole().Result;
+            if (WarehouseRole == IdentityResult.Failed())
+            {
+                throw new InvalidOperationException(WarehouseRole.DumpErrors());
+            }
             var UserForseller = identityDbSeedData.SeedUserForSeller().Result;
             if (UserForseller == IdentityResult.Failed())
             {
@@ -182,6 +187,32 @@ public class IdentityDbInitializer : IIdentityDbInitializer
         else
         {
             _logger.LogInformation($"{thisMethodName}: sellerRole already exists.");
+        }
+
+        await _unitOfWork.SaveChangesAsync();
+        return IdentityResult.Success;
+    }
+    
+    public async Task<IdentityResult> SeedWarehouseRole()
+    {
+
+        var thisMethodName = nameof(SeedWarehouseRole);
+
+        //Create the `Warehouse` Role if it does not exist
+        var WarehouseRole = await _roleManager.FindByNameAsync(ConstantRoles.Warehouse);
+        if (WarehouseRole == null)
+        {
+            WarehouseRole = new Role(ConstantRoles.Warehouse, "انباردار سیستم");
+            var WarehouseResult = await _roleManager.CreateAsync(WarehouseRole);
+            if (WarehouseResult == IdentityResult.Failed())
+            {
+                _logger.LogError($"{thisMethodName}: WarehouseRole CreateAsync failed. {WarehouseResult.DumpErrors()}");
+                return IdentityResult.Failed();
+            }
+        }
+        else
+        {
+            _logger.LogInformation($"{thisMethodName}: WarehouseRole already exists.");
         }
 
         await _unitOfWork.SaveChangesAsync();

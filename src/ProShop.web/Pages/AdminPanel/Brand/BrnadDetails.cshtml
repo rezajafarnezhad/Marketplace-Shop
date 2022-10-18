@@ -12,10 +12,10 @@
     <div class="card-header">
         <div class="card-title">
             اطلاعات کامل برند
-            <button class="btn btn-primary">
+            <button class="btn buttonDetails">
                 @Model.TitleFa
             </button>
-            <button class="btn btn-primary">
+            <button class="btn buttonDetails">
                 @Model.TitleEn
             </button>
         </div>
@@ -24,7 +24,7 @@
         <div class="row">
             <div>
                 <p class="fw-bold">
-                    <span class="btn btn-info">
+                    <span class="btn buttonDetails">
                         ایجاد شده توسط :
                         @createdBy
                         @if (fullName != null)
@@ -32,10 +32,10 @@
                             @:(@fullName)
                         }
                     </span>
-                    <span class="btn btn-@(Model.IsConfirmed ? "success" : "warning")">
+                    <span class="btn buttonDetails">
                         @isConfirmedText
                     </span>
-                    <span class="btn btn-outline-primary">
+                    <span class="btn buttonDetails">
                         @isIranianBrand
                         @if (Model.IsIranianBrand)
                         {

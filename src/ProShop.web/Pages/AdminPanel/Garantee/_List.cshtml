@@ -7,8 +7,8 @@
                 <tr>
                     <th>@Html.DisplayNameFor(x => x.Garanties[0].Id)</th>
                     <th>@Html.DisplayNameFor(x => x.Garanties[0].Title)</th>
-                    <th>@Html.DisplayNameFor(x => x.Garanties[0].FullTitle)</th>
                     <th>@Html.DisplayNameFor(x => x.Garanties[0].MonthCount)</th>
+                    <th>@Html.DisplayNameFor(x => x.Garanties[0].FullTitle)</th>
                     <th>@Html.DisplayNameFor(x => x.Garanties[0].Picture)</th>
                     <th>@Html.DisplayNameFor(x => x.Garanties[0].IsConfirmed)</th>
                     <th>عملیات</th>
@@ -20,8 +20,8 @@
                     <tr>
                         <td>@Item.Id</td>
                         <td>@Item.Title</td>
-                        <td>@Item.FullTitle</td>
                         <td>@Item.MonthCount</td>
+                        <td>@Item.FullTitle</td>
                         <td>
                             <span class="d-flex justify-content-center">
                                 <img src="~/images/Garantee/@Item.Picture" class="rounded max-width-200" />
@@ -37,8 +37,9 @@
                         </td>
                       
                         <td>
-                            <a custom-title="ویرایش گارانتی" asp-page-handler="Edit" asp-route-id="@Item.Id" class="btn btn-warning show-modal-form-button">
+                            <a custom-title="ویرایش گارانتی" asp-page-handler="Edit" asp-route-id="@Item.Id" class="btn button7 show-modal-form-button">
                                 ویرایش
+                                <span class="bi bi-eraser"></span>
                             </a>
                         </td>
                     </tr>

@@ -48,7 +48,7 @@
                 <input type="hidden" asp-for="Variant.ProductId" />
                 <input type="hidden" asp-for="Variant.VariantId" />
                 <div class="row mt-5">
-                    <div >
+                    <div div class="col-lg-6 my-2">
                         <label class="d-flex justify-content-between form-label">
                             <span>
                                 @Html.DisplayNameFor(c=>c.Variant.GaranteeId)
@@ -58,10 +58,14 @@
                                 گارانتی جدید
                             </a>
                         </label>
-                        <input asp-for="Variant.GaranteeId" class="form-control" />
+                       
+                        <select class="form-control custom-select2" asp-for="Variant.GaranteeId" asp-items="Model.Variant.Garantees">
+                            
+                        </select>
+
                         <span asp-validation-for="Variant.GaranteeId" class="span-error-message"></span>
                     </div>
-                    <div class="my-2" id="variant-box">
+                    <div class="col-lg-6 my-2" id="variant-box">
                         <label class="d-flex justify-content-between form-label">
                             <span>
                                 @Html.DisplayNameFor(c=>c.Variant.VariantId)
@@ -99,7 +103,10 @@
                     </div>
                 </div>
                 <div class="d-grid">
-                    <input type="submit" class="btn btn-primary" value="افزودن تنوع" />
+                    <button type="submit" class="btn button-72">
+                        افزودن تنوع
+                        <i class="bi bi-plus-square mr-2"></i>
+                        </button>
                 </div>
             </form>
         </div>
@@ -108,7 +115,14 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
 }
 @section CustomScripts{
     <script src="~/Pages/SellerPanel/Product/AddVariant.cshtml.js"></script>
+}
+    @section Styles
+    {
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
 }

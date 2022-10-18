@@ -480,7 +480,7 @@ function initializingAutocomplete() {
     $('.autocomplete').each(function () {
 
         var CurrentsearchUrl = $(this).attr('autocomplete-search-url');
-       
+
         var currentId = $(this).attr('id');
         $(`#${currentId}`).autocomplete({
             source: CurrentsearchUrl,
@@ -488,12 +488,12 @@ function initializingAutocomplete() {
             delay: 500,
             select: function (event, ui) {
                 if (typeof window['onAutocompleteSelect'] === 'function')
-                window['onAutocompleteSelect'](event, ui);
+                    window['onAutocompleteSelect'](event, ui);
             }
         });
     });
 
-    
+
 
 
 }
@@ -642,7 +642,7 @@ function fillDataTable() {
             activatingPageCount();
             activatingDeleteButtons();
             enablingTooltips();
-           
+
         }
     }).fail(function () {
         ShowErrorMessage();
@@ -715,7 +715,7 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
                 activatingPageCount();
                 activatingModalForm();
                 enablingTooltips();
-               
+
             }
 
         } else {
@@ -858,7 +858,7 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
             ShowErrorMessage();
         }
 
-       
+
 
     });
 }
@@ -880,7 +880,11 @@ $(document).on('change', 'form input.custom-md-persian-datepicker,form select,fo
 });
 
 $(document).on('blur', 'form input', function () {
-    $(this).parents('form').valid();
+    var currentForm = $(this).parents('form');
+    currentForm.valid();
+    if (currentForm.valid()) {
+        currentForm.find('div[class*="validation-summary"] ul').html('');
+    }
 });
 
 

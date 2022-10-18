@@ -1,0 +1,94 @@
+﻿@page
+@using ProShop.ViewModels
+@using ProShop.ViewModels.Consignments
+@model ProShop.web.Pages.Inventory.Consignment.IndexModel
+@{
+    ViewData["Title"] = "محموله ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+        <form class="alert alert-secondary Search-form-via-ajax">
+            <input type="hidden"  asp-for="Consignment.Pagination.CurrentPage"  />
+            <input type="hidden" asp-for="Consignment.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Consignment.SearchConsignments.ShopName"></label>
+                    <input autocomplete-search-url="@(Url.Page("./Index","AutocompleteSearchForShopName"))" class="form-control autocomplete" asp-for="Consignment.SearchConsignments.ShopName" />
+                    <span class="span-error-message" asp-validation-for="Consignment.SearchConsignments.ShopName"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Consignment.SearchConsignments.DeliveryDate"></label>
+                    <div class="input-group">
+                        <input readonly="readonly" class="custom-md-persian-datepicker form-control" asp-for="Consignment.SearchConsignments.DeliveryDate" />
+                        <span class="input-group-text">
+                            <i id="delvery-date-in-Search-Consignment" class="pointer-cursor bi bi-calendar2-date"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Consignment.SearchConsignments.DeliveryDate" class="span-error-message"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Consignment.SearchConsignments.ConsignmentStatus"></label>
+                    <select class="form-control" asp-for="Consignment.SearchConsignments.ConsignmentStatus" asp-items="Html.GetEnumSelectList<ConsignmentStatus>()">
+                        <option value="">همه</option>
+                    </select>
+                </div>
+               
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Consignment.SearchConsignments.Sorting"></label>
+                    <select class="form-control" asp-for="Consignment.SearchConsignments.Sorting" asp-items="Html.GetEnumSelectList<SortingConsignments>()"></select>
+                </div> 
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Consignment.SearchConsignments.SortingOrder"></label>
+                    <select class="form-control" asp-for="Consignment.SearchConsignments.SortingOrder" asp-items="Html.GetEnumSelectList<SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif"  />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"  />
+    <script src="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+}
+
+@section CustomScripts
+{
+    <script src="~/Pages/Inventory/Consignment/Index.cshtml.js"></script>
+  
+}
+
+    @section Styles
+    {
+
+    <link rel="stylesheet" href="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.style.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css" />
+}

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rurJgh9AdpC6PTY9AQSOJGhe1mR9jkGV986o5YRa+ZXFGLdScafCegvzwfU1qnZookuCNtWu34BNTX1gOQ8Ibw==",
+  "dgSpecHash": "r5OxDaVejJq3ysCVyUmDjIfKU6C+lI8bYtzHUSFxJy7VJOaDEeak2OULlTLMd4OrrPO8N6LU2DBfMLUV6VcxMQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\ProShop.web.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\mReza\\.nuget\\packages\\anglesharp.css\\0.16.3\\anglesharp.css.0.16.3.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\barcodelib\\2.4.0\\barcodelib.2.4.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\ben.demystifier\\0.4.1\\ben.demystifier.0.4.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntcommon.web.core\\3.3.0\\dntcommon.web.core.3.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntpersianutils.core\\5.4.1\\dntpersianutils.core.5.4.1.nupkg.sha512",
