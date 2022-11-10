@@ -9,6 +9,7 @@ public class Category : EntityBase, IAuditableEntity
     public bool IsShowInMenus { get; set; } = false;
     public bool CanAddFakeProduct { get; set; } = false;
     public bool IsVariantColor { get; set; } = false;
+    public string ProductPageGuid { get; set; }
 
 
     public Category ParentCategory { get; set; }
@@ -19,5 +20,5 @@ public class Category : EntityBase, IAuditableEntity
     public ICollection<ProductCategory> productCategories { get; set; }
     public ICollection<Product> Products { get; set; }
     public ICollection<CategoryVarieant> categoryVarieants { get; set; }
-    
+
 }

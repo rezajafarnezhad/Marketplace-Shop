@@ -8,7 +8,19 @@
             </span>
         </div>
     </div>
+
+    <alert class="alert alert-info text-danger">
+
+        "<strong>یادآوری</strong>"
+        "لطفا قبل از ارسال فرم موجودی کالاها را افزایش دهید"
+
+        <a href="/Inventory/ProductStock/AddProductStockByConsignment">
+            افرایش موجودی بر اساس محموله ارسالی
+        </a>
+    </alert>
     <div class="card-body">
+    
+      
         <div class="row">
             <div class="row">
                 <form method="post" asp-page-handler="ChangeConsignmentStatusToReceivedAndAddStock" call-function-in-the-end="consignmentReceivedAndAddStockSuccess"

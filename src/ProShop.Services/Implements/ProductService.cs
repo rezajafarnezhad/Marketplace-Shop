@@ -216,4 +216,8 @@ public class ProductService : GenericService<Product>, IProductService
     {
         return await _mapper.ProjectTo<AddVariantViewModel>(_products).SingleOrDefaultAsync(c => c.ProductId == productId);
     }
+    public async Task<ShowProductInfoViewModel> GetProductInfo(int productCode)
+    {
+        return await _mapper.ProjectTo<ShowProductInfoViewModel>(_products).SingleOrDefaultAsync(c => c.ProductCode == productCode);
+    }
 }

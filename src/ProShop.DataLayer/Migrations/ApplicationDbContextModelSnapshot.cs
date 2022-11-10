@@ -173,6 +173,10 @@ namespace ProShop.DataLayer.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<string>("ProductPageGuid")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(300)

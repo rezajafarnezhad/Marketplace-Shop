@@ -1914,6 +1914,7 @@
           "BarcodeLib": "2.4.0",
           "DNTPersianUtils.Core": "5.4.1",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0",
+          "Microsoft.AspNetCore.Mvc.RazorPages": "2.2.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
           "Microsoft.EntityFrameworkCore.Relational": "6.0.3",
           "Microsoft.Extensions.Identity.Core": "6.0.3",

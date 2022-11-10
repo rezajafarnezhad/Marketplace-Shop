@@ -131,6 +131,7 @@ public class MappingProfile : Profile
 
         this.CreateMap<Entities.ConsignmentItem, ShowConsignmentItemsViewModel>();
         this.CreateMap<AddProductStockByConsignmentViewModel, Entities.ProductStock>();
+        this.CreateMap<Entities.Product,ShowProductInfoViewModel>();
 
 
 

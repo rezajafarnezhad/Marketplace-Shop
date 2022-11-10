@@ -1,6 +1,5 @@
 ﻿<!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="~/css/main-styls.css">
+    <link rel="stylesheet" href="~/ProShop.web.styles.css">
     <title>Proshop | @ViewData["Title"]</title>
 </head>
 
@@ -123,7 +123,7 @@
                             ۱۰
                         </span>
                     </button>
-                    <div class="dropdown-menu custom-box-shadow" aria-labelledby="profile-dropdown-menu"
+                    <div class="dropdown-menu shadow-sm" aria-labelledby="profile-dropdown-menu"
                          id="ul-profile-menus">
                         body
                     </div>
@@ -131,6 +131,8 @@
             </div>
         </div>
     </div>
+
+    <vc:main-menu></vc:main-menu>
 
     @RenderBody()
 
