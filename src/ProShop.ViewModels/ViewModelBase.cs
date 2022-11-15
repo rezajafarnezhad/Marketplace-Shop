@@ -74,3 +74,10 @@ public class PaginationResultViewModel<T>
 
     public PaginationViewModel Pagination { get; set; }
 }
+
+
+public class ShowSelect2DataByAjaxViewModel
+{
+    public long Id { get; set; }
+    public string Text  { get; set; }
+}

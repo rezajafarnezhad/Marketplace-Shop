@@ -41,8 +41,8 @@ public class AddVariantModel : SellerPanelBase
         if (data is null)
             return RedirectToPage(PublicConstantStrings.Error404PageName);
 
-        var Garantees = await _garanteeService.GetGaranteesForAddProductVaraint();
-        data.Garantees = Garantees.CreateSelectListItem();
+        //var Garantees = await _garanteeService.GetGaranteesForAddProductVaraint();
+        //data.Garantees = Garantees.CreateSelectListItem();
         Variant = data;
         return Page();
     }
@@ -65,10 +65,10 @@ public class AddVariantModel : SellerPanelBase
         var ProductVaraintToAdd = _mapper.Map<Entities.ProductVariant>(Variant);
         ProductVaraintToAdd.SellerId = sellerId;
         ProductVaraintToAdd.VariantCode = await _productVariantService.GetVariantCodeForCreateProductVariant();
-        
-        if(await _productVariantService.existsProductVariant(ProductVaraintToAdd.ProductId, ProductVaraintToAdd.GaranteeId, ProductVaraintToAdd.VariantId))
+
+        if (await _productVariantService.existsProductVariant(ProductVaraintToAdd.ProductId, ProductVaraintToAdd.GaranteeId, ProductVaraintToAdd.VariantId, sellerId))
         {
-            return Json(new JsonResultOperation(false,"این مشخصات قبلا برای این محصول ثبت شده"));
+            return Json(new JsonResultOperation(false, "این مشخصات قبلا برای این محصول ثبت شده"));
         }
         await _productVariantService.AddAsync(ProductVaraintToAdd);
         await unitOfWork.SaveChangesAsync();
@@ -76,5 +76,14 @@ public class AddVariantModel : SellerPanelBase
 
         return Json(new JsonResultOperation(true, "تنوغ محصول با موفقیت اضافه شد"));
 
+    }
+
+    public IActionResult OnGetGetGarantees(string term)
+    {
+        var result = _garanteeService.SearchOnGatanteesForSelect2Ajax(term);
+        return Json(new
+        {
+            results=result
+        });
     }
 }

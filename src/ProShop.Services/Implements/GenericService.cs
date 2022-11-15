@@ -96,4 +96,9 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     }
 
     public async Task<bool> AnyAsync() => await _entities.AnyAsync();
+
+    public async Task<TEntity> FindAsync(params object[] ids)
+    {
+        return await _entities.FindAsync(ids);
+    }
 }

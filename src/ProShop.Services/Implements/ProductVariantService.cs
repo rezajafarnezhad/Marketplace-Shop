@@ -40,9 +40,9 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
         var sellerId = await _sellerService.GetSellerId();
         return await _mapper.ProjectTo<ShowProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => c.SellerId == sellerId)).SingleOrDefaultAsync(c=>c.VariantCode == VariantCode);
     }
-    public async Task<bool> existsProductVariant(long productId,long garanteeId,long variantId)
+    public async Task<bool> existsProductVariant(long productId,long garanteeId,long variantId,long sellerId)
     {
-        return await _productVariants.AnyAsync(c => c.ProductId == productId && c.GaranteeId == garanteeId && c.VariantId == variantId);
+        return await _productVariants.AnyAsync(c => c.ProductId == productId && c.GaranteeId == garanteeId && c.VariantId == variantId && c.SellerId == sellerId);
     }
 
     public async Task<List<GetProductVariantInCreateConsignmentViewModel>> GetProductVariantsForCreateConsignmet(List<int> variantCodes)

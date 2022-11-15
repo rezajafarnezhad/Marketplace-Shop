@@ -7,9 +7,12 @@
 }
 
 #buttons-next-to-gallery-box li:first-child[b-zptyp67v38] {
-   
     font-weight: bold;
 }
+
+a[b-zptyp67v38],a:link[b-zptyp67v38] {
+    color: inherit;
+} 
 
 #buttons-next-to-gallery-box button[b-zptyp67v38] {
     color: unset;
@@ -78,12 +81,10 @@
 }
 
 .selected-variant-in-show-product-info[b-zptyp67v38] {
-    border: 3px solid #19bfd3 !important;
+    border: 6px solid #19bfd3 !important;
 }
 
-li[b-zptyp67v38] {
-    list-style-type: none;
-}
+
 
 #category-guide[b-zptyp67v38] {
     line-height: 1.6rem;
@@ -93,3 +94,24 @@ li[b-zptyp67v38] {
     background-color: #f7f7f7;
 }
 /* End show product info */
+.abrnad[b-zptyp67v38] {
+    color: #19bfd3;
+    font-size: 0.99rem;
+}
+
+
+/* Other sellers */
+
+#other-sellers-bottom-line[b-zptyp67v38] {
+    width: 5rem;
+    height: 2px;
+}
+
+.other-sellers-table th[b-zptyp67v38], .other-sellers-table td[b-zptyp67v38] {
+    padding: 0.8rem .8rem;
+}
+
+.rounded-3[b-zptyp67v38] {
+    border-radius: 0.80rem;
+}
+/* End other sellers */

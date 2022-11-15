@@ -59,8 +59,10 @@
                             </a>
                         </label>
                        
-                        <select class="form-control custom-select2" asp-for="Variant.GaranteeId" asp-items="Model.Variant.Garantees">
+                       @* <select class="form-control custom-select2" asp-for="Variant.GaranteeId" asp-items="Model.Variant.Garantees">
                             
+                        </select>*@
+                        <select class="form-control custom-select2" asp-for="Variant.GaranteeId">
                         </select>
 
                         <span asp-validation-for="Variant.GaranteeId" class="span-error-message"></span>

@@ -1,0 +1,57 @@
+﻿<!-- Other variants -->
+@model List<ProShop.ViewModels.Product.ProductVariantForProductInfoViewModel>
+
+@{
+    var groupedvariants = Model.GroupBy(c => c.VariantValue);
+    var variantCount = 1;
+}
+
+<div id="other-sellers-box" style="padding:2rem;">
+    <div class="row">
+        <p class="fw-bold mb-2 rem16px">فروشندگان این کالا</p>
+        <span class="border border-danger ms-2" id="other-sellers-bottom-line"></span>
+        <!-- Other sellers table -->
+        @foreach (var variants in groupedvariants)
+        {
+            <div variant-value="@variants.First().VariantValue" class="table-responsive other-sellers-table mt-4 @(variantCount++ == 1?"":"d-none")">
+                <table class="table box-shadow align-middle">
+                    <tbody>
+                        @foreach (var variant in variants)
+                        {
+                            <tr free-delivery="@(variant.Price>500000?"true":"false")">
+                                <td class="p-4">
+                                    @if (!string.IsNullOrWhiteSpace(variant.SellerLogo))
+                                    {
+
+                                        <img src="~/images/seller-logos/@variant.SellerLogo" width="50" />
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-shop me-2 rem21px"></i>
+                                    }
+                                    @variant.SellerShopName
+                                </td>
+                                <td class="p-4"> <i class="bi bi-shield-check me-2 rem21px"></i> @variant.GaranteeFullTitle</td>
+                                <td class="p-4" hidden> @variant.Score</td>
+                                <td class="fw-bold p-4">
+                                    @variant.Price.ToString("N0")
+                                    تومان
+                                </td>
+                                <td class="p-4" style="float:left">
+                                    <button class="btn btn-danger rounded-3 ">
+                                        <i class="bi bi-cart rem1and3"></i>
+                                        افزودن به سبد
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+        <!-- End other sellers table -->
+    </div>
+</div>
+
+<!-- End other variants -->

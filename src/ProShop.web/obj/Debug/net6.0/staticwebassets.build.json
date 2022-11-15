@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "aZ5bRfNuzwNDRKWJfVtnJvDwonRtGCk/dLUBK1CprA4=",
+  "Hash": "c5ErzibtPaV/OIX+OSVi9KoV9owkG1sdVvbNDbvDo9o=",
   "Source": "ProShop.web",
   "BasePath": "_content/ProShop.web",
   "Mode": "Default",
@@ -253,6 +253,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "Pages\\Inventory\\ProductStock\\AddProductStockByConsignment.cshtml.js"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Product\\Index.cshtml.js",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "Pages/Product/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\Product\\Index.cshtml.js"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Seller\\ConfirmationPhoneNumber.cshtml.js",
@@ -1394,23 +1411,6 @@
       "OriginalItemSpec": "wwwroot\\images\\Products\\06359e56c3cb4ad8b9297a34b4bc6c7b.jpg"
     },
     {
-      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\0a1eedc4c88b4cac8f2589651f9c5786.jpg",
-      "SourceId": "ProShop.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
-      "BasePath": "_content/ProShop.web",
-      "RelativePath": "images/Products/0a1eedc4c88b4cac8f2589651f9c5786.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\Products\\0a1eedc4c88b4cac8f2589651f9c5786.jpg"
-    },
-    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\17323c426bc746a0b58b97795eb343cb.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -1615,12 +1615,12 @@
       "OriginalItemSpec": "wwwroot\\images\\Products\\52f29bc646ad42a8beefbdc5430062cf.jpg"
     },
     {
-      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\5302db3a5b3541ec9bb7f7899d68e0d1.png",
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\5302db3a5b3541ec9bb7f7899d68e0d1.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
       "BasePath": "_content/ProShop.web",
-      "RelativePath": "images/Products/5302db3a5b3541ec9bb7f7899d68e0d1.png",
+      "RelativePath": "images/Products/5302db3a5b3541ec9bb7f7899d68e0d1.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1629,7 +1629,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\Products\\5302db3a5b3541ec9bb7f7899d68e0d1.png"
+      "OriginalItemSpec": "wwwroot\\images\\Products\\5302db3a5b3541ec9bb7f7899d68e0d1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\5302db3a5b3541ec9sb7f7899d68e0d1.png",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Products/5302db3a5b3541ec9sb7f7899d68e0d1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Products\\5302db3a5b3541ec9sb7f7899d68e0d1.png"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\58a3e61668a54273b4bdc91ae893b9ae.png",
@@ -1732,23 +1749,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Products\\7d55e0eb12c647c2b029d51984b626a9.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\7e3a9080d59e4f9c8b18893775cd28fb.jpg",
-      "SourceId": "ProShop.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
-      "BasePath": "_content/ProShop.web",
-      "RelativePath": "images/Products/7e3a9080d59e4f9c8b18893775cd28fb.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\Products\\7e3a9080d59e4f9c8b18893775cd28fb.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\822449cd90ca4923b25d2988cd27f9bd.jpg",
@@ -1970,6 +1970,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Products\\c959a026ff9042d0baae6e2eedd2bc36.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\d.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Products/d.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Products\\d.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\db7b255f9faf49c1b78c307385daf9cd.jpg",
@@ -2227,6 +2244,23 @@
       "OriginalItemSpec": "wwwroot\\images\\seller-id-cart-pictures\\35366c86a8fc4a67ac5abba5978ef381.jpg"
     },
     {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\seller-id-cart-pictures\\412ea8e2095c4638863962ede9cead71.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/seller-id-cart-pictures/412ea8e2095c4638863962ede9cead71.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\seller-id-cart-pictures\\412ea8e2095c4638863962ede9cead71.jpg"
+    },
+    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\seller-id-cart-pictures\\a21343eb7523438d90c24bb6893cd734.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -2259,6 +2293,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\seller-id-cart-pictures\\a89ef0ccb51d4c67b3e3e1221711a5ec.png"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\seller-id-cart-pictures\\d0fa523ad7a44d39955ff7dad7467137.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/seller-id-cart-pictures/d0fa523ad7a44d39955ff7dad7467137.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\seller-id-cart-pictures\\d0fa523ad7a44d39955ff7dad7467137.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\seller-logos\\58e3c23f15244069902402aa0c9264ce.jpg",
@@ -2310,6 +2361,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\seller-logos\\d46f99594e1b45268a1b18d065dba022.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\seller-logos\\fd6fc24fa59c4409887e380a64e06315.png",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/seller-logos/fd6fc24fa59c4409887e380a64e06315.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\seller-logos\\fd6fc24fa59c4409887e380a64e06315.png"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\SendSms.gif",

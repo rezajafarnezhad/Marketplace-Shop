@@ -25,7 +25,6 @@
             <h5>
                 جستجو در
                 @ViewData["Title"]
-                <button type="button" class="left btn-Filter">Filter</button>
             </h5>
             <div class="row filterDiv">
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
@@ -35,7 +34,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="Variants.SearchVeriants.ColorCode"></label>
-                    <input type="color" class="form-control" asp-for="Variants.SearchVeriants.ColorCode" />
+                    <input class="form-control" asp-for="Variants.SearchVeriants.ColorCode" placeholder="#" />
                     <span class="span-error-message" asp-validation-for="Variants.SearchVeriants.ColorCode"></span>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">

@@ -8,7 +8,7 @@ namespace ProShop.ViewModels.Veriants;
 
 public class AddVariantViewModel
 {
-   
+
     public long ProductId { get; set; }
 
     public string Slug { get; set; }

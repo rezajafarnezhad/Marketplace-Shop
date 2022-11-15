@@ -1,26 +1,44 @@
 ﻿@page "/product/pc-{productCode}/{slug}"
+@using ProShop.Common.Helpers;
 @model ProShop.web.Pages.Product.IndexModel
 @{
+    var firstImage = Model.ProductInfo.ProductMedia.First(c => !c.IsVideo).FileName;
+    var showscore = Model.ProductInfo.Score > 0;
+    var showcommentscount = Model.ProductInfo.productCommentsCount > 0;
+    var showquestioncommentscount = false;
+    var productFeatures = Model.ProductInfo.ProductFeatures.Where(c => c.FeatureShowNextToProduct).ToList();
+    var productVariants = Model.ProductInfo.ProductVariants.OrderBy(c => c.Price).ToList();
+    var productTitle = Model.ProductInfo.PersianTitle;
+    var productCategory = Model.ProductInfo.CategoryTitle;
+    var productBrand = Model.ProductInfo.BrandTitleFa;
+    var firstProductVariant = productVariants.First();
+    var isvariantColor = !string.IsNullOrWhiteSpace(firstProductVariant.VariantColorCode);
+
+
+    ViewData["Title"] = $"مشخصات قیمت و خرید {productTitle}";
+    ViewData["HeaderDescription"] =
+        $"خرید اینترنتی {productTitle} و قیمت انواع {productCategory} {productBrand} از فروشگاه آنلاین پروشاپ. جدیدترین مدل های {productCategory} {productBrand} با بهترین قیمت در پروشاپ";
 }
 
 <!-- Start breadcrumb -->
 
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 rem14px">
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">فروشگاه پروشاپ</a>
+                <a class="active" href="/">فروشگاه پروشاپ</a>
             </li>
-            <li class="breadcrumb-item">
-                <a href="#">مردانه</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="#">اکسسوری مردانه</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="#">ساعت مردانه</a>
-            </li>
-            <li class="breadcrumb-item active">ساعت عقربه ای مردانه</li>
+            @{
+                var productCategoriesCount = Model.ProductInfo.productCategories.Count;
+                var LastCategory = Model.ProductInfo.productCategories.Last();
+            }
+            @foreach (var category in Model.ProductInfo.productCategories.Take(productCategoriesCount - 1))
+            {
+                <li class="breadcrumb-item">
+                    <a class="active" asp-page="@category.CategorySlug">@category.CategoryTitle</a>
+                </li>
+            }
+            <li class="breadcrumb-item active">@LastCategory.CategoryTitle</li>
         </ol>
     </nav>
 </div>
@@ -28,9 +46,9 @@
 <!-- End breadcrumb -->
 <!-- Start show product info -->
 
-<div class="container-fluid bg-white" id="show-product-box">
+<div class="container-fluid bg-white pb-3" id="show-product-box">
     <div class="row mt-3">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <div class="row">
                 <div class="col-2" id="buttons-next-to-gallery-box">
                     <ul class="list-inline">
@@ -38,10 +56,19 @@
                             فروش ویژه
                         </li>
                         <li>
-                            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
-                                    title="افزودن به علاقه مندی ها">
-                                <i class="bi bi-heart"></i>
-                            </button>
+                            @{
+                                var IsFavorite = Model.ProductInfo.isFavorite;
+                            }
+                            <form asp-page-handler="AddOrRemoveFavorite" method="post" class="public-ajax-form" call-function-in-the-end="addFavoriteFunc">
+                                <input type="hidden" name="Id" value="@Model.ProductInfo.Id"/>
+                                <input type="hidden" name="addFavorite" value="@(IsFavorite?"false":"true")" />
+                                <button id="AddFavoritebtn" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+                                        title="افزودن به علاقه مندی ها">
+                                    <i class="bi bi-heart @(IsFavorite?"d-none":"")"></i>
+                                    <i class="bi bi-heart-fill text-danger @(IsFavorite?"":"d-none")"></i>
+                                </button>
+                            </form>
+
                         </li>
                         <li>
                             <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
@@ -75,41 +102,34 @@
                 </div>
                 <div class="col-10">
                     <div class="border-bottom text-center">
-                        <img src="~/images/Products/c28994c632554b27b98e8c1d58458844.jpg" class="img-fluid pb-2 border-bottom" alt="">
+                        <img src="~/images/Products/@firstImage" class="img-fluid pb-2 border-bottom" alt="@productTitle">
                     </div>
                 </div>
                 <div class="text-center mt-3" id="product-thumbnails-box">
                     <ul class="list-inline">
-                        <li class="list-inline-item rounded-3">
-                            <button class="btn p-0 w-100 h-100">
-                                <img src="~/images/Products/06359e56c3cb4ad8b9297a34b4bc6c7b.jpg" class="w-100 h-100 p-1" alt="">
-                            </button>
-                        </li>
-                        <li class="list-inline-item rounded-3">
-                            <button class="btn p-0 w-100 h-100">
-                                <img src="~/images/Products/17323c426bc746a0b58b97795eb343cb.jpg" class="w-100 h-100 p-1" alt="">
-                            </button>
-                        </li>
-                        <li class="list-inline-item rounded-3">
-                            <button class="btn p-0 w-100 h-100">
-                                <img src="~/images/Products/32613d34522f476bb2978fe17b3f7e1d.jpg" class="w-100 h-100 p-1" alt="">
-                            </button>
-                        </li>
-                        <li class="list-inline-item rounded-3">
-                            <button class="btn p-0 w-100 h-100">
-                                <img src="~/images/Products/4642f4cbe49e422e85d68887f882c3b5.jpg" class="w-100 h-100 p-1" alt="">
-                            </button>
-                        </li>
-                        <li class="list-inline-item rounded-3">
-                            <button class="btn p-0 w-100 h-100">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                        </li>
+
+                        @foreach (var Image in Model.ProductInfo.ProductMedia.Where(c => !c.IsVideo))
+                        {
+                            <li class="list-inline-item rounded-3">
+                                <button class="btn p-0 w-100 h-100">
+                                    <img src="~/images/Products/@Image.FileName" class="w-100 h-100 p-1" alt="@productTitle">
+                                </button>
+                            </li>
+                        }
+                        @if (Model.ProductInfo.ProductMedia.Where(c => !c.IsVideo).Count() > 5 || Model.ProductInfo.ProductMedia.Count() > 0)
+                        {
+                            <li class="list-inline-item rounded-3">
+                                <button class="btn p-0 w-100 h-100">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </li>
+                        }
                     </ul>
+
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <div class="row">
                 <div class="d-flex">
                     @if (!string.IsNullOrWhiteSpace(Model.ProductInfo.BrandLogoPicture))
@@ -120,21 +140,22 @@
                     }
                     <div class="d-flex flex-column justify-content-between">
                         <div>
-                            <a href="#">@Model.ProductInfo.BrandTitleFa</a>
-                            /
-                            <a href="#">
+                            <a class="abrnad" href="#">@Model.ProductInfo.BrandTitleFa</a>
+
+                            <a class="abrnad" href="#">
+                                /
                                 @Model.ProductInfo.CategoryTitle
                                 @Model.ProductInfo.BrandTitleFa
                             </a>
                         </div>
                         <h5 id="product-fa-title-in-show-product-info">
-                            @Model.ProductInfo.PersianTitle
+                            @productTitle
                         </h5>
                     </div>
                 </div>
             </div>
             <div class="row mt-2 mt-sm-3 mt-md-4">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="d-flex align-items-center text-muted">
 
                         @if (!string.IsNullOrWhiteSpace(Model.ProductInfo.EnglishTitle))
@@ -146,37 +167,46 @@
 
                         <div id="product-en-title-line" class="flex-grow-1 bg-custom-grey"></div>
                     </div>
-                    <div class="mt-2 d-flex">
-                        <!-- Stars -->
+                    <div class="mt-2 d-flex @(!showscore && !showcommentscount && !showquestioncommentscount ? "d-none":string.Empty)">
 
-                        <div class="d-flex align-items-center me-2">
-                            <span>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <span class="rem13px">
-                                    ۴.۳
+                        @if (showscore)
+                        {
+                            <!-- Stars -->
+
+                            <div class="d-flex align-items-center me-2">
+                                <span>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <span class="rem13px">
+                                        @Model.ProductInfo.Score.ToString("0.#")
+                                    </span>
+                                    <span class="text-custom-grey rem12px">
+                                        (
+                                        @Model.ProductInfo.productCommentsLongCount
+                                        نفر
+                                        )
+                                    </span>
                                 </span>
-                                <span class="text-custom-grey rem12px">
-                                    (
-                                    ۶۲۵۰
-                                    نفر
-                                    )
+                                <div class="bg-custom-grey mx-2 rounded-circle product-info-dots"></div>
+                            </div>
+
+                            <!-- End stars -->
+                        }
+
+                        @if (showcommentscount)
+                        {
+                            <!-- Comments -->
+
+                            <div class="d-flex align-items-center me-2">
+                                <span class="rem13px text-info">
+                                    @Model.ProductInfo.productCommentsCount
+                                    دیدگاه
                                 </span>
-                            </span>
-                            <div class="bg-custom-grey mx-2 rounded-circle product-info-dots"></div>
-                        </div>
+                                <div class="bg-custom-grey mx-2 rounded-circle product-info-dots"></div>
+                            </div>
 
-                        <!-- End stars -->
-                        <!-- Comments -->
+                            <!-- End comments -->
+                        }
 
-                        <div class="d-flex align-items-center me-2">
-                            <span class="rem13px text-info">
-                                ۴۶۷۶
-                                دیدگاه
-                            </span>
-                            <div class="bg-custom-grey mx-2 rounded-circle product-info-dots"></div>
-                        </div>
-
-                        <!-- End comments -->
                         <!-- Questions -->
 
                         <div class="d-flex align-items-center">
@@ -188,88 +218,131 @@
 
                         <!-- End questions -->
                     </div>
-                    <div class="row mt-2 mt-md-3">
-                        <span class="d-flex align-items-center">
-                            <i class="bi bi-hand-thumbs-up text-success me-1 rem16px"></i>
-                            <span class="rem13px">
-                                ۸۵%
-                                (
-                                ۹۹۹
-                                ) نفر از خریداران، این کالا را پیشنهاد کرده اند
-                            </span>
-                            <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    @if (showscore && Model.ProductInfo.SuggestPercentage > 70 @*&& Model.ProductInfo.SuggestCount>2*@)
+                    {
+                        <div class="row mt-2 mt-md-3">
+                            <span class="d-flex align-items-center">
+                                <i class="bi bi-hand-thumbs-up text-success me-1 rem16px"></i>
+                                <span class="rem13px">
+                                    @Model.ProductInfo.SuggestPercentage.ToString("0.#")%
+                                    (
+                                    @Model.ProductInfo.SuggestCount
+                                    ) نفر از خریداران، این کالا را پیشنهاد کرده اند
+                                </span>
+                                <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="خریداران کالا با انتخاب یکی از گزینه های پیشنهاد یا عدم پیشنهاد، تجربه خرید خود را با کاربران به اشتراک می گذارند."></i>
-                        </span>
-                    </div>
+                            </span>
+                        </div>
+                    }
+
                     <div class="mt-4">
                         <div class="fw-bold rem17px">
-                            رنگ: قرمز
+                            @if (isvariantColor)
+                            {
+                                <text> رنگ:</text>
+                            }
+                            else
+                            {
+                                <text> اندازه:</text>
+                            }
+                            <span id="Product-variant-Value">
+                                @firstProductVariant.VariantValue
+                            </span>
                         </div>
+                        @{
+                            var GroupVariants = productVariants.GroupBy(c => c.VariantValue);
+                        }
                         <div class="d-flex mt-3" id="product-variants-box-in-show-product-info">
-                            <div class="rounded-circle d-flex justify-content-center align-items-center selected-variant-in-show-product-info">
-                                <span class="rounded-circle d-flex justify-content-center align-items-center">
-                                    <i class="bi bi-check2 rem21px text-white"></i>
-                                </span>
+                            @if (isvariantColor)
+                            {
+                                @foreach (var variant in GroupVariants)
+                                {
+                                    var currentVariant = variant.First();
+                                    <div data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                 title="@currentVariant.VariantValue"
+                                 class="pointer-cursor rounded-circle d-flex justify-content-center align-items-center">
+                                        <span class="rounded-circle d-flex justify-content-center align-items-center" style="background-color:@currentVariant.VariantColorCode">
+                                            <i class="bi bi-check2 rem21px fw-bold d-none"></i>
+                                        </span>
+                                    </div>
+                                }
+
+                            }
+                            else
+                            {
+                                <select class="form-select w-auto">
+                                    @foreach (var variant in GroupVariants)
+                                    {
+                                        var currentVariant = variant.First();
+                                        <option value="@currentVariant.VariantValue">
+                                            @currentVariant.VariantValue
+                                        </option>
+                                    }
+                                </select>
+                            }
+
+                        </div>
+                    </div>
+                    @if (productFeatures.Count > 0)
+                    {
+                        <div class="mt-4" id="ProductFeaturesBox">
+                            <div class="fw-bold rem17px">
+                                ویژگی ها
                             </div>
-                            <div class="rounded-circle d-flex justify-content-center align-items-center">
-                                <span class="rounded-circle d-flex justify-content-center align-items-center">
-                                </span>
+                            <ul class="mt-3 p-0 rem13px">
+
+                                @{
+                                    var counter = 0;
+                                }
+                                @foreach (var feature in productFeatures)
+                                {
+                                    <li class="d-flex align-items-center my-2 @(counter > 1 ?"d-none" : "")">
+                                        <div class="bg-custom-grey mx-2 rounded-circle product-info-dots">
+                                        </div>
+                                        <div class="text-secondary">
+                                            @feature.FeatureTitle :
+                                            &nbsp;
+                                        </div>
+                                        <div class="fw-bold rem14px">
+                                            @{
+                                                var value = feature.Value.Split("|||");
+
+                                            }
+                                            @string.Join(" , " , value)
+                                        </div>
+                                    </li>
+                                    counter++;
+                                }
+
+                            </ul>
+                            @if (productFeatures.Count() > 2)
+                            {
+                                <div class="text-info rem13px pointer-cursor" id="ShowAllProductFeatures">
+                                    مشاهده بیشتر
+                                    <i class="bi bi-chevron-left"></i>
+                                </div>
+                            }
+
+                        </div>
+
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ProductInfo.CategoryProductPageGuid))
+                    {
+                        <div class="d-flex rem13px border-top mt-3 text-secondary">
+                            <div class="d-flex align-items-center me-3">
+                                <i class="bi bi-info-circle"></i>
+                            </div>
+                            <div class="pt-2" id="category-guide">
+                                @Model.ProductInfo.CategoryProductPageGuid
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="fw-bold rem17px">
-                            ویژگی ها
-                        </div>
-                        <ul class="mt-3 p-0 rem13px">
-                            <li class="d-flex align-items-center my-2">
-                                <div class="bg-custom-grey mx-2 rounded-circle product-info-dots">
-                                </div>
-                                <div class="text-secondary">
-                                    فناوری صفحه نمایش :
-                                    &nbsp;
-                                </div>
-                                <div class="fw-bold rem16px">
-                                    128 گیگابایت
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center my-2">
-                                <div class="bg-custom-grey mx-2 rounded-circle product-info-dots">
-                                </div>
-                                <div class="text-secondary">
-                                    فناوری صفحه نمایش :
-                                    &nbsp;
-                                </div>
-                                <div class="fw-bold rem16px">
-                                    128 گیگابایت
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center my-2">
-                                <div class="bg-custom-grey mx-2 rounded-circle product-info-dots">
-                                </div>
-                                <div class="text-secondary">
-                                    فناوری صفحه نمایش :
-                                    &nbsp;
-                                </div>
-                                <div class="fw-bold rem16px">
-                                    128 گیگابایت
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="text-info rem13px">
-                            مشاهده بیشتر
-                            <i class="bi bi-chevron-left"></i>
-                        </div>
-                    </div>
-                    <div class="d-flex rem13px border-top mt-3 text-secondary">
-                        <div class="d-flex align-items-center me-3">
-                            <i class="bi bi-info-circle"></i>
-                        </div>
-                        <div class="pt-2" id="category-guide">
-                            @Model.ProductInfo.CategoryProductPageGuid
-                        </div>
-                    </div>
-                    <div class="d-flex border rounded-3 mt-4 justify-content-between p-3">
+                    }
+
+                    @{
+                        var showFreeDeliveryBox = firstProductVariant.Price < 500000 ? "d-none" : "";
+
+                    }
+                    <div id="free-delivery-box" class="d-flex border rounded-3 mt-4 justify-content-between p-3 @(showFreeDeliveryBox)">
                         <div class="d-flex flex-column justify-content-between">
                             <span class="fw-bold">ارسال رایگان</span>
                             <span class="rem13px text-secondary">
@@ -281,28 +354,35 @@
                         <img width="100" src="~/images/Application/free-delivery.png" />
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="border rounded-2 p-3" id="product-info-left-side-box">
+                <div class="col-md-5">
+                    <div class="border rounded-3 p-3" id="product-info-left-side-box">
                         <!-- 1 -->
 
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
                             <div class="fw-bold">فروشنده</div>
-                            <div class="text-info rem13px">2 فروشنده دیگر</div>
+                            <div class="text-info rem13px" id="other-sellers-count-box">
+                                <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
+                                فروشنده دیگر
+                            </div>
                         </div>
 
                         <!-- End 1 -->
                         <!-- 2 -->
 
-                        <div class="d-flex align-items-center mt-3">
-                            @if (!string.IsNullOrWhiteSpace(Model.ProductInfo.SellerLogo))
-                            {
-
-                                <img class="me-3" width="50" src="~/images/seller-logos/@Model.ProductInfo.SellerLogo" alt="@Model.ProductInfo.SellerShopName" />
-                            }else{
-                                <i class="bi bi-shop me-2 rem21px"></i>
+                        <div class="d-flex align-items-center mt-3" id="shop-details-in-page-of-product">
+                            @{
+                                var hassellerlogo = string.IsNullOrWhiteSpace(firstProductVariant.SellerLogo);
+                                var sellerLogoUrl = "/images/Application/eshop.png";
+                                if (!hassellerlogo)
+                                {
+                                    sellerLogoUrl = $"/images/seller-logos/{firstProductVariant.SellerLogo}";
+                                }
                             }
+                            <img class="me-3 @(hassellerlogo ? "d-none": "")" width="50" src="@sellerLogoUrl" alt="@firstProductVariant.SellerShopName" />
+                            <i class="bi bi-shop me-2 rem21px @(hassellerlogo ? "": "d-none")"></i>
+
                             <div>
-                                @Model.ProductInfo.SellerShopName
+                                @firstProductVariant.SellerShopName
                             </div>
                         </div>
 
@@ -314,8 +394,8 @@
 
                         <div class="d-flex align-items-center mt-3">
                             <i class="bi bi-shield-check me-2 rem21px"></i>
-                            <div class="rem14px">
-                                گارانتی ۱۸ ماهه داریا همراه پایتخت
+                            <div class="rem14px" id="garanteeName">
+                                @firstProductVariant.GaranteeFullTitle
                             </div>
                         </div>
 
@@ -328,10 +408,12 @@
                         <div class="d-flex align-items-center mt-3">
                             <i class="bi bi-trophy me-2 rem21px"></i>
                             <div class="rem14px">
-                                ۱۵۰
-                                امتیاز دیجی‌کلاب
+                                <span id="scoreProduct">
+                                    @firstProductVariant.Score
+                                </span>
+                                امتیاز پروشاپ
                                 <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                   title="بعد از پایان مهلت مرجوعی، برای دریافت امتیاز به صفحه ماموریت های کلابی سر بزنید."></i>
+                                   title="بعد از پایان مهلت مرجوعی، برای دریافت امتیاز به صفحه ماموریت های پروشاپی سر بزنید."></i>
                             </div>
                         </div>
 
@@ -342,8 +424,9 @@
                         <!-- 5 -->
 
                         <div class="d-flex justify-content-end align-items-center mt-3">
-                            <span class="fw-bold rem21px">
-                                ۵,۹۱۹,۰۰۰
+                            <span class="fw-bold rem21px" id="PriceProduct">
+                                @firstProductVariant.Price
+
                                 تومان
                             </span>
                         </div>
@@ -362,3 +445,52 @@
     </div>
 </div>
 <!-- End show product info -->
+<!-- Website features -->
+
+<div class="container mt-3 bg-white p-2 shadow-sm rem14px" id="webstie-features">
+    <div class="row">
+        <div class="col p-md-3 text-center">
+            <a href="#" class="text-secondary">
+                <i class="bi bi-box-seam"></i>
+                امکان تحویل اکسپرس
+            </a>
+        </div>
+        <div class="col p-md-3 text-center">
+            <a href="#" class="text-secondary">
+                <i class="bi bi-headset"></i>
+                ۲۴ ساعته،
+                ۷ روز هفته
+            </a>
+        </div>
+        <div class="col p-md-3 text-center">
+            <a href="#" class="text-secondary">
+                <i class="bi bi-credit-card-fill rem16px"></i>
+                امکان پرداخت در محل
+            </a>
+        </div>
+        <div class="col p-md-3 text-center">
+            <a href="#" class="text-secondary">
+                <i class="bi bi-box-seam-fill"></i>
+                هفت روز ضمانت بازگشت کالا
+            </a>
+        </div>
+        <div class="col p-md-3 text-center">
+            <a href="#" class="text-secondary">
+                <i class="bi bi-patch-check"></i>
+                ضمانت اصل بودن کالا
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- End website features -->
+
+<partial name="_OtherVariantsP" model="productVariants" />
+
+
+
+@section CustomScripts{
+
+    <script src="~/Pages/Product/Index.cshtml.js"></script>
+
+}

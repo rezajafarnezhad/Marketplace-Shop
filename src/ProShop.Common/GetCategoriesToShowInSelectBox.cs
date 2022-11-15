@@ -41,8 +41,7 @@ public static class CommonExtensionMethods
         object selectedItem = null,
         bool addChooseOneItem = true,
         string firstItemText = "انتخاب کنید",
-        string firstItemValue = "0"
-    )
+        string firstItemValue = "0")
     {
         return CreateSelectListItem(items.ToList(), selectedItem, addChooseOneItem, firstItemText, firstItemValue);
     }

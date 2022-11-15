@@ -12,3 +12,4 @@ public class ProductCategory : EntityBase ,IAuditableEntity
     public Product Product { get; set; }
 
 }
+

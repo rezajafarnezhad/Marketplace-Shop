@@ -28,7 +28,9 @@ public class Product : EntityBase , IAuditableEntity
     public ICollection<ProductCategory> productCategories { get; set; } = new List<ProductCategory>();
     public ICollection<ProductMedia> ProductMedia  { get; set; } = new List<ProductMedia>();
     public ICollection<ProductFeature> ProductFeatures { get; set; } = new List<ProductFeature>();
+    public ICollection<ProductComment> productComments { get; set; } = new List<ProductComment>();
     public List<ProductVariant> ProductVariants { get; set; }
+    public virtual ICollection<UserProductFavorite> UserProductFavorites { get; set; }
 
     public Brand Brand { get; set; }
     public Seller Seller { get; set; }

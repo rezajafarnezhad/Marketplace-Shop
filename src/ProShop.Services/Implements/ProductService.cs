@@ -211,13 +211,16 @@ public class ProductService : GenericService<Product>, IProductService
         var LastProductCode = await _products.OrderByDescending(c => c.ProductCode).Select(c => c.ProductCode).FirstOrDefaultAsync();
         return LastProductCode + 1;
     }
-
+    
     public async Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId)
     {
         return await _mapper.ProjectTo<AddVariantViewModel>(_products).SingleOrDefaultAsync(c => c.ProductId == productId);
     }
-    public async Task<ShowProductInfoViewModel> GetProductInfo(int productCode)
+    public Task<ShowProductInfoViewModel> GetProductInfo(int productCode)
     {
-        return await _mapper.ProjectTo<ShowProductInfoViewModel>(_products).SingleOrDefaultAsync(c => c.ProductCode == productCode);
+        var userid = _httpContext.HttpContext.User.Identity.GetLoggedUserId();
+        return _products.AsNoTracking().AsSplitQuery().ProjectTo<ShowProductInfoViewModel>
+            (_mapper.ConfigurationProvider, new { userid = userid }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
+
     }
 }

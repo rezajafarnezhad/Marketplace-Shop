@@ -59,5 +59,48 @@ namespace ProShop.Common.Helpers
         {
             return GenerateGuid() + Path.GetExtension(file.FileName);
         }
+
+        public static string ConvertToEasternArabicNumerals(string input)
+        {
+            System.Text.UTF8Encoding utf8Encoder = new UTF8Encoding();
+            System.Text.Decoder utf8Decoder = utf8Encoder.GetDecoder();
+            System.Text.StringBuilder convertedChars = new System.Text.StringBuilder();
+            char[] convertedChar = new char[1];
+            byte[] bytes = new byte[] { 217, 160 };
+            char[] inputCharArray = input.ToCharArray();
+            foreach (char c in inputCharArray)
+            {
+                if (char.IsDigit(c))
+                {
+                    bytes[1] = Convert.ToByte(160 + char.GetNumericValue(c));
+                    utf8Decoder.GetChars(bytes, 0, 2, convertedChar, 0);
+                    convertedChars.Append(convertedChar[0]);
+                }
+                else
+                {
+                    convertedChars.Append(c);
+                }
+            }
+            return convertedChars.ToString();
+        }
+        public static string LatinNumToArabic(string str)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("0", "٠");
+            dic.Add("1", "١");
+            dic.Add("2", "٢");
+            dic.Add("3", "٣");
+            dic.Add("4", "٤");
+            dic.Add("5", "٥");
+            dic.Add("6", "٦");
+            dic.Add("7", "٧");
+            dic.Add("8", "٨");
+            dic.Add("9", "٩");
+            foreach (KeyValuePair<string, string> entry in dic)
+            {
+                str = str.Replace(entry.Key, entry.Value);
+            }
+            return str;
+        }
     }
 }

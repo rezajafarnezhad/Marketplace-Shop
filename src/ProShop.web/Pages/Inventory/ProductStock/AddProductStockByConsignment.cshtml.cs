@@ -15,15 +15,17 @@ public class AddProductStockByConsignmentModel : InventoryPanelBase
 {
     private readonly IProductStockService _productStockService;
     private readonly IConsignmentItemService _consignmentItemService;
+    private readonly IConsignmentService _consignmentService;
     private readonly IUnitOfWork unitOfWork;
     private readonly IMapper _mapper;
 
-    public AddProductStockByConsignmentModel(IUnitOfWork unitOfWork, IConsignmentItemService consignmentItemService, IProductStockService productStockService, IMapper mapper)
+    public AddProductStockByConsignmentModel(IUnitOfWork unitOfWork, IConsignmentItemService consignmentItemService, IProductStockService productStockService, IMapper mapper, IConsignmentService consignmentService)
     {
         this.unitOfWork = unitOfWork;
         _consignmentItemService = consignmentItemService;
         _productStockService = productStockService;
         _mapper = mapper;
+        _consignmentService = consignmentService;
     }
 
     [BindProperty]
@@ -35,6 +37,11 @@ public class AddProductStockByConsignmentModel : InventoryPanelBase
 
     public async Task<IActionResult> OnPost()
     {
+
+        if(!await _consignmentService.CanAddStockForConsignmentItems(AddProductStock.ConsignmentId))
+            return Json(new JsonResultOperation(false, "موجودی این محموله قادر به افزایش و تغییر نمیباشد"));
+
+
         if (!await _consignmentItemService.IsExistsByProductVariantIdAndConsignmentId(AddProductStock.ProductVariantId, AddProductStock.ConsignmentId))
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 

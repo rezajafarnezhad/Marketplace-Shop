@@ -28,7 +28,14 @@ $(function () {
         }
     });
 
+    $(document).on('keydown', '#variant-Code-items-form-in-create-consignment input[type=number]', function (e) {
 
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+
+    });
 
     const dtp1Instance = new mds.MdsPersianDateTimePicker(document.getElementById('delvery-date-in-Create-Consignment'), {
         targetTextSelector: '#CreateConsignment_DeliveryDate',

@@ -507,6 +507,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime?>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("ShowNextToProduct")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1220,6 +1223,110 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("ProductCategory", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.ProductComment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CommentText")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CommentTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsBuyer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUnknown")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NegativeItems")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("PositiveItems")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte>("Score")
+                        .HasColumnType("tinyint");
+
+                    b.Property<long?>("SellerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SellerShopNameId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("Suggest")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("VariantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SellerShopNameId");
+
+                    b.HasIndex("VariantId");
+
+                    b.HasIndex("SellerId", "ProductId")
+                        .IsUnique()
+                        .HasFilter("[SellerId] IS NOT NULL");
+
+                    b.HasIndex("UserId", "ProductId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("ProductComment", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.ProductFeature", b =>
                 {
                     b.Property<long>("ProductId")
@@ -1664,6 +1771,49 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("Sellers", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.UserProductFavorite", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("UserProductFavorite", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.Variant", b =>
                 {
                     b.Property<long>("Id")
@@ -1957,6 +2107,39 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.ProductComment", b =>
+                {
+                    b.HasOne("ProShop.Entities.Product", null)
+                        .WithMany("productComments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Seller", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId");
+
+                    b.HasOne("ProShop.Entities.Seller", "SellerShopName")
+                        .WithMany()
+                        .HasForeignKey("SellerShopNameId");
+
+                    b.HasOne("ProShop.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("ProShop.Entities.Variant", "Variant")
+                        .WithMany()
+                        .HasForeignKey("VariantId");
+
+                    b.Navigation("Seller");
+
+                    b.Navigation("SellerShopName");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Variant");
+                });
+
             modelBuilder.Entity("ProShop.Entities.ProductFeature", b =>
                 {
                     b.HasOne("ProShop.Entities.Feature", "Feature")
@@ -2077,6 +2260,25 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.UserProductFavorite", b =>
+                {
+                    b.HasOne("ProShop.Entities.Product", "Product")
+                        .WithMany("UserProductFavorites")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Identity.User", "User")
+                        .WithMany("UserProductFavorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Brand", b =>
                 {
                     b.Navigation("CategoryBrands");
@@ -2132,6 +2334,8 @@ namespace ProShop.DataLayer.Migrations
 
                     b.Navigation("UserLogins");
 
+                    b.Navigation("UserProductFavorites");
+
                     b.Navigation("UserRoles");
 
                     b.Navigation("UserTokens");
@@ -2145,7 +2349,11 @@ namespace ProShop.DataLayer.Migrations
 
                     b.Navigation("ProductVariants");
 
+                    b.Navigation("UserProductFavorites");
+
                     b.Navigation("productCategories");
+
+                    b.Navigation("productComments");
                 });
 
             modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>

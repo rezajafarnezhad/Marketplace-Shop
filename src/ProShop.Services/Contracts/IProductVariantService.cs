@@ -4,7 +4,7 @@ using ProShop.ViewModels.ProductVariant;
 
 public interface IProductVariantService : IGenericService<ProductVariant>
 {
-    Task<bool> existsProductVariant(long productId, long garanteeId, long variantId);
+    Task<bool> existsProductVariant(long productId, long garanteeId, long variantId,long sellerId);
     Task<ShowProductVariantInCreateConsignmentViewModel> GetProductVariantForCreateConsignmet(int VariantCode);
     Task<List<ShowProductVariantViewModel>> GetProductVariants(long productId);
     Task<List<GetProductVariantInCreateConsignmentViewModel>> GetProductVariantsForCreateConsignmet(List<int> variantCodes);

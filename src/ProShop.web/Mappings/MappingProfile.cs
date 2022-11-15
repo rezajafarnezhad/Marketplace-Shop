@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DNTPersianUtils.Core;
+using Microsoft.Build.Framework;
 using ProShop.Common.Helpers;
 using ProShop.Entities;
 using ProShop.Entities.Identity;
@@ -102,8 +104,8 @@ public class MappingProfile : Profile
              options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
 
 
-        this.CreateMap<AddVariantViewModel,Entities.ProductVariant>();
-        this.CreateMap<Entities.ProductVariant,ShowProductVariantViewModel>()
+        this.CreateMap<AddVariantViewModel, Entities.ProductVariant>();
+        this.CreateMap<Entities.ProductVariant, ShowProductVariantViewModel>()
              .ForMember(dest => dest.GatanteeFullTitle, options => options.MapFrom(src => src.Garantee.FullTitle));
         this.CreateMap<Entities.ProductVariant, ShowProductVariantInCreateConsignmentViewModel>();
         this.CreateMap<Entities.ProductVariant, GetProductVariantInCreateConsignmentViewModel>();
@@ -121,18 +123,55 @@ public class MappingProfile : Profile
 
 
         long consignmentId = 0;
-        this.CreateMap<Entities.Consignment,ShowConsignmentDetailsViewModel>()
+        this.CreateMap<Entities.Consignment, ShowConsignmentDetailsViewModel>()
              .ForMember(dest => dest.DeliveryDate,
                 options =>
                     options.MapFrom(src => src.DeliveryDate.ToLongPersianDate()))
              .ForMember(dest => dest.ConsignmentItems,
             options =>
-                options.MapFrom(src => src.ConsignmentItems.Where(x => x.ConsignmentId == consignmentId))) ;
+                options.MapFrom(src => src.ConsignmentItems.Where(x => x.ConsignmentId == consignmentId)));
 
         this.CreateMap<Entities.ConsignmentItem, ShowConsignmentItemsViewModel>();
         this.CreateMap<AddProductStockByConsignmentViewModel, Entities.ProductStock>();
-        this.CreateMap<Entities.Product,ShowProductInfoViewModel>();
 
+        var userid = 0;
+        this.CreateMap<Entities.Product, ShowProductInfoViewModel>()
+
+            .ForMember(dest => dest.Score,
+                options =>
+                    options.MapFrom(src => src.productComments.Any() ? src.productComments.Average(c => c.Score) : 0))
+
+            .ForMember(dest => dest.productCommentsCount,
+                options =>
+                    options.MapFrom(src => src.productComments.LongCount(c => c.CommentTitle != null)))
+
+            .ForMember(dest => dest.SuggestCount,
+                options =>
+                    options.MapFrom(src => src.productComments.Where(c => c.IsBuyer).LongCount(c => c.Suggest == true)))
+
+            .ForMember(dest => dest.BuyerCount,
+                options =>
+                    options.MapFrom(src => src.productComments.LongCount(c => c.IsBuyer == true)))
+
+            .ForMember(dest => dest.ProductVariants,
+                options =>
+                    options.MapFrom(src => src.ProductVariants.Where(c => c.Count > 0)))
+
+            
+            .ForMember(dest => dest.isFavorite,
+                options =>
+                    options.MapFrom(src => src.UserProductFavorites.Any(c => c.UserId == userid)));
+
+
+
+            ;
+
+        this.CreateMap<ProductMedia, ProductMediaForProductInfoViewModel>();
+        this.CreateMap<ProductCategory, ProductCategoryForProductInfoViewModel>();
+        this.CreateMap<ProductFeature, ProductFeatureForProductInfoViewModel>();
+        this.CreateMap<ProductVariant, ProductVariantForProductInfoViewModel>();
+           
+            
 
 
 

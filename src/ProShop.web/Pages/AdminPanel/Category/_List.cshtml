@@ -54,6 +54,7 @@
                             }
 
                         </td>
+                        
                         <td class="text-center align-middle">
 
                             <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی" class="btn button7  show-modal-form-button">
@@ -64,7 +65,7 @@
                             @if (Item.IsDeleted)
                             {
                                 <form asp-page-handler="Restore" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <input type="hidden" name="elementId" value="@Item.Id" />
                                     <button custom-message="آیا مطمئن به بازگردانی هستید ؟" type="button" class="btn button7  delete-row-button">
                                         <span>بازگردانی</span>
                                         <span class="bi bi-trash2"></span>
@@ -74,7 +75,7 @@
                             else
                             {
                                 <form asp-page-handler="Delete" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <input type="hidden" name="elementId" value="@Item.Id" />
                                     <button type="button" class="btn button7  delete-row-button">
                                         <span>حذف</span>
                                         <span class="bi bi-trash2"></span>
@@ -93,7 +94,7 @@
                             @if (Item.Picture != "بدون عکس")
                             {
                                 <form asp-page-handler="DeletePicture" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id"/>
+                                    <input type="hidden" name="elementId" value="@Item.Id" />
                                     <button type="button" class="btn button7  delete-row-button">
                                         <span>حذف تصویر</span>
                                         <span class="bi bi-trash2"></span>

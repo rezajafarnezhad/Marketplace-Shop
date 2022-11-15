@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProShop.DataLayer.Context;
+using ProShop.ViewModels;
 using ProShop.ViewModels.Garantee;
 
 namespace ProShop.Services.Implements;
@@ -11,7 +12,7 @@ public class GaranteeService : GenericService<Entities.Garantee>, IGaranteeServi
     private readonly DbSet<Entities.Garantee> _garanties;
     private readonly IMapper _mapper;
 
-    public GaranteeService(IMapper mapper,IUnitOfWork uow):base(uow)
+    public GaranteeService(IMapper mapper, IUnitOfWork uow) : base(uow)
     {
         _mapper = mapper;
         _garanties = uow.Set<Entities.Garantee>();
@@ -42,6 +43,22 @@ public class GaranteeService : GenericService<Entities.Garantee>, IGaranteeServi
 
     public async Task<Dictionary<long, string>> GetGaranteesForAddProductVaraint()
     {
-        return await _garanties.ToDictionaryAsync(c=>c.Id,c=>c.FullTitle);
+        return await _garanties.ToDictionaryAsync(c => c.Id, c => c.FullTitle);
+    }
+
+    public List<ShowSelect2DataByAjaxViewModel> SearchOnGatanteesForSelect2Ajax(string input)
+    {
+
+        var data = _garanties.Where(c => c.Title.Contains(input)).Select(c => new ShowSelect2DataByAjaxViewModel
+        {
+            Id = c.Id,
+            Text = c.FullTitle
+
+        })
+            .OrderBy(c => c.Id)
+            .Take(15)
+            .ToList();
+
+        return data;
     }
 }

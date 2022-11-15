@@ -910,6 +910,7 @@ function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
             showLoading();
         },
         success: function (data) {
+            debugger;
             if (data.isSuccessful === false) {
                 showToastr('warning', data.message);
             } else {

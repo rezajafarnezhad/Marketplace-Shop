@@ -11,4 +11,5 @@ public interface IConsignmentService : IGenericService<Consignment>
     Task<Consignment> GetConsignmentToReceive(long consignmentId);
     Task<bool> IsExistsConsignmetWithReceivedStatus(long consignmentId);
     Task<Consignment> GetConsignmentWithReceivedStatus(long consignmentId);
+    Task<bool> CanAddStockForConsignmentItems(long consignmentId);
 }

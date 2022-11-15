@@ -17,7 +17,7 @@
                     <th>@Html.DisplayNameFor(x => x.Products[0].BrandFullTitle)</th>
                     <th>@Html.DisplayNameFor(x => x.Products[0].Status)</th>
 
-                    <th class="text-center">عملیات</th>
+                    <th class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,7 @@
 
 
                         </td>
-                        
+
                         <td>@Item.BrandFullTitle</td>
                         <td>
 
@@ -59,16 +59,27 @@
                         </td>
 
                         <td class="text-center">
-                            <button productId="@Item.Id" type="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax button-72">
-                                اطلاعات محصول
-                                <i class="bi bi-card-list"></i>
-                            </button>
 
-                            <a class="button-72" asp-page="./AddVariant" asp-route-ProductId="@Item.Id">
-                                شما هم فروشنده شوید
-                                <i class="bi bi-person-lines-fill"></i>
-                            </a>
+                            <div class="dropdown">
+                                <button class="btn button-72 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    بیشتر
+                                </button>
+                                <ul class="dropdown-menu ul-Drop-Down" aria-labelledby="dropdownMenuButton">
 
+                                    <a  productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax btn btn-Drop-Down">
+                                        اطلاعات
+                                        <i class="bi bi-card-list"></i>
+
+                                    </a>
+
+
+
+                                    <a class="btn btn-Drop-Down" asp-page="./AddVariant" asp-route-ProductId="@Item.Id">
+                                        بفروشید
+                                        <i class="bi bi-credit-card-fill"></i>
+                                    </a>
+                                </ul>
+                            </div>
                         </td>
 
                     </tr>

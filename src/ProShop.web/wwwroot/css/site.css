@@ -61,6 +61,9 @@ body {
 a {
     text-decoration: none;
 }
+li {
+    list-style-type: none;
+}
 
 .pointer-cursor {
     cursor: pointer;
@@ -83,7 +86,7 @@ a {
 }
 
 .footer {
-    position: fixed;
+    
     left: 0;
     bottom: 0;
     width: 100%;
@@ -611,3 +614,29 @@ span.select2-dropdown.select2-dropdown--below {
 .rem11px {
     font-size: 0.688rem;
 }
+
+.ul-Drop-Down {
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate3d(2px, 50px, 0px);
+    width: 100%;
+    border: 1px solid #ffc200;
+    border-radius: 9px;
+    padding: 15px;
+    background-color: #d7d7d9;
+}
+
+.btn-Drop-Down {
+    width: 100%;
+    padding: 8px;
+    color: white;
+    background: #513c6e;
+    border: 1px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+    .btn-Drop-Down:hover {
+        background-color: aliceblue;
+    }
