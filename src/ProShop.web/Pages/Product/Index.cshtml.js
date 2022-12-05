@@ -1,6 +1,30 @@
 ﻿
 
 $(function () {
+    
+
+    var zoomPluginOptions = {
+        fillContainer: true,
+        zoomPosition: 'original'
+    };
+
+    new ImageZoom(document.getElementById('zoom-image-place'), zoomPluginOptions);
+
+    $('#add-product-to-favorite-form').submit(function () {
+
+        if (!IsAuthenticated) {
+            showFirstLoginModal();
+            return false;
+        }
+
+    });
+
+    $('#ShareProductBtn').click(function () {
+       
+        $('#share-product-modal').modal('show');
+
+    });
+
 
 
     if ($('.other-sellers-table:first tbody tr').length === 1) {
@@ -203,6 +227,5 @@ function addFavoriteFunc() {
 
         $('#AddFavoritebtn i:first').removeClass('d-none')
         $('#AddFavoritebtn i:last').addClass('d-none')
-        showToastr('warning', "از لیست علاقه مندی حذف شد");
     }
 }

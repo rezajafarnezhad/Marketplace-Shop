@@ -1,0 +1,65 @@
+﻿@page
+@model ProShop.web.Pages.AdminPanel.ProductShortLink.IndexModel
+
+@{
+    ViewData["Title"] = "لینک کوتاه محصولات";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+        <form class="alert alert-secondary  Search-form-via-ajax">
+            <input type="hidden" asp-for="ShortLink.Pagination.CurrentPage" />
+            <input type="hidden" asp-for="ShortLink.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShortLink.shortLinkSearch.Link"></label>
+                    <input class="form-control" asp-for="ShortLink.shortLinkSearch.Link" />
+                    <span class="span-error-message" asp-validation-for="ShortLink.shortLinkSearch.Link"></span>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShortLink.shortLinkSearch.IsUsed"></label>
+                    <select class="form-select" asp-for="ShortLink.shortLinkSearch.IsUsed">
+                        <option value="">همه</option>
+                        <option value="true">استفاده شدها</option>
+                        <option value="false">استفاده نشدها</option>
+                    </select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section CustomScripts
+    {
+    <script src="~/Pages/AdminPanel/ProductShortLink/Index.cshtml.js"></script>
+}
+
+    @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+
+}

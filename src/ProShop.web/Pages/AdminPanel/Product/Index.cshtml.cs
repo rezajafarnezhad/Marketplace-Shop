@@ -22,7 +22,8 @@ public class IndexModel : PageBase
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUploadFileService _uploadFileService;
     private readonly IHtmlSanitizer _htmlSanitizer;
-    public IndexModel(IProductService productService, IMapper mapper, ISellerService sellerService, ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IHtmlSanitizer htmlSanitizer)
+    private readonly IProductShortLinkService _productShortLinkService;
+    public IndexModel(IProductService productService, IMapper mapper, ISellerService sellerService, ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IHtmlSanitizer htmlSanitizer, IProductShortLinkService productShortLinkService)
     {
         _productService = productService;
         _mapper = mapper;
@@ -31,6 +32,7 @@ public class IndexModel : PageBase
         _unitOfWork = unitOfWork;
         _uploadFileService = uploadFileService;
         _htmlSanitizer = htmlSanitizer;
+        _productShortLinkService = productShortLinkService;
     }
 
     [BindProperty(SupportsGet =true)]
@@ -85,7 +87,10 @@ public class IndexModel : PageBase
         if(product is null)
             return Json(new JsonResultOperation(false,"محصولی یافت نشد"));
 
+        var shortLink = await _productShortLinkService.FindByIdAsync(product.ProductShortLinkId);
+        shortLink.IsUsed = false;
         _productService.Remove(product);
+        
         await _unitOfWork.SaveChangesAsync();
         foreach (var item in product.ProductMedia)
         {

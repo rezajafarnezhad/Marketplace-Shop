@@ -15,6 +15,7 @@ public class ShowProductInfoViewModel
     public string BrandLogoPicture { get; set; }
     public double Score { get; set; }
     public long productCommentsLongCount { get; set; }
+    public string ProductShortLinkLink { get; set; }
     public long productCommentsCount { get; set; }
     public long SuggestCount { get; set; }
     public long BuyerCount { get; set; }

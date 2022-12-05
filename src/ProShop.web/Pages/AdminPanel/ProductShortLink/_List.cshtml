@@ -1,0 +1,94 @@
+﻿@model ProShop.ViewModels.ProductShortLink.ShowProductShortLinksViewModel
+@if (Model.shortLink.Count > 0)
+{
+    <div class="table-responsive data-table-body">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.shortLink[0].Id)</th>
+                    <th>@Html.DisplayNameFor(x => x.shortLink[0].Link)</th>
+                    <th>@Html.DisplayNameFor(x => x.shortLink[0].productPersianTitle)</th>
+                    <th>@Html.DisplayNameFor(x => x.shortLink[0].IsUsed)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Item in Model.shortLink)
+                {
+                    <tr>
+                        <td>@Item.Id</td>
+                        <td>@Item.Link</td>
+
+                        <td>
+                            @if (Item.productProductCode == null && string.IsNullOrWhiteSpace(Item.productPersianTitle))
+                            {
+                                <strong>
+                                    محصولی ندارد
+                                </strong>
+                            }
+                            else
+                            {
+                                <a asp-page="/Product/Index" asp-route-productCode="@Item.productProductCode" asp-route-slug="@Item.productSlug" target="_blank">
+                                    @Item.productPersianTitle
+                                </a>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-@(Item.IsUsed ? "success" : "warning")">
+                                    @(Item.IsUsed ? "استفاده شده" : "استفاده نشده")
+                                </button>
+                            </div>
+                        </td>
+                        <td></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Pagination -->
+        <!-- Pagination -->
+        <hr />
+        <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
+            <div class="btn-group me-2">
+                @if (Model.Pagination.CurrentPage != 1)
+                {
+                    <button value="1" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button value="@(Model.Pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                }
+                @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
+                {
+                    <button value="@counter" type="button"
+                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                        @counter
+                    </button>
+                }
+                @if (Model.Pagination.CurrentPage != Model.Pagination.PagesCount)
+                {
+                    <button value="@(Model.Pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.Pagination.PagesCount" value="@Model.Pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-left"></i>
+                        @Model.Pagination.PagesCount
+                    </button>
+                }
+            </div>
+            <div>
+                <select id="page-count-selectbox" class="form-control" asp-for="Pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
+            </div>
+        </div>
+        <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
+            <div class="input-group">
+                <input id="page-number-input" value="@Model.Pagination.CurrentPage" min="1" max="@Model.Pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
+            </div>
+        </div>
+        <!-- End pagination -->
+    </div>
+}
+
+else
+{
+    <partial name="_RecordNotFound" />
+}

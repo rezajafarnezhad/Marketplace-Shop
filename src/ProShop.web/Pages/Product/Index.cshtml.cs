@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
@@ -43,7 +43,7 @@ public class IndexModel : PageBase
     public async Task<IActionResult> OnPostAddOrRemoveFavorite(long Id, bool addFavorite)
     {
         if (!User.Identity.IsAuthenticated)
-            return Json(new JsonResultOperation(false));
+            return Json(new JsonResultOperation(false,"ابتدا به حساب کاربری خود وارد شوید"));
 
         if (!await _productService.IsExistsBy(nameof(Entities.Product.Id), Id))
             return Json(new JsonResultOperation(false));

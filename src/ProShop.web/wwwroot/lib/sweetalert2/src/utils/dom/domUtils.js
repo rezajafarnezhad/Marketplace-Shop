@@ -1,6 +1,6 @@
-import { getCancelButton, getConfirmButton, getDenyButton, getTimerProgressBar } from './getters.js'
 import { iconTypes, swalClasses } from '../classes.js'
-import { toArray, warn } from '../utils.js'
+import { warn } from '../utils.js'
+import { getCancelButton, getConfirmButton, getDenyButton, getTimerProgressBar } from './getters.js'
 
 // Remember state in cases where opening and handling a modal will fiddle with it.
 export const states = {
@@ -19,11 +19,15 @@ export const setInnerHtml = (elem, html) => {
   if (html) {
     const parser = new DOMParser()
     const parsed = parser.parseFromString(html, `text/html`)
-    toArray(parsed.querySelector('head').childNodes).forEach((child) => {
+    Array.from(parsed.querySelector('head').childNodes).forEach((child) => {
       elem.appendChild(child)
     })
-    toArray(parsed.querySelector('body').childNodes).forEach((child) => {
-      elem.appendChild(child)
+    Array.from(parsed.querySelector('body').childNodes).forEach((child) => {
+      if (child instanceof HTMLVideoElement || child instanceof HTMLAudioElement) {
+        elem.appendChild(child.cloneNode(true)) // https://github.com/sweetalert2/sweetalert2/issues/2507
+      } else {
+        elem.appendChild(child)
+      }
     })
   }
 }
@@ -46,8 +50,12 @@ export const hasClass = (elem, className) => {
   return true
 }
 
+/**
+ * @param {HTMLElement} elem
+ * @param {SweetAlertOptions} params
+ */
 const removeCustomClasses = (elem, params) => {
-  toArray(elem.classList).forEach((className) => {
+  Array.from(elem.classList).forEach((className) => {
     if (
       !Object.values(swalClasses).includes(className) &&
       !Object.values(iconTypes).includes(className) &&
@@ -58,16 +66,22 @@ const removeCustomClasses = (elem, params) => {
   })
 }
 
+/**
+ * @param {HTMLElement} elem
+ * @param {SweetAlertOptions} params
+ * @param {string} className
+ */
 export const applyCustomClass = (elem, params, className) => {
   removeCustomClasses(elem, params)
 
   if (params.customClass && params.customClass[className]) {
     if (typeof params.customClass[className] !== 'string' && !params.customClass[className].forEach) {
-      return warn(
+      warn(
         `Invalid type of customClass.${className}! Expected string or iterable object, got "${typeof params.customClass[
           className
         ]}"`
       )
+      return
     }
 
     addClass(elem, params.customClass[className])
@@ -76,18 +90,18 @@ export const applyCustomClass = (elem, params, className) => {
 
 /**
  * @param {HTMLElement} popup
- * @param {string} inputType
+ * @param {import('./renderers/renderInput').InputClass} inputClass
  * @returns {HTMLInputElement | null}
  */
-export const getInput = (popup, inputType) => {
-  if (!inputType) {
+export const getInput = (popup, inputClass) => {
+  if (!inputClass) {
     return null
   }
-  switch (inputType) {
+  switch (inputClass) {
     case 'select':
     case 'textarea':
     case 'file':
-      return popup.querySelector(`.${swalClasses.popup} > .${swalClasses[inputType]}`)
+      return popup.querySelector(`.${swalClasses.popup} > .${swalClasses[inputClass]}`)
     case 'checkbox':
       return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.checkbox} input`)
     case 'radio':
@@ -103,7 +117,7 @@ export const getInput = (popup, inputType) => {
 }
 
 /**
- * @param {HTMLInputElement} input
+ * @param {HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement} input
  */
 export const focusInput = (input) => {
   input.focus()
@@ -119,7 +133,7 @@ export const focusInput = (input) => {
 
 /**
  * @param {HTMLElement | HTMLElement[] | null} target
- * @param {string | string[]} classList
+ * @param {string | string[] | readonly string[]} classList
  * @param {boolean} condition
  */
 export const toggleClass = (target, classList, condition) => {
@@ -142,7 +156,7 @@ export const toggleClass = (target, classList, condition) => {
 
 /**
  * @param {HTMLElement | HTMLElement[] | null} target
- * @param {string | string[]} classList
+ * @param {string | string[] | readonly string[]} classList
  */
 export const addClass = (target, classList) => {
   toggleClass(target, classList, true)
@@ -150,7 +164,7 @@ export const addClass = (target, classList) => {
 
 /**
  * @param {HTMLElement | HTMLElement[] | null} target
- * @param {string | string[]} classList
+ * @param {string | string[] | readonly string[]} classList
  */
 export const removeClass = (target, classList) => {
   toggleClass(target, classList, false)
@@ -161,13 +175,14 @@ export const removeClass = (target, classList) => {
  *
  * @param {HTMLElement} elem
  * @param {string} className
- * @returns {HTMLElement | null}
+ * @returns {HTMLElement | undefined}
  */
 export const getDirectChildByClass = (elem, className) => {
-  const childNodes = toArray(elem.childNodes)
-  for (let i = 0; i < childNodes.length; i++) {
-    if (hasClass(childNodes[i], className)) {
-      return childNodes[i]
+  const children = Array.from(elem.children)
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i]
+    if (child instanceof HTMLElement && hasClass(child, className)) {
+      return child
     }
   }
 }
@@ -203,26 +218,55 @@ export const hide = (elem) => {
   elem.style.display = 'none'
 }
 
+/**
+ * @param {HTMLElement} parent
+ * @param {string} selector
+ * @param {string} property
+ * @param {string} value
+ */
 export const setStyle = (parent, selector, property, value) => {
+  /** @type {HTMLElement} */
   const el = parent.querySelector(selector)
   if (el) {
     el.style[property] = value
   }
 }
 
-export const toggle = (elem, condition, display) => {
+/**
+ * @param {HTMLElement} elem
+ * @param {any} condition
+ * @param {string} display
+ */
+export const toggle = (elem, condition, display = 'flex') => {
   condition ? show(elem, display) : hide(elem)
 }
 
-// borrowed from jquery $(elem).is(':visible') implementation
+/**
+ * borrowed from jquery $(elem).is(':visible') implementation
+ *
+ * @param {HTMLElement} elem
+ * @returns {boolean}
+ */
 export const isVisible = (elem) => !!(elem && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length))
 
+/**
+ * @returns {boolean}
+ */
 export const allButtonsAreHidden = () =>
   !isVisible(getConfirmButton()) && !isVisible(getDenyButton()) && !isVisible(getCancelButton())
 
+/**
+ * @param {HTMLElement} elem
+ * @returns {boolean}
+ */
 export const isScrollable = (elem) => !!(elem.scrollHeight > elem.clientHeight)
 
-// borrowed from https://stackoverflow.com/a/46352119
+/**
+ * borrowed from https://stackoverflow.com/a/46352119
+ *
+ * @param {HTMLElement} elem
+ * @returns {boolean}
+ */
 export const hasCssAnimation = (elem) => {
   const style = window.getComputedStyle(elem)
 
@@ -232,6 +276,10 @@ export const hasCssAnimation = (elem) => {
   return animDuration > 0 || transDuration > 0
 }
 
+/**
+ * @param {number} timer
+ * @param {boolean} reset
+ */
 export const animateTimerProgressBar = (timer, reset = false) => {
   const timerProgressBar = getTimerProgressBar()
   if (isVisible(timerProgressBar)) {

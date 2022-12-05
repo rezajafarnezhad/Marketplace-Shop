@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<SiteSettings>(options => builder.Configuration.Bind(options));
+
 builder.Services.Configure<ContentSecurityPolicyConfig>(options => builder.Configuration.GetSection("ContentSecurityPolicyConfig").Bind(options));
 builder.Services.AddCustomIdentityServices();
 builder.Services.AddRazorPages();

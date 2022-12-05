@@ -16,4 +16,5 @@ public interface IProductService : IGenericService<Product>
     Task<Entities.Product> GetProductToRemoveInManagingProducts(long id);
     Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId);
     Task<ShowProductInfoViewModel> GetProductInfo(int productCode);
+    Task<(int productCode, string slug)> FindByShortLink(string productShortLink);
 }

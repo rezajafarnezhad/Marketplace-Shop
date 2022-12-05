@@ -16,12 +16,13 @@ public class AddVariantModel : SellerPanelBase
 {
 
     private readonly IProductService _productService;
+    private readonly IVariantService _VariantService;
     private readonly ISellerService _sellerService;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly IProductVariantService _productVariantService;
     private readonly IGaranteeService _garanteeService;
-    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null, IGaranteeService garanteeService = null)
+    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null, IGaranteeService garanteeService = null, IVariantService variantService = null)
     {
         _productService = productService;
         _sellerService = sellerService;
@@ -29,6 +30,7 @@ public class AddVariantModel : SellerPanelBase
         _productVariantService = productVariantService;
         this.unitOfWork = unitOfWork;
         _garanteeService = garanteeService;
+        _VariantService = variantService;
     }
 
     [BindProperty]
@@ -61,6 +63,11 @@ public class AddVariantModel : SellerPanelBase
 
         var userId = User.Identity.GetLoggedUserId();
         var sellerId = await _sellerService.GetSellerId(userId);
+
+        if(!await _VariantService.checkProductAndVariantTypeForAddVariant(Variant.ProductId , Variant.VariantId))
+        {
+            return Json(new JsonResultOperation(false,PublicConstantStrings.RecordNotFoundErrorMessage));
+        }
 
         var ProductVaraintToAdd = _mapper.Map<Entities.ProductVariant>(Variant);
         ProductVaraintToAdd.SellerId = sellerId;

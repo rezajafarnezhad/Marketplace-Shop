@@ -59,8 +59,8 @@
                             @{
                                 var IsFavorite = Model.ProductInfo.isFavorite;
                             }
-                            <form asp-page-handler="AddOrRemoveFavorite" method="post" class="public-ajax-form" call-function-in-the-end="addFavoriteFunc">
-                                <input type="hidden" name="Id" value="@Model.ProductInfo.Id"/>
+                            <form id="add-product-to-favorite-form" asp-page-handler="AddOrRemoveFavorite" method="post" class="public-ajax-form" call-function-in-the-end="addFavoriteFunc">
+                                <input type="hidden" name="Id" value="@Model.ProductInfo.Id" />
                                 <input type="hidden" name="addFavorite" value="@(IsFavorite?"false":"true")" />
                                 <button id="AddFavoritebtn" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
                                         title="افزودن به علاقه مندی ها">
@@ -71,7 +71,7 @@
 
                         </li>
                         <li>
-                            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+                            <button id="ShareProductBtn" type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
                                     title="اشتراک گذاری">
                                 <i class="bi bi-share-fill"></i>
                             </button>
@@ -101,7 +101,7 @@
                     </ul>
                 </div>
                 <div class="col-10">
-                    <div class="border-bottom text-center">
+                    <div class="border-bottom text-center" id="zoom-image-place">
                         <img src="~/images/Products/@firstImage" class="img-fluid pb-2 border-bottom" alt="@productTitle">
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                     @if (!string.IsNullOrWhiteSpace(Model.ProductInfo.BrandLogoPicture))
                     {
                         <div>
-                            <img src="~/images/brands/@Model.ProductInfo.BrandLogoPicture" width="70" class="me-3" alt="@Model.ProductInfo.BrandTitleFa">
+                            <img src="~/images/brands/@Model.ProductInfo.BrandLogoPicture" width="60" class="me-2" alt="@Model.ProductInfo.BrandTitleFa">
                         </div>
                     }
                     <div class="d-flex flex-column justify-content-between">
@@ -176,7 +176,7 @@
                             <div class="d-flex align-items-center me-2">
                                 <span>
                                     <i class="bi bi-star-fill text-warning"></i>
-                                    <span class="rem13px">
+                                    <span class="rem13px persian-numbers">
                                         @Model.ProductInfo.Score.ToString("0.#")
                                     </span>
                                     <span class="text-custom-grey rem12px">
@@ -197,7 +197,7 @@
                             <!-- Comments -->
 
                             <div class="d-flex align-items-center me-2">
-                                <span class="rem13px text-info">
+                                <span class="rem13px text-info persian-numbers">
                                     @Model.ProductInfo.productCommentsCount
                                     دیدگاه
                                 </span>
@@ -210,7 +210,7 @@
                         <!-- Questions -->
 
                         <div class="d-flex align-items-center">
-                            <span class="rem13px text-info">
+                            <span class="rem13px text-info persian-numbers">
                                 ۴۶۷۶
                                 پرسش
                             </span>
@@ -223,7 +223,7 @@
                         <div class="row mt-2 mt-md-3">
                             <span class="d-flex align-items-center">
                                 <i class="bi bi-hand-thumbs-up text-success me-1 rem16px"></i>
-                                <span class="rem13px">
+                                <span class="rem13px persian-numbers">
                                     @Model.ProductInfo.SuggestPercentage.ToString("0.#")%
                                     (
                                     @Model.ProductInfo.SuggestCount
@@ -245,7 +245,7 @@
                             {
                                 <text> اندازه:</text>
                             }
-                            <span id="Product-variant-Value">
+                            <span id="Product-variant-Value" class="persian-numbers">
                                 @firstProductVariant.VariantValue
                             </span>
                         </div>
@@ -360,7 +360,7 @@
 
                         <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
                             <div class="fw-bold">فروشنده</div>
-                            <div class="text-info rem13px" id="other-sellers-count-box">
+                            <div class="text-info rem13px persian-numbers" id="other-sellers-count-box">
                                 <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
                                 فروشنده دیگر
                             </div>
@@ -394,7 +394,7 @@
 
                         <div class="d-flex align-items-center mt-3">
                             <i class="bi bi-shield-check me-2 rem21px"></i>
-                            <div class="rem14px" id="garanteeName">
+                            <div class="rem14px persian-numbers" id="garanteeName">
                                 @firstProductVariant.GaranteeFullTitle
                             </div>
                         </div>
@@ -408,7 +408,7 @@
                         <div class="d-flex align-items-center mt-3">
                             <i class="bi bi-trophy me-2 rem21px"></i>
                             <div class="rem14px">
-                                <span id="scoreProduct">
+                                <span id="scoreProduct" class="persian-numbers">
                                     @firstProductVariant.Score
                                 </span>
                                 امتیاز پروشاپ
@@ -424,8 +424,11 @@
                         <!-- 5 -->
 
                         <div class="d-flex justify-content-end align-items-center mt-3">
-                            <span class="fw-bold rem21px" id="PriceProduct">
-                                @firstProductVariant.Price
+                            <span class="fw-bold rem21px  persian-numbers" id="PriceProduct">
+
+
+                                @firstProductVariant.Price.ToString("0,#")
+
 
                                 تومان
                             </span>
@@ -447,7 +450,7 @@
 <!-- End show product info -->
 <!-- Website features -->
 
-<div class="container mt-3 bg-white p-2 shadow-sm rem14px" id="webstie-features">
+<div class="container mt-3 bg-white py-2 shadow-sm rem14px" id="webstie-features">
     <div class="row">
         <div class="col p-md-3 text-center">
             <a href="#" class="text-secondary">
@@ -487,6 +490,13 @@
 
 <partial name="_OtherVariantsP" model="productVariants" />
 
+@{
+
+    var shareProductModel = (Model.ProductInfo.PersianTitle, Model.ProductInfo.ProductShortLinkLink);
+
+}
+<partial name="_ShareProductP" model=shareProductModel />
+
 
 
 @section CustomScripts{
@@ -494,3 +504,8 @@
     <script src="~/Pages/Product/Index.cshtml.js"></script>
 
 }
+
+    @section Scripts{
+
+    <script src="~/lib/js-image-zoom/js-image-zoom.min.js"></script>
+               }

@@ -4,6 +4,7 @@ using ProShop.ViewModels.Veriants;
 
 public interface IVariantService : IGenericService<Variant>
 {
+    Task<bool> checkProductAndVariantTypeForAddVariant(long productId, long variantId);
     Task<ShowVeriantsViewModel> GetVariants(ShowVeriantsViewModel model);
 
 }

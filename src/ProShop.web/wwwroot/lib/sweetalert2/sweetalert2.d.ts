@@ -79,7 +79,7 @@ declare module 'sweetalert2' {
      * @param result The promise originally returned by `Swal.fire()` will be resolved with this value.
      * If no object is given, the promise is resolved with an empty `SweetAlertResult` object.
      */
-    function close(result?: SweetAlertResult): void
+    function close(result?: Partial<SweetAlertResult>): void
 
     /**
      * Gets the popup container which contains the backdrop and the popup itself.
@@ -120,6 +120,11 @@ declare module 'sweetalert2' {
      * Gets the icon.
      */
     function getIcon(): HTMLElement | null
+
+    /**
+     * Gets the icon content (without border).
+     */
+    function getIconContent(): HTMLElement | null
 
     /**
      * Gets the "Confirm" button.
@@ -175,7 +180,7 @@ declare module 'sweetalert2' {
      * Swal.showLoading(Swal.getDenyButton())
      * ```
      */
-    function showLoading(buttonToReplace?: HTMLButtonElement): void
+    function showLoading(buttonToReplace: HTMLButtonElement | null): void
 
     /**
      * Hides loader and shows back the button which was hidden by .showLoading()
@@ -421,6 +426,7 @@ declare module 'sweetalert2' {
     image?: string | readonly string[]
     htmlContainer?: string | readonly string[]
     input?: string | readonly string[]
+    inputLabel?: string | readonly string[]
     validationMessage?: string | readonly string[]
     actions?: string | readonly string[]
     confirmButton?: string | readonly string[]
@@ -635,12 +641,14 @@ declare module 'sweetalert2' {
 
     /**
      * CSS classes for animations when showing a popup (fade in)
+     *
      * @default { popup: 'swal2-show', backdrop: 'swal2-backdrop-show', icon: 'swal2-icon-show' }
      */
     showClass?: SweetAlertShowClass
 
     /**
      * CSS classes for animations when hiding a popup (fade out)
+     *
      * @default { popup: 'swal2-hide', backdrop: 'swal2-backdrop-hide', icon: 'swal2-icon-hide' }
      */
     hideClass?: SweetAlertHideClass
@@ -1007,6 +1015,7 @@ declare module 'sweetalert2' {
     /**
      * If the `input` parameter is set to `'select'` or `'radio'`, you can provide options.
      * Object keys will represent options values, object values will represent options text values.
+     *
      * @default {}
      */
     inputOptions?: SyncOrAsync<ReadonlyMap<string, string> | Record<string, any>>

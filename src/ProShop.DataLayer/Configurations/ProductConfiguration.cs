@@ -49,6 +49,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasForeignKey(c => c.MainCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasOne(c => c.ProductShortLink)
+           .WithOne(c => c.product)
+           .HasForeignKey<Product>(c => c.ProductShortLinkId);
 
     }
 }

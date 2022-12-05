@@ -145,9 +145,24 @@ function ShowMessageErrorForUploadFiles(text, functionToCallAfterConfirm) {
 
 function enablingTooltips() {
 
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('.read-data-table [data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+
+            trigger:'hover'
+
+        });
+    });
+}
+function enablingNormalTooltips() {
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+
+            trigger:'hover'
+
+        });
     });
 }
 
@@ -602,7 +617,7 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
 
 // فعال ساز مربوط به صحفه بندی
 function activatingPagination() {
-    $("#main-pagianation button").click(function () {
+    $("#main-pagianation button").not('.active').click(function () {
         isMainPaginationClicked = true;
         var currentPageSelected = $(this).val();
         $('.Search-form-via-ajax input[name$="Pagination.CurrentPage"]').val(currentPageSelected);
@@ -969,6 +984,16 @@ $('.multiple-images-preivew-input').change(function () {
 });
 
 
+// Convert English numbers to Persian numbers
+String.prototype.toPersinaDigit = function () {
+    var id = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    return this.replace(/[0-9]/g, function (w) {
+        return id[+w];
+    });
+}
+
+
+
 $(document).on('click', '.Images_preview', function () {
 
     var ImageID = $(this).attr('idImg');
@@ -998,7 +1023,13 @@ $(function () {
     activatingInputAttributes();
     initializeSelect2WithoutModal();
     initializeTinyMCE();
-    enablingTooltips();
+    enablingNormalTooltips();
+    $('.persian-numbers').each(function () {
+
+        var result = $(this).html().toPersinaDigit();
+        $(this).html(result);
+    });
+
     $('textarea[add-image-plugin="true"]').each(function () {
 
         var elementId = $(this).attr('id');

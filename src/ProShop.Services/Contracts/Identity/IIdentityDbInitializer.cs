@@ -21,5 +21,6 @@ namespace ProShop.Services.Contracts.Identity
         Task<IdentityResult> SeedUserForSeller();
         Task SeedProvincesAndCities();
         Task SeedSeller();
+        Task ProductShortLinks();
     }
 }

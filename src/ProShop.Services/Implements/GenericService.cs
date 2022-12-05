@@ -48,7 +48,7 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     public async Task<TEntity> FindByIdAsync(long id)
         => await _entities.FindAsync(id);
 
-    
+
     public async Task<bool> IsExistsBy(string propertyToFilter, object propertyValue, long? id = null)
     {
         var exp = ExpressionHelpers.CreateExpression<TEntity>(propertyToFilter, propertyValue);
@@ -71,10 +71,10 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
 
         var take = pagination.PageCount switch
         {
-            PageCount.TwentyFive =>25,
-            PageCount.Fifty =>50,
-            PageCount.Hundred =>100,
-            _=> 10,
+            PageCount.TwentyFive => 25,
+            PageCount.Fifty => 50,
+            PageCount.Hundred => 100,
+            _ => 10,
         };
 
 
@@ -100,5 +100,9 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     public async Task<TEntity> FindAsync(params object[] ids)
     {
         return await _entities.FindAsync(ids);
+    }
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    {
+        await _entities.AddRangeAsync(entities);
     }
 }

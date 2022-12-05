@@ -310,3 +310,4 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\Index.cshtml.rz.scp.css
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\_ShareProductP.cshtml.rz.scp.css

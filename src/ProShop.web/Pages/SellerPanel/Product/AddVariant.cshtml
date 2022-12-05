@@ -58,15 +58,16 @@
                                 گارانتی جدید
                             </a>
                         </label>
-                       
-                       @* <select class="form-control custom-select2" asp-for="Variant.GaranteeId" asp-items="Model.Variant.Garantees">
-                            
+
+                        @* <select class="form-control custom-select2" asp-for="Variant.GaranteeId" asp-items="Model.Variant.Garantees">
+
                         </select>*@
                         <select class="form-control custom-select2" asp-for="Variant.GaranteeId">
                         </select>
 
                         <span asp-validation-for="Variant.GaranteeId" class="span-error-message"></span>
                     </div>
+                   
                     <div class="col-lg-6 my-2" id="variant-box">
                         <label class="d-flex justify-content-between form-label">
                             <span>
@@ -82,18 +83,22 @@
 
                             @foreach (var item in Model.Variant.Variants)
                             {
-                                <button veariant-id="@item.VariantId" type="button" class="p-2 badge rounded-pill bg-dark border-0 variant-Item-button">
-                                    @item.VariantValue
-                                   @if(item.VariantIsColor)
-                                    {
-                                    <span class="rounded" style="background: @item.VariantColorCode">
-                                        &nbsp;
-                                        &nbsp;
-                                        &nbsp;
-                                    </span>
-                                    }
-                                </button>
-                               
+                                @if (item.VariantId != 0)
+                                {
+                                    <button veariant-id="@item.VariantId" type="button" class="p-2 badge rounded-pill bg-dark border-0 variant-Item-button">
+                                        @item.VariantValue
+                                        @if (item.VariantIsColor)
+                                        {
+                                            <span class="rounded" style="background: @item.VariantColorCode">
+                                                &nbsp;
+                                                &nbsp;
+                                                &nbsp;
+                                            </span>
+                                        }
+                                    </button>
+                                }
+                              
+
                             }
                         </div>
                     </div>
@@ -108,7 +113,7 @@
                     <button type="submit" class="btn button-72">
                         افزودن تنوع
                         <i class="bi bi-plus-square mr-2"></i>
-                        </button>
+                    </button>
                 </div>
             </form>
         </div>
@@ -120,7 +125,7 @@
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/lib/select2/js/i18n/fa.min.js"></script>
 }
-@section CustomScripts{
+    @section CustomScripts{
     <script src="~/Pages/SellerPanel/Product/AddVariant.cshtml.js"></script>
 }
     @section Styles

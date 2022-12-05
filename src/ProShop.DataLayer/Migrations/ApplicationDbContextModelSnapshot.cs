@@ -1146,6 +1146,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<int>("ProductCode")
                         .HasColumnType("int");
 
+                    b.Property<long>("ProductShortLinkId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("RejectReason")
                         .HasColumnType("nvarchar(max)");
 
@@ -1173,6 +1176,9 @@ namespace ProShop.DataLayer.Migrations
                     b.HasIndex("MainCategoryId");
 
                     b.HasIndex("ProductCode")
+                        .IsUnique();
+
+                    b.HasIndex("ProductShortLinkId")
                         .IsUnique();
 
                     b.HasIndex("SelerId");
@@ -1428,6 +1434,58 @@ namespace ProShop.DataLayer.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductMedia", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ProductShortLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductShortLink", (string)null);
                 });
 
             modelBuilder.Entity("ProShop.Entities.ProductStock", b =>
@@ -2075,6 +2133,12 @@ namespace ProShop.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProShop.Entities.ProductShortLink", "ProductShortLink")
+                        .WithOne("product")
+                        .HasForeignKey("ProShop.Entities.Product", "ProductShortLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProShop.Entities.Seller", "Seller")
                         .WithMany("Products")
                         .HasForeignKey("SelerId")
@@ -2084,6 +2148,8 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+
+                    b.Navigation("ProductShortLink");
 
                     b.Navigation("Seller");
                 });
@@ -2354,6 +2420,11 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("productCategories");
 
                     b.Navigation("productComments");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ProductShortLink", b =>
+                {
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>

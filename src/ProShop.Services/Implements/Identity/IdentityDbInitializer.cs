@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Org.BouncyCastle.Utilities;
 using ProShop.Common.GuardToolkit;
 using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
@@ -26,12 +27,13 @@ public class IdentityDbInitializer : IIdentityDbInitializer
     private readonly IUnitOfWork _unitOfWork;
     private readonly IProvinceAndCityService _provinceAndCityService;
     private readonly ISellerService _sellerService;
+    private readonly IProductShortLinkService _productShortLinkService;
     public IdentityDbInitializer(
         IApplicationUserManager applicationUserManager,
         IServiceScopeFactory scopeFactory,
         IApplicationRoleManager roleManager,
         IOptionsSnapshot<SiteSettings> adminUserSeedOptions,
-        ILogger<IdentityDbInitializer> logger, IUnitOfWork unitOfWork, IProvinceAndCityService provinceAndCityService, ISellerService sellerService)
+        ILogger<IdentityDbInitializer> logger, IUnitOfWork unitOfWork, IProvinceAndCityService provinceAndCityService, ISellerService sellerService, IProductShortLinkService productShortLinkService)
     {
         _applicationUserManager = applicationUserManager;
         _applicationUserManager.CheckArgumentIsNull(nameof(_applicationUserManager));
@@ -50,6 +52,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
         _provinceAndCityService = provinceAndCityService;
         _sellerService = sellerService;
         _logger.CheckArgumentIsNull(nameof(_logger));
+        _productShortLinkService = productShortLinkService;
     }
 
     /// <summary>
@@ -96,6 +99,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
 
             identityDbSeedData.SeedProvincesAndCities().GetAwaiter().GetResult();
             identityDbSeedData.SeedSeller().GetAwaiter().GetResult();
+            identityDbSeedData.ProductShortLinks().GetAwaiter().GetResult();
         });
     }
 
@@ -192,7 +196,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
         await _unitOfWork.SaveChangesAsync();
         return IdentityResult.Success;
     }
-    
+
     public async Task<IdentityResult> SeedWarehouseRole()
     {
 
@@ -333,5 +337,45 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             await _applicationUserManager.AddToRoleAsync(user, ConstantRoles.Seller);
             await _unitOfWork.SaveChangesAsync();
         }
+    }
+
+    public async Task ProductShortLinks()
+    {
+        if (!await _productShortLinkService.AnyAsync())
+        {
+            var links = new List<ProductShortLink>();
+            for (char letter1 = 'A'; letter1 <= 'Z'; letter1++)
+            {
+                if (!char.IsLetterOrDigit(letter1))
+                    continue;
+               
+                
+                for (char letter2 = '0'; letter2 <= 'Z'; letter2++)
+                {
+                    if (!char.IsLetterOrDigit(letter2))
+                        continue;
+
+                    for (char letter3 = '0'; letter3 <= 'Z'; letter3++)
+                    {
+                        if (!char.IsLetterOrDigit(letter3))
+                            continue;
+
+                        var link = letter1.ToString() + letter2 + letter3;
+                        links.Add(new ProductShortLink()
+                        {
+                            Link = link,
+                            IsDeleted = false,
+                        });
+                    }
+                }
+
+
+            }
+
+            await _productShortLinkService.AddRangeAsync(links);
+            await _unitOfWork.SaveChangesAsync();
+
+        }
+
     }
 }

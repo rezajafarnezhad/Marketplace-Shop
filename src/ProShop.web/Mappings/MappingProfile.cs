@@ -11,6 +11,7 @@ using ProShop.ViewModels.Consignments;
 using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Garantee;
 using ProShop.ViewModels.Product;
+using ProShop.ViewModels.ProductShortLink;
 using ProShop.ViewModels.ProductStock;
 using ProShop.ViewModels.ProductVariant;
 using ProShop.ViewModels.Sellers;
@@ -93,13 +94,14 @@ public class MappingProfile : Profile
         this.CreateMap<ProductFeature, ProductFeatureForDetailProductViewModel>();
         this.CreateMap<Entities.Variant, ShowVeriantViewModel>();
         this.CreateMap<Entities.Garantee, ShowGarantieeViewModel>();
+
         this.CreateMap<Entities.CategoryVarieant, ShowCategoryVariantInAddVariantViewModel>();
 
         this.CreateMap<Entities.Product, AddVariantViewModel>()
            .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Id))
            .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName))
            .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.PersianTitle))
-           .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants))
+           .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants.Where(c=>c.Variant.IsConfirmed)))
            .ForMember(dest => dest.CommissionPercentage, options =>
              options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
 
@@ -153,14 +155,15 @@ public class MappingProfile : Profile
                 options =>
                     options.MapFrom(src => src.productComments.LongCount(c => c.IsBuyer == true)))
 
+         
             .ForMember(dest => dest.ProductVariants,
                 options =>
                     options.MapFrom(src => src.ProductVariants.Where(c => c.Count > 0)))
 
-            
+
             .ForMember(dest => dest.isFavorite,
                 options =>
-                    options.MapFrom(src => src.UserProductFavorites.Any(c => c.UserId == userid)));
+                    options.MapFrom(src => userid !=0? src.UserProductFavorites.Any(c => c.UserId == userid):false));
 
 
 
@@ -170,6 +173,9 @@ public class MappingProfile : Profile
         this.CreateMap<ProductCategory, ProductCategoryForProductInfoViewModel>();
         this.CreateMap<ProductFeature, ProductFeatureForProductInfoViewModel>();
         this.CreateMap<ProductVariant, ProductVariantForProductInfoViewModel>();
+        
+        
+        this.CreateMap<Entities.ProductShortLink,ShowProductShortLinkViewModel>();
            
             
 

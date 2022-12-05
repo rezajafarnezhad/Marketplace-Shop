@@ -19,6 +19,7 @@ public class Product : EntityBase , IAuditableEntity
     public long BrandId { get; set; }
     public long SelerId { get; set; }
     public long MainCategoryId { get; set; }
+    public long ProductShortLinkId { get; set; }
     public string Slug { get; set; }
     public string RejectReason { get; set; }
 
@@ -35,6 +36,7 @@ public class Product : EntityBase , IAuditableEntity
     public Brand Brand { get; set; }
     public Seller Seller { get; set; }
     public Category Category{ get; set; }
+    public ProductShortLink ProductShortLink{ get; set; }
 }
 
 

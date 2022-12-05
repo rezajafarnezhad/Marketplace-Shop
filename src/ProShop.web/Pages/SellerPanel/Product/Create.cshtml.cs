@@ -33,6 +33,7 @@ public class CreateModel : SellerPanelBase
     private readonly IHtmlSanitizer _htmlSanitizer;
     private readonly IProductService _productService;
     private readonly ICategoryBrandService _categoryBrandService;
+    private readonly IProductShortLinkService _productShortLinkService;
 
 
     public CreateModel(ICategoryService categoryService,
@@ -40,7 +41,7 @@ public class CreateModel : SellerPanelBase
         IUnitOfWork unitOfWork, IUploadFileService fileService,
         ISellerService sellerService, ICategoryFeatureService categoryFeatureService,
         IFeatureConstantValuesService featureConstantValuesService,
-        IViewRenderService viewRenderService, IHtmlSanitizer htmlSanitizer, IProductService productService, ICategoryBrandService categoryBrandService)
+        IViewRenderService viewRenderService, IHtmlSanitizer htmlSanitizer, IProductService productService, ICategoryBrandService categoryBrandService, IProductShortLinkService productShortLinkService)
     {
         _categoryService = categoryService;
         _brandService = brandService;
@@ -54,10 +55,11 @@ public class CreateModel : SellerPanelBase
         _htmlSanitizer = htmlSanitizer;
         _productService = productService;
         _categoryBrandService = categoryBrandService;
+        _productShortLinkService = productShortLinkService;
     }
 
 
-    
+
     public AddProductViewModel Product { get; set; }
 
     public void OnGet()
@@ -88,6 +90,9 @@ public class CreateModel : SellerPanelBase
 
         ProductToAdd.SelerId = await _sellerService.GetSellerId(User.Identity.GetLoggedUserId());
         ProductToAdd.Slug = Product.PersianTitle.Replace(" ","-");
+        var ShortLink = await _productShortLinkService.GetProductShortLinkForCreateProduct();
+        ProductToAdd.ProductShortLinkId = ShortLink.Id;
+        ShortLink.IsUsed = true;
 
         ProductToAdd.ShortDescription = _htmlSanitizer.Sanitize(ProductToAdd.ShortDescription);
         ProductToAdd.SpecialCheck = _htmlSanitizer.Sanitize(ProductToAdd.SpecialCheck);

@@ -1,6 +1,6 @@
-import * as dom from '../utils/dom/index.js'
 import Swal from '../sweetalert2.js'
 import { swalClasses } from '../utils/classes.js'
+import * as dom from '../utils/dom/index.js'
 
 /**
  * Shows loader (spinner), this is useful with AJAX requests.
@@ -21,8 +21,8 @@ const showLoading = (buttonToReplace) => {
   }
   dom.show(loader)
 
-  popup.setAttribute('data-loading', true)
-  popup.setAttribute('aria-busy', true)
+  popup.setAttribute('data-loading', 'true')
+  popup.setAttribute('aria-busy', 'true')
   popup.focus()
 }
 

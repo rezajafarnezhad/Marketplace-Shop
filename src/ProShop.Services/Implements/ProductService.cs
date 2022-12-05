@@ -105,9 +105,9 @@ public class ProductService : GenericService<Product>, IProductService
 
     public async Task<ShowProductsInSellerPanelViewModel> GetProductsInSellerPanel(ShowProductsInSellerPanelViewModel model)
     {
-        
+
         var SellerId = await _sellerService.GetSellerId();
-        var Products = _products.AsNoTracking().Where(c => c.SelerId == SellerId || c.ProductVariants.Any(c=>c.SellerId == SellerId)).AsQueryable();
+        var Products = _products.AsNoTracking().Where(c => c.SelerId == SellerId || c.ProductVariants.Any(c => c.SellerId == SellerId)).AsQueryable();
         #region Search Products
 
         var searchStatus = model.SearchProducts.Status;
@@ -211,16 +211,33 @@ public class ProductService : GenericService<Product>, IProductService
         var LastProductCode = await _products.OrderByDescending(c => c.ProductCode).Select(c => c.ProductCode).FirstOrDefaultAsync();
         return LastProductCode + 1;
     }
-    
+
     public async Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId)
     {
         return await _mapper.ProjectTo<AddVariantViewModel>(_products).SingleOrDefaultAsync(c => c.ProductId == productId);
     }
     public Task<ShowProductInfoViewModel> GetProductInfo(int productCode)
     {
-        var userid = _httpContext.HttpContext.User.Identity.GetLoggedUserId();
+
+        long userid = 0;
+        if (_httpContext.HttpContext.User.Identity.IsAuthenticated)
+        {
+            userid = _httpContext.HttpContext.User.Identity.GetLoggedUserId();
+        }
+
         return _products.AsNoTracking().AsSplitQuery().ProjectTo<ShowProductInfoViewModel>
             (_mapper.ConfigurationProvider, new { userid = userid }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
 
     }
+
+    public async Task<(int productCode, string slug)> FindByShortLink(string productShortLink)
+    {
+        var data = await _products.Select(c => new { c.Slug, c.ProductCode, c.ProductShortLink })
+            .SingleOrDefaultAsync(c => c.ProductShortLink.Link == productShortLink);
+
+        return (data.ProductCode, data.Slug);
+
+
+    }
+
 }
