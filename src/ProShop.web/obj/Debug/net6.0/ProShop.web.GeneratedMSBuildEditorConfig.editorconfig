@@ -211,6 +211,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/AddEditDiscount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBZGRFZGl0RGlzY291bnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/All.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -221,6 +225,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/CreateProductSuccessful.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxDcmVhdGVQcm9kdWN0U3VjY2Vzc2Z1bC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/EditProductVariant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxFZGl0UHJvZHVjdFZhcmlhbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/SellerPanel/Product/Index.cshtml]

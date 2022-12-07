@@ -1,8 +1,12 @@
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.exe
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\appsettings.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\libman.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.staticwebassets.runtime.json
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.exe
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.deps.json
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.runtimeconfig.json
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AngleSharp.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AngleSharp.Css.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\AutoMapper.dll
@@ -293,6 +297,8 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\staticwebas
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\AdminPanel\Product\_ProductDetails.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Identity\LoginWithPhoneNumber.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Identity\RegisterLogin.cshtml.rz.scp.css
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\Index.cshtml.rz.scp.css
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\_ShareProductP.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\SellerPanel\Product\AddVariant.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\SellerPanel\Product\_ProductDetails.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Seller\CreateSeller.cshtml.rz.scp.css
@@ -303,11 +309,5 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\refint\ProShop.web.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.pdb
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.deps.json
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.runtimeconfig.json
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.dll
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\bin\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\Index.cshtml.rz.scp.css
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Product\_ShareProductP.cshtml.rz.scp.css

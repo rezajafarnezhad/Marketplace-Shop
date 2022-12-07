@@ -2,7 +2,33 @@
     fillDataTable();
     initializingAutocomplete();
     appendHtmlModalPlaceToBody();
+
+
+    $(document).on('blur', '#offPercentage', function () {
+
+        var price = $('#Price').val();
+        
+        var offPercentaage = $('#offPercentage').val();
+        var discountPrice = price / 100 * offPercentaage;
+        var priceWithDiscoutn = price - discountPrice;
+        $('#OffPrice').val(priceWithDiscoutn);
+       
+    });
+
+
+    
 });
+
+
+function activatingDateTimePicker(spanId, inputId) {
+    new mds.MdsPersianDateTimePicker(document.getElementById(spanId), {
+        targetTextSelector: `#${inputId}`,
+        persianNumber: true,
+        enableTimePicker: true,
+        selectedDate: new Date($(`#${inputId}`).attr('date-en') || new Date()),
+        selectedDateToShow: new Date($(`#${inputId}`).attr('date-en') || new Date())
+    });
+}
 
 
 function getProductDetails(e) {
@@ -25,6 +51,8 @@ function ShowProductDetailsInModal(data, clickedButton) {
     $.validator.unobtrusive.parse($('#html-modal-place form'));
    
 }
+
+
 function ShowProductVariantsInModal(data, clickedButton) {
 
     var currnetModal = $('#html-modal-place');
@@ -32,6 +60,7 @@ function ShowProductVariantsInModal(data, clickedButton) {
     currnetModal.modal('show');
     $('#html-modal-place .modal-header h5').html('تنوع های من برای محصول : ' +$(clickedButton).parents('tr').find('td:eq(2)').html());
     $.validator.unobtrusive.parse($('#html-modal-place form'));
+    ConvertToPersianNumber();
 }
 
 
@@ -40,4 +69,67 @@ function productStatusInManagingProducts(message, data) {
     showToastr('success', message);
     $('#html-modal-place').modal('hide');
     fillDataTable();
+}
+
+
+function EditProductVariant(e) {
+    $('#html-modal-place').modal('hide');
+    var pridcutVariantId = $(e).attr('pridcutVariantId');
+    GetHtmlWithAjax('?handler=EditProductVariant', { ProdcuctVariantId: pridcutVariantId }, 'ShowEditProductVariantsInModal', e);
+
+}
+
+function ShowEditProductVariantsInModal(data, clickedButton) {
+    
+    appendSecondHtmlModalPlaceToBody();
+    var currnetModal = $('#Second-html-modal-place');
+    currnetModal.find('.modal-body').html(data);
+    currnetModal.modal('show');
+    $('#Second-html-modal-place .modal-header h5').html($(clickedButton).text().trim());
+    $.validator.unobtrusive.parse($('#Second-html-modal-place form'));
+}
+
+function EditProductVariantFunc(message) {
+
+    
+    showToastr('success', message);
+}
+
+
+function EditAddDiscountProductVariant(e) {
+
+    $('#html-modal-place').modal('hide');
+    var pridcutVariantId = $(e).attr('pridcutVariantId');
+    GetHtmlWithAjax('?handler=AddEditDiscount', { ProdcuctVariantId: pridcutVariantId }, 'ShowEditAddDiscountProductVariantsInModal', e);
+}
+function ShowEditAddDiscountProductVariantsInModal(data, clickedButton) {
+
+    appendSecondHtmlModalPlaceToBody();
+    var currnetModal = $('#Second-html-modal-place');
+    currnetModal.find('.modal-body').html(data);
+    currnetModal.modal('show');
+    $('#Second-html-modal-place .modal-header h5').html($(clickedButton).text().trim());
+    $.validator.unobtrusive.parse($('#Second-html-modal-place form'));
+    activatingDateTimePicker('startDateTime-AddEditDiscount','StartDateTime');
+    activatingDateTimePicker('endDateTime-AddEditDiscount','EndDateTime');
+}
+
+function EditAddDiscountProductVariantsFunc(message) {
+
+
+    showToastr('success', message);
+}
+
+
+// Validation
+if (jQuery.validator) {
+
+    // divisibleBy10
+    jQuery.validator.addMethod('DivisibleBy10', function (value, element, param) {
+        var price = $(element).val();
+        if (!price)
+            return true;
+        return price % 10 === 0;
+    });
+    jQuery.validator.unobtrusive.adapters.addBool('DivisibleBy10');
 }

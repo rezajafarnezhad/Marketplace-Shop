@@ -23,6 +23,34 @@ function appendHtmlModalPlaceToBody() {
     }
 }
 
+
+var SecondhtmlModalPlace = `<div class="modal fade" id="Second-html-modal-place" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+               <button type="button" class="btn-close" data-bs-target="#html-modal-place" data-bs-toggle="modal" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer d-flex justify-content-start">
+                <button type="button" class="btn btn-danger" data-bs-target="#html-modal-place" data-bs-toggle="modal" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>`;
+
+function appendSecondHtmlModalPlaceToBody() {
+    if ($('#Second-html-modal-place').length === 0) {
+        $('body').append(SecondhtmlModalPlace);
+    }
+}
+
+
+
+
+
+
+
 var formModalPlace = `<div class="modal fade" id="form-modal-place" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -779,6 +807,7 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
         contentType: false,
         beforeSend: function () {
             $('#html-modal-place').modal('hide');
+            $('#Second-html-modal-place').modal('hide');
             showLoading();
         },
         success: function (data) {
@@ -925,7 +954,7 @@ function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
             showLoading();
         },
         success: function (data) {
-            debugger;
+            
             if (data.isSuccessful === false) {
                 showToastr('warning', data.message);
             } else {
@@ -1018,17 +1047,21 @@ $(document).on('click', '.Images_preview', function () {
 
 });
 
+function ConvertToPersianNumber() {
+    $('.persian-numbers').each(function () {
+
+        var result = $(this).html().toPersinaDigit();
+        $(this).html(result);
+    });
+}
+
 
 $(function () {
     activatingInputAttributes();
     initializeSelect2WithoutModal();
     initializeTinyMCE();
     enablingNormalTooltips();
-    $('.persian-numbers').each(function () {
-
-        var result = $(this).html().toPersinaDigit();
-        $(this).html(result);
-    });
+    ConvertToPersianNumber();
 
     $('textarea[add-image-plugin="true"]').each(function () {
 
@@ -1051,3 +1084,49 @@ $(function () {
     });
 
 });
+
+
+
+
+
+function fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        if (!successful)
+            showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');
+        else {
+            if (typeof window[functionNameToCallIntheEnd] === 'function') {
+                window[functionNameToCallIntheEnd]();
+            }
+        }
+    } catch (err) {
+        showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');
+    }
+
+    document.body.removeChild(textArea);
+}
+function copyTextToClipboard(text, functionNameToCallIntheEnd) {
+    if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd);
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function () {
+        if (typeof window[functionNameToCallIntheEnd] === 'function') {
+            window[functionNameToCallIntheEnd]();
+        }
+    }, function (err) {
+        showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');
+    });
+}

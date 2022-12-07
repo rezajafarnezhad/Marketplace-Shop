@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using DNTPersianUtils.Core;
 using Microsoft.EntityFrameworkCore;
+using ProShop.Common.Helpers;
 using ProShop.DataLayer.Context;
 using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
@@ -25,7 +27,7 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
     public async Task<List<ShowProductVariantViewModel>> GetProductVariants(long productId)
     {
         var sellerId = await _sellerService.GetSellerId();
-        var data = await _mapper.ProjectTo<ShowProductVariantViewModel>(_productVariants.Where(c=>c.ProductId == productId && c.SellerId ==sellerId)).ToListAsync();
+        var data = await _mapper.ProjectTo<ShowProductVariantViewModel>(_productVariants.Where(c => c.ProductId == productId && c.SellerId == sellerId)).ToListAsync();
         return data;
     }
 
@@ -35,12 +37,12 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
         return code + 1;
     }
 
-    public async Task<ShowProductVariantInCreateConsignmentViewModel> GetProductVariantForCreateConsignmet (int VariantCode)
+    public async Task<ShowProductVariantInCreateConsignmentViewModel> GetProductVariantForCreateConsignmet(int VariantCode)
     {
         var sellerId = await _sellerService.GetSellerId();
-        return await _mapper.ProjectTo<ShowProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => c.SellerId == sellerId)).SingleOrDefaultAsync(c=>c.VariantCode == VariantCode);
+        return await _mapper.ProjectTo<ShowProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => c.SellerId == sellerId)).SingleOrDefaultAsync(c => c.VariantCode == VariantCode);
     }
-    public async Task<bool> existsProductVariant(long productId,long garanteeId,long variantId,long sellerId)
+    public async Task<bool> existsProductVariant(long productId, long garanteeId, long variantId, long sellerId)
     {
         return await _productVariants.AnyAsync(c => c.ProductId == productId && c.GaranteeId == garanteeId && c.VariantId == variantId && c.SellerId == sellerId);
     }
@@ -48,7 +50,7 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
     public async Task<List<GetProductVariantInCreateConsignmentViewModel>> GetProductVariantsForCreateConsignmet(List<int> variantCodes)
     {
         var sellerId = await _sellerService.GetSellerId();
-        return await _mapper.ProjectTo<GetProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => variantCodes.Contains(c.VariantCode)).Where(c=>c.SellerId == sellerId)).ToListAsync();
+        return await _mapper.ProjectTo<GetProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => variantCodes.Contains(c.VariantCode)).Where(c => c.SellerId == sellerId)).ToListAsync();
     }
 
     public async Task<List<ProductVariant>> GetProductVariantsToAddCount(List<long> ids)
@@ -56,5 +58,44 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
         return await _productVariants.Where(c => ids.Contains(c.Id)).ToListAsync();
     }
 
-   
+    public async Task<EditProductVariantViewModel> GetDateForEdit(long ProductVariantId)
+    {
+        var sellerId = await _sellerService.GetSellerId();
+
+        return await _mapper.ProjectTo<EditProductVariantViewModel>(
+            _productVariants.Where(c=>c.SellerId == sellerId)
+            ).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
+
+
+    }
+
+    public async Task<AddEditDiscountViewModel> GetDateForAddEditDiscount(long ProductVariantId)
+    {
+        var sellerId = await _sellerService.GetSellerId();
+
+        var result =  await _mapper.ProjectTo<AddEditDiscountViewModel>(
+            _productVariants.Where(c => c.SellerId == sellerId)
+            ).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
+
+        if(result?.offPercentage != null)
+        {
+            var parsedDateTime = DateTime.Parse(result.StartDateTime);
+            result.StartDateTimeEn = parsedDateTime.ToString("yyyy/MM/dd HH:mm");
+            result.StartDateTime = parsedDateTime.ToShortPersianDateTime().ToPersianNumbers();
+
+            var parsedDateTime2 = DateTime.Parse(result.EndDateTime);
+            result.EndDateTimeEn = parsedDateTime2.ToString("yyyy/MM/dd HH:mm");
+            result.EndDateTime = parsedDateTime2.ToShortPersianDateTime().ToPersianNumbers();
+        }
+
+        return result;
+    }
+
+    public async Task<ProductVariant> GetforEdit(long ProductVariantId)
+    {
+        var sellerId = await _sellerService.GetSellerId();
+
+        return await _productVariants.Where(c => c.SellerId == sellerId).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
+    }
+
 }

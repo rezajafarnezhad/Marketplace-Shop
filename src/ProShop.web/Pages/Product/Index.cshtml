@@ -360,7 +360,7 @@
 
                         <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
                             <div class="fw-bold">فروشنده</div>
-                            <div class="text-info rem13px persian-numbers" id="other-sellers-count-box">
+                            <div class="text-info rem13px persian-numbers pointer-cursor" id="other-sellers-count-box">
                                 <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
                                 فروشنده دیگر
                             </div>
@@ -492,7 +492,7 @@
 
 @{
 
-    var shareProductModel = (Model.ProductInfo.PersianTitle, Model.ProductInfo.ProductShortLinkLink);
+    var shareProductModel = (Model.ProductInfo.PersianTitle, Url.PageLink("/Product/ProductShortLink", null, new { productshortLink = @Model.ProductInfo.ProductShortLinkLink }));
 
 }
 <partial name="_ShareProductP" model=shareProductModel />

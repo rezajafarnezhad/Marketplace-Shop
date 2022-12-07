@@ -1,0 +1,98 @@
+﻿@model ProShop.ViewModels.ProductVariant.AddEditDiscountViewModel
+@{
+    ViewData["Title"] = "تخقیفات";
+}
+
+<div class="row">
+    <div class="card text-dark bg-white border-0 shadow">
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <img src="~/images/Products/@Model.MainPicture" class="main-image-AddVariant" alt="test" style="max-width:100%" />
+                </div>
+                <div class="col-md-9">
+                    <div class="alert alert-dark">
+                        <p class="mb-3 text-center text-primary">
+                            <a asp-page="/Product/Index" asp-route-productCode="@Model.ProductCode" asp-route-slug="@Model.Slug" target="_blank">
+                                @Model.ProductTitle
+                            </a>
+                        </p>
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                دسته بندی:
+                                @Model.ProductCategoryTitle
+                            </div>
+                            <div class="col-md-3">
+                                تنوع مجاز این کالا:
+                                @(Model.CategoryIsVariantColor ? "رنگ" : "سایز")
+                            </div>
+                            <div class="col-md-3">
+                                برند کالا:
+                                @Model.ProductBrandFullTitle
+                            </div>
+                            <div class="col-md-3">
+                                کمیسیون فروش این کالا:
+                                %@Model.CommissionPercentage
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="post" asp-page-handler="AddEditDiscount" class="public-ajax-form" call-function-in-the-end="EditAddDiscountProductVariantsFunc">
+                <input hidden asp-for="Id" />
+                <div class="row">
+                    <div class="col-md-4 my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="Price">
+                        </label>
+                        <input disabled="disabled" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="span-error-message"></span>
+                    </div>
+                    <div class="col-md-4 my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="offPercentage">
+                        </label>
+                        <input asp-for="offPercentage" class="form-control" />
+                        <span asp-validation-for="offPercentage" class="span-error-message"></span>
+                    </div>
+                    <div class="col-md-4 my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="OffPrice">
+                        </label>
+                        <input readonly="readonly" asp-for="OffPrice" class="form-control " />
+                        <span asp-validation-for="OffPrice" class="span-error-message"></span>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="StartDateTime">
+                        </label>
+                        <div class="input-group">
+                            <input date-en="@Model.StartDateTimeEn" readonly="readonly" class="custom-md-persian-datepicker  form-control" asp-for="StartDateTime" />
+                            <span class="input-group-text">
+                                <i id="startDateTime-AddEditDiscount" class="pointer-cursor bi bi-calendar2-date"></i>
+                            </span>
+                        </div>
+                        <span asp-validation-for="StartDateTime" class="span-error-message"></span>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="EndDateTime">
+                        </label>
+                        <div class="input-group">
+                            <input date-en="@Model.EndDateTimeEn" readonly="readonly" class="custom-md-persian-datepicker  form-control" asp-for="EndDateTime" />
+                            <span class="input-group-text">
+                                <i id="endDateTime-AddEditDiscount" class="pointer-cursor bi bi-calendar2-date"></i>
+                            </span>
+                        </div>
+                        <span asp-validation-for="EndDateTime" class="span-error-message"></span>
+                    </div>
+                </div>
+
+
+                <div class="d-grid">
+                    <button type="submit" class="btn button-72">
+                        ثبت تخفیف
+                        <i class="bi bi-plus-square mr-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

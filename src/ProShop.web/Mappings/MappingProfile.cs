@@ -2,6 +2,7 @@
 using DNTPersianUtils.Core;
 using Microsoft.Build.Framework;
 using ProShop.Common.Helpers;
+using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
 using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
@@ -108,6 +109,8 @@ public class MappingProfile : Profile
 
         this.CreateMap<AddVariantViewModel, Entities.ProductVariant>();
         this.CreateMap<Entities.ProductVariant, ShowProductVariantViewModel>()
+            .ForMember(dest=>dest.StartDateTime, option=>option.MapFrom(src=> src.StartDateTime !=null ? src.StartDateTime.Value.ToLongPersianDate() :null))
+            .ForMember(dest=>dest.EndDateTime, option=>option.MapFrom(src=> src.EndDateTime != null ? src.EndDateTime.Value.ToLongPersianDate() :null))
              .ForMember(dest => dest.GatanteeFullTitle, options => options.MapFrom(src => src.Garantee.FullTitle));
         this.CreateMap<Entities.ProductVariant, ShowProductVariantInCreateConsignmentViewModel>();
         this.CreateMap<Entities.ProductVariant, GetProductVariantInCreateConsignmentViewModel>();
@@ -173,13 +176,31 @@ public class MappingProfile : Profile
         this.CreateMap<ProductCategory, ProductCategoryForProductInfoViewModel>();
         this.CreateMap<ProductFeature, ProductFeatureForProductInfoViewModel>();
         this.CreateMap<ProductVariant, ProductVariantForProductInfoViewModel>();
-        
-        
-        this.CreateMap<Entities.ProductShortLink,ShowProductShortLinkViewModel>();
-           
+
+
+        this.CreateMap<ProductVariant, EditProductVariantViewModel>()
             
+            .ForMember(dest=> dest.MainPicture, options => options.MapFrom(src=>src.Product.ProductMedia.First().FileName))
+           .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.Product.PersianTitle))
+           .ForMember(dest => dest.CommissionPercentage, options =>
+             options.MapFrom(src => src.Product.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.Product.BrandId).CommissionPercentage));
+        ;
 
 
+        this.CreateMap<AddEditDiscountViewModel, Entities.ProductVariant>()
+            .ForMember(x => x.Price, opt => opt.Ignore())
+            .ForMember(x => x.StartDateTime, opt => opt.Ignore())
+            .ForMember(x => x.EndDateTime, opt => opt.Ignore())
+            ;
+
+
+        this.CreateMap<ProductVariant, AddEditDiscountViewModel>()
+
+           .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.Product.ProductMedia.First().FileName))
+          .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.Product.PersianTitle))
+          .ForMember(dest => dest.CommissionPercentage, options =>
+            options.MapFrom(src => src.Product.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.Product.BrandId).CommissionPercentage));
+        ;
 
 
 

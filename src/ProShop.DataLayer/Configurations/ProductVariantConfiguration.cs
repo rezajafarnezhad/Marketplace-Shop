@@ -16,6 +16,8 @@ public class ProductVariantConfiguration : IEntityTypeConfiguration<ProductVaria
         builder.HasIndex(c => (new { c.SellerId,c.ProductId,c.VariantId })).IsUnique();
         builder.HasIndex(c => (new { c.VariantCode })).IsUnique();
 
+        builder.Ignore(c => c.FinalPrice);
+
         builder.HasOne(c => c.Product)
             .WithMany(c => c.ProductVariants)
             .HasForeignKey(c => c.ProductId);

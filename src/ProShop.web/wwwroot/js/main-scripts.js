@@ -26,8 +26,8 @@ $(document).ready(function () {
     IsAuthenticated = $('body').attr('is-authenticated') === 'true';
     LoginPageUrl = $('body').attr('login-page-url');
 
-    $('body').removeattr('is-authenticated')
-    $('body').removeattr('login-page-url')
+    $('body').removeAttr('is-authenticated')
+    $('body').removeAttr('login-page-url')
 
 });
 

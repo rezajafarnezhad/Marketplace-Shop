@@ -1,0 +1,68 @@
+﻿@model ProShop.ViewModels.ProductVariant.EditProductVariantViewModel
+@{
+    ViewData["Title"] = "ویرایش تنوع برای";
+}
+
+<div class="row">
+    <div class="card text-dark bg-white border-0 shadow">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                توجه:
+                <br />
+                لطفاً قبل از درج تنوع، مشخصات فنی کالا (مانند: رنگ، ابعاد، اقلام همراه کالا، جنس کالا، تصویر بسته‌بندی و ...) را در سایت چک کرده و اطمینان حاصل کنید که تنوع شما با مشخصات فنی کالا در سایت مطابقت داشته باشد.
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <img src="~/images/Products/@Model.MainPicture" class="main-image-AddVariant" alt="test" style="max-width:100%" />
+                </div>
+                <div class="col-md-9">
+                    <div class="alert alert-dark">
+                        <p class="mb-3 text-center text-primary">
+                            <a asp-page="/Product/Index" asp-route-productCode="@Model.ProductCode" asp-route-slug="@Model.Slug" target="_blank">
+                                @Model.ProductTitle
+                            </a>
+                        </p>
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                دسته بندی:
+                                @Model.ProductCategoryTitle
+                            </div>
+                            <div class="col-md-3">
+                                تنوع مجاز این کالا:
+                                @(Model.CategoryIsVariantColor ? "رنگ" : "سایز")
+                            </div>
+                            <div class="col-md-3">
+                                برند کالا:
+                                @Model.ProductBrandFullTitle
+                            </div>
+                            <div class="col-md-3">
+                                کمیسیون فروش این کالا:
+                                %@Model.CommissionPercentage
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="post" asp-page-handler="EditProductVariant" class="public-ajax-form" call-function-in-the-end="EditProductVariantFunc">
+                <input hidden asp-for="Id" />
+                <div class="row">
+                    <div class="my-2">
+                        <label class="d-flex justify-content-between form-label" asp-for="Price">
+                        </label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="span-error-message"></span>
+                    </div> 
+                </div>
+
+
+                <div class="d-grid">
+                    <button type="submit" class="btn button-72">
+                        ویرابش قیمت
+                        <i class="bi bi-plus-square mr-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

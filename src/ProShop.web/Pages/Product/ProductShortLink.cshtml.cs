@@ -30,7 +30,11 @@ public class ProductShortLinkModel : PageModel
 
 
         
-        return Redirect($"/product/pc-{product.productCode}/{product.slug}");
-       
+      
+        return RedirectToPage("/Product/Index", new
+        {
+            product.slug,
+            product.productCode
+        });
     }
 }

@@ -10,7 +10,11 @@ public class ProductVariant: EntityBase, IAuditableEntity
     public int Price { get; set; }
     public int VariantCode { get; set; }
     public int Count { get; set; }
-
+    public int? OffPrice { get; set; }
+    public byte? offPercentage { get; set; }
+    public int FinalPrice => OffPrice ?? Price;
+    public DateTime? StartDateTime { get; set; }
+    public DateTime? EndDateTime { get; set; }
     public Seller Seller { get; set; }
     public Product Product { get; set; }
     public Variant Variant { get; set; }

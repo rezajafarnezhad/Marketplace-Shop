@@ -1571,6 +1571,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("GaranteeId")
                         .HasColumnType("bigint");
 
@@ -1591,6 +1594,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime?>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("OffPrice")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -1600,11 +1606,17 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<long>("SellerId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime?>("StartDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("VariantCode")
                         .HasColumnType("int");
 
                     b.Property<long>("VariantId")
                         .HasColumnType("bigint");
+
+                    b.Property<byte?>("offPercentage")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
