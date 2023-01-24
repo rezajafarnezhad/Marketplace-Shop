@@ -84,7 +84,8 @@ public class CategoryService : GenericService<Category>, ICategoryService
                     Title = c.Title,
                     slug = c.Slug,
                     Picture = c.Picture ?? "بدون عکس",
-                    IsDeleted = c.IsDeleted
+                    IsDeleted = c.IsDeleted,
+                    ShowEditVariantButton=c.IsVariantColor==null?false:true,
                 }).ToListAsync(),
             Pagination = paginationResult.Pagination
         };
@@ -123,7 +124,6 @@ public class CategoryService : GenericService<Category>, ICategoryService
     {
         return await _categories.Select(c => new EditCategoryViewModel()
         {
-
             Id = c.Id,
             Title = c.Title,
             Slug = c.Slug,
@@ -132,7 +132,8 @@ public class CategoryService : GenericService<Category>, ICategoryService
             IsShowInMenus = c.IsShowInMenus,
             CanAddFakeProduct = c.CanAddFakeProduct,
             SelectedPicture = c.Picture,
-
+            IsVariantColor=c.IsVariantColor,
+            CanVariantTypeChange = c.categoryVarieants.Any()?false:true,
 
         }).SingleOrDefaultAsync(c => c.Id == Id);
     }
@@ -255,6 +256,16 @@ public class CategoryService : GenericService<Category>, ICategoryService
             }).ToDictionaryAsync(c => c.Key,c=>c.Title);
     }
 
-   
+    public async Task<bool?> IsVariantTypeColor(long categoryId)
+    {
+        return await _categories.Where(c => c.Id == categoryId).Select(c=>c.IsVariantColor).SingleOrDefaultAsync();
+
+    }
+ 
+    public async Task<Entities.Category> GetCategoryForEditVariant(long catagoryId)
+    {
+        return await _categories.Include(c=>c.categoryVarieants).SingleOrDefaultAsync(c => c.Id == catagoryId);
+    }
+
 }
 

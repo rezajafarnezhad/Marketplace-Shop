@@ -64,14 +64,18 @@ public class ProductVariantForProductInfoViewModel
     public string VariantColorCode { get; set; }
     public bool VariantIsColor { get; set; }
     public int Price { get; set; }
+    public int FinalPrice { get; set; }
+    public byte? offPercentage { get; set; }
     public string SellerShopName { get; set; }
     public string SellerLogo { get; set; }
     public string GaranteeFullTitle { get; set; }
+    public string EndDateTime { get; set; }
+    public bool IsDiscountActive { get; set; }
     public byte Score
     {
         get
         {
-            var result = Price / 10000;
+            var result = FinalPrice / 10000;
             if (result <= 1)
                 return 1;
             if (result >= 150)

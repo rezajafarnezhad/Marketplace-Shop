@@ -52,4 +52,7 @@ public class AddCategoryViewModel
 
     public List<SelectListItem> MainCategories { get; set; } = new();
 
+
+    [Display(Name = "نوع تنوع")]
+    public bool? IsVariantColor { get; set; }
 }

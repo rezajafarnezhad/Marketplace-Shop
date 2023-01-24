@@ -18,7 +18,8 @@
                     <tbody>
                         @foreach (var variant in variants)
                         {
-                            <tr free-delivery="@(variant.Price>500000?"true":"false")">
+                            <tr free-delivery="@(variant.Price>500000?"true":"false")" 
+                                is-discount-active="@(variant.IsDiscountActive?"true":"false")">
                                 <td class="p-4">
                                     @if (!string.IsNullOrWhiteSpace(variant.SellerLogo))
                                     {
@@ -33,9 +34,30 @@
                                 </td>
                                 <td class="p-4"> <i class="bi bi-shield-check me-2 rem21px"></i><span class="persian-numbers">@variant.GaranteeFullTitle</span> </td>
                                 <td class="p-4" hidden> @variant.Score</td>
-                                <td class="fw-bold p-4  persian-numbers">
-                                    @variant.Price.ToString("N0")
-                                    تومان
+                                <td>
+                                    <div class="@(variant.IsDiscountActive ? "d-none" : string.Empty)">
+                                        <span class="persian-numbers">
+                                            @variant.Price.ToString("0,#")
+                                        </span>
+                                        تومان
+                                    </div>
+                                    <div class="@(variant.IsDiscountActive ? string.Empty : "d-none")">
+                                        <div class="d-flex align-items-center">
+                                            <span class="rem14px text-decoration-line-through me-1 persian-numbers">
+                                                @variant.Price
+                                            </span>
+                                            <span class="badge rounded-pill bg-danger rem12px persian-numbers me-1">@variant.offPercentage%</span>
+                                            <span class="badge rounded-pill bg-primary rem12px count-down-timer-in-other-variants">
+                                                @variant.EndDateTime
+                                            </span>
+                                        </div>
+                                        <div class="rem18px mt-2">
+                                            <span class="persian-numbers">
+                                                @variant.FinalPrice
+                                            </span>
+                                            تومان
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="p-4" style="float:left">
                                     <button class="btn btn-danger rounded-3 ">

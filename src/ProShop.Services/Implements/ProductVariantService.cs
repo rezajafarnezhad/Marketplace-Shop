@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using DNTPersianUtils.Core;
 using Microsoft.EntityFrameworkCore;
 using ProShop.Common.Helpers;
@@ -62,10 +63,11 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
     {
         var sellerId = await _sellerService.GetSellerId();
 
-        return await _mapper.ProjectTo<EditProductVariantViewModel>(
-            _productVariants.Where(c=>c.SellerId == sellerId)
-            ).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
-
+        return await _productVariants.AsNoTracking()
+            .Where(c => c.SellerId == sellerId)
+            .ProjectTo<EditProductVariantViewModel>(
+            _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now })
+            .SingleOrDefaultAsync(c => c.Id == ProductVariantId);
 
     }
 
@@ -77,7 +79,7 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
             _productVariants.Where(c => c.SellerId == sellerId)
             ).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
 
-        if(result?.offPercentage != null)
+        if(result?.offPercentage >0)
         {
             var parsedDateTime = DateTime.Parse(result.StartDateTime);
             result.StartDateTimeEn = parsedDateTime.ToString("yyyy/MM/dd HH:mm");

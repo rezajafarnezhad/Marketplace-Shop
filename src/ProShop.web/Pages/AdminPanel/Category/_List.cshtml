@@ -54,7 +54,7 @@
                             }
 
                         </td>
-                        
+
                         <td class="text-center align-middle">
 
                             <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی" class="btn button7  show-modal-form-button">
@@ -91,6 +91,13 @@
                                 <span>افزودن برند</span>
                                 <span class="bi bi-globe2"></span>
                             </a>
+                            @if (Item.ShowEditVariantButton)
+                            {
+                                <a custom-title="ویرایش تنوع برای دسته  &quot; @Item.Title &quot;" asp-page-handler="EditCategoryVariant" asp-route-categoryId="@Item.Id" class="btn button7  show-modal-form-button">
+                                    <span>ویرایش تنوع</span>
+                                    <span class="bi bi-globe2"></span>
+                                </a>
+                            }
                             @if (Item.Picture != "بدون عکس")
                             {
                                 <form asp-page-handler="DeletePicture" class="d-inline-block">
@@ -109,7 +116,7 @@
         </table>
 
         <!-- Pagination -->
-   <hr />
+        <hr />
         <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
             <div class="btn-group me-2">
                 @if (Model.Pagination.CurrentPage != 1)
@@ -146,7 +153,7 @@
             </div>
         </div>
         <!-- End pagination -->
-</div>
+    </div>
 }
 else
 {

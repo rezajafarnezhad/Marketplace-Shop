@@ -226,7 +226,7 @@ public class ProductService : GenericService<Product>, IProductService
         }
 
         return _products.AsNoTracking().AsSplitQuery().ProjectTo<ShowProductInfoViewModel>
-            (_mapper.ConfigurationProvider, new { userid = userid }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
+            (_mapper.ConfigurationProvider, new { userid = userid , now = DateTime.Now }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
 
     }
 

@@ -33,7 +33,7 @@ public class ShowCategoryViewModel
     public long Id { get; set; }
 
     public bool IsDeleted { get; set; }
-
+    public bool ShowEditVariantButton { get; set; }
 
 }
 

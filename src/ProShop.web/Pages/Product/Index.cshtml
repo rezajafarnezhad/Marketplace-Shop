@@ -7,7 +7,7 @@
     var showcommentscount = Model.ProductInfo.productCommentsCount > 0;
     var showquestioncommentscount = false;
     var productFeatures = Model.ProductInfo.ProductFeatures.Where(c => c.FeatureShowNextToProduct).ToList();
-    var productVariants = Model.ProductInfo.ProductVariants.OrderBy(c => c.Price).ToList();
+    var productVariants = Model.ProductInfo.ProductVariants.OrderBy(c => c.FinalPrice).ToList();
     var productTitle = Model.ProductInfo.PersianTitle;
     var productCategory = Model.ProductInfo.CategoryTitle;
     var productBrand = Model.ProductInfo.BrandTitleFa;
@@ -18,6 +18,12 @@
     ViewData["Title"] = $"مشخصات قیمت و خرید {productTitle}";
     ViewData["HeaderDescription"] =
         $"خرید اینترنتی {productTitle} و قیمت انواع {productCategory} {productBrand} از فروشگاه آنلاین پروشاپ. جدیدترین مدل های {productCategory} {productBrand} با بهترین قیمت در پروشاپ";
+
+
+
+    var GroupVariants = productVariants.GroupBy(c => c.VariantValue);
+
+
 }
 
 <!-- Start breadcrumb -->
@@ -249,9 +255,7 @@
                                 @firstProductVariant.VariantValue
                             </span>
                         </div>
-                        @{
-                            var GroupVariants = productVariants.GroupBy(c => c.VariantValue);
-                        }
+
                         <div class="d-flex mt-3" id="product-variants-box-in-show-product-info">
                             @if (isvariantColor)
                             {
@@ -357,14 +361,29 @@
                 <div class="col-md-5">
                     <div class="border rounded-3 p-3" id="product-info-left-side-box">
                         <!-- 1 -->
-
-                        <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
-                            <div class="fw-bold">فروشنده</div>
-                            <div class="text-info rem13px persian-numbers pointer-cursor" id="other-sellers-count-box">
-                                <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
-                                فروشنده دیگر
+                        @if ((productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1) == 0)
+                        {
+                            <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
+                                <div class="fw-bold">فروشنده</div>
+                                <div class="text-info rem13px persian-numbers pointer-cursor" id="other-sellers-count-box">
+                                    فروشنده دیگری ندارد
+                                </div>
                             </div>
-                        </div>
+
+
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
+                                <div class="fw-bold">فروشنده</div>
+                                <div class="text-info rem13px persian-numbers pointer-cursor" id="other-sellers-count-box">
+                                    <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
+                                    فروشنده دیگر
+                                </div>
+                            </div>
+                        }
+
+
 
                         <!-- End 1 -->
                         <!-- 2 -->
@@ -422,19 +441,70 @@
                         <hr class="bg-secondary" />
 
                         <!-- 5 -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
 
-                        <div class="d-flex justify-content-end align-items-center mt-3">
-                            <span class="fw-bold rem21px  persian-numbers" id="PriceProduct">
+                            <div>
+
+                                <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="این کالا توسط فروشنده آن ، قیمت گذاری شده است."></i>
+
+                            </div>
+
+                            @foreach (var variants in GroupVariants)
+                            {
 
 
-                                @firstProductVariant.Price.ToString("0,#")
+                                var currentVariant = variants.First();
 
 
-                                تومان
-                            </span>
+                                <div variant-value="@currentVariant.VariantValue" class="d-flex flex-column align-items-center product-final-price-in-single-page-of-product  @(firstProductVariant.VariantValue == currentVariant.VariantValue ? (currentVariant.IsDiscountActive?string.Empty:"d-none") :"d-none") ">
+                                    <div>
+                                        <span class="text-decoration-line-through text-custom-grey rem14px me-2 persian-numbers">
+                                            @currentVariant.Price.ToString("0,#")
+                                        </span>
+                                        <span class="badge rounded-pill bg-danger persian-numbers">@currentVariant.offPercentage%</span>
+                                    </div>
+                                    <span class="rem21px mt-2 persian-numbers">
+                                        @currentVariant.FinalPrice.ToString("0,#")
+                                        تومان
+                                    </span>
+                                </div>
+                                <span variant-value="@currentVariant.VariantValue" class="rem21px product-price-in-single-page-of-product @(firstProductVariant.VariantValue == currentVariant.VariantValue ? (currentVariant.IsDiscountActive?"d-none":string.Empty):"d-none")">
+                                    <span class="persian-numbers">
+                                        @currentVariant.Price.ToString("0,#")
+                                    </span>
+                                    تومان
+                                </span>
+
+
+                            }
+
                         </div>
 
                         <!-- End 5 -->
+                        <!-- 6 -->
+                        @foreach (var variants in GroupVariants)
+                        {
+
+                            var currentVariant = variants.First();
+                            if (currentVariant.IsDiscountActive)
+                            {
+                                <div variant-value="@currentVariant.VariantValue" class="Product-discount-box d-flex flex-column align-items-center mt-3 text-danger fw-bold   @(firstProductVariant.VariantValue == currentVariant.VariantValue ? string.Empty :"d-none")">
+                                    <div>
+                                        پیشنهاد شگفت انگیز
+                                    </div>
+                                    <div class="text-center count-down-timer">
+                                        @currentVariant.EndDateTime
+                                    </div>
+                                </div>
+                            }
+
+
+                        }
+
+
+                        <!-- End 6 -->
+
 
                         <div class="d-grid mt-3">
                             <button class="btn btn-danger rounded-3">

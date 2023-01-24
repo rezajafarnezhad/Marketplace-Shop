@@ -4,6 +4,7 @@ using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels;
+using System.Globalization;
 
 namespace ProShop.Services.Implements;
 
@@ -104,5 +105,15 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     public async Task AddRangeAsync(IEnumerable<TEntity> entities)
     {
         await _entities.AddRangeAsync(entities);
+    }
+
+    public Task<TEntity> FindByIdWithIncludesAsync(long Id , params string[] includes)
+    {
+        var query = _entities.AsQueryable();
+        foreach(var include in includes)
+        {
+            query= query.Include(include);
+        }
+        return  query.SingleOrDefaultAsync(c=>c.Id == Id);
     }
 }

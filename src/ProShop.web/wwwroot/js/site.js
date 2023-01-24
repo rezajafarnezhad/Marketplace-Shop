@@ -585,7 +585,49 @@ function activatingModalForm() {
 //activatingModalForm();
 
 
+// این فانکشن هر فرمی را به صورت پست به سمت سرور با استفاده از ایجکس
+// ارسال میکند
+$(document).on('submit', 'form.public-ajax-form', function (e) {
 
+    e.preventDefault();
+    var currentForm = $(this);
+    var formAction = currentForm.attr("action");
+    var functionName = currentForm.attr("call-function-in-the-end");
+    var formdata = new FormData(this);
+    $.ajax({
+
+        url: formAction,
+        data: formdata,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $('#html-modal-place').modal('hide');
+            $('#Second-html-modal-place').modal('hide');
+            showLoading();
+        },
+        success: function (data) {
+
+            if (data.isSuccessful == false) {
+                /*var finalData = data.data != null ? data.data : [data.message];*/
+                var finalData = data.data || [data.message];
+                fillValidationForm(finalData, currentForm);
+                showToastr('warning', data.message);
+            } else {
+                window[functionName](data.message, data.data);
+            }
+        },
+        complete: function () {
+            hideLoading();
+        },
+        error: function () {
+            ShowErrorMessage();
+        }
+
+    });
+});
 
 // فرم ایجاد و ویرایش در داخل مودال موقعی که سابمیت شوند توسط این
 // فانکشن به صورت ایجکسی به سمت سرور ارسال میشوند
@@ -787,49 +829,7 @@ function fillValidationForm(errors, currentForm) {
 
 
 
-// این فانکشن هر فرمی را به صورت پست به سمت سرور با استفاده از ایجکس
-// ارسال میکند
-$(document).on('submit', 'form.public-ajax-form', function (e) {
 
-    e.preventDefault();
-    var currentForm = $(this);
-    var formAction = currentForm.attr("action");
-    var functionName = currentForm.attr("call-function-in-the-end");
-    var formdata = new FormData(this);
-    $.ajax({
-
-        url: formAction,
-        data: formdata,
-        type: 'POST',
-        enctype: 'multipart/form-data',
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-            $('#html-modal-place').modal('hide');
-            $('#Second-html-modal-place').modal('hide');
-            showLoading();
-        },
-        success: function (data) {
-
-            if (data.isSuccessful == false) {
-                /*var finalData = data.data != null ? data.data : [data.message];*/
-                var finalData = data.data || [data.message];
-                fillValidationForm(finalData, currentForm);
-                showToastr('warning', data.message);
-            } else {
-                window[functionName](data.message, data.data);
-            }
-        },
-        complete: function () {
-            hideLoading();
-        },
-        error: function () {
-            ShowErrorMessage();
-        }
-
-    });
-});
 
 
 // این فانکشن هر فرمی را به صورت پست به سمت سرور با استفاده از ایجکس

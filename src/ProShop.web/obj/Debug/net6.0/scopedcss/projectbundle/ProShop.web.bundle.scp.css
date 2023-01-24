@@ -1,3 +1,11 @@
+/* _content/ProShop.web/Pages/AdminPanel/Category/_EditCategoryVariant.cshtml.rz.scp.css */
+
+
+
+#Selected-variant-box[b-5wkit8f3dk], all-variant-box[b-5wkit8f3dk] {
+    max-height: 158px;
+    overflow-y: auto;
+}
 /* _content/ProShop.web/Pages/AdminPanel/Product/_ProductDetails.cshtml.rz.scp.css */
 
 
@@ -131,8 +139,8 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
 }
 /* End show product info */
 .abrnad[b-zptyp67v38] {
-    color: #19bfd3;
-    font-size: 0.99rem;
+    color: #70d7e4 !important;
+    font-size: 0.9rem;
 }
 
 

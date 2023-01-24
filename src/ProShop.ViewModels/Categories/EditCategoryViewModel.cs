@@ -53,5 +53,10 @@ public class EditCategoryViewModel
     public long? ParentId { get; set; }
 
     public List<SelectListItem> MainCategories { get; set; } = new();
+  
+    [Display(Name = "نوع تنوع")]
+    public bool? IsVariantColor { get; set; }
+
+    public bool CanVariantTypeChange { get; set; }
 
 }

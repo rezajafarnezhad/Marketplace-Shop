@@ -60,7 +60,7 @@ public class CreateModel : SellerPanelBase
 
 
 
-    public AddProductViewModel Product { get; set; }
+    public AddProductViewModel Product{ get; set; }
 
     public void OnGet()
     {

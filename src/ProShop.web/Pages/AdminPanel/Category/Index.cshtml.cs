@@ -9,6 +9,7 @@ using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Categories;
+using ProShop.ViewModels.CategoryVaraints;
 
 namespace ProShop.web.Pages.AdminPanel.Category
 {
@@ -23,7 +24,10 @@ namespace ProShop.web.Pages.AdminPanel.Category
         private readonly IBrandService _brandService;
         private readonly IMapper _mapper;
         private readonly IHtmlSanitizer _htmlSanitizer;
-        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper,IHtmlSanitizer htmlSanitizer)
+        private readonly IVariantService _variantService;
+        private readonly ICategoryVariantService _categoryVariantService;
+
+        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper, IHtmlSanitizer htmlSanitizer, IVariantService variantService, ICategoryVariantService categoryVariantService)
         {
             _categoryService = categoryService;
             _unitOfWork = unitOfWork;
@@ -31,6 +35,8 @@ namespace ProShop.web.Pages.AdminPanel.Category
             _brandService = brandService;
             _mapper = mapper;
             _htmlSanitizer = htmlSanitizer;
+            _variantService = variantService;
+            _categoryVariantService = categoryVariantService;
         }
 
         #endregion
@@ -39,7 +45,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
         public ShowCategoriesViewModel CategoriesViewModel { get; set; } = new();
         public void OnGet()
         {
-          
+
         }
 
         public async Task<IActionResult> OnGetGetDataTableAsync()
@@ -145,7 +151,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
             }
 
 
-            var _category = await _categoryService.FindByIdAsync(model.Id);
+            var _category = await _categoryService.FindByIdWithIncludesAsync(model.Id, nameof(Entities.Category.categoryVarieants));
             if (_category is null)
             {
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
@@ -160,12 +166,20 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 _category.Picture = picturefileName;
                 await _uploadFileService.SaveFile(model.Picture, picturefileName, oldFileName, "images", "Categories");
             }
+
+            if (_category.categoryVarieants.Any())
+            {
+                model.IsVariantColor = _category.IsVariantColor;
+            }
+
+
             _category.Title = model.Title;
             _category.Slug = model.Slug;
             _category.ParentId = model.ParentId is 0 ? null : model.ParentId;
             _category.Description = model.Description;
             _category.IsShowInMenus = model.IsShowInMenus;
             _category.CanAddFakeProduct = model.CanAddFakeProduct;
+            _category.IsVariantColor = model.IsVariantColor;
 
 
             var result = await _categoryService.Update(_category);
@@ -222,10 +236,10 @@ namespace ProShop.web.Pages.AdminPanel.Category
             foreach (var item in model.Brands)
             {
                 var spilitBrands = item.Split("|||");
-                brandsInDictionary.Add(spilitBrands[0],byte.Parse(spilitBrands[1]));
+                brandsInDictionary.Add(spilitBrands[0], byte.Parse(spilitBrands[1]));
             }
-            var brands = await _brandService.GetBrandsByFullTitle(brandsInDictionary.Select(c=>c.Key).ToList());
-            if(brands.Count != model.Brands.Count)
+            var brands = await _brandService.GetBrandsByFullTitle(brandsInDictionary.Select(c => c.Key).ToList());
+            if (brands.Count != model.Brands.Count)
                 return Json(new JsonResultOperation(false));
 
             foreach (var item in brands)
@@ -233,9 +247,9 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 _Category.CategoryBrands.Add(new CategoryBrand()
                 {
                     BrandId = item.Key,
-                    CommissionPercentage = brandsInDictionary[item.Value] 
-              
-                }) ;
+                    CommissionPercentage = brandsInDictionary[item.Value]
+
+                });
             }
 
             await _unitOfWork.SaveChangesAsync();
@@ -297,6 +311,55 @@ namespace ProShop.web.Pages.AdminPanel.Category
         public async Task<IActionResult> OnPostCheckForSlugOnEdit(string slug, long id)
         {
             return Json(!await _categoryService.IsExistsBy(nameof(Entities.Category.Slug), slug, id));
+        }
+
+
+        public async Task<IActionResult> OnGetEditCategoryVariant(long categoryId)
+        {
+
+            if (!await _categoryService.IsExistsBy(nameof(Entities.Category.Id), categoryId))
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+
+            var isVariantTypeColor = await _categoryService.IsVariantTypeColor(categoryId);
+
+            if(isVariantTypeColor is null)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+
+
+             var variants = await _variantService.GetVariantsForEditCategoryVariants(isVariantTypeColor.Value);
+
+            var selectedVariants = await _categoryVariantService.GetCategoryVariants(categoryId);
+
+            var model = new EditCategoryVariantViewModel()
+            {
+                // CategoryId = categoryId,
+                 Variants = variants,
+                SelectedVariants = selectedVariants,
+            };
+
+            return Partial("_EditCategoryVariant", model);
+        }
+
+        public async Task<IActionResult> OnPostEditCategoryVariant(EditCategoryVariantViewModel model)
+        {
+            var category = await _categoryService.GetCategoryForEditVariant(model.CategoryId);
+            if (category is null)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+            category.categoryVarieants.Clear();
+            foreach (var VariantId in model.SelectedVariants)
+            {
+                category.categoryVarieants.Add(new CategoryVarieant()
+                {
+                    VariantId = VariantId,
+                });
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return Json(new JsonResultOperation(true, "تنوع ها با موفقیت ثبت شدند"));
+
+
         }
     }
 }

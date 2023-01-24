@@ -311,3 +311,4 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\refint\ProS
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\AdminPanel\Category\_EditCategoryVariant.cshtml.rz.scp.css

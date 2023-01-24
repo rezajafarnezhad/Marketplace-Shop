@@ -149,7 +149,7 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<bool>("IsShowInMenus")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsVariantColor")
+                    b.Property<bool?>("IsVariantColor")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedByBrowserName")

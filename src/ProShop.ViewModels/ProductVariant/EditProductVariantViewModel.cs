@@ -34,6 +34,7 @@ public class EditProductVariantViewModel
     public byte CommissionPercentage { get; set; }
 
     public string MainPicture { get; set; }
+    public bool IsDiscountActive { get; set; }
 
 
 }
@@ -68,13 +69,13 @@ public class AddEditDiscountViewModel
     [DivisibleBy10]
     [Display(Name = "قیمت با تخفیف")]
     [Range(1, 20000000000, ErrorMessage = AttributesErrorMessages.RangeMessage)]
-    public int? OffPrice { get; set; }
+    public int OffPrice { get; set; }
 
     [Display(Name = "درصد تخفیف")]
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]
 
     public byte? offPercentage { get; set; }
-    public int FinalPrice => OffPrice ?? Price;
+    
 
     [Display(Name = "تاریخ شروع تخفیف")]
     [Required(ErrorMessage = AttributesErrorMessages.RequiredMessage)]

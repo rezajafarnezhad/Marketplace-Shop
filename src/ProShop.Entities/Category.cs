@@ -8,7 +8,7 @@ public class Category : EntityBase, IAuditableEntity
     public string Picture { get; set; }
     public bool IsShowInMenus { get; set; } = false;
     public bool CanAddFakeProduct { get; set; } = false;
-    public bool IsVariantColor { get; set; } = false;
+    public bool? IsVariantColor { get; set; } 
     public string ProductPageGuid { get; set; }
 
 

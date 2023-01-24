@@ -80,6 +80,6 @@ public class ConsignmentService : GenericService<Consignment>, IConsignmentServi
 
     public async Task<bool> CanAddStockForConsignmentItems(long consignmentId)
     {
-        return await _consignment.Where(c => c.ConsignmentStatus == ConsignmentStatus.Rejected).AnyAsync(c=>c.Id == consignmentId);
+        return await _consignment.Where(c => c.ConsignmentStatus == ConsignmentStatus.Received).AnyAsync(c=>c.Id == consignmentId);
     }
 }

@@ -8,6 +8,7 @@ using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
+using ProShop.ViewModels.CategoryVaraints;
 using ProShop.ViewModels.Consignments;
 using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Garantee;
@@ -172,16 +173,31 @@ public class MappingProfile : Profile
 
             ;
 
+
+
         this.CreateMap<ProductMedia, ProductMediaForProductInfoViewModel>();
         this.CreateMap<ProductCategory, ProductCategoryForProductInfoViewModel>();
         this.CreateMap<ProductFeature, ProductFeatureForProductInfoViewModel>();
-        this.CreateMap<ProductVariant, ProductVariantForProductInfoViewModel>();
 
+
+        DateTime now = default;
+        this.CreateMap<Entities.ProductVariant, ProductVariantForProductInfoViewModel>()
+            .ForMember(dest => dest.EndDateTime,
+                options =>
+                    options.MapFrom(src =>
+                        src.EndDateTime != null ? src.EndDateTime.Value.ToString("yyyy/MM/dd HH:mm:ss") : null
+                    ))
+            .ForMember(dest => dest.IsDiscountActive,
+                options =>
+                    options.MapFrom(src =>
+                        src.offPercentage != null && (src.StartDateTime <= now && src.EndDateTime >= now)
+                    ));
 
         this.CreateMap<ProductVariant, EditProductVariantViewModel>()
             
-            .ForMember(dest=> dest.MainPicture, options => options.MapFrom(src=>src.Product.ProductMedia.First().FileName))
+           .ForMember(dest=> dest.MainPicture, options => options.MapFrom(src=>src.Product.ProductMedia.First().FileName))
            .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.Product.PersianTitle))
+           .ForMember(dest => dest.IsDiscountActive, options => options.MapFrom(src => src.offPercentage != null && (src.StartDateTime <= now && src.EndDateTime >= now)))
            .ForMember(dest => dest.CommissionPercentage, options =>
              options.MapFrom(src => src.Product.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.Product.BrandId).CommissionPercentage));
         ;
@@ -204,7 +220,7 @@ public class MappingProfile : Profile
 
 
 
-
+        this.CreateMap<Entities.Variant, ShowVariantInEditCategoryVariantViewModel>();
 
     }
 }
