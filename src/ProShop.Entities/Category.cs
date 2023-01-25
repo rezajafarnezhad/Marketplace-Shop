@@ -10,7 +10,7 @@ public class Category : EntityBase, IAuditableEntity
     public bool CanAddFakeProduct { get; set; } = false;
     public bool? IsVariantColor { get; set; } 
     public string ProductPageGuid { get; set; }
-
+    public bool HasVariant { get; set; }
 
     public Category ParentCategory { get; set; }
     public ICollection<Category> ChildCategory { get; set; }

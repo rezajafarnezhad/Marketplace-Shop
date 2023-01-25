@@ -17,4 +17,5 @@ public interface IProductService : IGenericService<Product>
     Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId);
     Task<ShowProductInfoViewModel> GetProductInfo(int productCode);
     Task<(int productCode, string slug)> FindByShortLink(string productShortLink);
+    Task<List<Product>> GetProductsForChangeStatus(List<long> Ids);
 }

@@ -47,18 +47,23 @@ public class VariantService : GenericService<Variant>, IVariantService
         };
     }
 
-    public async Task<bool> checkProductAndVariantTypeForAddVariant(long productId , long variantId)
+    public async Task<(bool result,bool isVariantNull)> checkProductAndVariantTypeForAddVariant(long productId , long variantId)
     {
         var product = await _product.Select(c => new { c.Id, c.Category.IsVariantColor }).SingleOrDefaultAsync(c => c.Id == productId);
+        
         if (product is null)
-            return false;
+            return (false,default);
+
+        if (product.IsVariantColor is null)
+            return (true, true);
 
         var variant = await _variants.Where(c => c.IsConfirmed)
             .Select(c => new { c.Id, c.IsColor }).SingleOrDefaultAsync(c => c.Id == variantId);
+        
         if (variant is null)
-            return false;
+            return (false,false);
 
-        return product.IsVariantColor == variant.IsColor;
+        return (product.IsVariantColor == variant.IsColor,false);
 
     }
 
@@ -66,5 +71,15 @@ public class VariantService : GenericService<Variant>, IVariantService
     {
         return await _mapper.ProjectTo<ShowVariantInEditCategoryVariantViewModel>
             (_variants.Where(c=>c.IsConfirmed).Where(c=>c.IsColor == isColor)).ToListAsync();
+    }
+
+    public async Task<bool> CheckVariantsCountAddConfirmStatusForEditCategoryVariants(List<long> variantsIds , bool isColor)
+    {
+        var result = await _variants
+            .Where(c => variantsIds.Contains(c.Id))
+            .Where(c=>c.IsColor == isColor)
+            .CountAsync(c => c.IsConfirmed);
+
+        return variantsIds.Count == result;
     }
 }

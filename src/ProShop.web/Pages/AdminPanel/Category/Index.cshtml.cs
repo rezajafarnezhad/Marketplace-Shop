@@ -6,6 +6,7 @@ using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
+using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Categories;
@@ -26,8 +27,9 @@ namespace ProShop.web.Pages.AdminPanel.Category
         private readonly IHtmlSanitizer _htmlSanitizer;
         private readonly IVariantService _variantService;
         private readonly ICategoryVariantService _categoryVariantService;
+        private readonly IProductVariantService _productVariantService;
 
-        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper, IHtmlSanitizer htmlSanitizer, IVariantService variantService, ICategoryVariantService categoryVariantService)
+        public IndexModel(ICategoryService categoryService, IUnitOfWork unitOfWork, IUploadFileService uploadFileService, IBrandService brandService, IMapper mapper, IHtmlSanitizer htmlSanitizer, IVariantService variantService, ICategoryVariantService categoryVariantService, IProductVariantService productVariantService)
         {
             _categoryService = categoryService;
             _unitOfWork = unitOfWork;
@@ -37,6 +39,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
             _htmlSanitizer = htmlSanitizer;
             _variantService = variantService;
             _categoryVariantService = categoryVariantService;
+            _productVariantService = productVariantService;
         }
 
         #endregion
@@ -167,7 +170,7 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 await _uploadFileService.SaveFile(model.Picture, picturefileName, oldFileName, "images", "Categories");
             }
 
-            if (_category.categoryVarieants.Any())
+            if (_category.categoryVarieants.Any() || _category.HasVariant)
             {
                 model.IsVariantColor = _category.IsVariantColor;
             }
@@ -323,20 +326,21 @@ namespace ProShop.web.Pages.AdminPanel.Category
 
             var isVariantTypeColor = await _categoryService.IsVariantTypeColor(categoryId);
 
-            if(isVariantTypeColor is null)
+            if (isVariantTypeColor is null)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
 
 
-             var variants = await _variantService.GetVariantsForEditCategoryVariants(isVariantTypeColor.Value);
+            var variants = await _variantService.GetVariantsForEditCategoryVariants(isVariantTypeColor.Value);
 
             var selectedVariants = await _categoryVariantService.GetCategoryVariants(categoryId);
 
             var model = new EditCategoryVariantViewModel()
             {
                 // CategoryId = categoryId,
-                 Variants = variants,
+                Variants = variants,
                 SelectedVariants = selectedVariants,
+                AddedVariantsToProductVariant = await _productVariantService.GetAddedVariantsToProductVariants(selectedVariants,categoryId)
             };
 
             return Partial("_EditCategoryVariant", model);
@@ -347,13 +351,38 @@ namespace ProShop.web.Pages.AdminPanel.Category
             var category = await _categoryService.GetCategoryForEditVariant(model.CategoryId);
             if (category is null)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+           
+            if (category.IsVariantColor is null)
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
-            category.categoryVarieants.Clear();
-            foreach (var VariantId in model.SelectedVariants)
+            var categoryVariantsIds = category.categoryVarieants.Select(c => c.VariantId).ToList();
+            if(!await _variantService.CheckVariantsCountAddConfirmStatusForEditCategoryVariants(categoryVariantsIds,category.IsVariantColor.Value))
             {
+                return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+            }
+
+            var addedVariantsForProductVariants = await _productVariantService.GetAddedVariantsToProductVariants(categoryVariantsIds,model.CategoryId);
+
+            foreach (var Variant in category.categoryVarieants)
+            {
+                if(addedVariantsForProductVariants.Contains(Variant.VariantId))              
+                    continue;
+ 
+
+                category.categoryVarieants.Remove(Variant);
+            }
+
+
+          
+            foreach (var variantId in model.SelectedVariants)
+            {
+                if (category.categoryVarieants.Any(c => c.VariantId == variantId))
+                    continue;
+
                 category.categoryVarieants.Add(new CategoryVarieant()
                 {
-                    VariantId = VariantId,
+                    VariantId = variantId,
                 });
             }
             await _unitOfWork.SaveChangesAsync();

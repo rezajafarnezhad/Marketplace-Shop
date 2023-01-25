@@ -23,8 +23,9 @@ public class IndexModel : InventoryPanelBase
     private readonly IMapper _mapper;
     private readonly IHtmlSanitizer _htmlSanitizer;
     private readonly IProductStockService _productStockService;
+    private readonly IProductService _productService;
     private readonly IProductVariantService _productVariantService;
-    public IndexModel(IConsignmentService consignmentService, IUnitOfWork unitOfWork, ISellerService sellerService, IMapper mapper, IHtmlSanitizer htmlSanitizer, IProductStockService productStockService, IProductVariantService productVariantService)
+    public IndexModel(IConsignmentService consignmentService, IUnitOfWork unitOfWork, ISellerService sellerService, IMapper mapper, IHtmlSanitizer htmlSanitizer, IProductStockService productStockService, IProductVariantService productVariantService, IProductService productService)
     {
         _consignmentService = consignmentService;
         this.unitOfWork = unitOfWork;
@@ -33,6 +34,7 @@ public class IndexModel : InventoryPanelBase
         _htmlSanitizer = htmlSanitizer;
         _productStockService = productStockService;
         _productVariantService = productVariantService;
+        _productService = productService;
     }
 
     [BindProperty(SupportsGet = true)]
@@ -150,6 +152,16 @@ public class IndexModel : InventoryPanelBase
             }
         }
         #endregion
+
+        var productIds = ProductVariants.Select(c => c.ProductId).Distinct().ToList();
+        var productToChangeTheirStatus = await _productService.GetProductsForChangeStatus(productIds);
+
+        foreach (var Product in productToChangeTheirStatus)
+        {
+            if (Product.ProductStockStatustus == Entities.ProductStockStatus.Unavailable)
+                Product.ProductStockStatustus = Entities.ProductStockStatus.Available;
+
+        }
         await unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true,
               "موجودی کالا ها باموفقیت افزایش یافت"));

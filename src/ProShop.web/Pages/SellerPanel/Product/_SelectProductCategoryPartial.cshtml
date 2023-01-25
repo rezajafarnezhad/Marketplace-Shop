@@ -6,6 +6,9 @@
 
 @foreach (var categories in Model)
 {
+    if (categories.Count == 0)
+        continue;
+
     <div class="list-group col-3" category-row=@(counter++)>
         @foreach (var category in categories)
         {

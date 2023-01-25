@@ -6,7 +6,7 @@
 <div class="row">
     <div class="card text-dark bg-white border-0 shadow">
         <div class="card-body">
-            
+
             <div class="row">
                 <div class="col-md-3 text-center">
                     <img src="~/images/Products/@Model.MainPicture" class="main-image-AddVariant" alt="test" style="max-width:100%" />
@@ -24,8 +24,15 @@
                                 @Model.ProductCategoryTitle
                             </div>
                             <div class="col-md-3">
+                                @{
+                                    var variantType = "بدون تنوع";
+                                    if (Model.CategoryIsVariantColor != null)
+                                    {
+                                        variantType = Model.CategoryIsVariantColor.Value ? "رنگ" : "سایز";
+                                    }
+                                }
                                 تنوع مجاز این کالا:
-                                @(Model.CategoryIsVariantColor ? "رنگ" : "سایز")
+                                @variantType
                             </div>
                             <div class="col-md-3">
                                 برند کالا:
@@ -42,6 +49,9 @@
             <form method="post" asp-page-handler="AddEditDiscount" class="public-ajax-form" call-function-in-the-end="EditAddDiscountProductVariantsFunc">
                 <input hidden asp-for="Id" />
                 <div class="row">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <div class="col-md-4 my-2">
                         <label class="d-flex justify-content-between form-label" asp-for="Price">
                         </label>

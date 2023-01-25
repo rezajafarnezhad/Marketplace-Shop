@@ -27,7 +27,7 @@ public class EditProductVariantViewModel
 
     public string ProductCategoryTitle { get; set; }
 
-    public bool CategoryIsVariantColor { get; set; }
+    public bool? CategoryIsVariantColor { get; set; }
 
     public string ProductBrandFullTitle { get; set; }
 
@@ -57,7 +57,7 @@ public class AddEditDiscountViewModel
 
     public string ProductCategoryTitle { get; set; }
 
-    public bool CategoryIsVariantColor { get; set; }
+    public bool? CategoryIsVariantColor { get; set; }
 
     public string ProductBrandFullTitle { get; set; }
 

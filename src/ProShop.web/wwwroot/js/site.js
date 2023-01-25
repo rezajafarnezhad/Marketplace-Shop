@@ -177,7 +177,7 @@ function enablingTooltips() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
 
-            trigger:'hover'
+            trigger: 'hover'
 
         });
     });
@@ -188,7 +188,7 @@ function enablingNormalTooltips() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
 
-            trigger:'hover'
+            trigger: 'hover'
 
         });
     });
@@ -590,10 +590,39 @@ function activatingModalForm() {
 $(document).on('submit', 'form.public-ajax-form', function (e) {
 
     e.preventDefault();
-    var currentForm = $(this);
+    $('#html-modal-place').modal('hide');
+    $('#Second-html-modal-place').modal('hide');
+    showLoading();
+    var currentForm = this;
+
+    if ($(this).parents('.modal').length === 0) {
+        publicajaxformFunc(currentForm);
+
+
+    } else {
+        $(this).parents('.modal').off('hidden.bs.modal').on('hidden.bs.modal', function () {
+
+            publicajaxformFunc(currentForm);
+
+
+        });
+    }
+
+
+
+
+
+
+
+
+});
+
+
+function publicajaxformFunc(form) {
+    var currentForm = $(form);
     var formAction = currentForm.attr("action");
     var functionName = currentForm.attr("call-function-in-the-end");
-    var formdata = new FormData(this);
+    var formdata = new FormData(form);
     $.ajax({
 
         url: formAction,
@@ -603,11 +632,6 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
         dataType: 'json',
         processData: false,
         contentType: false,
-        beforeSend: function () {
-            $('#html-modal-place').modal('hide');
-            $('#Second-html-modal-place').modal('hide');
-            showLoading();
-        },
         success: function (data) {
 
             if (data.isSuccessful == false) {
@@ -615,6 +639,15 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
                 var finalData = data.data || [data.message];
                 fillValidationForm(finalData, currentForm);
                 showToastr('warning', data.message);
+                var modalId = currentForm.parents('.modal').attr('id');
+                if (modalId == 'Second-html-modal-place') {
+
+                    $('#Second-html-modal-place').modal('show');
+
+                } else if (modalId == 'html-modal-place') {
+                    $('#html-modal-place').modal('show');
+
+                }
             } else {
                 window[functionName](data.message, data.data);
             }
@@ -627,7 +660,8 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
         }
 
     });
-});
+}
+
 
 // فرم ایجاد و ویرایش در داخل مودال موقعی که سابمیت شوند توسط این
 // فانکشن به صورت ایجکسی به سمت سرور ارسال میشوند
@@ -658,7 +692,8 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
         success: function (data) {
 
             if (data.isSuccessful == false) {
-                fillValidationForm(data.data, currentForm);
+                var finalData = data.data || [data.message];
+                fillValidationForm(finalData, currentForm);
                 showToastr('warning', data.message);
             } else {
                 fillDataTable();
@@ -948,13 +983,12 @@ function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
         url: url,
         data: data,
         type: 'GET',
-        dataType: 'html',
         traditional: true,
         beforeSend: function () {
             showLoading();
         },
         success: function (data) {
-            
+
             if (data.isSuccessful === false) {
                 showToastr('warning', data.message);
             } else {

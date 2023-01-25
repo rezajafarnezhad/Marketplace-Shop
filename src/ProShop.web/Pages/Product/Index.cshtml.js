@@ -156,6 +156,11 @@ $(function () {
 
     $('#product-variants-box-in-show-product-info div').click(function () {
 
+        if ($(this).find('i').hasClass('d-none') === false) {
+            return;
+        }
+
+
         $('#product-variants-box-in-show-product-info div').removeClass('selected-variant-in-show-product-info ');
         $('#product-variants-box-in-show-product-info i').addClass('d-none');
 
@@ -222,6 +227,10 @@ $(function () {
         $('#shop-details-in-page-of-product div').text(selectedShopName);
         $('#ShopNameForInfo').text(selectedShopName);
 
+       
+        var tooltip = bootstrap.Tooltip.getInstance('#product-shopName-tooltip');
+        tooltip.setContent({ '.tooltip-inner': `"این کالا توسط فروشنده آن ${selectedShopName.trim()}، قیمت گذاری شده است."` });
+
         //change Seller Logo
         var selectedLogo = selectedSeller.find('td:first i').length === 0 ? 'img' : 'i';
         if (selectedLogo === 'img') {
@@ -268,6 +277,11 @@ $(function () {
         } else {
             $('#free-delivery-box').addClass('d-none');
         }
+
+
+        $('.latest-product-stock-in-inventory').addClass('d-none');
+        $('.latest-product-stock-in-inventory[variant-value="' + selectedVariantValue + '"]').removeClass('d-none');
+
 
 
     }

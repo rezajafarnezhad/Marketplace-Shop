@@ -11,7 +11,7 @@ public class ShowProductVariantViewModel
 
     [Display(Name ="مقدار تنوع")]
     public string VariantValue { get; set; }
-    public bool VariantIsColor { get; set; }
+    public bool? VariantIsColor { get; set; }
     public string VariantColorCode { get; set; }
 
     [Display(Name = "گارانتی")]

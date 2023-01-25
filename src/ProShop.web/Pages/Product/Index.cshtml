@@ -7,12 +7,24 @@
     var showcommentscount = Model.ProductInfo.productCommentsCount > 0;
     var showquestioncommentscount = false;
     var productFeatures = Model.ProductInfo.ProductFeatures.Where(c => c.FeatureShowNextToProduct).ToList();
+
+
+
     var productVariants = Model.ProductInfo.ProductVariants.OrderBy(c => c.FinalPrice).ToList();
+
+
+    var firstProductVariant = productVariants.FirstOrDefault();
+
+    //var isvariantColor = !string.IsNullOrWhiteSpace(firstProductVariant.VariantColorCode);
+    var isvariantColor = !string.IsNullOrWhiteSpace(Model.ProductInfo.ProductVariants.First().VariantColorCode);
+
+
     var productTitle = Model.ProductInfo.PersianTitle;
     var productCategory = Model.ProductInfo.CategoryTitle;
     var productBrand = Model.ProductInfo.BrandTitleFa;
-    var firstProductVariant = productVariants.First();
-    var isvariantColor = !string.IsNullOrWhiteSpace(firstProductVariant.VariantColorCode);
+
+    var GroupVariants = productVariants.GroupBy(c => c.VariantValue);
+
 
 
     ViewData["Title"] = $"مشخصات قیمت و خرید {productTitle}";
@@ -21,7 +33,6 @@
 
 
 
-    var GroupVariants = productVariants.GroupBy(c => c.VariantValue);
 
 
 }
@@ -58,9 +69,7 @@
             <div class="row">
                 <div class="col-2" id="buttons-next-to-gallery-box">
                     <ul class="list-inline">
-                        <li class="text-danger rem14px">
-                            فروش ویژه
-                        </li>
+
                         <li>
                             @{
                                 var IsFavorite = Model.ProductInfo.isFavorite;
@@ -241,52 +250,58 @@
                         </div>
                     }
 
-                    <div class="mt-4">
-                        <div class="fw-bold rem17px">
-                            @if (isvariantColor)
-                            {
-                                <text> رنگ:</text>
-                            }
-                            else
-                            {
-                                <text> اندازه:</text>
-                            }
-                            <span id="Product-variant-Value" class="persian-numbers">
-                                @firstProductVariant.VariantValue
-                            </span>
-                        </div>
 
-                        <div class="d-flex mt-3" id="product-variants-box-in-show-product-info">
-                            @if (isvariantColor)
-                            {
-                                @foreach (var variant in GroupVariants)
+                    @if (!Model.ProductInfo.IsVariantTypeNull)
+                    {
+                        <div class="mt-4">
+                            <div class="fw-bold rem17px">
+                                @if (isvariantColor)
                                 {
-                                    var currentVariant = variant.First();
-                                    <div data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                 title="@currentVariant.VariantValue"
-                                 class="pointer-cursor rounded-circle d-flex justify-content-center align-items-center">
-                                        <span class="rounded-circle d-flex justify-content-center align-items-center" style="background-color:@currentVariant.VariantColorCode">
-                                            <i class="bi bi-check2 rem21px fw-bold d-none"></i>
-                                        </span>
-                                    </div>
+                                    <text> رنگ:</text>
                                 }
+                                else
+                                {
+                                    <text> اندازه:</text>
+                                }
+                                <span id="Product-variant-Value" class="persian-numbers">
+                                    @firstProductVariant.VariantValue
+                                </span>
+                            </div>
 
-                            }
-                            else
-                            {
-                                <select class="form-select w-auto">
+                            <div class="d-flex mt-3" id="product-variants-box-in-show-product-info">
+                                @if (isvariantColor)
+                                {
                                     @foreach (var variant in GroupVariants)
                                     {
                                         var currentVariant = variant.First();
-                                        <option value="@currentVariant.VariantValue">
-                                            @currentVariant.VariantValue
-                                        </option>
+                                        <div data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                 title="@currentVariant.VariantValue"
+                                 class="pointer-cursor rounded-circle d-flex justify-content-center align-items-center">
+                                            <span class="rounded-circle d-flex justify-content-center align-items-center" style="background-color:@currentVariant.VariantColorCode">
+                                                <i class="bi bi-check2 rem21px fw-bold d-none"></i>
+                                            </span>
+                                        </div>
                                     }
-                                </select>
-                            }
 
+                                }
+                                else
+                                {
+                                    <select class="form-select w-auto">
+                                        @foreach (var variant in GroupVariants)
+                                        {
+                                            var currentVariant = variant.First();
+                                            <option value="@currentVariant.VariantValue">
+                                                @currentVariant.VariantValue
+                                            </option>
+                                        }
+                                    </select>
+                                }
+
+                            </div>
                         </div>
-                    </div>
+                    }
+
+
                     @if (productFeatures.Count > 0)
                     {
                         <div class="mt-4" id="ProductFeaturesBox">
@@ -377,7 +392,7 @@
                             <div class="d-flex justify-content-between align-items-center" id="other-sellers-count-box">
                                 <div class="fw-bold">فروشنده</div>
                                 <div class="text-info rem13px persian-numbers pointer-cursor" id="other-sellers-count-box">
-                                    <span>@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
+                                    <span class="persian-numbers">@(productVariants.Count(c => c.VariantValue == firstProductVariant.VariantValue) - 1)</span>
                                     فروشنده دیگر
                                 </div>
                             </div>
@@ -445,8 +460,8 @@
 
                             <div>
 
-                                <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                   title="این کالا توسط فروشنده آن ، قیمت گذاری شده است."></i>
+                                <i id="product-shopName-tooltip" class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="این کالا توسط فروشنده آن @firstProductVariant.SellerShopName، قیمت گذاری شده است."></i>
 
                             </div>
 
@@ -482,6 +497,28 @@
                         </div>
 
                         <!-- End 5 -->
+
+
+                        <!-- Low Inventory Stock -->
+
+                        @foreach (var variants in GroupVariants)
+                        {
+                            var currentVariant = variants.First();
+                            if (currentVariant.Count == 0)
+                                continue;
+
+                            <div variant-value="@currentVariant.VariantValue"
+                            class="latest-product-stock-in-inventory text-danger mt-3 fw-bold rem13px  @(firstProductVariant.VariantValue == currentVariant.VariantValue ? string.Empty :"d-none")">
+                                تنها
+                                <span class="persian-numbers">@currentVariant.Count</span>
+                                عدد در انبار باقی مانده
+                                !
+                            </div>
+                        }
+
+                        <!-- End Low Inventory Stock -->
+
+
                         <!-- 6 -->
                         @foreach (var variants in GroupVariants)
                         {

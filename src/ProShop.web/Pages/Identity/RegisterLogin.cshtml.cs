@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
@@ -16,11 +17,12 @@ public class RegisterLoginModel : PageBase
 
     private readonly SiteSettings _siteSettings;
     private readonly IApplicationUserManager _applicationUserManager;
+    private readonly IApplicationSigninManager _applicationSigninManager;
     private readonly ISmsSender _smsSender;
     private readonly ILogger<RegisterLoginModel> _logger;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IUnitOfWork _unitOfWork;
-    public RegisterLoginModel(IOptionsMonitor<SiteSettings> siteSettings, IApplicationUserManager applicationUserManager, ILogger<RegisterLoginModel> logger, ISmsSender smsSender, IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork)
+    public RegisterLoginModel(IOptionsMonitor<SiteSettings> siteSettings, IApplicationUserManager applicationUserManager, ILogger<RegisterLoginModel> logger, ISmsSender smsSender, IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork, IApplicationSigninManager applicationSigninManager)
     {
         _applicationUserManager = applicationUserManager;
         _logger = logger;
@@ -28,6 +30,7 @@ public class RegisterLoginModel : PageBase
         _webHostEnvironment = webHostEnvironment;
         _unitOfWork = unitOfWork;
         _siteSettings = siteSettings.CurrentValue;
+        _applicationSigninManager = applicationSigninManager;
     }
 
     public RegisterLoginViewModel RegisterLogin { get; set; }
@@ -91,6 +94,23 @@ public class RegisterLoginModel : PageBase
         }
 
         return RedirectToPage("./LoginWithPhoneNumber", new { phoneNumber = registerLogin.PhoneNumberOrEmail });
+    }
+
+    public async Task<IActionResult> OnPostLogOut()
+    {
+        var user = User.Identity is { IsAuthenticated: true }
+
+            ? await _applicationUserManager.FindByNameAsync(User.Identity.Name)
+            : null;
+
+        if (user != null)
+        {
+            await _applicationUserManager.UpdateSecurityStampAsync(user);
+        }
+
+        await _applicationSigninManager.SignOutAsync();
+
+        return RedirectToPage("../Index");
     }
 }
 

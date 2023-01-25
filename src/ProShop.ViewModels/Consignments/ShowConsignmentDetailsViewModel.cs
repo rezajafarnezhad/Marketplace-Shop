@@ -39,7 +39,7 @@ public class ShowConsignmentItemsViewModel
 
     public string ProductVariantVariantColorCode { get; set; }
 
-    public bool ProductVariantVariantIsColor { get; set; }
+    public bool? ProductVariantVariantIsColor { get; set; }
 
     [Display(Name = "قیمت")]
     public int ProductVariantPrice { get; set; }

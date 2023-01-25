@@ -43,7 +43,7 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
         var sellerId = await _sellerService.GetSellerId();
         return await _mapper.ProjectTo<ShowProductVariantInCreateConsignmentViewModel>(_productVariants.Where(c => c.SellerId == sellerId)).SingleOrDefaultAsync(c => c.VariantCode == VariantCode);
     }
-    public async Task<bool> existsProductVariant(long productId, long garanteeId, long variantId, long sellerId)
+    public async Task<bool> existsProductVariant(long productId, long garanteeId, long? variantId, long sellerId)
     {
         return await _productVariants.AnyAsync(c => c.ProductId == productId && c.GaranteeId == garanteeId && c.VariantId == variantId && c.SellerId == sellerId);
     }
@@ -99,5 +99,16 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
 
         return await _productVariants.Where(c => c.SellerId == sellerId).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
     }
+
+    public async Task<List<long>> GetAddedVariantsToProductVariants(List<long> VariantsIds, long categoryId)
+    {
+        return await _productVariants
+            .Where(c=>c.Product.MainCategoryId == categoryId)
+            .Where(c => c.VariantId != null)
+            .Where(c => VariantsIds.Contains(c.VariantId.Value)).GroupBy(c=>c.VariantId)
+            .Select(c => c.First().VariantId.Value)
+            .ToListAsync();
+    }
+
 
 }

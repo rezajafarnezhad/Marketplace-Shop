@@ -14,6 +14,7 @@ public class EditCategoryVariantViewModel
     public long CategoryId { get; set; }
     public List<ShowVariantInEditCategoryVariantViewModel> Variants { get; set; }
     public List<long> SelectedVariants { get; set; } = new();
+    public List<long> AddedVariantsToProductVariant { get; set; } = new();
 
 
 }

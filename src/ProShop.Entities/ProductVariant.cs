@@ -5,7 +5,7 @@ public class ProductVariant: EntityBase, IAuditableEntity
 
     public long ProductId { get; set; }
     public long SellerId { get; set; }
-    public long VariantId { get; set; }
+    public long? VariantId { get; set; }
     public long GaranteeId { get; set; }
     public int Price { get; set; }
     public int VariantCode { get; set; }

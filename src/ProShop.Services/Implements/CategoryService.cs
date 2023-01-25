@@ -133,7 +133,7 @@ public class CategoryService : GenericService<Category>, ICategoryService
             CanAddFakeProduct = c.CanAddFakeProduct,
             SelectedPicture = c.Picture,
             IsVariantColor=c.IsVariantColor,
-            CanVariantTypeChange = c.categoryVarieants.Any()?false:true,
+            CanVariantTypeChange = c.categoryVarieants.Any()?false:(!c.HasVariant),
 
         }).SingleOrDefaultAsync(c => c.Id == Id);
     }

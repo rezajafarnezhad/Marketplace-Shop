@@ -5,6 +5,7 @@ namespace ProShop.ViewModels.Product;
 public class ShowProductInfoViewModel
 {
     public long Id { get; set; }
+    public bool IsVariantTypeNull { get; set; }
     public int ProductCode { get; set; }
     public string Slug { get; set; }
     public string PersianTitle { get; set; }
@@ -32,8 +33,8 @@ public class ShowProductInfoViewModel
 
     public List<ProductMediaForProductInfoViewModel> ProductMedia { get; set; }
     public List<ProductCategoryForProductInfoViewModel> productCategories { get; set; }
-    public List<ProductFeatureForProductInfoViewModel> ProductFeatures { get; set; }
-    public List<ProductVariantForProductInfoViewModel> ProductVariants { get; set; }
+    public List<ProductFeatureForProductInfoViewModel> ProductFeatures { get; set; } = new();
+    public List<ProductVariantForProductInfoViewModel> ProductVariants { get; set; } = new();
 
 }
 
@@ -62,7 +63,7 @@ public class ProductVariantForProductInfoViewModel
 {
     public string VariantValue { get; set; }
     public string VariantColorCode { get; set; }
-    public bool VariantIsColor { get; set; }
+    public bool? VariantIsColor { get; set; }
     public int Price { get; set; }
     public int FinalPrice { get; set; }
     public byte? offPercentage { get; set; }
@@ -71,11 +72,12 @@ public class ProductVariantForProductInfoViewModel
     public string GaranteeFullTitle { get; set; }
     public string EndDateTime { get; set; }
     public bool IsDiscountActive { get; set; }
+    public byte Count { get; set; }
     public byte Score
     {
         get
         {
-            var result = FinalPrice / 10000;
+            var result = Price / 10000;
             if (result <= 1)
                 return 1;
             if (result >= 150)

@@ -14,15 +14,19 @@ public class AddVariantViewModel
     public string Slug { get; set; }
 
     public int ProductCode { get; set; }
+    
+    
     [Display(Name = "تنوع")]
     [Range(1, long.MaxValue, ErrorMessage = AttributesErrorMessages.RequiredMessage)]
-
     public long VariantId { get; set; }
 
 
     [Display(Name = "گارانتی")]
+    [Required(ErrorMessage =AttributesErrorMessages.RequiredMessage)]
     [Range(1, long.MaxValue, ErrorMessage = AttributesErrorMessages.RegularExpressionMessage)]
     public long GaranteeId { get; set; }
+
+
     public List<SelectListItem> Garantees { get; set; } = new();
 
 
@@ -35,7 +39,7 @@ public class AddVariantViewModel
 
     public string CategoryTitle { get; set; }
 
-    public bool CategoryIsVariantColor { get; set; }
+    public bool? CategoryIsVariantColor { get; set; }
 
     public string BrandFullTitle { get; set; }
 
@@ -50,6 +54,6 @@ public class ShowCategoryVariantInAddVariantViewModel
 {
     public long VariantId { get; set; }
     public string VariantValue { get; set; }
-    public bool VariantIsColor { get; set; }
+    public bool? VariantIsColor { get; set; }
     public string VariantColorCode { get; set; }
 }

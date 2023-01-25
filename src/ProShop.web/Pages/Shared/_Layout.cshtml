@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-lg-4 ms-auto text-end d-flex justify-content-center justify-content-md-end align-items-center">
-                <a asp-page="/Identity/RegisterLogin" class="btn btn-light">
+                <a Condition="!User.Identity.IsAuthenticated" asp-page="/Identity/RegisterLogin" class="btn btn-light me-1">
                     <i class="bi bi-box-arrow-in-left rem1and3"></i>
                     &nbsp;
                     <span>
@@ -46,9 +46,9 @@
                         <span class="d-none d-lg-inline-block">به حساب کاربری</span>
                     </span>
                 </a>
-                <!-- <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle dropstart" type="button" id="profile-dropdown-menu"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                <div Condition="User.Identity.IsAuthenticated" class="dropdown">
+                    <button class="btn btn-light dropdown-toggle dropstart me-1" type="button" id="profile-dropdown-menu"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person rem1and3"></i>
                     </button>
                     <ul class="dropdown-menu custom-box-shadow" aria-labelledby="profile-dropdown-menu"
@@ -112,13 +112,16 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bi bi-box-arrow-right"></i>
-                                خروج از حساب کاربری
-                            </a>
+                            <form method="post" asp-page="/Identity/RegisterLogin" asp-page-handler="LogOut">
+                                <button class="dropdown-item" type="submit">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    خروج از حساب کاربری
+                                </button>
+                            </form>
+
                         </li>
                     </ul>
-                </div> -->
+                </div>
 
                 <span style="height: 26px; border-right: 1px solid #dad4d4;"></span>
                 <div class="dropdown">
@@ -140,15 +143,15 @@
 
     <vc:main-menu></vc:main-menu>
 
-@RenderBody()
+    @RenderBody()
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/toastr.js/toastr.min.js"></script>
-@await RenderSectionAsync("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main-scripts.js" asp-append-version="true"></script>
-@await RenderSectionAsync("CustomScripts", false)
+    @await RenderSectionAsync("CustomScripts", false)
 </body>
 
 </html>

@@ -103,15 +103,15 @@ public class MappingProfile : Profile
            .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Id))
            .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName))
            .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.PersianTitle))
-           .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants.Where(c=>c.Variant.IsConfirmed)))
+           .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants.Where(c => c.Variant.IsConfirmed)))
            .ForMember(dest => dest.CommissionPercentage, options =>
              options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
 
 
         this.CreateMap<AddVariantViewModel, Entities.ProductVariant>();
         this.CreateMap<Entities.ProductVariant, ShowProductVariantViewModel>()
-            .ForMember(dest=>dest.StartDateTime, option=>option.MapFrom(src=> src.StartDateTime !=null ? src.StartDateTime.Value.ToLongPersianDate() :null))
-            .ForMember(dest=>dest.EndDateTime, option=>option.MapFrom(src=> src.EndDateTime != null ? src.EndDateTime.Value.ToLongPersianDate() :null))
+            .ForMember(dest => dest.StartDateTime, option => option.MapFrom(src => src.StartDateTime != null ? src.StartDateTime.Value.ToLongPersianDate() : null))
+            .ForMember(dest => dest.EndDateTime, option => option.MapFrom(src => src.EndDateTime != null ? src.EndDateTime.Value.ToLongPersianDate() : null))
              .ForMember(dest => dest.GatanteeFullTitle, options => options.MapFrom(src => src.Garantee.FullTitle));
         this.CreateMap<Entities.ProductVariant, ShowProductVariantInCreateConsignmentViewModel>();
         this.CreateMap<Entities.ProductVariant, GetProductVariantInCreateConsignmentViewModel>();
@@ -140,6 +140,7 @@ public class MappingProfile : Profile
         this.CreateMap<Entities.ConsignmentItem, ShowConsignmentItemsViewModel>();
         this.CreateMap<AddProductStockByConsignmentViewModel, Entities.ProductStock>();
 
+
         var userid = 0;
         this.CreateMap<Entities.Product, ShowProductInfoViewModel>()
 
@@ -159,19 +160,19 @@ public class MappingProfile : Profile
                 options =>
                     options.MapFrom(src => src.productComments.LongCount(c => c.IsBuyer == true)))
 
-         
+
             .ForMember(dest => dest.ProductVariants,
                 options =>
                     options.MapFrom(src => src.ProductVariants.Where(c => c.Count > 0)))
 
+            .ForMember(dest => dest.IsVariantTypeNull,
+                options =>
+                    options.MapFrom(src => src.Category.IsVariantColor == null))
 
             .ForMember(dest => dest.isFavorite,
                 options =>
-                    options.MapFrom(src => userid !=0? src.UserProductFavorites.Any(c => c.UserId == userid):false));
+                    options.MapFrom(src => userid != 0 ? src.UserProductFavorites.Any(c => c.UserId == userid) : false));
 
-
-
-            ;
 
 
 
@@ -187,6 +188,14 @@ public class MappingProfile : Profile
                     options.MapFrom(src =>
                         src.EndDateTime != null ? src.EndDateTime.Value.ToString("yyyy/MM/dd HH:mm:ss") : null
                     ))
+
+            .ForMember(dest => dest.Count,
+                options =>
+                    options.MapFrom(src =>
+                        src.Count > 5 ? (byte)0 :(byte)src.Count
+                    ))
+
+
             .ForMember(dest => dest.IsDiscountActive,
                 options =>
                     options.MapFrom(src =>
@@ -194,8 +203,8 @@ public class MappingProfile : Profile
                     ));
 
         this.CreateMap<ProductVariant, EditProductVariantViewModel>()
-            
-           .ForMember(dest=> dest.MainPicture, options => options.MapFrom(src=>src.Product.ProductMedia.First().FileName))
+          .ForMember(dest => dest.CategoryIsVariantColor, options => options.MapFrom(src => src.Product.Category.IsVariantColor))
+           .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.Product.ProductMedia.First().FileName))
            .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.Product.PersianTitle))
            .ForMember(dest => dest.IsDiscountActive, options => options.MapFrom(src => src.offPercentage != null && (src.StartDateTime <= now && src.EndDateTime >= now)))
            .ForMember(dest => dest.CommissionPercentage, options =>
@@ -212,8 +221,9 @@ public class MappingProfile : Profile
 
         this.CreateMap<ProductVariant, AddEditDiscountViewModel>()
 
-           .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.Product.ProductMedia.First().FileName))
+          .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.Product.ProductMedia.First().FileName))
           .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.Product.PersianTitle))
+          .ForMember(dest => dest.CategoryIsVariantColor, options => options.MapFrom(src => src.Product.Category.IsVariantColor))
           .ForMember(dest => dest.CommissionPercentage, options =>
             options.MapFrom(src => src.Product.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.Product.BrandId).CommissionPercentage));
         ;

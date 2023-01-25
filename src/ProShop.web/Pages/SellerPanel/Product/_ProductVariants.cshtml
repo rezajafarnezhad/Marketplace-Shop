@@ -33,15 +33,19 @@
 
                             <td class="table-success">
 
-                                @Item.VariantValue
-                                @if (Item.VariantIsColor)
+                                @(Item.VariantValue ?? "بدون تنوع")
+                                @if (Item.VariantIsColor != null)
                                 {
-                                    <span class="rounded float-inline-start" style="background: @Item.VariantColorCode">
-                                        &nbsp;
-                                        &nbsp;
-                                        &nbsp;
-                                    </span>
+                                    @if (Item.VariantIsColor.Value)
+                                    {
+                                        <span class="rounded float-inline-start" style="background: @Item.VariantColorCode">
+                                            &nbsp;
+                                            &nbsp;
+                                            &nbsp;
+                                        </span>
+                                    }
                                 }
+                              
 
                             </td>
                             <td class="table-success">@Item.GatanteeFullTitle</td>
@@ -71,8 +75,8 @@
                                     <span class="persian-numbers">
                                         @Item.OffPrice.Value.ToString("N0")  تومان
                                     </span>
-                                   
-                                    }
+
+                                }
                                 else
                                 {
                                     <p>-</p>
@@ -85,7 +89,7 @@
                                 @if (Item.StartDateTime != null)
                                 {
                                     <span>
-                                        @Item.StartDateTime 
+                                        @Item.StartDateTime
                                     </span>
 
                                 }
@@ -116,7 +120,7 @@
 
                                 <a pridcutVariantId="@Item.Id" class="btn buttonDetails get-html-with-ajax" functionNameToCallOnClick="EditAddDiscountProductVariant">
                                     ایجاد تخفیف / ویرایش
-                               </a>
+                                </a>
 
                             </td>
                         </tr>

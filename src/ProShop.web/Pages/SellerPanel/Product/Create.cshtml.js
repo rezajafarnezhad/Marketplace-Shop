@@ -1,5 +1,4 @@
-﻿
-activatingModalForm();
+﻿activatingModalForm();
 function getCategories() {
 
     GetHtmlWithAjax(`${location.pathname}?handler=GetCategories`, null, 'showCategories', null);
@@ -214,7 +213,7 @@ function emptyAllInputsAndShowOtherTabs() {
 
 function undoSelectedCategoryButton() {
 
-    $(`#product-category button`).removeClass("active");
+    $('#product-category button').removeClass("active");
     $(`#product-category button[category-id="${categoryId}"]`).addClass("active");
 
 }

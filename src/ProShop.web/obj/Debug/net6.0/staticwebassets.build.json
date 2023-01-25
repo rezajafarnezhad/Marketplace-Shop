@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fNnzqGSSJfx/lO43dTwBZ0cfAGLaC25/gBuc0KtTIGU=",
+  "Hash": "HU6wd/3z/onD3UDxYzq3Fg6i+3OV/ydXQv4T4R8vDeQ=",
   "Source": "ProShop.web",
   "BasePath": "_content/ProShop.web",
   "Mode": "Default",
@@ -1445,6 +1445,23 @@
       "OriginalItemSpec": "wwwroot\\images\\Products\\1245d6b2809244edbaec071f63d8b494.jpg"
     },
     {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\1291da8bb3c048999d085e363ea40881.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Products/1291da8bb3c048999d085e363ea40881.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Products\\1291da8bb3c048999d085e363ea40881.jpg"
+    },
+    {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\17323c426bc746a0b58b97795eb343cb.jpg",
       "SourceId": "ProShop.web",
       "SourceType": "Discovered",
@@ -2259,6 +2276,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Products\\f52a12b73b9f4bd1a8142b8e335f9159.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\f5839cb17034468f84a86f733005c921.jpg",
+      "SourceId": "ProShop.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\",
+      "BasePath": "_content/ProShop.web",
+      "RelativePath": "images/Products/f5839cb17034468f84a86f733005c921.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Products\\f5839cb17034468f84a86f733005c921.jpg"
     },
     {
       "Identity": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Products\\fb76db624a8a41919a879ae571d8f560.jpg",

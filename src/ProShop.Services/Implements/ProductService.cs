@@ -226,7 +226,7 @@ public class ProductService : GenericService<Product>, IProductService
         }
 
         return _products.AsNoTracking().AsSplitQuery().ProjectTo<ShowProductInfoViewModel>
-            (_mapper.ConfigurationProvider, new { userid = userid , now = DateTime.Now }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
+            (_mapper.ConfigurationProvider, new { userid = userid, now = DateTime.Now }).SingleOrDefaultAsync(c => c.ProductCode == productCode);
 
     }
 
@@ -236,6 +236,14 @@ public class ProductService : GenericService<Product>, IProductService
             .SingleOrDefaultAsync(c => c.ProductShortLink.Link == productShortLink);
 
         return (data.ProductCode, data.Slug);
+
+
+    }
+
+
+    public async Task<List<Entities.Product>> GetProductsForChangeStatus(List<long> Ids)
+    {
+        return await _products.Where(c => Ids.Contains(c.Id)).ToListAsync();
 
 
     }

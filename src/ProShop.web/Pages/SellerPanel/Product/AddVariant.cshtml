@@ -29,8 +29,18 @@
                                 @Model.Variant.CategoryTitle
                             </div>
                             <div class="col-md-3">
+
+                                @{
+                                    var variantType = "بدون تنوع";
+                                    if (Model.Variant.CategoryIsVariantColor != null)
+                                    {
+                                        variantType = Model.Variant.CategoryIsVariantColor.Value ? "رنگ" : "سایز";
+                                    }
+
+                                }
+
                                 تنوع مجاز این کالا:
-                                @(Model.Variant.CategoryIsVariantColor ? "رنگ" : "سایز")
+                                @variantType
                             </div>
                             <div class="col-md-3">
                                 برند کالا:
@@ -46,7 +56,17 @@
             </div>
             <form method="post" class="public-ajax-form" call-function-in-the-end="addProductVariantFunc">
                 <input type="hidden" asp-for="Variant.ProductId" />
-                <input type="hidden" asp-for="Variant.VariantId" />
+                @if (Model.Variant.CategoryIsVariantColor is null)
+                {
+                    <input type="hidden" asp-for="Variant.VariantId" value="1" />
+                }
+                else
+                {
+                    <input type="hidden" asp-for="Variant.VariantId" />
+                }
+
+
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="row mt-5">
                     <div div class="col-lg-6 my-2">
                         <label class="d-flex justify-content-between form-label">
@@ -67,41 +87,45 @@
 
                         <span asp-validation-for="Variant.GaranteeId" class="span-error-message"></span>
                     </div>
-                   
-                    <div class="col-lg-6 my-2" id="variant-box">
-                        <label class="d-flex justify-content-between form-label">
-                            <span>
-                                @Html.DisplayNameFor(c=>c.Variant.VariantId)
-                            </span>
-                            <a id="request-new-variant" asp-page-handler="RequestForAddVariant" class="text-info border-bottom-dashed show-modal-form-button">
-                                درخواست
-                                سایز جدید
-                            </a>
-                        </label>
-                        <span asp-validation-for="Variant.VariantId" class="span-error-message"></span>
-                        <div class="border border-1 rounded mt-2 p-2" id="all-variant-box">
 
-                            @foreach (var item in Model.Variant.Variants)
-                            {
-                                @if (item.VariantId != 0)
+                    @if (Model.Variant.CategoryIsVariantColor != null)
+                    {
+                        <div class="col-lg-6 my-2" id="variant-box">
+                            <label class="d-flex justify-content-between form-label">
+                                <span>
+                                    @Html.DisplayNameFor(c=>c.Variant.VariantId)
+                                </span>
+                                <a id="request-new-variant" asp-page-handler="RequestForAddVariant" class="text-info border-bottom-dashed show-modal-form-button">
+                                    درخواست
+                                    سایز جدید
+                                </a>
+                            </label>
+                            <span asp-validation-for="Variant.VariantId" class="span-error-message"></span>
+                            <div class="border border-1 rounded mt-2 p-2" id="all-variant-box">
+
+                                @foreach (var item in Model.Variant.Variants)
                                 {
-                                    <button veariant-id="@item.VariantId" type="button" class="p-2 badge rounded-pill bg-dark border-0 variant-Item-button">
-                                        @item.VariantValue
-                                        @if (item.VariantIsColor)
-                                        {
-                                            <span class="rounded" style="background: @item.VariantColorCode">
-                                                &nbsp;
-                                                &nbsp;
-                                                &nbsp;
-                                            </span>
-                                        }
-                                    </button>
-                                }
-                              
+                                    @if (item.VariantId != 0)
+                                    {
+                                        <button veariant-id="@item.VariantId" type="button" class="p-2 badge rounded-pill bg-dark border-0 variant-Item-button">
+                                            @item.VariantValue
+                                            @if (item.VariantIsColor.Value)
+                                            {
+                                                <span class="rounded" style="background: @item.VariantColorCode">
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                </span>
+                                            }
+                                        </button>
+                                    }
 
-                            }
+
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
+
                     <div class="my-2">
                         <label class="d-flex justify-content-between form-label" asp-for="Variant.Price">
                         </label>

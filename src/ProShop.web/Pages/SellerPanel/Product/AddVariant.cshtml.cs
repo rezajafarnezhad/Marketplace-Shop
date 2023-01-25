@@ -64,12 +64,21 @@ public class AddVariantModel : SellerPanelBase
         var userId = User.Identity.GetLoggedUserId();
         var sellerId = await _sellerService.GetSellerId(userId);
 
-        if(!await _VariantService.checkProductAndVariantTypeForAddVariant(Variant.ProductId , Variant.VariantId))
+        var checkInputs = await _VariantService.checkProductAndVariantTypeForAddVariant(Variant.ProductId, Variant.VariantId);
+
+        if (!checkInputs.result)
         {
             return Json(new JsonResultOperation(false,PublicConstantStrings.RecordNotFoundErrorMessage));
         }
 
         var ProductVaraintToAdd = _mapper.Map<Entities.ProductVariant>(Variant);
+        if (checkInputs.isVariantNull)
+        {
+            ProductVaraintToAdd.VariantId =null;
+
+        }
+
+
         ProductVaraintToAdd.SellerId = sellerId;
         ProductVaraintToAdd.VariantCode = await _productVariantService.GetVariantCodeForCreateProductVariant();
 
@@ -78,6 +87,15 @@ public class AddVariantModel : SellerPanelBase
             return Json(new JsonResultOperation(false, "این مشخصات قبلا برای این محصول ثبت شده"));
         }
         await _productVariantService.AddAsync(ProductVaraintToAdd);
+
+
+        var product = await _productService.FindByIdWithIncludesAsync(Variant.ProductId,nameof(Entities.Product.Category));
+        if (product.ProductStockStatustus == Entities.ProductStockStatus.New)
+            product.ProductStockStatustus = Entities.ProductStockStatus.Unavailable;
+
+
+        product.Category.HasVariant = true;
+
         await unitOfWork.SaveChangesAsync();
 
 

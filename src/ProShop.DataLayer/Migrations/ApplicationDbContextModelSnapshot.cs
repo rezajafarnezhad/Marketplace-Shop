@@ -143,6 +143,9 @@ namespace ProShop.DataLayer.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
+                    b.Property<bool>("HasVariant")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1149,6 +1152,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<long>("ProductShortLinkId")
                         .HasColumnType("bigint");
 
+                    b.Property<byte>("ProductStockStatustus")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("RejectReason")
                         .HasColumnType("nvarchar(max)");
 
@@ -1612,7 +1618,7 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<int>("VariantCode")
                         .HasColumnType("int");
 
-                    b.Property<long>("VariantId")
+                    b.Property<long?>("VariantId")
                         .HasColumnType("bigint");
 
                     b.Property<byte?>("offPercentage")
@@ -1630,7 +1636,8 @@ namespace ProShop.DataLayer.Migrations
                     b.HasIndex("VariantId");
 
                     b.HasIndex("SellerId", "ProductId", "VariantId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[VariantId] IS NOT NULL");
 
                     b.ToTable("ProductVariant", (string)null);
                 });
@@ -2289,9 +2296,7 @@ namespace ProShop.DataLayer.Migrations
 
                     b.HasOne("ProShop.Entities.Variant", "Variant")
                         .WithMany()
-                        .HasForeignKey("VariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VariantId");
 
                     b.Navigation("Garantee");
 

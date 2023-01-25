@@ -6,17 +6,21 @@
     <td>@Model.ProductPersianTitle</td>
     <td>
 
-        @Model.VariantValue
-        @if (Model.VariantIsColor)
+        @(Model.VariantValue??"بدون تنوع")
+        @if (Model.VariantIsColor != null)
         {
-            <span class="rounded float-inline-start" style="background: @Model.VariantColorCode">
-                &nbsp;
-                &nbsp;
-                &nbsp;
-            </span>
+            @if (Model.VariantIsColor.Value)
+            {
+                <span class="rounded float-inline-start" style="background: @Model.VariantColorCode">
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                </span>
+            }
         }
 
     </td>
+
     <td>
         @Model.GaranteeFullTitle
     </td>

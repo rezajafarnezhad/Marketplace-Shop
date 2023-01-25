@@ -66,15 +66,18 @@
                         <td class="table-primary">@consignmentItem.ProductVariantProductId</td>
                         <td class="table-primary">@consignmentItem.ProductVariantProductPersianTitle</td>
                         <td class="table-primary">
-                            @consignmentItem.ProductVariantVariantValue
-                            @if (consignmentItem.ProductVariantVariantIsColor)
-                            {
-                                <span class="rounded float-inline-start" style="background: @consignmentItem.ProductVariantVariantColorCode">
-                                    &nbsp;
-                                    &nbsp;
-                                    &nbsp;
-                                </span>
-                            }
+                            @(consignmentItem.ProductVariantVariantValue??"بدون تنوع")
+                           @if(consignmentItem.ProductVariantVariantIsColor !=null)
+                           {
+                                @if (consignmentItem.ProductVariantVariantIsColor.Value)
+                                {
+                                    <span class="rounded float-inline-start" style="background: @consignmentItem.ProductVariantVariantColorCode">
+                                        &nbsp;
+                                        &nbsp;
+                                        &nbsp;
+                                    </span>
+                                }
+                           }
                         </td>
                         <td class="table-primary">
                             @consignmentItem.ProductVariantPrice.ToString("N0")
