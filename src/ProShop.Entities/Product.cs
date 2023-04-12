@@ -25,6 +25,7 @@ public class Product : EntityBase , IAuditableEntity
 
     public ProductStatus Status { get; set; }
     public ProductStockStatus ProductStockStatustus { get; set; }
+    public ProductDimensions Dimensions { get; set; }
 
 
     public ICollection<ProductCategory> productCategories { get; set; } = new List<ProductCategory>();
@@ -79,4 +80,16 @@ public enum ProductStockStatus : byte
     Unavailable
 
 
+}
+
+public enum ProductDimensions : byte
+{
+    [Display(Name = "عادی")]
+    Normal,
+
+    [Display(Name = "کالا های بزرگ و سنگین")]
+    Heavy,
+
+    [Display(Name = "کالا های فوق سنگین")]
+    UltraHeavy
 }

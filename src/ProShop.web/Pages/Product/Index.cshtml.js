@@ -4,7 +4,7 @@ function functionNameToCallIntheEnd() {
     var copybtnSelector = $('#copy-product-link-button');
     var btnhtml = copybtnSelector.html();
     copybtnSelector.html('<i class="bi bi-clipboard-check rem20px"></i> کپی شد');
-    setInterval(function () {
+    setTimeout(function () {
 
         copybtnSelector.html(btnhtml);
     }, 2000);
@@ -12,6 +12,19 @@ function functionNameToCallIntheEnd() {
 
 
 $(function () {
+
+    var allprodcutCountInCart = $('#cart-dropdown-body div:first').attr('all-product-count-in-cart');
+    $('#cart-count-text').html(allprodcutCountInCart.toPersinaDigit());
+    $(document).on('click', '.increaseProductVariantInCartButton, .decreaseProductVariantInCartButton, .empty-variants-in-cart', function () {
+
+        if ($(this).parents('span').hasClass('text-custom-grey')) {
+            return;
+        }
+
+        $(this).parent().submit();
+
+    });
+
 
 
     $('.count-down-timer-in-other-variants').each(function () {
@@ -23,16 +36,16 @@ $(function () {
 
     $('.count-down-timer').each(function () {
         var currentEl = $(this);
-        var variantValue = currentEl.parents().attr('variant-value'); 
+        var variantValue = currentEl.parents().attr('variant-value');
         var selectorToShow = $('.product-price-in-single-page-of-product[variant-value="' + variantValue + '"]');
         var selectorToHide = currentEl.parent();
-        var selectorToHide2 = $('.product-final-price-in-single-page-of-product[variant-value="' + variantValue +'"]');
+        var selectorToHide2 = $('.product-final-price-in-single-page-of-product[variant-value="' + variantValue + '"]');
         countDownTimer(currentEl, selectorToShow, selectorToHide, selectorToHide2);
     });
 
- 
 
-   
+
+
 
     function countDownTimerFunction(selector, selectorToShow, selectorToHide, selectorToHide2, countDownDate) {
         // Get today's date and time
@@ -59,7 +72,7 @@ $(function () {
 
         // If the count down is finished, write some text
         if (distance < 0) {
-            selector.parents('tr').attr('is-discount-active','false');
+            selector.parents('tr').attr('is-discount-active', 'false');
             selectorToShow.removeClass('d-none');
             selectorToHide.addClass('d-none');
             if (selectorToHide2) {
@@ -161,15 +174,20 @@ $(function () {
         }
 
 
-        $('#product-variants-box-in-show-product-info div').removeClass('selected-variant-in-show-product-info ');
+        $('#product-variants-box-in-show-product-info div').removeClass('selected-variant-in-show-product-info');
         $('#product-variants-box-in-show-product-info i').addClass('d-none');
 
         $(this).find('i').removeClass('d-none');
-        $(this).addClass('selected-variant-in-show-product-info ');
+        $(this).addClass('selected-variant-in-show-product-info');
 
 
         var selectedVariantValue = $(this).attr('aria-label');
-        changeVariant(selectedVariantValue);
+       
+        var selectedProductVariantId = $(this).attr('product-variant-id');
+
+        changeVariant(selectedVariantValue, selectedProductVariantId);
+
+
 
     });
 
@@ -179,13 +197,14 @@ $(function () {
     $('#product-variants-box-in-show-product-info select').change(function () {
 
         var selectedVariantValue = this.value;
-        changeVariant(selectedVariantValue);
+        var selectedProductVariantId = $(this).find(':selected').attr('product-variant-id');
+        changeVariant(selectedVariantValue, selectedProductVariantId);
 
     });
 
 
 
-    function changeVariant(selectedVariantValue) {
+    function changeVariant(selectedVariantValue, selectedProductVariantId) {
 
         $('.other-sellers-table').addClass('d-none');
 
@@ -227,7 +246,7 @@ $(function () {
         $('#shop-details-in-page-of-product div').text(selectedShopName);
         $('#ShopNameForInfo').text(selectedShopName);
 
-       
+
         var tooltip = bootstrap.Tooltip.getInstance('#product-shopName-tooltip');
         tooltip.setContent({ '.tooltip-inner': `"این کالا توسط فروشنده آن ${selectedShopName.trim()}، قیمت گذاری شده است."` });
 
@@ -284,6 +303,29 @@ $(function () {
 
 
 
+        //Change cart Count
+
+        $('#product-info-left-side-box .product-variant-in-cart-section').addClass('d-none');
+
+        $('.product-variant-in-cart-section[variant-id="' + selectedProductVariantId + '"]').addClass('d-none');
+
+        var cartSectionEl = $('#product-info-left-side-box .product-variant-in-cart-section[variant-id="' + selectedProductVariantId + '"]');
+
+
+        if (cartSectionEl.find('.productvariantcountincart span:first').text().trim() !== '۰') {
+            cartSectionEl.removeClass('d-none');
+            $('.product-variant-in-cart-section[variant-id="' + selectedProductVariantId + '"]').removeClass('d-none');
+
+        }
+        $('#product-info-left-side-box .add-product-variant-to-cart').addClass('d-none');
+        $('.add-product-variant-to-cart[variant-id="' + selectedProductVariantId + '"]').addClass('d-none');
+
+        //change buttonCart
+
+       // $('#product-info-left-side-box .add-product-variant-to-cart').addClass('d-none');
+        if (cartSectionEl.find('.productvariantcountincart span:first').text().trim() === '۰') {
+            $('.add-product-variant-to-cart[varaint-id="' + selectedProductVariantId + '"]').removeClass('d-none');
+        }
     }
 
 });
@@ -308,4 +350,75 @@ function addFavoriteFunc() {
         $('#AddFavoritebtn i:first').removeClass('d-none')
         $('#AddFavoritebtn i:last').addClass('d-none')
     }
+}
+
+
+function addProductVariantToCart(message, data) {
+
+    var addProductVariantToCartEl = $('.add-product-variant-to-cart[varaint-id="' + data.productvariantid + '"]');
+    var currentSectionEl = $('.product-variant-in-cart-section[variant-id="' + data.productvariantid + '"]');
+
+   
+
+    currentSectionEl.find('.productvariantcountincart span:first').html(data.count.toString().toPersinaDigit());
+
+
+    if (data.iscartfull) {
+
+        currentSectionEl.find('.productvariantcountincart span:last').removeClass('d-none');
+        currentSectionEl.find('.increaseProductVariantInCartButton').parents('span').addClass('text-custom-grey');
+        currentSectionEl.find('.increaseProductVariantInCartButton').parents('span').removeClass('pointer-cursor');
+
+    } else {
+        currentSectionEl.find('.productvariantcountincart span:last').addClass('d-none');
+        currentSectionEl.find('.increaseProductVariantInCartButton').parents('span').removeClass('text-custom-grey');
+        currentSectionEl.find('.increaseProductVariantInCartButton').parents('span').addClass('pointer-cursor');
+    }
+
+    debugger;
+    var selectedProductVariantId = 0;
+    var selectedColor = parseInt($('#product-variants-box-in-show-product-info div i').not('[class*="d-none"]').parents('div').attr('product-variant-id'));
+    var selectedSize = parseInt($('#product-variants-box-in-show-product-info select').find(':selected').attr('product-variant-id'));
+    if (selectedColor || selectedSize) {
+        selectedProductVariantId = parseInt(selectedColor || selectedSize);
+    } else {
+        selectedProductVariantId = data.selectedProductVariantId
+    }
+
+
+    if (selectedProductVariantId === data.productvariantid) {
+        currentSectionEl.addClass('d-none');
+        addProductVariantToCartEl.addClass('d-none');
+
+        if (data.count > 0) {
+            currentSectionEl.removeClass('d-none');
+
+
+        } else {
+            addProductVariantToCartEl.removeClass('d-none');
+
+        }
+    }
+
+   
+
+
+    if (data.count === 1) {
+        currentSectionEl.find('.decreaseProductVariantInCartButton').parents('span').addClass('d-none');
+        currentSectionEl.find('.empty-variants-in-cart').parents('span').removeClass('d-none');
+    } else if (data.count>1) {
+        currentSectionEl.find('.empty-variants-in-cart').parents('span').addClass('d-none');
+        currentSectionEl.find('.decreaseProductVariantInCartButton').parents('span').removeClass('d-none');
+    }
+    $('#cart-dropdown-body').html(data.cartsDetails);
+    $('#cart-dropdown-body .persian-numbers').each(function () {
+        var text = $(this).html();
+        $(this).html(text.toPersinaDigit())
+    });
+
+
+    var allprodcutCountInCart = $('#cart-dropdown-body div:first').attr('all-product-count-in-cart');
+    $('#cart-count-text').html(allprodcutCountInCart.toPersinaDigit());
+
+
 }

@@ -23,6 +23,11 @@ public class EditProductVariantViewModel
     [Range(1, 20000000000, ErrorMessage = AttributesErrorMessages.RangeMessage)]
     public int Price { get; set; }
 
+
+    [Display(Name = "حداکثر تعداد در سبد خرید")]
+    [Range(1, short.MaxValue, ErrorMessage = AttributesErrorMessages.RangeMessage)]
+    public short MaxCountInCart { get; set; }
+
     public string ProductTitle { get; set; }
 
     public string ProductCategoryTitle { get; set; }

@@ -6,6 +6,7 @@ using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
 using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
+using ProShop.ViewModels.Cart;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
 using ProShop.ViewModels.CategoryVaraints;
@@ -231,6 +232,45 @@ public class MappingProfile : Profile
 
 
         this.CreateMap<Entities.Variant, ShowVariantInEditCategoryVariantViewModel>();
+        this.CreateMap<Entities.Cart,ProductVariantInCartForProductInfoViewModel>();
+        this.CreateMap<EditProductVariantViewModel, Entities.ProductVariant>();
+
+
+        this.CreateMap<Cart, ShowCartInDropDownViewModel>()
+            .ForMember(dest => dest.ProductPicture, options => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
+            .ForMember(dest => dest.IsDiscountActive,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
+            ;
+
+
+        this.CreateMap<Cart, ShowCartInCartPageViewModel>()
+            .ForMember(dest => dest.ProductPicture, options => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
+            .ForMember(dest => dest.ProductVariantCount2,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.Count > 5 ? (byte)0 : (byte)src.ProductVariant.Count
+                    ))
+            .ForMember(dest => dest.IsDiscountActive,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
+            ;
+
+
+        this.CreateMap<Cart, ShowCartInChackoutPage>()
+            .ForMember(dest => dest.ProductPicture, options => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
+            .ForMember(dest => dest.ProductVariantCount2,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.Count > 5 ? (byte)0 : (byte)src.ProductVariant.Count
+                    ))
+            .ForMember(dest => dest.IsDiscountActive,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
+            ;
 
     }
 }

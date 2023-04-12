@@ -118,18 +118,7 @@ function EditAddDiscountProductVariantsFunc(message) {
 
 
     showToastr('success', message);
+  
 }
 
 
-// Validation
-if (jQuery.validator) {
-
-    // divisibleBy10
-    jQuery.validator.addMethod('DivisibleBy10', function (value, element, param) {
-        var price = $(element).val();
-        if (!price)
-            return true;
-        return price % 10 === 0;
-    });
-    jQuery.validator.unobtrusive.adapters.addBool('DivisibleBy10');
-}

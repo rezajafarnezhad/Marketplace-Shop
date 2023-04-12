@@ -21,7 +21,11 @@ public class ShowProductVariantViewModel
     [Display(Name = "قیمت")]
 
     public int Price { get; set; }
-    
+
+    [Display(Name = "حداکثر تعداد در سبد خرید")]
+    [Range(1, short.MaxValue, ErrorMessage = AttributesErrorMessages.RangeMessage)]
+    public short MaxCountInCart { get; set; }
+
     [Display(Name = "کد تنوع محصول")]
 
     public int VariantCode { get; set; }

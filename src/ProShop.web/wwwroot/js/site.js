@@ -457,6 +457,18 @@ if (jQuery.validator) {
         return !result;
     });
     jQuery.validator.unobtrusive.adapters.addBool('makeTinyMceRequired');
+
+    // Validation
+
+    // divisibleBy10
+    jQuery.validator.addMethod('DivisibleBy10', function (value, element, param) {
+        var price = $(element).val();
+        if (!price)
+            return true;
+        return price % 10 === 0;
+    });
+    jQuery.validator.unobtrusive.adapters.addBool('DivisibleBy10');
+
 }
 
 
@@ -590,10 +602,10 @@ function activatingModalForm() {
 $(document).on('submit', 'form.public-ajax-form', function (e) {
 
     e.preventDefault();
+    var currentForm = this;
     $('#html-modal-place').modal('hide');
     $('#Second-html-modal-place').modal('hide');
     showLoading();
-    var currentForm = this;
 
     if ($(this).parents('.modal').length === 0) {
         publicajaxformFunc(currentForm);
@@ -601,28 +613,18 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
 
     } else {
         $(this).parents('.modal').off('hidden.bs.modal').on('hidden.bs.modal', function () {
-
             publicajaxformFunc(currentForm);
-
-
         });
     }
-
-
-
-
-
-
-
-
 });
 
 
 function publicajaxformFunc(form) {
     var currentForm = $(form);
-    var formAction = currentForm.attr("action");
+    var formAction = currentForm.attr('action');
     var functionName = currentForm.attr("call-function-in-the-end");
     var formdata = new FormData(form);
+    
     $.ajax({
 
         url: formAction,
@@ -640,7 +642,7 @@ function publicajaxformFunc(form) {
                 fillValidationForm(finalData, currentForm);
                 showToastr('warning', data.message);
                 var modalId = currentForm.parents('.modal').attr('id');
-                if (modalId == 'Second-html-modal-place') {
+                if (modalId === 'Second-html-modal-place') {
 
                     $('#Second-html-modal-place').modal('show');
 
@@ -648,12 +650,14 @@ function publicajaxformFunc(form) {
                     $('#html-modal-place').modal('show');
 
                 }
-            } else {
+            }
+            else {
                 window[functionName](data.message, data.data);
             }
         },
         complete: function () {
             hideLoading();
+          
         },
         error: function () {
             ShowErrorMessage();

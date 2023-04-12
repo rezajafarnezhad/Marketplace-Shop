@@ -35,6 +35,7 @@ public class ShowProductInfoViewModel
     public List<ProductCategoryForProductInfoViewModel> productCategories { get; set; }
     public List<ProductFeatureForProductInfoViewModel> ProductFeatures { get; set; } = new();
     public List<ProductVariantForProductInfoViewModel> ProductVariants { get; set; } = new();
+    public List<ProductVariantInCartForProductInfoViewModel> ProductVariantInCart { get; set; } = new();
 
 }
 
@@ -61,6 +62,7 @@ public class ProductFeatureForProductInfoViewModel
 
 public class ProductVariantForProductInfoViewModel
 {
+    public long Id { get; set; }
     public string VariantValue { get; set; }
     public string VariantColorCode { get; set; }
     public bool? VariantIsColor { get; set; }
@@ -73,6 +75,7 @@ public class ProductVariantForProductInfoViewModel
     public string EndDateTime { get; set; }
     public bool IsDiscountActive { get; set; }
     public byte Count { get; set; }
+    public short MaxCountInCart { get; set; }
     public byte Score
     {
         get
@@ -87,6 +90,13 @@ public class ProductVariantForProductInfoViewModel
         }
     }
 
+}
+
+
+public class ProductVariantInCartForProductInfoViewModel
+{
+    public long ProductVariantId { get; set; }
+    public short Count { get; set; }
 }
 
 

@@ -22,6 +22,90 @@ namespace ProShop.DataLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ProShop.Entities.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AddressLine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("No")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Pob")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<long>("ProvinceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<short>("Unit")
+                        .HasColumnType("smallint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Address", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.Brand", b =>
                 {
                     b.Property<long>("Id")
@@ -112,6 +196,52 @@ namespace ProShop.DataLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("Brands", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.Cart", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductVaraintId")
+                        .HasColumnType("bigint");
+
+                    b.Property<short>("Count")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "ProductVaraintId");
+
+                    b.HasIndex("ProductVaraintId");
+
+                    b.ToTable("Cart", (string)null);
                 });
 
             modelBuilder.Entity("ProShop.Entities.Category", b =>
@@ -1102,6 +1232,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte>("Dimensions")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("EnglishTitle")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -1586,6 +1719,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<short>("MaxCountInCart")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("ModifiedByBrowserName")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -1950,6 +2086,33 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("Variant", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Address", b =>
+                {
+                    b.HasOne("ProShop.Entities.ProvinceAndCity", "City")
+                        .WithMany("AddressCities")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.ProvinceAndCity", "Province")
+                        .WithMany("AddressProvinces")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Province");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Brand", b =>
                 {
                     b.HasOne("ProShop.Entities.Seller", "Seller")
@@ -1957,6 +2120,25 @@ namespace ProShop.DataLayer.Migrations
                         .HasForeignKey("SellerId");
 
                     b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.Cart", b =>
+                {
+                    b.HasOne("ProShop.Entities.ProductVariant", "ProductVariant")
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductVaraintId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Identity.User", "User")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ProductVariant");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProShop.Entities.Category", b =>
@@ -2319,13 +2501,13 @@ namespace ProShop.DataLayer.Migrations
             modelBuilder.Entity("ProShop.Entities.Seller", b =>
                 {
                     b.HasOne("ProShop.Entities.ProvinceAndCity", "City")
-                        .WithMany("Cities")
+                        .WithMany("SellerCities")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProShop.Entities.ProvinceAndCity", "Province")
-                        .WithMany("Provinces")
+                        .WithMany("SellerProvinces")
                         .HasForeignKey("ProvinceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2411,6 +2593,8 @@ namespace ProShop.DataLayer.Migrations
 
             modelBuilder.Entity("ProShop.Entities.Identity.User", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("Seller");
 
                     b.Navigation("UserClaims");
@@ -2446,6 +2630,8 @@ namespace ProShop.DataLayer.Migrations
 
             modelBuilder.Entity("ProShop.Entities.ProductVariant", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("ConsignmentItems");
 
                     b.Navigation("ProductStocks");
@@ -2453,9 +2639,13 @@ namespace ProShop.DataLayer.Migrations
 
             modelBuilder.Entity("ProShop.Entities.ProvinceAndCity", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("AddressCities");
 
-                    b.Navigation("Provinces");
+                    b.Navigation("AddressProvinces");
+
+                    b.Navigation("SellerCities");
+
+                    b.Navigation("SellerProvinces");
                 });
 
             modelBuilder.Entity("ProShop.Entities.Seller", b =>

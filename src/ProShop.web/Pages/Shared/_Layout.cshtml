@@ -1,4 +1,20 @@
-﻿<!doctype html>
+﻿@using ProShop.Common.IdentityToolkit
+@using ProShop.ViewModels.Cart;
+@inject ProShop.Services.Contracts.ICartService cartService
+@{
+
+    long userId;
+    var cart = new List<ShowCartInDropDownViewModel>();
+    int allProductsCountInCart = 0;
+    if (User.Identity.IsAuthenticated)
+    {
+        userId = User.Identity.GetLoggedUserId();
+        cart = await cartService.GetCartForDropDown(userId);
+        allProductsCountInCart = cart.Sum(x => x.Count);
+    }
+  
+}
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
     <!-- Required meta tags -->
@@ -11,6 +27,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="~/css/main-styls.css">
     <link rel="stylesheet" href="~/ProShop.web.styles.css">
@@ -27,7 +44,9 @@
     <div class="container-fluid bg-white shadow-sm">
         <div class="row p-3" id="main-header">
             <div class="col-12 col-lg-2 text-center text-lg-start mb-3 mb-lg-0 ps-2">
-                <img src="~/images/Application/eshop.png" class="logo" />
+                <a href="/">
+                    <img src="~/images/Application/eshop.png" class="logo" />
+                </a>
             </div>
             <div class="col-lg-6 col-xl-5 col-md-9">
                 <div class="input-group" id="main-search-box">
@@ -124,19 +143,44 @@
                 </div>
 
                 <span style="height: 26px; border-right: 1px solid #dad4d4;"></span>
-                <div class="dropdown">
-                    <button class="btn btn-light position-relative dropstart" type="button" id="profile-dropdown-menu"
+              
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (ViewData["HideMainCartDropdown"] == null)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-light position-relative dropstart" type="button" id="cart-dropdown" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-cart rem1and3"></i>
-                        <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-danger">
-                            ۱۰
-                        </span>
-                    </button>
-                    <div class="dropdown-menu shadow-sm" aria-labelledby="profile-dropdown-menu"
-                         id="ul-profile-menus">
-                        body
-                    </div>
-                </div>
+                                <i class="bi bi-cart rem1and3"></i>
+                                <span class="persian-numbers position-absolute top-100 start-50 translate-middle badge rounded-pill bg-danger" id="cart-count-text">
+                                    @allProductsCountInCart
+                                </span>
+                            </button>
+                            <div class="dropdown-menu shadow-sm" aria-labelledby="profile-dropdown-menu"
+                         id="cart-dropdown-body">
+
+
+                                <partial name="_Cart" model="cart"></partial>
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-light position-relative dropstart" type="button" id="cart-dropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-cart rem1and3"></i>
+                                <span class="persian-numbers position-absolute top-100 start-50 translate-middle badge rounded-pill bg-danger" id="cart-count-text">
+                                    @allProductsCountInCart
+                                </span>
+                            </button>
+                        </div>
+                    }
+                }
+
+              
+
             </div>
         </div>
     </div>
@@ -151,6 +195,7 @@
     @await RenderSectionAsync("Scripts", false)
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main-scripts.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetalert2/dist/sweetalert2.all.min.js"></script>
     @await RenderSectionAsync("CustomScripts", false)
 </body>
 

@@ -10,6 +10,7 @@ public class ProductVariant: EntityBase, IAuditableEntity
     public int Price { get; set; }
     public int VariantCode { get; set; }
     public int Count { get; set; }
+    public short MaxCountInCart { get; set; }
     public int? OffPrice { get; set; }
     public byte? offPercentage { get; set; }
     public int FinalPrice => OffPrice ?? Price;
@@ -21,6 +22,7 @@ public class ProductVariant: EntityBase, IAuditableEntity
     public Garantee Garantee { get; set; }
     public ICollection<ConsignmentItem> ConsignmentItems { get; set; }
     public ICollection<ProductStock> ProductStocks { get; set; }
+    public ICollection<Cart> Carts { get; set; }
 
 
 }

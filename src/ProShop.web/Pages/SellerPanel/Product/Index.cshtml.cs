@@ -90,9 +90,12 @@ public class IndexModel : SellerPanelBase
         if(productVariant is null)
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
-        productVariant.Price = model.Price;
+
+        productVariant = _mapper.Map(model, productVariant);
         productVariant.StartDateTime = productVariant.EndDateTime = null;
         productVariant.OffPrice = productVariant.offPercentage = null;
+
+         _mapper.Map<Entities.ProductVariant>(model);
 
         await unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true, "تنوع محصول با موفقیت ویرایش شد"));

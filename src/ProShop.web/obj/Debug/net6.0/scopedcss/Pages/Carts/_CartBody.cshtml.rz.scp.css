@@ -1,0 +1,11 @@
+.cart-items-in-cart-page:not(:last-child)[b-1y9io5jk4a] {
+    border-bottom: 1px solid #dee2e6;
+}
+
+#cart-page-title[b-1y9io5jk4a] {
+    border-bottom: 1px solid #e0e0e2;
+}
+
+#cart-page-title-border[b-1y9io5jk4a] {
+    height: 4px;
+}

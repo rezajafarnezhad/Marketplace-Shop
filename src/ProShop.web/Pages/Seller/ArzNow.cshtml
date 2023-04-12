@@ -1,0 +1,60 @@
+﻿@page "/Arz"
+@model ProShop.web.Pages.Seller.ArzNowModel
+@{
+}
+
+
+
+
+<div class="alert alert-warning  m-5 text-center">
+    <h3 class="text-danger">
+        قیمت لحظه ایی ارز
+    </h3>
+</div>
+
+
+
+<div class="container-fluid bg-white pb-3">
+    <div class="row mt-3">
+
+        <div class="col-lg-8">
+            @foreach (var data in Model.Etelasat.Arz.Result)
+            {
+                <div class="alert alert-secondary m-5 text-center">
+                    <p class="bold text-bg-primary">
+                        تاریخ :@data.update
+                    </p>
+                    <p>
+                        واحد :@data.name
+                    </p>
+                    <hr>
+                    <p class="rem14px bold">
+                        قیمت هم اکنون :@data.price تومان
+                    </p>
+                    <hr>
+                    <p>
+                        نوسان :@data.change
+                    </p>
+                    <hr>
+                    <p>
+                        کم ترین قیمت امروز :<span class="text-success">@data.low</span>
+                    </p>
+                    <p>
+                        بیشترین قیمت امروز :<span class="text-danger">@data.High</span>
+                    </p>
+                    <hr>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-4">
+            @foreach (var data in Model.Etelasat.Prooxy.Result)
+            {
+                <div class="alert alert-success m-5 text-center">
+                    <a href="https://t.me/proxy?server=@data.server;port=@data.port&amp;secret=@data.secret">⚫️ Connect Proxy 🔴 </a>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

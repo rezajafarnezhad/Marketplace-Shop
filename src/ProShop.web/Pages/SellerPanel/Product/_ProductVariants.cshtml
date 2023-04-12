@@ -15,6 +15,7 @@
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].VariantCode)</th>
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].VariantValue)</th>
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].GatanteeFullTitle)</th>
+                        <th scope="col">@Html.DisplayNameFor(c=>c[0].MaxCountInCart)</th>
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].Price)</th>
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].offPercentage)</th>
                         <th scope="col">@Html.DisplayNameFor(c=>c[0].OffPrice)</th>
@@ -49,6 +50,7 @@
 
                             </td>
                             <td class="table-success">@Item.GatanteeFullTitle</td>
+                            <td class="table-success">@Item.MaxCountInCart</td>
                             <td class="table-success">
                                 <span class="persian-numbers">
                                     @Item.Price.ToString("N0")
@@ -115,12 +117,12 @@
 
                             <td class="table-success">
                                 <button pridcutVariantId="@Item.Id" class="btn buttonDetails get-html-with-ajax" functionNameToCallOnClick="EditProductVariant" type="button">
-                                    ویرایش قیمت
+                                    ویرایش 
                                 </button>
 
-                                <a pridcutVariantId="@Item.Id" class="btn buttonDetails get-html-with-ajax" functionNameToCallOnClick="EditAddDiscountProductVariant">
+                                <button pridcutVariantId="@Item.Id" class="btn buttonDetails get-html-with-ajax" functionNameToCallOnClick="EditAddDiscountProductVariant">
                                     ایجاد تخفیف / ویرایش
-                                </a>
+                                </button>
 
                             </td>
                         </tr>

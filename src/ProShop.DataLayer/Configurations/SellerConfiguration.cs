@@ -43,11 +43,11 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
 
 
         builder.HasOne(c => c.City)
-            .WithMany(c => c.Cities)
+            .WithMany(c => c.SellerCities)
             .HasForeignKey(c => c.CityId);
         
         builder.HasOne(c => c.Province)
-            .WithMany(c => c.Provinces)
+            .WithMany(c => c.SellerProvinces)
             .HasForeignKey(c => c.ProvinceId);
     }
 }

@@ -5,6 +5,7 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProShop.web
 build_property.RootNamespace = ProShop.web
@@ -267,6 +268,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/ArzNow.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXEFyek5vdy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Seller/ConfirmationPhoneNumber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyXENvbmZpcm1hdGlvblBob25lTnVtYmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -293,6 +298,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_AdminSidebarPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9BZG1pblNpZGViYXJQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_Cart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9DYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_CheckoutLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9DaGVja291dExheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Shared/_IdentityLayout.cshtml]
@@ -338,6 +351,22 @@ build_metadata.AdditionalFiles.CssScope = b-5wkit8f3dk
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/AdminPanel/Product/_ProductDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxQcm9kdWN0XF9Qcm9kdWN0RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-733iwinjqi
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Carts/CheckOut.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FydHNcQ2hlY2tPdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-jqb7va1wl8
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Carts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-2kval4lctj
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Carts/_CartBody.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FydHNcX0NhcnRCb2R5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-1y9io5jk4a
+
+[C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Carts/_EmptyCart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FydHNcX0VtcHR5Q2FydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-tb9g9piu5a
 
 [C:/Users/mReza/source/repos/ProShop/src/ProShop.web/Pages/Identity/LoginWithPhoneNumber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcTG9naW5XaXRoUGhvbmVOdW1iZXIuY3NodG1s

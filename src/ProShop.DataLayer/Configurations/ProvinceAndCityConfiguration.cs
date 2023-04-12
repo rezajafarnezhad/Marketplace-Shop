@@ -14,11 +14,21 @@ public class ProvinceAndCityConfiguration : IEntityTypeConfiguration<ProvinceAnd
         builder.Property(c => c.Title).IsRequired().HasMaxLength(100);
 
 
-        builder.HasMany(x => x.Provinces)
+        builder.HasMany(x => x.SellerProvinces)
             .WithOne(x => x.Province)
             .HasForeignKey(x => x.ProvinceId);
 
-        builder.HasMany(x => x.Cities)
+        builder.HasMany(x => x.SellerCities)
+            .WithOne(x => x.City)
+            .HasForeignKey(x => x.CityId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        builder.HasMany(x => x.AddressProvinces)
+            .WithOne(x => x.Province)
+            .HasForeignKey(x => x.ProvinceId);
+
+        builder.HasMany(x => x.AddressCities)
             .WithOne(x => x.City)
             .HasForeignKey(x => x.CityId)
             .OnDelete(DeleteBehavior.Restrict);

@@ -640,3 +640,20 @@ span.select2-dropdown.select2-dropdown--below {
     .btn-Drop-Down:hover {
         background-color: aliceblue;
     }
+
+
+.disable-selecting {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.bg-custom-grey {
+    background: #c0c2c5;
+}
+.text-custom-grey {
+    color: #c0c2c5;
+}

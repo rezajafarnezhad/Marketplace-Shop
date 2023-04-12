@@ -29,7 +29,7 @@
                         تعداد ویدیو :@Model.ProductMedia.Count(x=> x.IsVideo)
                     </span>
                     <span class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#product-features-collapse">
-                    ویژگی های محصول: @Model.ProductFeatures.Count
+                        ویژگی های محصول: @Model.ProductFeatures.Count
                     </span>
                     <span class="btn btn-info">
                         @if (Model.IsFake)
@@ -49,6 +49,14 @@
                         دسته بندی اصلی:
                         @Model.CategoryTitle
                     </span>
+                    @if (Model.Status == ProductStatus.Confirmed)
+                    {
+                        <span class="btn btn-sm btn-primary">
+                            ابعاد:
+                            @Model.Dimensions.GetEnumDisplayName()
+                        </span>
+                    }
+                   
                 </p>
             </div>
         </div>
@@ -200,6 +208,10 @@
                   method="post" asp-page-handler="ConfirmProduct"
                   class="mt-3 public-ajax-form">
                     <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label asp-for="Dimensions" class="form-lable"></label>
+                        <select class="form-select" asp-for="Dimensions" asp-items="Html.GetEnumSelectList<ProductDimensions>()"></select>
+                    </div>
                     <button type="submit" class="btn btn-success btn-block">تایید کردن محصول</button>
                 </form>
 

@@ -1,8 +1,10 @@
 ﻿<!-- Other variants -->
-@model List<ProShop.ViewModels.Product.ProductVariantForProductInfoViewModel>
+@using ProShop.ViewModels.Product;
+
+@model (List<ProductVariantForProductInfoViewModel> ProductVariants , List<ProductVariantInCartForProductInfoViewModel> productVariantsInCart)
 
 @{
-    var groupedvariants = Model.GroupBy(c => c.VariantValue);
+    var groupedvariants = Model.ProductVariants.GroupBy(c => c.VariantValue);
     var variantCount = 1;
 }
 
@@ -18,8 +20,8 @@
                     <tbody>
                         @foreach (var variant in variants)
                         {
-                            <tr free-delivery="@(variant.Price>500000?"true":"false")" 
-                                is-discount-active="@(variant.IsDiscountActive?"true":"false")">
+                            <tr free-delivery="@(variant.Price>500000?"true":"false")"
+                        is-discount-active="@(variant.IsDiscountActive?"true":"false")">
                                 <td class="p-4">
                                     @if (!string.IsNullOrWhiteSpace(variant.SellerLogo))
                                     {
@@ -60,10 +62,82 @@
                                     </div>
                                 </td>
                                 <td class="p-4" style="float:left">
-                                    <button class="btn btn-danger rounded-3 ">
-                                        <i class="bi bi-cart rem1and3"></i>
-                                        افزودن به سبد
-                                    </button>
+                                    @{
+                                        var showbutton = @Model.productVariantsInCart.All(c => c.ProductVariantId != variant.Id);
+
+                                    }
+                                    <form method="post" call-function-in-the-end="addProductVariantToCart"
+                                  asp-page-handler="AddProductVariantToCart" varaint-id="@variant.Id"
+                                  class="@(showbutton?string.Empty:"d-none") add-product-variant-to-cart public-ajax-form">
+
+                                        <input type="hidden" name="productVariantId" asp-for="@variant.Id">
+
+                                        <button class="btn btn-danger rounded-3">
+                                            افزودن به سبد
+                                        </button>
+
+                                    </form>
+
+                                    @{
+                                        var productVariantInCart = @Model.productVariantsInCart.SingleOrDefault(c => c.ProductVariantId == variant.Id);
+                                        var IsCartFull = false;
+                                        if (productVariantInCart != null)
+                                        {
+                                            IsCartFull = productVariantInCart.Count == variant.MaxCountInCart;
+                                        }
+
+                                        var showbutton2 = productVariantInCart != null;
+                                    }
+
+
+                                    <div variant-id="@variant.Id" class="@(showbutton2?string.Empty:"d-none") product-variant-in-cart-section   d-flex align-items-center text-danger shadow rounded p-2">
+
+
+                                        <!-- + -->
+                                        <span class="px-2 disable-selecting @(IsCartFull?"text-custom-grey":"pointer-cursor")">
+                                            <form method="post" call-function-in-the-end="addProductVariantToCart"
+                                          class="public-ajax-form" asp-page-handler="AddProductVariantToCart">
+                                                <input type="hidden" name="productVariantId" asp-for="@variant.Id" />
+                                                <input type="hidden" name="isIncrease" value="true" />
+                                                <span class="rem20px increaseProductVariantInCartButton">+</span>
+                                            </form>
+                                        </span>
+                                        <!-- + -->
+
+
+                                        <span variant-id="@variant.Id" class="d-flex flex-column justify-content-between px-2 disable-selecting productvariantcountincart">
+                                            <span class="fw-bold text-center persian-numbers">
+                                                @(productVariantInCart?.Count ?? 0)
+                                            </span>
+                                            <span class="text-custom-grey rem13px @(IsCartFull?string.Empty : "d-none")">
+                                                حداکثر مجاز
+                                            </span>
+                                        </span>
+
+
+
+                                        <span class="px-2 disable-selecting pointer-cursor @((productVariantInCart?.Count==1?string.Empty:"d-none") ?? "d-none")">
+                                            <form method="post" call-function-in-the-end="addProductVariantToCart"
+                                          class="public-ajax-form" asp-page-handler="AddProductVariantToCart">
+                                                <input type="hidden" name="productVariantId" asp-for="@variant.Id" />
+                                                <span class="empty-variants-in-cart">
+
+                                                    <i class="bi bi-trash"></i>
+                                                </span>
+                                            </form>
+                                        </span>
+
+
+                                        <!-- - -->
+                                        <span class="px-2 disable-selecting  pointer-cursor @((productVariantInCart?.Count>1?string.Empty:"d-none") ?? "d-none")">
+                                            <form method="post" call-function-in-the-end="addProductVariantToCart"
+                                          class="public-ajax-form" asp-page-handler="AddProductVariantToCart">
+                                                <input type="hidden" name="productVariantId" asp-for="@variant.Id" />
+                                                <span class="rem20px decreaseProductVariantInCartButton">-</span>
+                                            </form>
+                                        </span>
+                                        <!-- - -->
+                                    </div>
                                 </td>
                             </tr>
                         }

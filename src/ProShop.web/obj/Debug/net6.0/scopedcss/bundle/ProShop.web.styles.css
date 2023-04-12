@@ -15,6 +15,48 @@
     
     border-radius: 18px;
 }
+/* _content/ProShop.web/Pages/Carts/CheckOut.cshtml.rz.scp.css */
+.checkout-line-in-header[b-jqb7va1wl8] {
+    width: 100px;
+    height: 1px;
+}
+
+#cart-section-in-checkout[b-jqb7va1wl8] {
+    color: #f3a3a3;
+}
+
+.color-element-in-checkout[b-jqb7va1wl8] {
+    width: 14px;
+    height: 14px;
+}
+
+.shipping-item-in-checkout span[b-jqb7va1wl8] {
+    top: 85%;
+    right: 83%;
+    z-index: 1;
+}
+/* _content/ProShop.web/Pages/Carts/Index.cshtml.rz.scp.css */
+
+/* _content/ProShop.web/Pages/Carts/_CartBody.cshtml.rz.scp.css */
+.cart-items-in-cart-page:not(:last-child)[b-1y9io5jk4a] {
+    border-bottom: 1px solid #dee2e6;
+}
+
+#cart-page-title[b-1y9io5jk4a] {
+    border-bottom: 1px solid #e0e0e2;
+}
+
+#cart-page-title-border[b-1y9io5jk4a] {
+    height: 4px;
+}
+/* _content/ProShop.web/Pages/Carts/_EmptyCart.cshtml.rz.scp.css */
+#cart-page-title[b-tb9g9piu5a] {
+    border-bottom: 1px solid #e0e0e2;
+}
+
+#cart-page-title-border[b-tb9g9piu5a] {
+    height: 4px;
+}
 /* _content/ProShop.web/Pages/Identity/LoginWithPhoneNumber.cshtml.rz.scp.css */
 #login-register-text[b-xhvhmgknev] {
 font-weight: bold;
@@ -91,13 +133,9 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
     height: 1px;
 }
 
-.text-custom-grey[b-zptyp67v38] {
-    color: #c0c2c5;
-}
 
-.bg-custom-grey[b-zptyp67v38] {
-    background: #c0c2c5;
-}
+
+
 
 .product-info-dots[b-zptyp67v38] {
     width: 5px;

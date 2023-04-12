@@ -116,4 +116,9 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
         }
         return  query.SingleOrDefaultAsync(c=>c.Id == Id);
     }
+
+    public void RemoveRange(List<TEntity> entities)
+    {
+        _entities.RemoveRange(entities);
+    }
 }

@@ -30,6 +30,7 @@ public class User : IdentityUser<long>, IAuditableEntity
     public virtual ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<UserToken> UserTokens { get; set; }
     public virtual ICollection<UserProductFavorite> UserProductFavorites { get; set; }
+    public virtual ICollection<Cart> Carts{ get; set; }
     public Seller Seller { get; set; }
 }
 

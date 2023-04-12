@@ -7,6 +7,7 @@ using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
+using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Product;
 
@@ -100,7 +101,7 @@ public class IndexModel : PageBase
 
     }
     
-    public async Task<IActionResult> OnPostConfirmProduct(long Id)
+    public async Task<IActionResult> OnPostConfirmProduct(long Id , ProductDimensions Dimensions)
     {
         if (Id < 1)
             return Json(new JsonResultOperation(false));
@@ -110,6 +111,7 @@ public class IndexModel : PageBase
             return Json(new JsonResultOperation(false,"محصولی یافت نشد"));
 
         product.Status = Entities.ProductStatus.Confirmed;
+        product.Dimensions = Dimensions;
         product.RejectReason =null;
         await _unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true, "محصول مورد نظر تایید شد"));
