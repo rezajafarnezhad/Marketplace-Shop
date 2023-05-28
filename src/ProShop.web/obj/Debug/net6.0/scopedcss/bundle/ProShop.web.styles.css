@@ -35,6 +35,10 @@
     right: 83%;
     z-index: 1;
 }
+
+#shipping-dropdown .dropdown-menu[b-jqb7va1wl8] {
+    width: 300px !important;
+}
 /* _content/ProShop.web/Pages/Carts/Index.cshtml.rz.scp.css */
 
 /* _content/ProShop.web/Pages/Carts/_CartBody.cshtml.rz.scp.css */

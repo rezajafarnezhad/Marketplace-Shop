@@ -11,18 +11,26 @@ namespace ProShop.web.Pages.Carts;
 [Authorize]
 public class CheckOutModel : PageModel
 {
+    private readonly IAddressService _addressService;
     private readonly ICartService _cartService;
 
-    public CheckOutModel(ICartService cartService)
+    public CheckOutModel(ICartService cartService, IAddressService addressService)
     {
         _cartService = cartService;
+        _addressService = addressService;
     }
 
-    public List<ShowCartInChackoutPage> CartItems { get; set; }
+    public CheckoutViewModel CheckOutPage { get; set; } = new CheckoutViewModel();
 
-    public async Task OnGet()
+    public async Task<IActionResult> OnGet()
     {
         var userId = User.Identity.GetLoggedUserId();
-        CartItems = await _cartService.GetCartsForCheckoutPage(userId);
+        CheckOutPage.CartItems = await _cartService.GetCartsForCheckoutPage(userId);
+        if(CheckOutPage.CartItems.Count < 1)
+        {
+            return RedirectToPage("Index");
+        }
+        CheckOutPage.UserAddress = await _addressService.GetAddressForCheckoutPage(userId);
+        return Page();
     }
 }

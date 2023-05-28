@@ -1,13 +1,6 @@
 ﻿@using ProShop.Common.Helpers
 @model ProShop.ViewModels.Product.ProductDetailsViewModel
-@{
-    var statusButtonClass = Model.Status switch
-    {
-        ProductStatus.Confirmed => "success",
-        ProductStatus.Rejected => "danger",
-        _ => "warning"
-    };
-}
+
 <div class="card">
     <div class="card-header">
         <div class="card-title">
@@ -23,15 +16,15 @@
         <div class="row">
             <div>
                 <p class="fw-bold">
-                    <span class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#product-files-collapse">
+                    <span class="btn buttonDetails" data-bs-toggle="collapse" data-bs-target="#product-files-collapse">
                         فایل (ها) |
                         تعداد عکس :@Model.ProductMedia.Count(x=> !x.IsVideo)
                         تعداد ویدیو :@Model.ProductMedia.Count(x=> x.IsVideo)
                     </span>
-                    <span class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#product-features-collapse">
+                    <span class="btn buttonDetails" data-bs-toggle="collapse" data-bs-target="#product-features-collapse">
                         ویژگی های محصول: @Model.ProductFeatures.Count
                     </span>
-                    <span class="btn btn-info">
+                    <span class="btn buttonDetails">
                         @if (Model.IsFake)
                         {
                             @:محصول غیر اصل میباشد
@@ -41,17 +34,17 @@
                             <text>اصل</text>
                         }
                     </span>
-                    <span class="btn btn-@(statusButtonClass)">
+                    <span class="btn buttonDetails">
                         وضعیت:
                         @Model.Status.GetEnumDisplayName()
                     </span>
-                    <span class="btn btn-primary">
+                    <span class="btn buttonDetails">
                         دسته بندی اصلی:
                         @Model.CategoryTitle
                     </span>
                     @if (Model.Status == ProductStatus.Confirmed)
                     {
-                        <span class="btn btn-sm btn-primary">
+                        <span class="btn buttonDetails">
                             ابعاد:
                             @Model.Dimensions.GetEnumDisplayName()
                         </span>

@@ -17,3 +17,7 @@
     right: 83%;
     z-index: 1;
 }
+
+#shipping-dropdown .dropdown-menu[b-jqb7va1wl8] {
+    width: 300px !important;
+}

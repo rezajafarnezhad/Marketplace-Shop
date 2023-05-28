@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
-using DNTPersianUtils.Core;
-using Microsoft.Build.Framework;
 using ProShop.Common.Helpers;
-using ProShop.DataLayer.Migrations;
 using ProShop.Entities;
 using ProShop.Entities.Identity;
 using ProShop.ViewModels.Brands;
-using ProShop.ViewModels.Cart;
 using ProShop.ViewModels.Categories;
 using ProShop.ViewModels.CategoryFeatures;
-using ProShop.ViewModels.CategoryVaraints;
 using ProShop.ViewModels.Consignments;
 using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Garantee;
@@ -19,7 +14,7 @@ using ProShop.ViewModels.ProductStock;
 using ProShop.ViewModels.ProductVariant;
 using ProShop.ViewModels.Sellers;
 using ProShop.ViewModels.Veriants;
-using ProShop.web.Pages.Inventory.ProductStock;
+using ProShop.ViewModels.Cart;
 
 namespace ProShop.web.Mappings;
 
@@ -99,6 +94,7 @@ public class MappingProfile : Profile
         this.CreateMap<Entities.Garantee, ShowGarantieeViewModel>();
 
         this.CreateMap<Entities.CategoryVarieant, ShowCategoryVariantInAddVariantViewModel>();
+        this.CreateMap<Entities.ProductShortLink, ShowProductShortLinkViewModel>();
 
         this.CreateMap<Entities.Product, AddVariantViewModel>()
            .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Id))
@@ -193,7 +189,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Count,
                 options =>
                     options.MapFrom(src =>
-                        src.Count > 5 ? (byte)0 :(byte)src.Count
+                        src.Count > 5 ? (byte)0 : (byte)src.Count
                     ))
 
 
@@ -232,8 +228,8 @@ public class MappingProfile : Profile
 
 
         this.CreateMap<Entities.Variant, ShowVariantInEditCategoryVariantViewModel>();
-        this.CreateMap<Entities.Cart,ProductVariantInCartForProductInfoViewModel>();
-        this.CreateMap<EditProductVariantViewModel, Entities.ProductVariant>();
+        this.CreateMap<Entities.Cart, ProductVariantInCartForProductInfoViewModel>();
+
 
 
         this.CreateMap<Cart, ShowCartInDropDownViewModel>()
@@ -259,7 +255,7 @@ public class MappingProfile : Profile
             ;
 
 
-        this.CreateMap<Cart, ShowCartInChackoutPage>()
+        this.CreateMap<Cart, ShowCartInChackoutPageViewModel>()
             .ForMember(dest => dest.ProductPicture, options => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
             .ForMember(dest => dest.ProductVariantCount2,
                 options =>
@@ -271,6 +267,8 @@ public class MappingProfile : Profile
                     options.MapFrom(src =>
                         src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
             ;
+
+        this.CreateMap<Entities.Address, AddressInCheckoutPageInViewModel>();
 
     }
 }

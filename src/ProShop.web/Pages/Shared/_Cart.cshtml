@@ -24,15 +24,15 @@
         @foreach (var cartItem in Model)
         {
             <li class="d-flex justify-content-around py-2">
-                <div>
-                    <img width="100" src="~/images/Products/@cartItem.ProductPicture" />
+                <div class="text-center">
+                    <img width="100px" height="105px" src="~/images/Products/@cartItem.ProductPicture" />
                     @if (cartItem.IsDiscountActive)
                     {
                         <div class="text-danger text-center fw-bold mt-3">
                             شگفت انگیز
                         </div>
                     }
-                    <div class="mt-3">
+                    <div class="m-2">
                         @{
                             var IsCartFull = false;
 
@@ -40,7 +40,7 @@
 
                         }
 
-                        <div class="product-variant-in-cart-section d-flex align-items-center text-danger shadow rounded p-2" variant-id="@cartItem.ProductVariantId">
+                        <div class="product-variant-in-cart-section d-flex align-items-center text-danger shadow rounded p-1" variant-id="@cartItem.ProductVariantId">
 
 
                             <!-- + -->
@@ -60,7 +60,7 @@
                                     @cartItem.Count
                                 </span>
                                 <span class="text-custom-grey rem13px @(IsCartFull?string.Empty : "d-none")">
-                                    حداکثر مجاز
+                                    حداکثر
                                 </span>
                             </span>
 
@@ -102,18 +102,18 @@
                             {
                                 @if (cartItem.ProductVariantVariantColorCode != null)
                                 {
-                                    <div class="color-element-in-cart rounded-circle" style="background-color: @cartItem.ProductVariantVariantColorCode"></div>
+                                    <div class="color-element-in-cart rounded-circle" style="background-color: @cartItem.ProductVariantVariantColorCode">
+                                      
+                                    </div>
                                     <span>
-                                        رنگ :  @cartItem.ProductVariantVariantValue
-
-
+                                        @cartItem.ProductVariantVariantValue
                                     </span>
 
                                 }
                                 else
                                 {
-                                    <span>سایر :  @cartItem.ProductVariantVariantValue</span>
-                                    <i class="bi bi-sort-numeric-up"></i>
+                                    <span>سایر :@cartItem.ProductVariantVariantValue <i class="bi bi-sort-numeric-up"></i></span>
+                                    
                                 }
                             }
                             else
@@ -123,7 +123,7 @@
 
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-2">
                         @if (cartItem.IsDiscountActive)
                         {
                             // این قیمت تخفیف دار نیست

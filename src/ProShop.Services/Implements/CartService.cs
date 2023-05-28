@@ -44,11 +44,11 @@ public class CartService : GenericService<Cart>, ICartService
     }
 
 
-    public async Task<List<ShowCartInChackoutPage>> GetCartsForCheckoutPage(long userId)
+    public async Task<List<ShowCartInChackoutPageViewModel>> GetCartsForCheckoutPage(long userId)
     {
 
         return await _carts.AsNoTracking().Where(c => c.UserId == userId)
-            .ProjectTo<ShowCartInChackoutPage>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now})
+            .ProjectTo<ShowCartInChackoutPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now})
             .ToListAsync();
 
     }
