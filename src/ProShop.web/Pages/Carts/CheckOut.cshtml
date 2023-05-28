@@ -50,10 +50,10 @@
         discountPercentage = (byte)(100 - percentageOfTotalPriceOfCartThatUserMustPay);
     }
 
-    var shippingCount=0;
+    var shippingCount = 0;
 
     if (normalProducts.Count > 0)
-        shippingCount++; 
+        shippingCount++;
 
     if (HeavyProducts.Count > 0)
         shippingCount++;
@@ -148,22 +148,27 @@
                                             @normalProduct.Count
                                         </span>
                                     </div>
+                                    @if (normalProduct.ProductVariantVariantIsColor != null)
+                                    {
+                                        <div class="d-flex align-items-center mt-2">
 
-                                    <div class="d-flex align-items-center mt-2">
-                                        @if (normalProduct.ProductVariantVariantIsColor.Value)
-                                        {
 
-                                            <div class="color-element-in-checkout rounded-circle me-1" style="background-color: @normalProduct.ProductVariantVariantColorCode;"></div>
 
-                                        }
-                                        else
-                                        {
-                                            <i class="bi bi-sort-numeric-up"></i>
+                                            @if (normalProduct.ProductVariantVariantIsColor.Value)
+                                            {
 
-                                        }
-                                        <div class="rem14px text-secondary">@normalProduct.ProductVariantVariantValue</div>
+                                                <div class="color-element-in-checkout rounded-circle me-1" style="background-color: @normalProduct.ProductVariantVariantColorCode;"></div>
 
-                                    </div>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-sort-numeric-up"></i>
+
+                                            }
+                                            <div class="rem14px text-secondary">@normalProduct.ProductVariantVariantValue</div>
+
+                                        </div>
+                                    }
                                 </div>
 
                             }
