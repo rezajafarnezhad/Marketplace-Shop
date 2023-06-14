@@ -4,8 +4,18 @@
     var allProductsCountInCart = Model.Sum(x => x.Count);
 
     // مجموع قیمت محصولاتی که در داخل سبد خرید وجود دارند
+    
+
+   
+
     var totalPriceOfCart = Model
-        .Sum(x => x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice);
+        .Sum(x => (x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice)
+                  *
+                  x.Count
+        );
+
+
+
 }
 <div all-product-count-in-cart="@allProductsCountInCart">
     <div class="d-flex justify-content-between rem14px p-2 pb-3">

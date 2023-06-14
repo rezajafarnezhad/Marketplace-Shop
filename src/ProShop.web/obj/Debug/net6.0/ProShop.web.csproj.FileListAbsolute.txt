@@ -301,7 +301,6 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\staticwebas
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\AdminPanel\Category\_EditCategoryVariant.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\AdminPanel\Product\_ProductDetails.cshtml.rz.scp.css
-C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Carts\CheckOut.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Carts\Index.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Carts\_CartBody.cshtml.rz.scp.css
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Carts\_EmptyCart.cshtml.rz.scp.css
@@ -321,3 +320,4 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\refint\ProS
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
+C:\Users\mReza\source\repos\ProShop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Carts\Peyment.cshtml.rz.scp.css

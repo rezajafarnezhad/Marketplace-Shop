@@ -49,7 +49,7 @@ public class GaranteeService : GenericService<Entities.Garantee>, IGaranteeServi
     public List<ShowSelect2DataByAjaxViewModel> SearchOnGatanteesForSelect2Ajax(string input)
     {
 
-        var data = _garanties.Where(c => c.Title.Contains(input)).Select(c => new ShowSelect2DataByAjaxViewModel
+        var data = _garanties.Where(c => c.Title.Contains(input)).Where(c=>c.IsConfirmed).Select(c => new ShowSelect2DataByAjaxViewModel
         {
             Id = c.Id,
             Text = c.FullTitle

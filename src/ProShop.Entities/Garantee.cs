@@ -7,5 +7,6 @@ public class Garantee : EntityBase , IAuditableEntity
     public byte MonthCount { get; set; }
     public string Picture { get; set; }
     public bool IsConfirmed { get; set; }
-
+    public ICollection<ParcelPostItem> ParcelPostItems { get; set; }
+  
 } 

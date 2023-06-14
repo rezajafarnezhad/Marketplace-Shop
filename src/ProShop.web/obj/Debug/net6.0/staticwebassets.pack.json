@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets\\Pages\\Carts\\Index.cshtml.js"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Carts\\Peyment.cshtml.js",
+      "PackagePath": "staticwebassets\\Pages\\Carts\\Peyment.cshtml.js"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\Pages\\Identity\\LoginWithPhoneNumber.cshtml.js",
       "PackagePath": "staticwebassets\\Pages\\Identity\\LoginWithPhoneNumber.cshtml.js"
     },
@@ -111,6 +115,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\Videos\\Products\\e75d3cdc45664e30863cdb741656eed1.mp4",
       "PackagePath": "staticwebassets\\Videos\\Products\\e75d3cdc45664e30863cdb741656eed1.mp4"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\css\\CheckOutAndPeyment.css",
+      "PackagePath": "staticwebassets\\css\\CheckOutAndPeyment.css"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\css\\admin-styls.css",
@@ -315,6 +323,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Categories\\fb809644e2cc4b76a8bdef32e6aa4842.jpg",
       "PackagePath": "staticwebassets\\images\\Categories\\fb809644e2cc4b76a8bdef32e6aa4842.jpg"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\23dd53af94d847db9eef4e322ce11b31.jpg",
+      "PackagePath": "staticwebassets\\images\\Garantee\\23dd53af94d847db9eef4e322ce11b31.jpg"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\3e0ae06f5011470b9d75b5fcd7c09e64.jpg",

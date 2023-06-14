@@ -31,5 +31,3 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
             .HasForeignKey(c => c.BrandId);
     }
 }
-
-

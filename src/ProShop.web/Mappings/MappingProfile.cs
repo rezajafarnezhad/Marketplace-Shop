@@ -268,6 +268,19 @@ public class MappingProfile : Profile
                         src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
             ;
 
+        this.CreateMap<Cart, ShowCartInPeymentPageViewModel>()
+            .ForMember(dest => dest.ProductPicture, options => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
+            .ForMember(dest => dest.ProductVariantCount2,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.Count > 5 ? (byte)0 : (byte)src.ProductVariant.Count
+                    ))
+            .ForMember(dest => dest.IsDiscountActive,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductVariant.offPercentage != null && (src.ProductVariant.StartDateTime <= now && src.ProductVariant.EndDateTime >= now)))
+            ;
+
         this.CreateMap<Entities.Address, AddressInCheckoutPageInViewModel>();
 
     }

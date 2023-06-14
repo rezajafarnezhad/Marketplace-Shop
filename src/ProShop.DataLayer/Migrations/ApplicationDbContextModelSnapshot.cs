@@ -54,6 +54,9 @@ namespace ProShop.DataLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1207,6 +1210,195 @@ namespace ProShop.DataLayer.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PayFromWallet")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ParcalPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("Dimensions")
+                        .HasColumnType("tinyint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte>("OrderStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PostTrackingCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("ShippingPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PostTrackingCode")
+                        .IsUnique()
+                        .HasFilter("[PostTrackingCode] IS NOT NULL");
+
+                    b.ToTable("ParcalPosts", (string)null);
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ParcelPostItem", b =>
+                {
+                    b.Property<long>("ParcalPostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductVariantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("CreatedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DiscountPrice")
+                        .HasColumnType("int");
+
+                    b.Property<long>("GaranteeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ModifiedByBrowserName")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ModifiedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long?>("ModifiedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("ParcalPostId", "ProductVariantId");
+
+                    b.HasIndex("GaranteeId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("ParcelPostItems", (string)null);
+                });
+
             modelBuilder.Entity("ProShop.Entities.Product", b =>
                 {
                     b.Property<long>("Id")
@@ -2320,6 +2512,63 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Order", b =>
+                {
+                    b.HasOne("ProShop.Entities.Address", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.Identity.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ParcalPost", b =>
+                {
+                    b.HasOne("ProShop.Entities.Order", "Order")
+                        .WithMany("ParcalPosts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ParcelPostItem", b =>
+                {
+                    b.HasOne("ProShop.Entities.Garantee", "Garantee")
+                        .WithMany("ParcelPostItems")
+                        .HasForeignKey("GaranteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.ParcalPost", "ParcalPost")
+                        .WithMany("ParcelPostItems")
+                        .HasForeignKey("ParcalPostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProShop.Entities.ProductVariant", "ProductVariant")
+                        .WithMany("ParcelPostItems")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Garantee");
+
+                    b.Navigation("ParcalPost");
+
+                    b.Navigation("ProductVariant");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Product", b =>
                 {
                     b.HasOne("ProShop.Entities.Brand", "Brand")
@@ -2544,6 +2793,11 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Address", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Brand", b =>
                 {
                     b.Navigation("CategoryBrands");
@@ -2584,6 +2838,11 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("ProductFeatures");
                 });
 
+            modelBuilder.Entity("ProShop.Entities.Garantee", b =>
+                {
+                    b.Navigation("ParcelPostItems");
+                });
+
             modelBuilder.Entity("ProShop.Entities.Identity.Role", b =>
                 {
                     b.Navigation("RoleClaims");
@@ -2594,6 +2853,8 @@ namespace ProShop.DataLayer.Migrations
             modelBuilder.Entity("ProShop.Entities.Identity.User", b =>
                 {
                     b.Navigation("Carts");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Seller");
 
@@ -2606,6 +2867,16 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("UserRoles");
 
                     b.Navigation("UserTokens");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.Order", b =>
+                {
+                    b.Navigation("ParcalPosts");
+                });
+
+            modelBuilder.Entity("ProShop.Entities.ParcalPost", b =>
+                {
+                    b.Navigation("ParcelPostItems");
                 });
 
             modelBuilder.Entity("ProShop.Entities.Product", b =>
@@ -2633,6 +2904,8 @@ namespace ProShop.DataLayer.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("ConsignmentItems");
+
+                    b.Navigation("ParcelPostItems");
 
                     b.Navigation("ProductStocks");
                 });

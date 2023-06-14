@@ -15,32 +15,13 @@
     
     border-radius: 18px;
 }
-/* _content/ProShop.web/Pages/Carts/CheckOut.cshtml.rz.scp.css */
-.checkout-line-in-header[b-jqb7va1wl8] {
-    width: 100px;
-    height: 1px;
-}
-
-#cart-section-in-checkout[b-jqb7va1wl8] {
-    color: #f3a3a3;
-}
-
-.color-element-in-checkout[b-jqb7va1wl8] {
-    width: 14px;
-    height: 14px;
-}
-
-.shipping-item-in-checkout span[b-jqb7va1wl8] {
-    top: 85%;
-    right: 83%;
-    z-index: 1;
-}
-
-#shipping-dropdown .dropdown-menu[b-jqb7va1wl8] {
-    width: 300px !important;
-}
 /* _content/ProShop.web/Pages/Carts/Index.cshtml.rz.scp.css */
 
+/* _content/ProShop.web/Pages/Carts/Peyment.cshtml.rz.scp.css */
+.circle-in-payment[b-gpzzyn6vwf] {
+    width: 20px;
+    height: 20px;
+}
 /* _content/ProShop.web/Pages/Carts/_CartBody.cshtml.rz.scp.css */
 .cart-items-in-cart-page:not(:last-child)[b-1y9io5jk4a] {
     border-bottom: 1px solid #dee2e6;

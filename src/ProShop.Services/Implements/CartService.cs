@@ -28,19 +28,19 @@ public class CartService : GenericService<Cart>, ICartService
     public async Task<List<ShowCartInDropDownViewModel>> GetCartForDropDown(long userId)
     {
         return await _carts.AsNoTracking().Where(c => c.UserId == userId)
-            .ProjectTo<ShowCartInDropDownViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now=DateTime.Now}).ToListAsync();
+            .ProjectTo<ShowCartInDropDownViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now }).ToListAsync();
     }
-    
+
     public async Task<List<ShowCartInCartPageViewModel>> GetCartForCartPage(long userId)
     {
         return await _carts.AsNoTracking().Where(c => c.UserId == userId)
-            .ProjectTo<ShowCartInCartPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now=DateTime.Now}).ToListAsync();
+            .ProjectTo<ShowCartInCartPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now }).ToListAsync();
     }
 
     public async Task<List<Cart>> GetAllCartItems(long userId)
     {
 
-       return await _carts.AsNoTracking().Where(c => c.UserId == userId).ToListAsync();
+        return await _carts.AsNoTracking().Where(c => c.UserId == userId).ToListAsync();
     }
 
 
@@ -48,9 +48,15 @@ public class CartService : GenericService<Cart>, ICartService
     {
 
         return await _carts.AsNoTracking().Where(c => c.UserId == userId)
-            .ProjectTo<ShowCartInChackoutPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now})
+            .ProjectTo<ShowCartInChackoutPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now })
             .ToListAsync();
 
+    }
+    public async Task<List<ShowCartInPeymentPageViewModel>> GetCartsForPeymentPage(long userId)
+    {
+        return await _carts.AsNoTracking().Where(c => c.UserId == userId)
+            .ProjectTo<ShowCartInPeymentPageViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now })
+            .ToListAsync();
     }
 
 }

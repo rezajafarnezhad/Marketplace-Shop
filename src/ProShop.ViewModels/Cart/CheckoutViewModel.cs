@@ -40,11 +40,13 @@ namespace ProShop.ViewModels.Cart
         public string ProductVariantGaranteeFullTitle { get; set; }
         public string ProductVariantSellerShopName { get; set; }
         public byte ProductVariantCount2 { get; set; }
+        public int ProductVariantProductProductCode { get; set; }
+        public int ProductVariantProductProductSlug { get; set; }
         public byte Score
         {
             get
             {
-                var result = ProductVariantPrice / 10000;
+                var result = (ProductVariantPrice * Count) / 10000;
                 if (result <= 1)
                     return 1;
                 if (result >= 150)

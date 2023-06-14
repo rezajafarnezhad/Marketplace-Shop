@@ -9,6 +9,7 @@ public class Address : EntityBase, IAuditableEntity
     public long UserId { get; set; }
     public long ProvinceId { get; set; }
     public long CityId { get; set; }
+    public bool IsDefault { get; set; }
     public string AddressLine { get; set; }
 
     /// <summary>
@@ -38,4 +39,5 @@ public class Address : EntityBase, IAuditableEntity
     public User User { get; set; }
     public ProvinceAndCity Province { get; set; }
     public ProvinceAndCity City { get; set; }
+    public ICollection<Order> Orders { get; set; }
 }
