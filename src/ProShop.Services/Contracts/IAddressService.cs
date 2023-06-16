@@ -11,4 +11,6 @@ namespace ProShop.Services.Contracts;
 public interface IAddressService : IGenericService<Address>
 {
     Task<AddressInCheckoutPageInViewModel> GetAddressForCheckoutPage(long userId);
+    Task<(bool HasUserAddress,long AddressId)> GetAddressForCreateOrderAndPay(long userId);
+
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mayleFB5jw5dy2Tn7Q+akZTWjtCFsRscSm//RKSWRu0O0qJrhJfqo3PRUkxKp/nFnA8oTmKUJHdsuqwWX/DSbw==",
+  "dgSpecHash": "wboWD5Qyh0GPExMgUlVc/bvP/hBfGJD8xIAIiU0MBWbsDQJJZkMoFtsOwkwOTKd/1tlrcv3lyQBTmRtZgllaGQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Services\\ProShop.Services.csproj",
   "expectedPackageFiles": [
@@ -111,6 +111,8 @@
     "C:\\Users\\mReza\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.abstractions\\1.0.0\\parbad.storage.abstractions.1.0.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.entityframeworkcore\\1.3.1\\parbad.storage.entityframeworkcore.1.3.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\polly\\7.2.2\\polly.7.2.2.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",

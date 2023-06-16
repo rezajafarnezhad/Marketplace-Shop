@@ -18,8 +18,8 @@
     .ToList();
 
 
-    var sumPriceOfNormalProducts = normalProducts.Sum(x => x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice);
-    var sumPriceOfHeavyProducts = HeavyProducts.Sum(x => x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice);
+    var sumPriceOfNormalProducts = normalProducts.Sum(x => (x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice) * x.Count);
+    var sumPriceOfHeavyProducts = HeavyProducts.Sum(x => (x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice)* x.Count);
 
 
     var sumScore = CartItems.Sum(c => c.Score);

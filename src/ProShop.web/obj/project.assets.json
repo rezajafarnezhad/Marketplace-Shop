@@ -3051,6 +3051,114 @@
           }
         }
       },
+      "Parbad/3.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1",
+          "Parbad.Storage.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.AspNetCore/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Gateway.ZarinPal/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Parbad.Storage.Abstractions/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Parbad.Storage.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Parbad.Storage.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Storage.Cache/1.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "Parbad.Storage.Abstractions": "1.1.0"
+        },
+        "compile": {
+          "lib/net6.0/Parbad.Storage.Cache.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Parbad.Storage.Cache.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Storage.EntityFrameworkCore/1.3.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.0",
+          "Parbad.Storage.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Parbad.Storage.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Parbad.Storage.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Polly/7.2.2": {
         "type": "package",
         "compile": {
@@ -4819,6 +4927,7 @@
           "Microsoft.EntityFrameworkCore": "6.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.3",
+          "Parbad.Storage.EntityFrameworkCore": "1.3.1",
           "ProShop.Entities": "1.0.0"
         },
         "compile": {
@@ -8449,6 +8558,147 @@
         "lib/netstandard2.0/NuGet.Versioning.xml",
         "nuget.versioning.5.11.0.nupkg.sha512",
         "nuget.versioning.nuspec"
+      ]
+    },
+    "Parbad/3.7.0": {
+      "sha512": "GNq42w6sgWvMfMV2K07vZJsfV8GdKiIDedtoPCNuUp2OdSs6Z2AdF2EAO5WXWCfBNIZkPyhfPauApNH/xsTFTg==",
+      "type": "package",
+      "path": "parbad/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.dll",
+        "lib/net5.0/Parbad.xml",
+        "lib/netcoreapp3.0/Parbad.dll",
+        "lib/netcoreapp3.0/Parbad.xml",
+        "lib/netcoreapp3.1/Parbad.dll",
+        "lib/netcoreapp3.1/Parbad.xml",
+        "lib/netstandard2.0/Parbad.dll",
+        "lib/netstandard2.0/Parbad.xml",
+        "lib/netstandard2.1/Parbad.dll",
+        "lib/netstandard2.1/Parbad.xml",
+        "parbad.3.7.0.nupkg.sha512",
+        "parbad.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.AspNetCore/1.2.0": {
+      "sha512": "b+9tgJY6MUvD5mSrMLVAEXshRo8nSV3HyEgdPBAQBarzXaqUdij2TBRj+NuWvf25xOQTEA500TO/sblI1PwBJw==",
+      "type": "package",
+      "path": "parbad.aspnetcore/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.AspNetCore.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.AspNetCore.dll",
+        "lib/net5.0/Parbad.AspNetCore.xml",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.dll",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.xml",
+        "lib/netcoreapp3.1/Parbad.AspNetCore.dll",
+        "lib/netcoreapp3.1/Parbad.AspNetCore.xml",
+        "lib/netstandard2.0/Parbad.AspNetCore.dll",
+        "lib/netstandard2.0/Parbad.AspNetCore.xml",
+        "lib/netstandard2.1/Parbad.AspNetCore.dll",
+        "lib/netstandard2.1/Parbad.AspNetCore.xml",
+        "parbad.aspnetcore.1.2.0.nupkg.sha512",
+        "parbad.aspnetcore.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Gateway.ZarinPal/1.2.0": {
+      "sha512": "6YJQUNEX1ZSA39ko90vikWHhesq5SVnP+ydzwFXbHRErk9RROWk7yTGZdW9rv7cHhuB9vbV8jeNaNdF3SNU/nw==",
+      "type": "package",
+      "path": "parbad.gateway.zarinpal/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Gateway.ZarinPal.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/net5.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.1/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.1/Parbad.Gateway.ZarinPal.xml",
+        "parbad.gateway.zarinpal.1.2.0.nupkg.sha512",
+        "parbad.gateway.zarinpal.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Storage.Abstractions/1.1.0": {
+      "sha512": "cCRrBim9RgDRvAc3ULKWMnw2JRqlNQez599jZ7vmcuXZxmOm3r24hVIIvJf3o3yKF99PtfTRUs+8gvXuByOvWg==",
+      "type": "package",
+      "path": "parbad.storage.abstractions/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Storage.Abstractions.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.Storage.Abstractions.dll",
+        "lib/net5.0/Parbad.Storage.Abstractions.xml",
+        "lib/net6.0/Parbad.Storage.Abstractions.dll",
+        "lib/net6.0/Parbad.Storage.Abstractions.xml",
+        "lib/net7.0/Parbad.Storage.Abstractions.dll",
+        "lib/net7.0/Parbad.Storage.Abstractions.xml",
+        "lib/netcoreapp3.0/Parbad.Storage.Abstractions.dll",
+        "lib/netcoreapp3.0/Parbad.Storage.Abstractions.xml",
+        "lib/netcoreapp3.1/Parbad.Storage.Abstractions.dll",
+        "lib/netcoreapp3.1/Parbad.Storage.Abstractions.xml",
+        "lib/netstandard2.0/Parbad.Storage.Abstractions.dll",
+        "lib/netstandard2.0/Parbad.Storage.Abstractions.xml",
+        "lib/netstandard2.1/Parbad.Storage.Abstractions.dll",
+        "lib/netstandard2.1/Parbad.Storage.Abstractions.xml",
+        "parbad.storage.abstractions.1.1.0.nupkg.sha512",
+        "parbad.storage.abstractions.nuspec"
+      ]
+    },
+    "Parbad.Storage.Cache/1.3.0": {
+      "sha512": "GCplKPLEKhqqHXAx82IrLQlw9u7rBx90Pre0JvBYlFAug8KEJVmlXeQbrHh4lAiGjGgeUMV/cWtz8JaaA18OVg==",
+      "type": "package",
+      "path": "parbad.storage.cache/1.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Storage.Cache.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.Storage.Cache.dll",
+        "lib/net5.0/Parbad.Storage.Cache.xml",
+        "lib/net6.0/Parbad.Storage.Cache.dll",
+        "lib/net6.0/Parbad.Storage.Cache.xml",
+        "lib/net7.0/Parbad.Storage.Cache.dll",
+        "lib/net7.0/Parbad.Storage.Cache.xml",
+        "lib/netcoreapp3.0/Parbad.Storage.Cache.dll",
+        "lib/netcoreapp3.0/Parbad.Storage.Cache.xml",
+        "lib/netcoreapp3.1/Parbad.Storage.Cache.dll",
+        "lib/netcoreapp3.1/Parbad.Storage.Cache.xml",
+        "lib/netstandard2.0/Parbad.Storage.Cache.dll",
+        "lib/netstandard2.0/Parbad.Storage.Cache.xml",
+        "lib/netstandard2.1/Parbad.Storage.Cache.dll",
+        "lib/netstandard2.1/Parbad.Storage.Cache.xml",
+        "parbad.storage.cache.1.3.0.nupkg.sha512",
+        "parbad.storage.cache.nuspec"
+      ]
+    },
+    "Parbad.Storage.EntityFrameworkCore/1.3.1": {
+      "sha512": "mcnxk8seOeWldiA0Zk0q4tFCTLKWxhe1ZOJLfZwcx21kpsz3Ydcuc+35xs2X0LqV4sM5u4hB7sRklXPRjXPunA==",
+      "type": "package",
+      "path": "parbad.storage.entityframeworkcore/1.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Storage.EntityFrameworkCore.xml",
+        "icon.png",
+        "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll",
+        "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.xml",
+        "lib/netstandard2.1/Parbad.Storage.EntityFrameworkCore.dll",
+        "lib/netstandard2.1/Parbad.Storage.EntityFrameworkCore.xml",
+        "parbad.storage.entityframeworkcore.1.3.1.nupkg.sha512",
+        "parbad.storage.entityframeworkcore.nuspec"
       ]
     },
     "Polly/7.2.2": {
@@ -12719,6 +12969,10 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
+      "Parbad.AspNetCore >= 1.2.0",
+      "Parbad.Gateway.ZarinPal >= 1.2.0",
+      "Parbad.Storage.Cache >= 1.3.0",
+      "Parbad.Storage.EntityFrameworkCore >= 1.3.1",
       "ProShop.DataLayer >= 1.0.0",
       "ProShop.Ioc >= 1.0.0",
       "ProShop.Services >= 1.0.0",
@@ -12786,6 +13040,22 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[6.0.2, )"
+          },
+          "Parbad.AspNetCore": {
+            "target": "Package",
+            "version": "[1.2.0, )"
+          },
+          "Parbad.Gateway.ZarinPal": {
+            "target": "Package",
+            "version": "[1.2.0, )"
+          },
+          "Parbad.Storage.Cache": {
+            "target": "Package",
+            "version": "[1.3.0, )"
+          },
+          "Parbad.Storage.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[1.3.1, )"
           }
         },
         "imports": [

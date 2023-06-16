@@ -26,4 +26,15 @@ public class AddressService : GenericService<Entities.Address>, IAddressService
         return await _mapper.ProjectTo<AddressInCheckoutPageInViewModel>(_address.Where(c=>c.UserId == userId)).FirstAsync();
     }
 
+    public async Task<(bool HasUserAddress, long AddressId)> GetAddressForCreateOrderAndPay(long userId)
+    {
+        var address =
+            await _address.Where(c=>c.IsDefault)
+                .Select(c => new { c.Id, c.UserId }).FirstOrDefaultAsync(c => c.UserId == userId);
+       
+        if(address is null)
+            return (false,default);
+
+        return (true, address.Id);
+    }
 }

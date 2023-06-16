@@ -5,10 +5,11 @@ using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels;
 using System.Globalization;
+using ProShop.ViewModels.Cart;
 
 namespace ProShop.Services.Implements;
 
-public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : EntityBase, new()
+public abstract class GenericService<TEntity> : IGenericService<TEntity> where TEntity : EntityBase, new()
 {
     private readonly IUnitOfWork _uow;
     private readonly DbSet<TEntity> _entities;
@@ -121,4 +122,6 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     {
         _entities.RemoveRange(entities);
     }
+
+   
 }

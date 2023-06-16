@@ -10,3 +10,8 @@
     });
 
 });
+
+
+function createOrderAndPayFunc(message, data) {
+    location.href = data;
+}

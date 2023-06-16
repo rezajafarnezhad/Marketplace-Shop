@@ -23,7 +23,8 @@ public class ProductVariant: EntityBase, IAuditableEntity
     public ICollection<ConsignmentItem> ConsignmentItems { get; set; }
     public ICollection<ProductStock> ProductStocks { get; set; }
     public ICollection<Cart> Carts { get; set; }
-    public ICollection<ParcelPostItem> ParcelPostItems { get; set; }
+    public ICollection<ParcelPostItem> ParcelPostItems { get; set; } = new List<ParcelPostItem>();
+
 
 
 }

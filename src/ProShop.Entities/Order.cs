@@ -18,7 +18,7 @@ public class Order : EntityBase, IAuditableEntity
     public bool PayFromWallet { get; set; }
     public User User { get; set; }
     public Address Address { get; set; }
-    public ICollection<ParcalPost> ParcalPosts { get; set; }
+    public ICollection<ParcalPost> ParcalPosts { get; set; } = new List<ParcalPost>();
 }
 
 public enum OrderStatus : byte

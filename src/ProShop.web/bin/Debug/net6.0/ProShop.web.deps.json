@@ -9,6 +9,10 @@
       "ProShop.web/1.0.0": {
         "dependencies": {
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
+          "Parbad.AspNetCore": "1.2.0",
+          "Parbad.Gateway.ZarinPal": "1.2.0",
+          "Parbad.Storage.Cache": "1.3.0",
+          "Parbad.Storage.EntityFrameworkCore": "1.3.1",
           "ProShop.DataLayer": "1.0.0",
           "ProShop.Ioc": "1.0.0",
           "ProShop.Services": "1.0.0",
@@ -1985,6 +1989,72 @@
           }
         }
       },
+      "Parbad/3.7.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "Parbad.Storage.Abstractions": "1.1.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "Parbad.AspNetCore/1.2.0": {
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Parbad.Gateway.ZarinPal/1.2.0": {
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Parbad.Storage.Abstractions/1.1.0": {
+        "runtime": {
+          "lib/net6.0/Parbad.Storage.Abstractions.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Parbad.Storage.Cache/1.3.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "Parbad.Storage.Abstractions": "1.1.0"
+        },
+        "runtime": {
+          "lib/net6.0/Parbad.Storage.Cache.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.0.0"
+          }
+        }
+      },
+      "Parbad.Storage.EntityFrameworkCore/1.3.1": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.3",
+          "Parbad.Storage.Abstractions": "1.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Parbad.Storage.EntityFrameworkCore.dll": {
+            "assemblyVersion": "1.3.1.0",
+            "fileVersion": "1.3.1.0"
+          }
+        }
+      },
       "Polly/7.2.2": {
         "runtime": {
           "lib/netstandard2.0/Polly.dll": {
@@ -2884,6 +2954,7 @@
           "Microsoft.EntityFrameworkCore": "6.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.3",
+          "Parbad.Storage.EntityFrameworkCore": "1.3.1",
           "ProShop.Entities": "1.0.0"
         },
         "runtime": {
@@ -3981,6 +4052,48 @@
       "sha512": "sha512-mCv/GzvMk5iatWoZY41PoIShEbwVxq9CDCc1fV/uqPFKZ4DD/1JuKZ5AL/FJJRsTanvMR3EOXKYCLdQ7PFYn8Q==",
       "path": "nuget.versioning/5.11.0",
       "hashPath": "nuget.versioning.5.11.0.nupkg.sha512"
+    },
+    "Parbad/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GNq42w6sgWvMfMV2K07vZJsfV8GdKiIDedtoPCNuUp2OdSs6Z2AdF2EAO5WXWCfBNIZkPyhfPauApNH/xsTFTg==",
+      "path": "parbad/3.7.0",
+      "hashPath": "parbad.3.7.0.nupkg.sha512"
+    },
+    "Parbad.AspNetCore/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b+9tgJY6MUvD5mSrMLVAEXshRo8nSV3HyEgdPBAQBarzXaqUdij2TBRj+NuWvf25xOQTEA500TO/sblI1PwBJw==",
+      "path": "parbad.aspnetcore/1.2.0",
+      "hashPath": "parbad.aspnetcore.1.2.0.nupkg.sha512"
+    },
+    "Parbad.Gateway.ZarinPal/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6YJQUNEX1ZSA39ko90vikWHhesq5SVnP+ydzwFXbHRErk9RROWk7yTGZdW9rv7cHhuB9vbV8jeNaNdF3SNU/nw==",
+      "path": "parbad.gateway.zarinpal/1.2.0",
+      "hashPath": "parbad.gateway.zarinpal.1.2.0.nupkg.sha512"
+    },
+    "Parbad.Storage.Abstractions/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cCRrBim9RgDRvAc3ULKWMnw2JRqlNQez599jZ7vmcuXZxmOm3r24hVIIvJf3o3yKF99PtfTRUs+8gvXuByOvWg==",
+      "path": "parbad.storage.abstractions/1.1.0",
+      "hashPath": "parbad.storage.abstractions.1.1.0.nupkg.sha512"
+    },
+    "Parbad.Storage.Cache/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GCplKPLEKhqqHXAx82IrLQlw9u7rBx90Pre0JvBYlFAug8KEJVmlXeQbrHh4lAiGjGgeUMV/cWtz8JaaA18OVg==",
+      "path": "parbad.storage.cache/1.3.0",
+      "hashPath": "parbad.storage.cache.1.3.0.nupkg.sha512"
+    },
+    "Parbad.Storage.EntityFrameworkCore/1.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mcnxk8seOeWldiA0Zk0q4tFCTLKWxhe1ZOJLfZwcx21kpsz3Ydcuc+35xs2X0LqV4sM5u4hB7sRklXPRjXPunA==",
+      "path": "parbad.storage.entityframeworkcore/1.3.1",
+      "hashPath": "parbad.storage.entityframeworkcore.1.3.1.nupkg.sha512"
     },
     "Polly/7.2.2": {
       "type": "package",

@@ -19,5 +19,5 @@ public class ParcalPost : EntityBase, IAuditableEntity
     /// </summary>
     public int ShippingPrice { get; set; }
     public Order Order { get; set; }
-    public ICollection<ParcelPostItem> ParcelPostItems { get; set; }
+    public ICollection<ParcelPostItem> ParcelPostItems { get; set; }=new List<ParcelPostItem>();
 }

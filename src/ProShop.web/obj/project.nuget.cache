@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lx+uz93fXov5NIrD+0kIvLHQwbTajfEcRxbKXAZ654zqaiGwpv+zFXkZ6xxqvfi4hgSBnBoC6SlfJ3OeZKT5qg==",
+  "dgSpecHash": "oWQ3tyr2qAmBsSe8gbIIbGAVUfRnBNo9R5XlQTZt5FB/bXW3f7gp7Y+qZNCdDaVQjGaaMP4sqhXonD8cfFvCDw==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.web\\ProShop.web.csproj",
   "expectedPackageFiles": [
@@ -152,6 +152,12 @@
     "C:\\Users\\mReza\\.nuget\\packages\\nuget.projectmodel\\5.11.0\\nuget.projectmodel.5.11.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\nuget.protocol\\5.11.0\\nuget.protocol.5.11.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\nuget.versioning\\5.11.0\\nuget.versioning.5.11.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad\\3.7.0\\parbad.3.7.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.aspnetcore\\1.2.0\\parbad.aspnetcore.1.2.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.gateway.zarinpal\\1.2.0\\parbad.gateway.zarinpal.1.2.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.abstractions\\1.1.0\\parbad.storage.abstractions.1.1.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.cache\\1.3.0\\parbad.storage.cache.1.3.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.entityframeworkcore\\1.3.1\\parbad.storage.entityframeworkcore.1.3.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\polly\\7.2.2\\polly.7.2.2.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",

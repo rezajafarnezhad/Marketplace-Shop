@@ -12,4 +12,6 @@ public interface ICartService : IGenericService<Cart>
     Task<List<ShowCartInChackoutPageViewModel>> GetCartsForCheckoutPage(long userId);
     Task<List<ShowCartInPeymentPageViewModel>> GetCartsForPeymentPage(long userId);
     Task<List<ProductVariantInCartForProductInfoViewModel>> GetProductVariantsInCart(List<long> productVariantsIds, long userId);
+    Task<List<ShowCartForCreateOrderAndPayViewModel>> GetCartsForCreateOrderAndPay(long userId);
+    Task<List<Cart>> GetCartsForRemove(long userId, List<long> productVariantId);
 }

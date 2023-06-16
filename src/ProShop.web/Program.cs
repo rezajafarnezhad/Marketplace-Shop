@@ -2,18 +2,63 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using AutoMapper;
 using DNTCommon.Web.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.WebEncoders;
+using Parbad.Builder;
+using Parbad.Gateway.ZarinPal;
+using Parbad.Storage.EntityFrameworkCore.Builder;
+using ProShop.DataLayer.Context;
 using ProShop.Ioc;
 using ProShop.ViewModels.Identity.Settings;
 using ProShop.web.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Parbad ConnectionString
+
+var parbadConnectionString = builder.Configuration.GetConnectionString("ParbadDataContextConnection");
+
 // Add services to the container.
 builder.Services.Configure<SiteSettings>(options => builder.Configuration.Bind(options));
 
 builder.Services.Configure<ContentSecurityPolicyConfig>(options => builder.Configuration.GetSection("ContentSecurityPolicyConfig").Bind(options));
 builder.Services.AddCustomIdentityServices();
+
+
+builder.Services.AddParbad()
+    .ConfigureStorage(builder =>
+{
+    builder.UseEfCore(options =>
+    {
+        // Example 1: Using SQL Server
+        var assemblyName = typeof(ApplicationDbContext).Assembly.GetName().Name;
+       
+        // Example 2: If you prefer to have a separate MigrationHistory table for Parbad, you can change the above line to this:
+        options.ConfigureDbContext = db => db.UseSqlServer(parbadConnectionString, sql =>
+        {
+            sql.MigrationsAssembly(assemblyName);
+        });
+
+        options.DefaultSchema = "dbo"; // optional
+        options.PaymentTableOptions.Name = "Payment"; // optional
+        options.TransactionTableOptions.Name = "Transaction"; // optional
+    });
+}).ConfigureGateways(gateways =>
+    {
+        gateways
+            .AddZarinPal()
+            .WithAccounts(accounts =>
+            {
+                accounts.AddInMemory(account =>
+                {
+                    account.MerchantId = "test";
+                    account.IsSandbox = true;
+                });
+            });
+    }).ConfigureHttpContext(builder => builder.UseDefaultAspNetCore());
+
+
+
 builder.Services.AddRazorPages();
 builder.Services.Configure<WebEncoderOptions>(options =>
 {
