@@ -62,7 +62,7 @@ function getRVT(e) {
 
 
 function loginWithPhonenumberInIdentity(message, data) {
-    console.log(data);
+    
     showToastr('success', message);
     location.href = data;
 }

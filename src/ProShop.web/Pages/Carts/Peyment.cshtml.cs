@@ -185,7 +185,7 @@ namespace ProShop.web.Pages.Carts
             //// remove Cart 
             var _productVariantIds = CartItems.Select(c => c.ProductVariantId).ToList();
             var cartItems = await _cartService.GetCartsForRemove(userId, _productVariantIds);
-            int a = 0;
+           
             _cartService.RemoveRange(cartItems);
 
 
@@ -240,6 +240,7 @@ namespace ProShop.web.Pages.Carts
                 return Json(new JsonResultOperation(false));
 
             }
+            //end payment
         }
     }
 }
