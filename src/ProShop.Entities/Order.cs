@@ -8,7 +8,8 @@ public class Order : EntityBase, IAuditableEntity
 {
     public long UserId { get; set; }
     public long AddressId { get; set; }
-    public int OrderNumber { get; set; }
+    public long OrderNumber { get; set; }
+    public string BankTransactionCode { get; set; }
     public DateTime CreatedDateTime { get; set; }
     /// <summary>
     /// آیا این سفارش توسط مقدار داخل کیف پول کاربر پرداخت شده است ؟
@@ -16,6 +17,10 @@ public class Order : EntityBase, IAuditableEntity
     /// اگر هم ترو باشد، یعنی توسط کیف پول پرداخت شده است
     /// </summary>
     public bool PayFromWallet { get; set; }
+    /// <summary>
+    /// از کدام درگاه، پرداختی انجام شده است
+    /// </summary>
+    public PaymentGateway PaymentGateway { get; set; }
     public User User { get; set; }
     public Address Address { get; set; }
     public ICollection<ParcalPost> ParcalPosts { get; set; } = new List<ParcalPost>();
@@ -37,4 +42,16 @@ public enum OrderStatus : byte
 
     [Display(Name = "تحویل شده")]
     DeliveredToClient
+}
+
+public enum PaymentGateway : byte
+{
+    [Display(Name = "زرین پال")]
+    Zarinpal,
+
+    [Display(Name = "به پرداخت ملت")]
+    Mellat,
+
+    [Display(Name = "درگاه مجازی تست")]
+    ParbadVirtual,
 }

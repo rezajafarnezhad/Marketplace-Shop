@@ -4,5 +4,5 @@ namespace ProShop.Services.Contracts;
 
 public interface IOrderService : IGenericService<Order>
 {
-    Task<int> GetOrderNumberForCreateOrderAndPay();
+    Task<Order> FindByOrderNumberAndIncludeParcelPosts(long orderNumber , long userId);
 }

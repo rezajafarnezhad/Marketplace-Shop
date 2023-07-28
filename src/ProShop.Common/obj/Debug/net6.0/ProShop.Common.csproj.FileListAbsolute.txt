@@ -10,3 +10,15 @@ C:\Users\mReza\source\repos\ProShop\src\ProShop.Common\obj\Debug\net6.0\ProShop.
 C:\Users\mReza\source\repos\ProShop\src\ProShop.Common\obj\Debug\net6.0\refint\ProShop.Common.dll
 C:\Users\mReza\source\repos\ProShop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.pdb
 C:\Users\mReza\source\repos\ProShop\src\ProShop.Common\obj\Debug\net6.0\ref\ProShop.Common.dll
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\bin\Debug\net6.0\ProShop.Common.deps.json
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\bin\Debug\net6.0\ProShop.Common.dll
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\bin\Debug\net6.0\ProShop.Common.pdb
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.csproj.AssemblyReference.cache
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.AssemblyInfoInputs.cache
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.AssemblyInfo.cs
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.csproj.CoreCompileInputs.cache
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.dll
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\refint\ProShop.Common.dll
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ProShop.Common.pdb
+C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.Common\obj\Debug\net6.0\ref\ProShop.Common.dll

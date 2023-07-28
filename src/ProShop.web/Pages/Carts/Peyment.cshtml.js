@@ -12,6 +12,7 @@
 });
 
 
-function createOrderAndPayFunc(message, data) {
-    location.href = data;
-}
+
+$('form').submit(function () {
+    $('#btn-pay').attr('disabled', 'disabled');
+});

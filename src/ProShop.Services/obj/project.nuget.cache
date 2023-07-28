@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wboWD5Qyh0GPExMgUlVc/bvP/hBfGJD8xIAIiU0MBWbsDQJJZkMoFtsOwkwOTKd/1tlrcv3lyQBTmRtZgllaGQ==",
+  "dgSpecHash": "2kPM0D3OYfJPHyLYmmjlW/c6sx6MlXei6bpQBSpeCl99HqpltVGgeLSwV5Bz/pU73ijV21l475z5cvQ+FXMfZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Services\\ProShop.Services.csproj",
+  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Services\\ProShop.Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mReza\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

@@ -8247,11 +8247,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj",
+      "projectUniqueName": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
       "projectName": "ProShop.Common",
-      "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj",
+      "projectPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
       "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\obj\\",
+      "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

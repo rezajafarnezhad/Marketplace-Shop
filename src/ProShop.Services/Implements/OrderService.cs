@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProShop.DataLayer.Context;
+using ProShop.Entities;
 using ProShop.Services.Contracts;
+using System.Data;
 
 namespace ProShop.Services.Implements;
 
@@ -16,11 +18,11 @@ public class OrderService : GenericService<Entities.Order>, IOrderService
         _orders = uow.Set<Entities.Order>();
     }
 
-    public async Task<int> GetOrderNumberForCreateOrderAndPay()
+    public async Task<Order> FindByOrderNumberAndIncludeParcelPosts(long orderNumber, long userId)
     {
-        var LastOrderNumber = await _orders.OrderByDescending(c => c.Id).Select(c=>c.OrderNumber).FirstOrDefaultAsync();
-        return LastOrderNumber + 5020;
-
+        return await _orders
+            .Include(c => c.ParcalPosts)
+            .Where(c => c.OrderNumber == orderNumber)
+            .SingleOrDefaultAsync(c => c.UserId == userId);
     }
-
 }

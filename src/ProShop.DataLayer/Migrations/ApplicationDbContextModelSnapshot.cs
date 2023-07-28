@@ -1221,6 +1221,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("BankTransactionCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedByBrowserName")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -1252,11 +1255,14 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime?>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                    b.Property<long>("OrderNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("PayFromWallet")
                         .HasColumnType("bit");
+
+                    b.Property<byte>("PaymentGateway")
+                        .HasColumnType("tinyint");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");

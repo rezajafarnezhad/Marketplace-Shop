@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JdWdqPSQYZg4pTNVe+kaUrhCAyAJVG6UbxnfL/fZdKCZL4aHBpEPmrVssbl0B3gmJ98J2mnY5BbrFX1MiCEL+w==",
+  "dgSpecHash": "W9QpxUtJG0O30VL8WbKzU6SUcd6TKdvsQiWlr0qCad2gk2BHrh/+taulF5UNAiPORlk1U0w/rn6O8UkQWdGaeQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
+  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mReza\\.nuget\\packages\\anglesharp\\0.16.1\\anglesharp.0.16.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\anglesharp.css\\0.16.3\\anglesharp.css.0.16.3.nupkg.sha512",

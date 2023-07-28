@@ -10242,11 +10242,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
+      "projectUniqueName": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
       "projectName": "ProShop.Ioc",
-      "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
+      "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Ioc\\ProShop.Ioc.csproj",
       "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Ioc\\obj\\",
+      "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Ioc\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -10268,17 +10268,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj": {
-              "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Common\\ProShop.Common.csproj"
+            "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj": {
+              "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj"
             },
-            "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj": {
-              "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj"
+            "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj": {
+              "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj"
             },
-            "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Services\\ProShop.Services.csproj": {
-              "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.Services\\ProShop.Services.csproj"
+            "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Services\\ProShop.Services.csproj": {
+              "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Services\\ProShop.Services.csproj"
             },
-            "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj": {
-              "projectPath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj"
+            "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj": {
+              "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj"
             }
           }
         }

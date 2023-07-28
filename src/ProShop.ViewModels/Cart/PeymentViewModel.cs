@@ -1,5 +1,6 @@
 ﻿
 using ProShop.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProShop.ViewModels.Cart
 {
@@ -23,6 +24,8 @@ namespace ProShop.ViewModels.Cart
         /// اگر هم ترو باشد، یعنی توسط کیف پول پرداخت شده است
         /// </summary>
         public bool PayFromWallet { get; set; }
+        [Display(Name ="درگاه پرداخت")]
+        public PaymentGateway PaymentGateway { get; set; }
     }
 
     public class ShowCartForCreateOrderAndPayViewModel : ShowCartInPeymentPageViewModel

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qglHco2BlhEvTjRQvkgU7JYDlxfu+K6bGLD6LNgeNyZpSJ+VUSYcw5SuxBiFu7xaZXiMRiZDew0Izw6UKRPadA==",
+  "dgSpecHash": "ON3Do2vEgXQZ+9KtFO4b/7eBXKWCrbfVgsedfS1CqqJltgW91NkfmvSP25TEuXYRxMUK8+FjyDdS0u8Gfeo9fg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\ProShop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj",
+  "projectFilePath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.ViewModels\\ProShop.ViewModels.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mReza\\.nuget\\packages\\barcodelib\\2.4.0\\barcodelib.2.4.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\dntpersianutils.core\\5.4.1\\dntpersianutils.core.5.4.1.nupkg.sha512",

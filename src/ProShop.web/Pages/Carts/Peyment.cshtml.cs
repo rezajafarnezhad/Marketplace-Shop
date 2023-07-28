@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Parbad;
+using Parbad.AspNetCore;
 using Parbad.Gateway.ZarinPal;
+using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
@@ -32,6 +34,10 @@ namespace ProShop.web.Pages.Carts
 
         public PeymentViewModel PeymentPage { get; set; } = new PeymentViewModel();
 
+
+        [BindProperty]
+        public CreateOrderAndPayViewModel CreateOrderAndPayModel { get; set; }
+
         public async Task<IActionResult> OnGet()
         {
             var userId = User.Identity.GetLoggedUserId();
@@ -43,9 +49,9 @@ namespace ProShop.web.Pages.Carts
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCreateOrderAndPey(CreateOrderAndPayViewModel model)
+        public async Task<IActionResult> OnPost()
         {
-            if (model.PayFromWallet)
+            if (CreateOrderAndPayModel.PayFromWallet)
             {
                 //par order Price from wallet
             }
@@ -53,19 +59,22 @@ namespace ProShop.web.Pages.Carts
             var userId = User.Identity.GetLoggedUserId();
             var address = await _addressService.GetAddressForCreateOrderAndPay(userId);
             if (!address.HasUserAddress)
-                return Json(new JsonResultOperation(false));
-            var orderNumber = await _orderService.GetOrderNumberForCreateOrderAndPay();
+                return RedirectToPage("CheckOut");
+
             var orderToAdd = new Order()
             {
                 UserId = userId,
                 AddressId = address.AddressId,
                 PayFromWallet = false,
-                OrderNumber = orderNumber,
 
             };
 
 
             var CartItems = await _cartService.GetCartsForCreateOrderAndPay(userId);
+
+            if(CartItems.Count <1)
+                return RedirectToPage("Index");
+
 
             var normalProducts = CartItems.Where(c => c.ProductVariantProductDimensions == ProShop.Entities.ProductDimensions.Normal)
                 .ToList();
@@ -185,13 +194,11 @@ namespace ProShop.web.Pages.Carts
             //// remove Cart 
             var _productVariantIds = CartItems.Select(c => c.ProductVariantId).ToList();
             var cartItems = await _cartService.GetCartsForRemove(userId, _productVariantIds);
-           
+
             _cartService.RemoveRange(cartItems);
 
 
 
-            await _orderService.AddAsync(orderToAdd);
-            await _unitOfWork.SaveChangesAsync();
 
             //قیمت قابل پرداخت
             var TotalPrice = CartItems
@@ -215,32 +222,36 @@ namespace ProShop.web.Pages.Carts
 
 
             //Payment
-            var CallbackUrl = Url.Page("Index", "test", null, Request.Scheme);
-            var result =await _onlinePayment.RequestAsync(invoice =>
+            var CallbackUrl = Url.PageLink("VerifyPayment", null, null, Request.Scheme);
+            var result = await _onlinePayment.RequestAsync(invoice =>
             {
                 invoice
                     .SetAmount(FinalPrice)
                     .SetCallbackUrl(CallbackUrl)
-                    .UseZarinPal()
-                    .SetZarinPalData(new ZarinPalInvoice("پرداخت آنلاین پرو شاپ"));
+                    .SetGateway(CreateOrderAndPayModel.PaymentGateway.ToString())
+                    .UseAutoIncrementTrackingNumber();
+                if (CreateOrderAndPayModel.PaymentGateway == PaymentGateway.Zarinpal)
+                {
+                    invoice.SetZarinPalData(new ZarinPalInvoice("پرداخت آنلاین پرو شاپ"));
+                }
 
-                invoice.UseAutoIncrementTrackingNumber();
             });
 
+            orderToAdd.OrderNumber = result.TrackingNumber;
+            orderToAdd.PaymentGateway = CreateOrderAndPayModel.PaymentGateway;
             if (result.IsSucceed)
             {
-                return Json(new JsonResultOperation(true, "OK")
-                {
-                    Data = result.GatewayTransporter.Descriptor.Url
-                });
-
+                await _orderService.AddAsync(orderToAdd);
+                await _unitOfWork.SaveChangesAsync();
+                return result.GatewayTransporter.TransportToGateway();
             }
             else
             {
-                return Json(new JsonResultOperation(false));
+                return RedirectToPage(PublicConstantStrings.Error500PageName);
 
             }
             //end payment
         }
+
     }
 }

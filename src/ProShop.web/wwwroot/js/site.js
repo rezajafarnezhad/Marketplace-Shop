@@ -958,9 +958,11 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
 // اما در قسمت بالای صفحه همچنان متن "لطفا ایمیل را وارد کنید" وجود دارد
 // برای اینکه این مشکل حل شود از این کد استفاده میکنیم
 
-$(document).on('change', 'form input.custom-md-persian-datepicker,form select,form input[type="checkbox"] ,input[type="file"] ', function () {
-    $(this).parents('form').valid();
-});
+if (jQuery.validator) {
+    $(document).on('change', 'form input.custom-md-persian-datepicker,form select,form input[type="checkbox"] ,input[type="file"] ', function () {
+        $(this).parents('form').valid();
+    });
+}
 
 $(document).on('blur', 'form input', function () {
     var currentForm = $(this).parents('form');

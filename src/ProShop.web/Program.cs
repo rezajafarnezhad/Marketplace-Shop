@@ -5,11 +5,14 @@ using DNTCommon.Web.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.WebEncoders;
 using Parbad.Builder;
+using Parbad.Gateway.Mellat;
+using Parbad.Gateway.ParbadVirtual;
 using Parbad.Gateway.ZarinPal;
 using Parbad.Storage.EntityFrameworkCore.Builder;
 using ProShop.DataLayer.Context;
 using ProShop.Ioc;
 using ProShop.ViewModels.Identity.Settings;
+using ProShop.web.Helpers;
 using ProShop.web.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,14 +50,33 @@ builder.Services.AddParbad()
     {
         gateways
             .AddZarinPal()
-            .WithAccounts(accounts =>
-            {
-                accounts.AddInMemory(account =>
-                {
-                    account.MerchantId = "test";
-                    account.IsSandbox = true;
-                });
-            });
+            .WithAccounts(source => source.Add<ParbadGatewaysAccounts>(ServiceLifetime.Transient));
+        //.WithAccounts(accounts =>
+        //{
+        //    accounts.AddInMemory(account =>
+        //    {
+        //        account.MerchantId = "test";
+        //        account.IsSandbox = true;
+        //    });
+        //});
+
+        gateways
+            .AddMellat()
+            .WithAccounts(source => source.Add<ParbadGatewaysAccounts>(ServiceLifetime.Transient));
+        //.WithAccounts(accounts =>
+        //{
+        //    accounts.AddInMemory(account =>
+        //    {
+        //        account.TerminalId = 123;
+        //        account.UserName = "MyId";
+        //        account.UserPassword = "MyPassword";
+        //    });
+        //});
+
+        gateways
+            .AddParbadVirtual()
+            .WithOptions(options => options.GatewayPath = "/Carts/Peyment/VirtualGateway");
+
     }).ConfigureHttpContext(builder => builder.UseDefaultAspNetCore());
 
 
@@ -91,5 +113,5 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
-
+app.UseParbadVirtualGateway();
 app.Run();

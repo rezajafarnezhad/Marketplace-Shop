@@ -6,4 +6,5 @@ public static class PublicConstantStrings
     public const string DuplicateErrorMessage = "رکوردی تکراری وارد شده است";
     public const string RecordNotFoundErrorMessage = "رکورد مورد نظر یافت نشد";
     public const string Error404PageName = "../Error404";
+    public const string Error500PageName = "../Error500";
 }
