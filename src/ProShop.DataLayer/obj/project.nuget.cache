@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eYsO5dyIf8nuzM4ZbwFnWdb5dKSCeXrWweiYoHrEvhbfhHX1Lsf6g4mck4s6kpEnQ79k4edTxjCEk+CbTtpRUg==",
+  "dgSpecHash": "IqtOYBx3heqgu5POTMT3teaWrsU20vdWiKYToS6jpASP5MfSsfWnZ6FLoM2jtELQf4VRPQARNIx3PdC0t52ebw==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj",
   "expectedPackageFiles": [
@@ -90,6 +90,9 @@
     "C:\\Users\\mReza\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad\\3.7.0\\parbad.3.7.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.aspnetcore\\1.2.0\\parbad.aspnetcore.1.2.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.gateway.zarinpal\\1.2.0\\parbad.gateway.zarinpal.1.2.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.abstractions\\1.0.0\\parbad.storage.abstractions.1.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.entityframeworkcore\\1.3.1\\parbad.storage.entityframeworkcore.1.3.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

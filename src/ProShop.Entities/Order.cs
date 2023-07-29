@@ -20,7 +20,8 @@ public class Order : EntityBase, IAuditableEntity
     /// <summary>
     /// از کدام درگاه، پرداختی انجام شده است
     /// </summary>
-    public PaymentGateway PaymentGateway { get; set; }
+    public PaymentGateway? PaymentGateway { get; set; }
+    public OrderStatus OrderStatus { get; set; }
     public User User { get; set; }
     public Address Address { get; set; }
     public ICollection<ParcalPost> ParcalPosts { get; set; } = new List<ParcalPost>();
@@ -37,11 +38,14 @@ public enum OrderStatus : byte
     [Display(Name = "پردازش انبار")]
     InventoryProcessing,
 
-    [Display(Name = "تحویل به پست")]
-    DeliveredToPost,
-
     [Display(Name = "تحویل شده")]
-    DeliveredToClient
+    DeliveredToClient,
+
+    [Display(Name = "بخشی از مرسوله ها در پست")]
+    SomeParcelsDeliveredToPost,
+    [Display(Name = "تمام مرسوله ها در پست")]
+
+    CompletelyParcelsDeliveredToPost,
 }
 
 public enum PaymentGateway : byte

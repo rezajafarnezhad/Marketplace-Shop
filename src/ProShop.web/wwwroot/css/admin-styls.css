@@ -27,7 +27,9 @@
         height: calc(100vh - 56px);
     }
 }
-
+td {
+    vertical-align: middle;
+}
 #sidebar .nav-link i.bi.bi-chevron-left {
     transform: rotate(-90deg);
     transition: all .3s;

@@ -12,8 +12,6 @@
 		<ProjectReference Include="..\ProShop.Services\ProShop.Services.csproj" />
 		<ProjectReference Include="..\ProShop.ViewModels\ProShop.ViewModels.csproj" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
-		<PackageReference Include="Parbad.AspNetCore" Version="1.2.0" />
-		<PackageReference Include="Parbad.Gateway.ZarinPal" Version="1.2.0" />
 		<PackageReference Include="Parbad.Storage.EntityFrameworkCore" Version="1.3.1" />
 		<PackageReference Include="Parbad.Storage.Cache" Version="1.3.0" />
 

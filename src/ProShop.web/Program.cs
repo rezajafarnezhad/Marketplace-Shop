@@ -9,10 +9,10 @@ using Parbad.Gateway.Mellat;
 using Parbad.Gateway.ParbadVirtual;
 using Parbad.Gateway.ZarinPal;
 using Parbad.Storage.EntityFrameworkCore.Builder;
+using ProShop.Common.Helpers;
 using ProShop.DataLayer.Context;
 using ProShop.Ioc;
 using ProShop.ViewModels.Identity.Settings;
-using ProShop.web.Helpers;
 using ProShop.web.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);

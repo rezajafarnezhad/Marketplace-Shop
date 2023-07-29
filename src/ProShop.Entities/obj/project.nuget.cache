@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3t+DYBjyVIz6zpWBvOlgMgmznPie46O5g0TdBDjMlEy67dtLvUhwN74+zhm6IVVCzO56eZkkd7svIbUP+xifHA==",
+  "dgSpecHash": "r0/2MnFXcfMf4NNGVeJGaShex4XXoJqBqGGTNUWEhAzzflDjPEiMFdN62nFod7L+J+Qse1QeDkOv1U5504km/g==",
   "success": true,
   "projectFilePath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Entities\\ProShop.Entities.csproj",
   "expectedPackageFiles": [
@@ -77,6 +77,10 @@
     "C:\\Users\\mReza\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad\\3.7.0\\parbad.3.7.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.aspnetcore\\1.2.0\\parbad.aspnetcore.1.2.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.gateway.zarinpal\\1.2.0\\parbad.gateway.zarinpal.1.2.0.nupkg.sha512",
+    "C:\\Users\\mReza\\.nuget\\packages\\parbad.storage.abstractions\\1.0.0\\parbad.storage.abstractions.1.0.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\mReza\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

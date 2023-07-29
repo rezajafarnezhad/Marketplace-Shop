@@ -13,7 +13,7 @@
             @ViewData["Title"]
         </h5>
         <form class="alert alert-secondary Search-form-via-ajax">
-            <input type="hidden"  asp-for="Consignment.Pagination.CurrentPage"  />
+            <input type="hidden" asp-for="Consignment.Pagination.CurrentPage" />
             <input type="hidden" asp-for="Consignment.Pagination.PageCount" />
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -43,11 +43,11 @@
                         <option value="">همه</option>
                     </select>
                 </div>
-               
+
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="Consignment.SearchConsignments.Sorting"></label>
                     <select class="form-control" asp-for="Consignment.SearchConsignments.Sorting" asp-items="Html.GetEnumSelectList<SortingConsignments>()"></select>
-                </div> 
+                </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="Consignment.SearchConsignments.SortingOrder"></label>
                     <select class="form-control" asp-for="Consignment.SearchConsignments.SortingOrder" asp-items="Html.GetEnumSelectList<SortingOrder>()"></select>
@@ -64,7 +64,7 @@
 
             <div class="read-data-table">
                 <div class="text-center data-table-loading">
-                    <img src="/images/Application/loading.gif"  />
+                    <img src="/images/Application/loading.gif" />
                 </div>
             </div>
         </form>
@@ -74,7 +74,7 @@
 
 @section Scripts
 {
-    <partial name="_ValidationScriptsPartial"  />
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.min.js"></script>
     <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
     <script src="~/lib/tinymce/tinymce.min.js"></script>
@@ -83,12 +83,14 @@
 @section CustomScripts
 {
     <script src="~/Pages/Inventory/Consignment/Index.cshtml.js"></script>
-  
+
 }
 
-    @section Styles
+@section Styles
     {
 
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
     <link rel="stylesheet" href="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.style.min.css" />
     <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.min.css" />
 }

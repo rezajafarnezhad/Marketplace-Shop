@@ -1258,10 +1258,13 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<long>("OrderNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<byte>("OrderStatus")
+                        .HasColumnType("tinyint");
+
                     b.Property<bool>("PayFromWallet")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("PaymentGateway")
+                    b.Property<byte?>("PaymentGateway")
                         .HasColumnType("tinyint");
 
                     b.Property<long>("UserId")
@@ -1324,8 +1327,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<byte>("OrderStatus")
-                        .HasColumnType("tinyint");
+                    b.Property<byte>("ParcelPostStatus")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("ParcelPostStatus");
 
                     b.Property<string>("PostTrackingCode")
                         .HasMaxLength(30)

@@ -61,6 +61,10 @@
       "PackagePath": "staticwebassets\\Pages\\Inventory\\Consignment\\Index.cshtml.js"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\Pages\\Inventory\\Order\\Index.cshtml.js",
+      "PackagePath": "staticwebassets\\Pages\\Inventory\\Order\\Index.cshtml.js"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\Pages\\Inventory\\ProductStock\\AddProductStockByConsignment.cshtml.js",
       "PackagePath": "staticwebassets\\Pages\\Inventory\\ProductStock\\AddProductStockByConsignment.cshtml.js"
     },
@@ -245,6 +249,14 @@
       "PackagePath": "staticwebassets\\images\\Application\\Id-Cart-Sample.jpg"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Application\\Wallet.png",
+      "PackagePath": "staticwebassets\\images\\Application\\Wallet.png"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Application\\beMellat.png",
+      "PackagePath": "staticwebassets\\images\\Application\\beMellat.png"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Application\\eshop.png",
       "PackagePath": "staticwebassets\\images\\Application\\eshop.png"
     },
@@ -267,6 +279,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Application\\shopping-basket.png",
       "PackagePath": "staticwebassets\\images\\Application\\shopping-basket.png"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Application\\zarinPal.png",
+      "PackagePath": "staticwebassets\\images\\Application\\zarinPal.png"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\BrandRegistrationPictures\\1eb2af3e0a2649eda1d1c9e28c7f9be8.jpg",
@@ -361,6 +377,14 @@
       "PackagePath": "staticwebassets\\images\\Products\\17323c426bc746a0b58b97795eb343cb.jpg"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\1db4c824505a4ac2a848407b90c18362.jpg",
+      "PackagePath": "staticwebassets\\images\\Products\\1db4c824505a4ac2a848407b90c18362.jpg"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\2560e1cadad14d51a28d5df220f83ffc.png",
+      "PackagePath": "staticwebassets\\images\\Products\\2560e1cadad14d51a28d5df220f83ffc.png"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\26ae6dd9e1f44da59c0e4e43259caca6.jpg",
       "PackagePath": "staticwebassets\\images\\Products\\26ae6dd9e1f44da59c0e4e43259caca6.jpg"
     },
@@ -389,6 +413,10 @@
       "PackagePath": "staticwebassets\\images\\Products\\3e38520262a848f98814674a0aa86569.jpg"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\404824b0d36647128f67df092de7a808.jpg",
+      "PackagePath": "staticwebassets\\images\\Products\\404824b0d36647128f67df092de7a808.jpg"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\409bf179cd564671a8fcc0a13de8a90e.jpg",
       "PackagePath": "staticwebassets\\images\\Products\\409bf179cd564671a8fcc0a13de8a90e.jpg"
     },
@@ -403,6 +431,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\48e1744999ba42beb6e265f377e91b89.jpg",
       "PackagePath": "staticwebassets\\images\\Products\\48e1744999ba42beb6e265f377e91b89.jpg"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\4a9daf6786074629bcb1a1e7df243980.jpg",
+      "PackagePath": "staticwebassets\\images\\Products\\4a9daf6786074629bcb1a1e7df243980.jpg"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\4aaffab50ef94fccaa6b1ae3cd822861.jpg",
@@ -559,6 +591,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\dc1cae4ec9e5499bbff9469afbed94c1.jpg",
       "PackagePath": "staticwebassets\\images\\Products\\dc1cae4ec9e5499bbff9469afbed94c1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\e56d33a7c50a438c91e83ce4c8470ab5.jpg",
+      "PackagePath": "staticwebassets\\images\\Products\\e56d33a7c50a438c91e83ce4c8470ab5.jpg"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Products\\eb08e02bac944d34a8db4a70f6c9ad92.jpg",

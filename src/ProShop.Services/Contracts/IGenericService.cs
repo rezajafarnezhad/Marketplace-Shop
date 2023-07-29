@@ -1,4 +1,5 @@
-﻿using ProShop.Entities;
+﻿using ProShop.Common.Helpers;
+using ProShop.Entities;
 using ProShop.ViewModels.Cart;
 
 namespace ProShop.Services.Contracts;

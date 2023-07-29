@@ -656,3 +656,4 @@ C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.web\obj\Debug\net6.0\re
 C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.pdb
 C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.web\obj\Debug\net6.0\ProShop.web.genruntimeconfig.cache
 C:\Users\mReza\Source\Repos\Marketplace-Shop\src\ProShop.web\obj\Debug\net6.0\ref\ProShop.web.dll
+C:\Users\mReza\source\repos\Marketplace-Shop\src\ProShop.web\obj\Debug\net6.0\scopedcss\Pages\Inventory\Order\_OrderDetails.cshtml.rz.scp.css

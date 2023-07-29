@@ -11,7 +11,7 @@
         "projectName": "ProShop.Common",
         "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
         "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\obj\\",
+        "outputPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -73,6 +73,14 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
+            "Parbad.AspNetCore": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "Parbad.Gateway.ZarinPal": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -105,7 +113,7 @@
         "projectName": "ProShop.DataLayer",
         "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\ProShop.DataLayer.csproj",
         "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\obj\\",
+        "outputPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -191,7 +199,7 @@
         "projectName": "ProShop.Entities",
         "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Entities\\ProShop.Entities.csproj",
         "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Entities\\obj\\",
+        "outputPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

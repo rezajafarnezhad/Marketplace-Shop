@@ -15,6 +15,7 @@ using ProShop.ViewModels.ProductVariant;
 using ProShop.ViewModels.Sellers;
 using ProShop.ViewModels.Veriants;
 using ProShop.ViewModels.Cart;
+using ProShop.ViewModels.Orders;
 
 namespace ProShop.web.Mappings;
 
@@ -296,6 +297,36 @@ public class MappingProfile : Profile
             ;
 
         this.CreateMap<Entities.Address, AddressInCheckoutPageInViewModel>();
+
+
+        this.CreateMap<Order, ShowOrder>()
+            .ForMember(dest => dest.CreatedDateTime,
+                options =>
+                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour())) 
+            
+            
+            .ForMember(dest => dest.Destination,
+                options =>
+                    options.MapFrom(src => src.Address.Province.Title+" - "+src.Address.City.Title))
+            ;
+
+
+
+        this.CreateMap<Order, OrderDetailsViewModel>()
+            .ForMember(dest => dest.CreatedDateTime,
+                options =>
+                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour()))
+
+
+           
+            ;
+
+
+        this.CreateMap<Entities.ParcalPost, ParcelPostForOrderDetailsViewModel>();
+        this.CreateMap<Entities.ParcelPostItem, ParcelPostItemForOrderDetailsViewModel>()
+            .ForMember(dest => dest.ProductPicture, options
+                => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
+            ;
 
     }
 }

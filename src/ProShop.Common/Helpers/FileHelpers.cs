@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing;
 using BarcodeLib;
+using Microsoft.AspNetCore.Http;
+
+namespace ProShop.Common.Helpers;
 
 public static class FileHelpers
 {

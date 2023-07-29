@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using DNTPersianUtils.Core;
 using ProShop.Common.Attributes;
-using ProShop.Common.Helpers;
+
+namespace ProShop.Common.Helpers;
 
 public static class ExpressionHelpers
 {
@@ -83,7 +83,34 @@ public static class ExpressionHelpers
 
         return result;
     }
-    
+
+    public static IQueryable<T> CreateEnumEqualExpressions<T>(this IQueryable<T> query, object model)
+    {
+        var result = query;
+        var propertiesToSearch = model.GetType().GetProperties()
+            .Where(c => Attribute.IsDefined(c, typeof(EqualEnumSearchAttribute))).ToList();
+        if (propertiesToSearch.Count > 0)
+        {
+            foreach (var propertyInfo in propertiesToSearch)
+            {
+                var propertyValue = propertyInfo.GetValue(model);
+                if (!string.IsNullOrWhiteSpace(propertyValue?.ToString()))
+                {
+                    var parameter = Expression.Parameter(typeof(T));
+                    var property = Expression.Property(parameter, propertyInfo.Name);
+                    
+                    var constantValue = Expression.Constant((byte)propertyValue);
+                    var convertedProperty = Expression.Convert(property, typeof(byte));
+                    var equal = Expression.Equal(convertedProperty, constantValue);
+                    var exp = Expression.Lambda<Func<T, bool>>(equal, parameter);
+                    result = result.Where(exp);
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static IQueryable<T> CreateEqualDateTimeExpressions<T>(this IQueryable<T> query, object model)
     {
         var result = query;
@@ -101,7 +128,7 @@ public static class ExpressionHelpers
                     var dateproperty = Expression.Property(property, "Date");
                     if (propertyValue is string)
                     {
-                        var (isSuccessful,dateTimeResult) = propertyValue.ToString().ToGregorianDate();
+                        var (isSuccessful, dateTimeResult) = propertyValue.ToString().ToGregorianDate();
                         if (isSuccessful)
                         {
                             var constantValue = Expression.Constant(dateTimeResult.Date);
@@ -109,7 +136,7 @@ public static class ExpressionHelpers
                             var exp = Expression.Lambda<Func<T, bool>>(equal, parameter);
                             result = result.Where(exp);
                         }
-                   
+
                     }
                 }
             }
@@ -136,11 +163,12 @@ public static class ExpressionHelpers
         return result;
     }
 
-    public static IQueryable<T> CreateSearchExpressions<T>(this IQueryable<T> query, object model,bool callDeletedStatusExpression = true)
+    public static IQueryable<T> CreateSearchExpressions<T>(this IQueryable<T> query, object model, bool callDeletedStatusExpression = true)
     {
         var containsExpressions = CreateContainsExpressions(query, model);
         var equalExpressions = CreateEqualExpressions(containsExpressions, model);
-        var equalDateTimeExpressions = CreateEqualDateTimeExpressions(equalExpressions, model);
+        var enumEqualExpressions = CreateEnumEqualExpressions(equalExpressions, model);
+        var equalDateTimeExpressions = CreateEqualDateTimeExpressions(enumEqualExpressions, model);
         if (callDeletedStatusExpression)
         {
             return CreateDeletedStatusExpression(equalDateTimeExpressions, model);

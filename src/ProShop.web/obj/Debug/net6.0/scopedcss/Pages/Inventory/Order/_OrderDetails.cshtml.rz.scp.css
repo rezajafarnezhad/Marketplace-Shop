@@ -1,0 +1,22 @@
+.circle-fill-dot-in-order-details[b-vlh9k2eis7] {
+    width: 5px;
+    height: 5px;
+}
+
+.order-details-progress[b-vlh9k2eis7] {
+    height: 8px;
+}
+
+.parcel-post-item-in-order-details .position-relative span[b-vlh9k2eis7] {
+    top: 85%;
+    right: 83%;
+    z-index: 1;
+}
+
+.parcel-post-item-in-order-details:not(:last-child)[b-vlh9k2eis7] {
+    margin-bottom: 2rem;
+}
+
+.parcel-post-item-in-order-details:last-child hr[b-vlh9k2eis7] {
+    display: none;
+}

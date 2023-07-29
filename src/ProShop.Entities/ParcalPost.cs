@@ -1,4 +1,7 @@
-﻿namespace ProShop.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace ProShop.Entities;
 
 
 /// <summary>
@@ -9,7 +12,7 @@ public class ParcalPost : EntityBase, IAuditableEntity
 {
     public long OrderId { get; set; }
     public ProductDimensions Dimensions { get; set; }
-    public OrderStatus OrderStatus { get; set; }
+    public ParcelPostStatus ParcelPostStatus { get; set; }
     public string PostTrackingCode { get; set; }
     /// <summary>
     /// هزینه پرداخت شده برای  پست کردن این مرسوله
@@ -20,4 +23,21 @@ public class ParcalPost : EntityBase, IAuditableEntity
     public int ShippingPrice { get; set; }
     public Order Order { get; set; }
     public ICollection<ParcelPostItem> ParcelPostItems { get; set; }=new List<ParcelPostItem>();
+}
+public enum ParcelPostStatus : byte
+{
+    [Display(Name = "در انتظار پرداخت")]
+    WaitingForPaying,
+
+    [Display(Name = "در حال پردازش")]
+    Processing,
+
+    [Display(Name = "پردازش انبار")]
+    InventoryProcessing,
+
+    [Display(Name = "تحویل به پست")]
+    DeliveredToPost,
+
+    [Display(Name = "تحویل شده")]
+    DeliveredToClient
 }

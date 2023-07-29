@@ -11,6 +11,7 @@ public class ParcalPostConfiguration : IEntityTypeConfiguration<ParcalPost>
 
         builder.ToTable("ParcalPosts");
         builder.HasKey(c => c.Id);
+        builder.Property(c => c.ParcelPostStatus).HasColumnName("ParcelPostStatus");
         builder.Property(c => c.PostTrackingCode).HasMaxLength(30);
 
         builder.HasIndex(c => (new { c.PostTrackingCode })).IsUnique();

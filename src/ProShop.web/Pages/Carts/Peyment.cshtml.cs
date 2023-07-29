@@ -66,6 +66,7 @@ namespace ProShop.web.Pages.Carts
                 UserId = userId,
                 AddressId = address.AddressId,
                 PayFromWallet = false,
+                OrderStatus=OrderStatus.WaitingForPaying,
 
             };
 
@@ -95,7 +96,7 @@ namespace ProShop.web.Pages.Carts
                 var parcelPostToAdd = new ParcalPost()
                 {
                     Dimensions = ProductDimensions.Normal,
-                    OrderStatus = OrderStatus.WaitingForPaying,
+                    ParcelPostStatus = ParcelPostStatus.WaitingForPaying,
                     ShippingPrice = sumPriceOfNormalProducts < 500000 ? 30000 : 0,
                 };
 
@@ -129,7 +130,7 @@ namespace ProShop.web.Pages.Carts
                 var parcelPostToAdd = new ParcalPost()
                 {
                     Dimensions = ProductDimensions.Heavy,
-                    OrderStatus = OrderStatus.WaitingForPaying,
+                    ParcelPostStatus = ParcelPostStatus.WaitingForPaying,
                     ShippingPrice = sumPriceOfHeavyProducts < 500000 ? 45000 : 0,
                 };
 
@@ -163,7 +164,7 @@ namespace ProShop.web.Pages.Carts
                 var parcelPostToAdd = new ParcalPost()
                 {
                     Dimensions = ProductDimensions.UltraHeavy,
-                    OrderStatus = OrderStatus.WaitingForPaying,
+                    ParcelPostStatus = ParcelPostStatus.WaitingForPaying,
                     ShippingPrice = 0,
                 };
 

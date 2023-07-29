@@ -31,7 +31,7 @@ public class ProductShortLinkModel : PageModel
 
         
       
-        return RedirectToPage("/Product/Index", new
+        return RedirectToPagePermanent("/Product/Index", new
         {
             product.slug,
             product.productCode

@@ -71,11 +71,12 @@ public class VerifyPaymentModel : PageModel
         // وضعیت مرسوله های این سفارش را به حالت "در حال پردازش" تغییر میدهیم
         foreach (var parcelPost in order.ParcalPosts)
         {
-            parcelPost.OrderStatus = OrderStatus.Processing;
+            parcelPost.ParcelPostStatus = ParcelPostStatus.Processing;
         }
 
         // شماره پیگیری بانک بعد از پرداخت وجه سفارش
         order.BankTransactionCode = verifyResult.TransactionCode;
+        order.OrderStatus = OrderStatus.Processing;
         await _uow.SaveChangesAsync();
 
         return Content("The payment was successful");

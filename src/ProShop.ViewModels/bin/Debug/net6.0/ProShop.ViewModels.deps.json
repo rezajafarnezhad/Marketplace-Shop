@@ -717,6 +717,48 @@
           }
         }
       },
+      "Parbad/3.7.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "Parbad.Storage.Abstractions": "1.0.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "Parbad.AspNetCore/1.2.0": {
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Parbad.Gateway.ZarinPal/1.2.0": {
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Parbad.Storage.Abstractions/1.0.0": {
+        "runtime": {
+          "lib/net5.0/Parbad.Storage.Abstractions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
@@ -1509,6 +1551,8 @@
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
           "Microsoft.EntityFrameworkCore.Relational": "6.0.3",
           "Microsoft.Extensions.Identity.Core": "6.0.3",
+          "Parbad.AspNetCore": "1.2.0",
+          "Parbad.Gateway.ZarinPal": "1.2.0",
           "System.Drawing.Common": "6.0.0"
         },
         "runtime": {
@@ -2114,6 +2158,34 @@
       "sha512": "sha512-5PYT/IqQ+UK31AmZiSS102R6EsTo+LGTSI8bp7WAUqDKaF4wHXD8U9u4WxTI1vc64tYi++8p3dk3WWNqPFgldw==",
       "path": "newtonsoft.json.bson/1.0.1",
       "hashPath": "newtonsoft.json.bson.1.0.1.nupkg.sha512"
+    },
+    "Parbad/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GNq42w6sgWvMfMV2K07vZJsfV8GdKiIDedtoPCNuUp2OdSs6Z2AdF2EAO5WXWCfBNIZkPyhfPauApNH/xsTFTg==",
+      "path": "parbad/3.7.0",
+      "hashPath": "parbad.3.7.0.nupkg.sha512"
+    },
+    "Parbad.AspNetCore/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b+9tgJY6MUvD5mSrMLVAEXshRo8nSV3HyEgdPBAQBarzXaqUdij2TBRj+NuWvf25xOQTEA500TO/sblI1PwBJw==",
+      "path": "parbad.aspnetcore/1.2.0",
+      "hashPath": "parbad.aspnetcore.1.2.0.nupkg.sha512"
+    },
+    "Parbad.Gateway.ZarinPal/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6YJQUNEX1ZSA39ko90vikWHhesq5SVnP+ydzwFXbHRErk9RROWk7yTGZdW9rv7cHhuB9vbV8jeNaNdF3SNU/nw==",
+      "path": "parbad.gateway.zarinpal/1.2.0",
+      "hashPath": "parbad.gateway.zarinpal.1.2.0.nupkg.sha512"
+    },
+    "Parbad.Storage.Abstractions/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TaMzWP4og8gUMasX7XXZuXICqT3lZeU0/h+kRIcnYIvgaVDY44sjgssJdLYiXqKoUrFd7UZOO0GmM1DKiFxpkw==",
+      "path": "parbad.storage.abstractions/1.0.0",
+      "hashPath": "parbad.storage.abstractions.1.0.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

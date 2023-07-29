@@ -1277,6 +1277,77 @@
           }
         }
       },
+      "Parbad/3.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1",
+          "Parbad.Storage.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.AspNetCore/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Gateway.ZarinPal/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.7.0"
+        },
+        "compile": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.Gateway.ZarinPal.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Parbad.Storage.Abstractions/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Parbad.Storage.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Parbad.Storage.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -4145,6 +4216,99 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
+      ]
+    },
+    "Parbad/3.7.0": {
+      "sha512": "GNq42w6sgWvMfMV2K07vZJsfV8GdKiIDedtoPCNuUp2OdSs6Z2AdF2EAO5WXWCfBNIZkPyhfPauApNH/xsTFTg==",
+      "type": "package",
+      "path": "parbad/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.dll",
+        "lib/net5.0/Parbad.xml",
+        "lib/netcoreapp3.0/Parbad.dll",
+        "lib/netcoreapp3.0/Parbad.xml",
+        "lib/netcoreapp3.1/Parbad.dll",
+        "lib/netcoreapp3.1/Parbad.xml",
+        "lib/netstandard2.0/Parbad.dll",
+        "lib/netstandard2.0/Parbad.xml",
+        "lib/netstandard2.1/Parbad.dll",
+        "lib/netstandard2.1/Parbad.xml",
+        "parbad.3.7.0.nupkg.sha512",
+        "parbad.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.AspNetCore/1.2.0": {
+      "sha512": "b+9tgJY6MUvD5mSrMLVAEXshRo8nSV3HyEgdPBAQBarzXaqUdij2TBRj+NuWvf25xOQTEA500TO/sblI1PwBJw==",
+      "type": "package",
+      "path": "parbad.aspnetcore/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.AspNetCore.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.AspNetCore.dll",
+        "lib/net5.0/Parbad.AspNetCore.xml",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.dll",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.xml",
+        "lib/netcoreapp3.1/Parbad.AspNetCore.dll",
+        "lib/netcoreapp3.1/Parbad.AspNetCore.xml",
+        "lib/netstandard2.0/Parbad.AspNetCore.dll",
+        "lib/netstandard2.0/Parbad.AspNetCore.xml",
+        "lib/netstandard2.1/Parbad.AspNetCore.dll",
+        "lib/netstandard2.1/Parbad.AspNetCore.xml",
+        "parbad.aspnetcore.1.2.0.nupkg.sha512",
+        "parbad.aspnetcore.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Gateway.ZarinPal/1.2.0": {
+      "sha512": "6YJQUNEX1ZSA39ko90vikWHhesq5SVnP+ydzwFXbHRErk9RROWk7yTGZdW9rv7cHhuB9vbV8jeNaNdF3SNU/nw==",
+      "type": "package",
+      "path": "parbad.gateway.zarinpal/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Gateway.ZarinPal.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/net5.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.1/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.1/Parbad.Gateway.ZarinPal.xml",
+        "parbad.gateway.zarinpal.1.2.0.nupkg.sha512",
+        "parbad.gateway.zarinpal.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Storage.Abstractions/1.0.0": {
+      "sha512": "TaMzWP4og8gUMasX7XXZuXICqT3lZeU0/h+kRIcnYIvgaVDY44sjgssJdLYiXqKoUrFd7UZOO0GmM1DKiFxpkw==",
+      "type": "package",
+      "path": "parbad.storage.abstractions/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Parbad.Storage.Abstractions.xml",
+        "icon.png",
+        "lib/net5.0/Parbad.Storage.Abstractions.dll",
+        "lib/net5.0/Parbad.Storage.Abstractions.xml",
+        "lib/netcoreapp3.0/Parbad.Storage.Abstractions.dll",
+        "lib/netcoreapp3.0/Parbad.Storage.Abstractions.xml",
+        "lib/netcoreapp3.1/Parbad.Storage.Abstractions.dll",
+        "lib/netcoreapp3.1/Parbad.Storage.Abstractions.xml",
+        "lib/netstandard2.0/Parbad.Storage.Abstractions.dll",
+        "lib/netstandard2.0/Parbad.Storage.Abstractions.xml",
+        "lib/netstandard2.1/Parbad.Storage.Abstractions.dll",
+        "lib/netstandard2.1/Parbad.Storage.Abstractions.xml",
+        "parbad.storage.abstractions.1.0.0.nupkg.sha512",
+        "parbad.storage.abstractions.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -8237,6 +8401,8 @@
       "Microsoft.AspNetCore.Mvc.ViewFeatures >= 2.2.0",
       "Microsoft.EntityFrameworkCore.Relational >= 6.0.3",
       "Microsoft.Extensions.Identity.Core >= 6.0.3",
+      "Parbad.AspNetCore >= 1.2.0",
+      "Parbad.Gateway.ZarinPal >= 1.2.0",
       "System.Drawing.Common >= 6.0.0"
     ]
   },
@@ -8247,11 +8413,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
+      "projectUniqueName": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
       "projectName": "ProShop.Common",
-      "projectPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
+      "projectPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\ProShop.Common.csproj",
       "packagesPath": "C:\\Users\\mReza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mReza\\Source\\Repos\\Marketplace-Shop\\src\\ProShop.Common\\obj\\",
+      "outputPath": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -8312,6 +8478,14 @@
           "Microsoft.Extensions.Identity.Core": {
             "target": "Package",
             "version": "[6.0.3, )"
+          },
+          "Parbad.AspNetCore": {
+            "target": "Package",
+            "version": "[1.2.0, )"
+          },
+          "Parbad.Gateway.ZarinPal": {
+            "target": "Package",
+            "version": "[1.2.0, )"
           },
           "System.Drawing.Common": {
             "target": "Package",

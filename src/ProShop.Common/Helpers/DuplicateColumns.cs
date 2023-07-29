@@ -1,4 +1,6 @@
-﻿public class DuplicateColumns
+﻿namespace ProShop.Common.Helpers;
+
+public class DuplicateColumns
 {
     public DuplicateColumns(bool ok=true)
     {
