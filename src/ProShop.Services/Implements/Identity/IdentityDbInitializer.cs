@@ -90,6 +90,12 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             if (WarehouseRole == IdentityResult.Failed())
             {
                 throw new InvalidOperationException(WarehouseRole.DumpErrors());
+            } 
+            
+            var DeliveryManRole = identityDbSeedData.SeedDeliveryManRole().Result;
+            if (DeliveryManRole == IdentityResult.Failed())
+            {
+                throw new InvalidOperationException(DeliveryManRole.DumpErrors());
             }
             var UserForseller = identityDbSeedData.SeedUserForSeller().Result;
             if (UserForseller == IdentityResult.Failed())
@@ -173,9 +179,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
 
     public async Task<IdentityResult> SeedSellerRole()
     {
-
         var thisMethodName = nameof(SeedSellerRole);
-
         //Create the `Seller` Role if it does not exist
         var sellerRole = await _roleManager.FindByNameAsync(ConstantRoles.Seller);
         if (sellerRole == null)
@@ -187,41 +191,67 @@ public class IdentityDbInitializer : IIdentityDbInitializer
                 _logger.LogError($"{thisMethodName}: sellerRole CreateAsync failed. {sellerRoleResult.DumpErrors()}");
                 return IdentityResult.Failed();
             }
+
+            await _unitOfWork.SaveChangesAsync();
         }
         else
         {
             _logger.LogInformation($"{thisMethodName}: sellerRole already exists.");
         }
 
-        await _unitOfWork.SaveChangesAsync();
         return IdentityResult.Success;
     }
 
     public async Task<IdentityResult> SeedWarehouseRole()
     {
-
         var thisMethodName = nameof(SeedWarehouseRole);
-
         //Create the `Warehouse` Role if it does not exist
-        var WarehouseRole = await _roleManager.FindByNameAsync(ConstantRoles.Warehouse);
-        if (WarehouseRole == null)
+        var warehouseRole = await _roleManager.FindByNameAsync(ConstantRoles.Warehouse);
+        if (warehouseRole == null)
         {
-            WarehouseRole = new Role(ConstantRoles.Warehouse, "انباردار سیستم");
-            var WarehouseResult = await _roleManager.CreateAsync(WarehouseRole);
-            if (WarehouseResult == IdentityResult.Failed())
+            warehouseRole = new Role(ConstantRoles.Warehouse, "انباردار سیستم");
+            var warehouseRoleResult = await _roleManager.CreateAsync(warehouseRole);
+            if (warehouseRoleResult == IdentityResult.Failed())
             {
-                _logger.LogError($"{thisMethodName}: WarehouseRole CreateAsync failed. {WarehouseResult.DumpErrors()}");
+                _logger.LogError($"{thisMethodName}: warehouseRole CreateAsync failed. {warehouseRoleResult.DumpErrors()}");
                 return IdentityResult.Failed();
             }
+
+            await _unitOfWork.SaveChangesAsync();
         }
         else
         {
-            _logger.LogInformation($"{thisMethodName}: WarehouseRole already exists.");
+            _logger.LogInformation($"{thisMethodName}: warehouseRole already exists.");
         }
 
-        await _unitOfWork.SaveChangesAsync();
         return IdentityResult.Success;
     }
+
+    public async Task<IdentityResult> SeedDeliveryManRole()
+    {
+        var thisMethodName = nameof(SeedDeliveryManRole);
+        //Create the `Warehouse` Role if it does not exist
+        var deliveryManRole = await _roleManager.FindByNameAsync(ConstantRoles.DeliveryMan);
+        if (deliveryManRole == null)
+        {
+            deliveryManRole = new Role(ConstantRoles.DeliveryMan, "پیک");
+            var deliveryManRoleResult = await _roleManager.CreateAsync(deliveryManRole);
+            if (deliveryManRoleResult == IdentityResult.Failed())
+            {
+                _logger.LogError($"{thisMethodName}: deliveryManRole CreateAsync failed. {deliveryManRoleResult.DumpErrors()}");
+                return IdentityResult.Failed();
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+        else
+        {
+            _logger.LogInformation($"{thisMethodName}: warehouseRole already exists.");
+        }
+
+        return IdentityResult.Success;
+    }
+
 
     public async Task<IdentityResult> SeedUserForSeller()
     {

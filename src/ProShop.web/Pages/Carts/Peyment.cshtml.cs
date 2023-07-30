@@ -66,14 +66,14 @@ namespace ProShop.web.Pages.Carts
                 UserId = userId,
                 AddressId = address.AddressId,
                 PayFromWallet = false,
-                OrderStatus=OrderStatus.WaitingForPaying,
+                OrderStatus = OrderStatus.WaitingForPaying,
 
             };
 
 
             var CartItems = await _cartService.GetCartsForCreateOrderAndPay(userId);
 
-            if(CartItems.Count <1)
+            if (CartItems.Count < 1)
                 return RedirectToPage("Index");
 
 
@@ -202,11 +202,31 @@ namespace ProShop.web.Pages.Carts
 
 
             //قیمت قابل پرداخت
-            var TotalPrice = CartItems
+            var TotalPricewithDiscount = CartItems
                 .Sum(x => (x.IsDiscountActive ? x.ProductVariantOffPrice.Value : x.ProductVariantPrice)
                           *
                           x.Count
                 );
+
+            var totalPrice = CartItems
+                .Sum(x => x.ProductVariantPrice * x.Count);
+
+            var sumScore = CartItems.Sum(c => c.Score);
+            if (sumScore > 150)
+                sumScore = 150;
+
+            //این سفارش در چند مرسوله ارسال میشود؟
+            var shippingCount = 0;
+
+            if (normalProducts.Count > 0)
+                shippingCount++;
+
+            if (HeavyProducts.Count > 0)
+                shippingCount++;
+
+            if (UltraHeavyProducts.Count > 0)
+                shippingCount++;
+
 
             var sumPriceOfShipping = 0;
             if (sumPriceOfNormalProducts < 500000 && normalProducts.Count > 0)
@@ -219,7 +239,7 @@ namespace ProShop.web.Pages.Carts
 
             }
 
-            var FinalPrice = TotalPrice + sumPriceOfShipping;
+            var FinalPrice = TotalPricewithDiscount + sumPriceOfShipping;
 
 
             //Payment
@@ -238,8 +258,19 @@ namespace ProShop.web.Pages.Carts
 
             });
 
+
+
             orderToAdd.OrderNumber = result.TrackingNumber;
             orderToAdd.PaymentGateway = CreateOrderAndPayModel.PaymentGateway;
+            orderToAdd.TotalPrice = totalPrice;
+            orderToAdd.TotalScore = (byte)sumScore;
+            orderToAdd.ShippingCount = (byte)shippingCount;
+            var discountPrice = totalPrice - TotalPricewithDiscount;
+            if (discountPrice > 0)
+                orderToAdd.DiscountPrice = discountPrice;
+
+
+
             if (result.IsSucceed)
             {
                 await _orderService.AddAsync(orderToAdd);

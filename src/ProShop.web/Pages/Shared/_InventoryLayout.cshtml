@@ -14,7 +14,9 @@
     @await RenderSectionAsync("Styles",false)
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="~/css/admin-styls.css">
-    <link rel="stylesheet" href="~/ProShop.web.styles.css">
+    <link rel="stylesheet" href="~/css/main-styls.css">
+  
+    <link rel="stylesheet" href="~/ProShop.Web.styles.css">
     <title> @ViewData["Title"] | پروشاپ پنل</title>
 </head>
 
@@ -159,7 +161,7 @@
 
             <partial name="_InventorySidebarPartial" />
             <!----------------------- Sidebar End ----------------------->
-            <div id="main-content" class="col-12 col-lg-10 ms-auto">
+            <div id="main-content" class="col-12 col-lg-10 mt-3 ms-auto">
                 @RenderBody()
             </div>
         </div>

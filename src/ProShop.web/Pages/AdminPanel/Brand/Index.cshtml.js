@@ -4,6 +4,7 @@
 });
 
 function EditBrandFunction() {
+   
     var IsIranianBrand = $('#IsIranianBrand').is(':checked');
     $('#IsIranianBrand').parents('.form-switch').find('label').html(IsIranianBrand ? 'ایرانی' : 'خارجی');
     $('#IsIranianBrand').change(function () {

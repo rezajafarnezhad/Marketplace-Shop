@@ -23,6 +23,29 @@ function appendHtmlModalPlaceToBody() {
     }
 }
 
+var htmlScrollableModalPlace = `<div class="modal fade" id="html-scrollable-modal-place" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer d-flex justify-content-start">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>`;
+
+
+function appendHtmlScrollableModalPlaceToBody() {
+    if ($('#html-scrollable-modal-place').length === 0) {
+        $('body').append(htmlScrollableModalPlace);
+    }
+}
+
+
 
 var SecondhtmlModalPlace = `<div class="modal fade" id="Second-html-modal-place" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl">
@@ -289,7 +312,7 @@ function initializeSelect2() {
         $('.modal .custom-select2').select2({
             theme: 'bootstrap-5',
             dropdownParent: $('#form-modal-place'),
-
+            width:'100%'
         });
     }
 }
@@ -298,6 +321,7 @@ function initializeSelect2WithoutModal() {
     if ($('.custom-select2').length > 0) {
         $('.custom-select2').select2({
             theme: 'bootstrap-5',
+            width:'100%'
         });
     }
 
@@ -566,7 +590,8 @@ function activatingModalForm() {
             customtitle = $(this).text().trim();
         }
         appendFormModalPlaceToBody();
-        $('#form-modal-place .modal-header h5').html(customtitle);
+        appendHtmlScrollableModalPlaceToBody();
+        $('#html-scrollable-modal-place .modal-header h5').html(customtitle);
         showLoading();
         $.get(Url, function (data) {
             if (data.isSuccessful === false) {
@@ -574,16 +599,17 @@ function activatingModalForm() {
                 showToastr('warning', data.message);
             } else {
 
-                $('#form-modal-place .modal-body').html(data);
+                $('#html-scrollable-modal-place .modal-body').html(data);
                 initializingAutocomplete();
-                $.validator.unobtrusive.parse($('#form-modal-place form'));
+                $.validator.unobtrusive.parse($('#html-scrollable-modal-place form'));
                 initializeTinyMCE();
                 activatingInputAttributes();
                 initializeSelect2();
+                ConvertToPersianNumber();
                 if (typeof window[functionNameToCallInTheEnd] === 'function') {
                     window[functionNameToCallInTheEnd](data);
                 }
-                $("#form-modal-place").modal("show");
+                $("#html-scrollable-modal-place").modal("show");
             }
         }).fail(function () {
             ShowErrorMessage();
@@ -702,7 +728,7 @@ $(document).on('submit', 'form.custom-ajax-form', function (e) {
             } else {
                 fillDataTable();
                 if (closewhedone !== 'false') {
-                    $("#form-modal-place").modal("hide");
+                    $("#html-scrollable-modal-place").modal("hide");
                 }
                 showToastr('success', data.message);
                 if (functionName) {
@@ -1128,15 +1154,14 @@ $(function () {
 
 
 
-
-function fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd) {
-    var textArea = document.createElement("textarea");
+function fallbackCopyTextToClipboard(text, functionNameToCallInTheEnd, clickedEl) {
+    var textArea = document.createElement('textarea');
     textArea.value = text;
 
     // Avoid scrolling to bottom
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
 
     document.body.appendChild(textArea);
     textArea.focus();
@@ -1147,8 +1172,8 @@ function fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd) {
         if (!successful)
             showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');
         else {
-            if (typeof window[functionNameToCallIntheEnd] === 'function') {
-                window[functionNameToCallIntheEnd]();
+            if (typeof window[functionNameToCallInTheEnd] === 'function') {
+                window[functionNameToCallInTheEnd](clickedEl);
             }
         }
     } catch (err) {
@@ -1157,14 +1182,14 @@ function fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd) {
 
     document.body.removeChild(textArea);
 }
-function copyTextToClipboard(text, functionNameToCallIntheEnd) {
+function copyTextToClipboard(text, functionNameToCallInTheEnd, clickedEl) {
     if (!navigator.clipboard) {
-        fallbackCopyTextToClipboard(text, functionNameToCallIntheEnd);
+        fallbackCopyTextToClipboard(text, functionNameToCallInTheEnd, clickedEl);
         return;
     }
     navigator.clipboard.writeText(text).then(function () {
-        if (typeof window[functionNameToCallIntheEnd] === 'function') {
-            window[functionNameToCallIntheEnd]();
+        if (typeof window[functionNameToCallInTheEnd] === 'function') {
+            window[functionNameToCallInTheEnd](clickedEl);
         }
     }, function (err) {
         showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');

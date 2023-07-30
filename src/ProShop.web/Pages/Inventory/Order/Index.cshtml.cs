@@ -79,11 +79,15 @@ public class IndexModel : InventoryPanelBase
 
     public async Task<IActionResult> OnPostChangeStatusToInventoryProcessing(long OrderId)
     {
-        var order = await _orderService.FindByIdAsync(OrderId);
-        if (order is null)
+        var _order = await _orderService.FindByIdWithIncludesAsync(OrderId,nameof(Entities.Order.ParcalPosts));
+        if (_order is null)
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
-        order.OrderStatus = OrderStatus.InventoryProcessing;
+        _order.OrderStatus = OrderStatus.InventoryProcessing;
+        foreach (var parcelPost in _order.ParcalPosts)
+        {
+            parcelPost.ParcelPostStatus = ParcelPostStatus.InventoryProcessing;
+        }
         await _unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true, "سفارش مورد نظر وارد مرحله پردازش انبار شد"));
     }

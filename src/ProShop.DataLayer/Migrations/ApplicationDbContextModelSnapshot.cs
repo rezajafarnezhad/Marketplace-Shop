@@ -1238,7 +1238,13 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DiscountPrice")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPay")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedByBrowserName")
@@ -1265,6 +1271,15 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte?>("PaymentGateway")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("ShippingCount")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("TotalScore")
                         .HasColumnType("tinyint");
 
                     b.Property<long>("UserId")
@@ -1374,7 +1389,7 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscountPrice")
+                    b.Property<int?>("DiscountPrice")
                         .HasColumnType("int");
 
                     b.Property<long>("GaranteeId")
@@ -1397,8 +1412,8 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
+                    b.Property<byte>("Score")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("ParcalPostId", "ProductVariantId");
 
@@ -2284,6 +2299,9 @@ namespace ProShop.DataLayer.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Value")
+                        .IsUnique();
 
                     b.ToTable("Variant", (string)null);
                 });

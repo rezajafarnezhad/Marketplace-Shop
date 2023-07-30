@@ -45,6 +45,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.CreatedDateTime, options => options.MapFrom(src => src.CreatedDateTime.ToLongPersianDate()));
 
 
+        this.CreateMap<AddVariantInPanelAdmin,Entities.Variant>();
+
         this.CreateMap<Entities.Brand, ShowBrandViewModel>();
         this.CreateMap<AddBrandViewModel, Entities.Brand>()
             .AddTransform<string>(str => str != null ? str.Trim() : null);
@@ -327,6 +329,20 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.ProductPicture, options
                 => options.MapFrom(src => src.ProductVariant.Product.ProductMedia.First().FileName))
             ;
+
+        this.CreateMap<Order, ShowOrderInDeliveryOrderViewModel>()
+            .ForMember(dest => dest.CreatedDateTime,
+                options =>
+                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour()))
+
+
+            .ForMember(dest => dest.Destination,
+                options =>
+                    options.MapFrom(src => src.Address.Province.Title + " - " + src.Address.City.Title))
+            ;
+
+        
+        this.CreateMap<Entities.ParcalPost, ShowParcelPostInDeliveryOrdersViewModel>();
 
     }
 }

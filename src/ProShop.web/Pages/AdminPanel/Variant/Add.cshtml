@@ -1,0 +1,35 @@
+﻿@model ProShop.ViewModels.Veriants.AddVariantInPanelAdmin
+
+<form class="alert alert-secondary custom-ajax-form" asp-page-handler="Add" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12 col-lg-12 col-sm-12 form-check form-switch px-3">
+            <label class="form-check-label" asp-for="IsColor">سایز</label>
+            <div>
+                <input class="form-check-input m-0" asp-for="IsColor" />
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="Value"></label>
+            <label > نام (<span id="SizeorColor">سایز</span>)</label>
+            <input class="form-control" asp-for="Value" />
+            <span class="span-error-message" asp-validation-for="Value"></span>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-12 my-2 d-none" id="ColorCodeinput">
+            <label class="form-label" asp-for="ColorCode"></label>
+            <input type="color" class="form-control" asp-for="ColorCode" />
+            <span class="span-error-message" asp-validation-for="ColorCode"></span>
+        </div>
+        <div class="col-12 my-2">
+            <div class="d-grid">
+                <button type="submit" class="btn btn-block button7 submit-custom-ajax-button">
+                    افزودن
+                    <i class="bi bi-plus-square mr-2"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</form>

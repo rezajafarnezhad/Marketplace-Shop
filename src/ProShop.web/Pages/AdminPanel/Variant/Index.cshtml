@@ -13,10 +13,11 @@
             @ViewData["Title"]
         </h5>
         <div class="d-grid d-lg-block mb-2 text-end">
-            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button" functionNameToCallInTheEnd="EditBrandFunction">
+            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button" functionNameToCallInTheEnd="EditIsColorFunction">
                 افزودن تنوع
                 <span class="bi bi-plus-circle mt-5"></span>
             </a>
+           
         </div>
         <form class="alert alert-secondary  Search-form-via-ajax">
             <input type="hidden" asp-for="Variants.Pagination.CurrentPage" />

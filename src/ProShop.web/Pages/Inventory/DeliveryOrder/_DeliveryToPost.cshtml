@@ -1,0 +1,15 @@
+﻿
+@model ProShop.ViewModels.ParcelPosts.DeliveryParcelPostViewModel
+
+<form class="alert alert-secondary custom-ajax-form" method="post" asp-page-handler="ChangeStatusToDeliveryToPost">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-12 my-2">
+            <label class="form-label" asp-for="PostTrackingCode"></label>
+            <input class="form-control" asp-for="PostTrackingCode" />
+            <span class="span-error-message" asp-validation-for="PostTrackingCode"></span>
+        </div>
+        <button class="btn btn-primary">ارسال</button>
+    </div>
+</form>

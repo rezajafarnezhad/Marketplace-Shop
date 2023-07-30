@@ -61,6 +61,10 @@
       "PackagePath": "staticwebassets\\Pages\\Inventory\\Consignment\\Index.cshtml.js"
     },
     {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\Pages\\Inventory\\DeliveryOrder\\Index.cshtml.js",
+      "PackagePath": "staticwebassets\\Pages\\Inventory\\DeliveryOrder\\Index.cshtml.js"
+    },
+    {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\Pages\\Inventory\\Order\\Index.cshtml.js",
       "PackagePath": "staticwebassets\\Pages\\Inventory\\Order\\Index.cshtml.js"
     },
@@ -343,6 +347,10 @@
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\23dd53af94d847db9eef4e322ce11b31.jpg",
       "PackagePath": "staticwebassets\\images\\Garantee\\23dd53af94d847db9eef4e322ce11b31.jpg"
+    },
+    {
+      "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\2bad53f7b50b4f0baeba39cc23bb4138.jpg",
+      "PackagePath": "staticwebassets\\images\\Garantee\\2bad53f7b50b4f0baeba39cc23bb4138.jpg"
     },
     {
       "Id": "C:\\Users\\mReza\\source\\repos\\Marketplace-Shop\\src\\ProShop.web\\wwwroot\\images\\Garantee\\3e0ae06f5011470b9d75b5fcd7c09e64.jpg",

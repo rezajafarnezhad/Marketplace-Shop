@@ -37,7 +37,7 @@ public class OrderService : GenericService<Entities.Order>, IOrderService
         #region Search
 
         if(model.SearchOrders.OnlyPayedOrders)
-            orders = orders.Where(c => c.BankTransactionCode != null);
+            orders = orders.Where(c => c.IsPay);
 
 
         var searchFullName = model.SearchOrders.FullName;
@@ -78,5 +78,52 @@ public class OrderService : GenericService<Entities.Order>, IOrderService
     public  Task<OrderDetailsViewModel> GetOrderDetails(long orderId)
     {
         return _mapper.ProjectTo<OrderDetailsViewModel>(_orders.AsSplitQuery().AsNoTracking()).SingleOrDefaultAsync(c => c.Id == orderId);
+    }
+
+
+    public async Task<ShowOrdersInDeliveryOrdersViewModel> GetDeliveryOrders(ShowOrdersInDeliveryOrdersViewModel model)
+    {
+        var orders = _orders.Where(c=>c.IsPay).AsNoTracking().AsQueryable();
+
+        #region Search
+
+        var searchFullName = model.SearchOrders.FullName;
+        if (!string.IsNullOrWhiteSpace(searchFullName))
+            orders = orders.Where(c => (c.Address.FirstName + " " + c.Address.LastName).Contains(searchFullName));
+
+
+        var searchProvinceId = model.SearchOrders.ProvinceId;
+        if (searchProvinceId is > 0)
+            orders = orders.Where(c => c.Address.ProvinceId == searchProvinceId);
+
+        var searchCityId = model.SearchOrders.CityId;
+        if (searchCityId is > 0)
+            orders = orders.Where(c => c.Address.CityId == searchCityId);
+
+        if(model.SearchOrders.OrderStatus is null)
+            orders = orders.Where(c => c.OrderStatus != OrderStatus.WaitingForPaying)
+                .Where(c=>c.OrderStatus !=OrderStatus.Processing);
+
+
+        orders = orders.CreateSearchExpressions(model.SearchOrders, false);
+
+        #region Sorting
+
+        orders = orders.CreateOrderByExpression(model.SearchOrders.Sorting.ToString(),
+            model.SearchOrders.SortingOrder.ToString());
+
+        #endregion
+
+
+        var paginationResult = await GenericPagination(orders, model.Pagination);
+
+        #endregion
+
+
+        return new ShowOrdersInDeliveryOrdersViewModel()
+        {
+            Orders = await _mapper.ProjectTo<ShowOrderInDeliveryOrderViewModel>(paginationResult.Query).ToListAsync(),
+            Pagination = paginationResult.Pagination
+        };
     }
 }

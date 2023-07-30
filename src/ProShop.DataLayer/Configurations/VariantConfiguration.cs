@@ -14,7 +14,7 @@ public class VariantConfiguration : IEntityTypeConfiguration<Variant>
         builder.HasKey(c =>c.Id);
         builder.Property(c => c.Value).IsRequired().HasMaxLength(150);
         builder.Property(c => c.ColorCode).HasMaxLength(7);
-
+        builder.HasIndex(c => (new { c.Value })).IsUnique();
         builder.HasMany(c => c.categoryVarieants)
             .WithOne(c => c.Variant)
             .HasForeignKey(c => c.VariantId)

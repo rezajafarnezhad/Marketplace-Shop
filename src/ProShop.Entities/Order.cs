@@ -10,6 +10,11 @@ public class Order : EntityBase, IAuditableEntity
     public long AddressId { get; set; }
     public long OrderNumber { get; set; }
     public string BankTransactionCode { get; set; }
+    public int TotalPrice { get; set; }
+    public int? DiscountPrice { get; set; }
+    public byte TotalScore { get; set; }
+    public byte ShippingCount { get; set; }
+
     public DateTime CreatedDateTime { get; set; }
     /// <summary>
     /// آیا این سفارش توسط مقدار داخل کیف پول کاربر پرداخت شده است ؟
@@ -17,6 +22,7 @@ public class Order : EntityBase, IAuditableEntity
     /// اگر هم ترو باشد، یعنی توسط کیف پول پرداخت شده است
     /// </summary>
     public bool PayFromWallet { get; set; }
+    public bool IsPay { get; set; }
     /// <summary>
     /// از کدام درگاه، پرداختی انجام شده است
     /// </summary>
@@ -38,14 +44,13 @@ public enum OrderStatus : byte
     [Display(Name = "پردازش انبار")]
     InventoryProcessing,
 
-    [Display(Name = "تحویل شده")]
-    DeliveredToClient,
-
     [Display(Name = "بخشی از مرسوله ها در پست")]
     SomeParcelsDeliveredToPost,
     [Display(Name = "تمام مرسوله ها در پست")]
 
     CompletelyParcelsDeliveredToPost,
+    [Display(Name = "تحویل شده")]
+    DeliveredToClient,
 }
 
 public enum PaymentGateway : byte

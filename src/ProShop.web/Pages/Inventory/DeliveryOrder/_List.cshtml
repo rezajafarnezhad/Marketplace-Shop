@@ -1,0 +1,164 @@
+﻿@using ProShop.ViewModels
+@model ProShop.ViewModels.Orders.ShowOrdersInDeliveryOrdersViewModel
+@if (Model.Orders.Count > 0)
+{
+    <div class="table-responsive data-table-body">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].Id)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].OrderNumber)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].AddressFullName)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].Destination)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].CreatedDateTime)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].OrderStatus)</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Item in Model.Orders)
+                {
+
+                    <tr>
+                        <td>@Item.Id</td>
+                        <td>@Item.OrderNumber</td>
+                        <td>@Item.AddressFullName</td>
+                        <td>@Item.Destination</td>
+                        <td>@Item.CreatedDateTime</td>
+                        <td>
+                            @{
+                                var orderStatusColor = string.Empty;
+                                var orderStatusIcon = string.Empty;
+                                switch (Item.OrderStatus)
+                                {
+                                    case OrderStatus.WaitingForPaying:
+                                        orderStatusColor = "danger";
+                                        orderStatusIcon = "coin";
+                                        break;
+                                    case OrderStatus.Processing:
+                                        orderStatusColor = "primary";
+                                        orderStatusIcon = "cpu";
+                                        break;
+                                    case OrderStatus.InventoryProcessing:
+                                        orderStatusColor = "primary";
+                                        orderStatusIcon = "box-fill";
+                                        break;
+                                    case OrderStatus.SomeParcelsDeliveredToPost:
+                                        orderStatusColor = "warning";
+                                        orderStatusIcon = "mailbox";
+                                        break;
+                                    case OrderStatus.CompletelyParcelsDeliveredToPost:
+                                        orderStatusColor = "success";
+                                        orderStatusIcon = "mailbox";
+                                        break;
+                                    case OrderStatus.DeliveredToClient:
+                                        orderStatusColor = "success";
+                                        orderStatusIcon = "check2-square";
+                                        break;
+                                }
+                            }
+
+                            <span class="badge rounded-pill bg-@orderStatusColor">
+                                <i class="bi bi-@orderStatusIcon"></i>
+                                @Item.OrderStatus.GetEnumDisplayName()
+                            </span>
+                        </td>
+                        <td class="text-center">
+
+
+                            <div class="dropdown">
+                                <button class="btn button7 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    عملیات
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="static">
+                                    <li>
+                                        <a class="dropdown-item text-secondary show-modal-form-button" asp-page-handler="OrderDetails" asp-route-orderId="@Item.Id" custom-title="جزییات سفارش">
+                                            <span class="bi bi-info"></span>
+                                            <span>جزییات</span>
+                                        </a>
+                                    </li>
+
+                                    @foreach (var parcelPost in Item.ParcalPosts)
+                                    {
+                                        @if (parcelPost.ParcelPostStatus == ParcelPostStatus.InventoryProcessing)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item text-secondary show-modal-form-button" asp-page-handler="ShowDeliveryToPost" asp-route-Id="@parcelPost.Id" custom-title="تحویل مرسوله به اداره پست">
+                                                    <span class="bi bi-info"></span>
+                                                    <span>
+                                                        تحویل مرسوله
+                                                        @if (parcelPost.Dimensions == ProductDimensions.Normal)
+                                                        {
+                                                            @:عادی
+                                                        }
+                                                        else if (parcelPost.Dimensions == ProductDimensions.Heavy)
+                                                        {
+                                                            @:بزرگ و سنگین
+                                                        }
+                                                        else
+                                                        {
+                                                            @:فوق سنگین
+
+                                                        }
+                                                        به اداره پست
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                    }
+
+                                </ul>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <hr />
+        <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
+            <div class="btn-group me-2">
+                @if (Model.Pagination.CurrentPage != 1)
+                {
+                    <button value="1" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                    <button value="@(Model.Pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                }
+                @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
+                {
+                    <button value="@counter" type="button"
+                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                        @counter
+                    </button>
+                }
+                @if (Model.Pagination.CurrentPage != Model.Pagination.PagesCount)
+                {
+                    <button value="@(Model.Pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.Pagination.PagesCount" value="@Model.Pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                        <i class="bi bi-chevron-double-left"></i>
+                        @Model.Pagination.PagesCount
+                    </button>
+                }
+            </div>
+            <div>
+                <select id="page-count-selectbox" class="form-control" asp-for="Pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
+            </div>
+        </div>
+        <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
+            <div class="input-group">
+                <input id="page-number-input" value="@Model.Pagination.CurrentPage" min="1" max="@Model.Pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
+            </div>
+        </div>
+        <!-- End pagination -->
+    </div>
+}
+else
+{
+    <partial name="_RecordNotFound" />
+}

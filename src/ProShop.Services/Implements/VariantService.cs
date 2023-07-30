@@ -83,4 +83,19 @@ public class VariantService : GenericService<Variant>, IVariantService
 
         return variantsIds.Count == result;
     }
+    public override async Task<DuplicateColumns> AddAsync(Entities.Variant entity)
+    {
+        var result = new List<string>();
+
+        if (await _variants.AnyAsync(c => c.Value == entity.Value))
+            result.Add(nameof(Entities.Variant.Value));
+
+        if (!result.Any())
+            await base.AddAsync(entity);
+
+        return new DuplicateColumns(!result.Any())
+        {
+            Columns = result
+        };
+    }
 }

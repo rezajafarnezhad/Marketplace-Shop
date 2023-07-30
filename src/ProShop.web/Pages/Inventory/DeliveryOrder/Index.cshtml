@@ -1,0 +1,113 @@
+﻿@page
+@using ProShop.ViewModels.Orders
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProShop.web.Pages.Inventory.DeliveryOrder.IndexModel
+@{
+    ViewData["Title"] = "سفارشات آماده ارسال";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @ViewData["Title"]
+        </h5>
+
+
+
+        <form class="alert alert-secondary Search-form-via-ajax">
+            <input type="hidden" asp-for="ShowOrders.Pagination.CurrentPage" />
+            <input type="hidden" asp-for="ShowOrders.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.FullName"></label>
+                    <input class="form-control" asp-for="ShowOrders.SearchOrders.FullName" />
+                    <span class="span-error-message" asp-validation-for="ShowOrders.SearchOrders.FullName"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.OrderNumber"></label>
+                    <input class="form-control" asp-for="ShowOrders.SearchOrders.OrderNumber" />
+                    <span class="span-error-message" asp-validation-for="ShowOrders.SearchOrders.OrderNumber"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.CreatedDateTime"></label>
+                    <div class="input-group">
+                        <input readonly="readonly" class="custom-md-persian-datepicker form-control" asp-for="ShowOrders.SearchOrders.CreatedDateTime" />
+                        <span class="input-group-text">
+                            <i id="order-date-in-Search-Orders" class="pointer-cursor bi bi-calendar2-date"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="ShowOrders.SearchOrders.CreatedDateTime" class="span-error-message"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.OrderStatus"></label>
+                    <select class="form-control" asp-for="ShowOrders.SearchOrders.OrderStatus" asp-items="Html.GetEnumSelectList<OrderStatusInDeliveryOrders>()">
+                        <option value="">همه</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.ProvinceId"></label>
+                    <select class="form-select custom-select2" asp-for="ShowOrders.SearchOrders.ProvinceId" asp-items="Model.ShowOrders.SearchOrders.Provinces"></select>
+                    <span asp-validation-for="ShowOrders.SearchOrders.ProvinceId" class="span-error-message"></span>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2 d-none" id="selectCity">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.CityId"></label>
+                    <select class="form-select custom-select2" asp-for="ShowOrders.SearchOrders.CityId">
+                        <option value="0">انتخاب کنید</option>
+                    </select>
+                    <span asp-validation-for="ShowOrders.SearchOrders.CityId" class="span-error-message"></span>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.Sorting"></label>
+                    <select class="form-control" asp-for="ShowOrders.SearchOrders.Sorting" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.Orders.SortingOrders>()"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowOrders.SearchOrders.SortingOrder"></label>
+                    <select class="form-control" asp-for="ShowOrders.SearchOrders.SortingOrder" asp-items="Html.GetEnumSelectList<ProShop.ViewModels.SortingOrder>()"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block text-center">
+                        <button disabled="disabled" type="submit" class="btn buttonDetails Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
+    <script src="~/lib/md.bootstrappersiandatetimepicker/dist/mds.bs.datetimepicker.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+}
+
+@section CustomScripts
+{
+    <script src="~/Pages/Inventory/DeliveryOrder/Index.cshtml.js"></script>
+}
+@section Styles
+{
+
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.min.css" />
+}

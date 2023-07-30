@@ -50,6 +50,14 @@
     font-family: "Vazir", tahoma;
 }
 
+.color-element-in-cart {
+    width: 17px;
+    height: 17px;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
 body {
     background-color: #fefefe;
 }
@@ -657,3 +665,4 @@ span.select2-dropdown.select2-dropdown--below {
 .text-custom-grey {
     color: #c0c2c5;
 }
+

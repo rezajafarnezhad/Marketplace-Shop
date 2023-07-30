@@ -102,5 +102,15 @@ namespace ProShop.Common.Helpers
             }
             return str;
         }
+
+        public static string ToShowGuaranteeFullTitle(this string input)
+        {
+            if (input.Contains("0 ماهه"))
+            {
+                return "گارانتی اصالت و سلامت فیزیکی";
+            }
+
+            return input;
+        }
     }
 }

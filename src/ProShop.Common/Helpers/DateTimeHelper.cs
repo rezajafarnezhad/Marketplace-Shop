@@ -47,7 +47,7 @@ public static class DateTimeHelper
         var date = ToLongPersianDate(dateTime);
         var pc = new PersianCalendar();
         var Hour = pc.GetHour(dateTime);
-        var minute = pc.GetMinute(dateTime);
+        var minute = pc.GetMinute(dateTime).ToString("00");
         return $"{date} , ساعت {Hour}:{minute}".ToPersianNumbers();
     }
 

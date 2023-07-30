@@ -128,6 +128,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxTZWxsZXJcX1NlbGxlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/AdminPanel/Variant/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxWYXJpYW50XEFkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/AdminPanel/Variant/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYW5lbFxWYXJpYW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -182,6 +186,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Inventory/Consignment/_List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XENvbnNpZ25tZW50XF9MaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Inventory/DeliveryOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XERlbGl2ZXJ5T3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Inventory/DeliveryOrder/_DeliveryToPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XERlbGl2ZXJ5T3JkZXJcX0RlbGl2ZXJ5VG9Qb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Inventory/DeliveryOrder/_List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XERlbGl2ZXJ5T3JkZXJcX0xpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Inventory/Index.cshtml]
