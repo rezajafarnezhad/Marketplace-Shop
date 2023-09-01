@@ -124,8 +124,6 @@ namespace ProShop.web.Pages.AdminPanel.Category
             return Json(new JsonResultOperation(true, "دسته بندی مورد نظر با موفقیت ذخیره شد"));
         }
 
-
-
         public async Task<IActionResult> OnGetEdit(long Id)
         {
             var model = await _categoryService.GetForEdit(Id);
@@ -340,7 +338,11 @@ namespace ProShop.web.Pages.AdminPanel.Category
                 // CategoryId = categoryId,
                 Variants = variants,
                 SelectedVariants = selectedVariants,
-                AddedVariantsToProductVariant = await _productVariantService.GetAddedVariantsToProductVariants(selectedVariants,categoryId)
+                // برای مثال این دسته بندی 3 رنگ دارد
+                // از کدام یک از این رنگ ها در بخش تنوع محصولات استفاده شده
+                // آیدی اون تنوع ها رو برگشت میزنیم
+                // که به ادمین اجازه ندیم که اون تنوع هارو از این دسته بندی حذف کنه
+                AddedVariantsToProductVariant = await _productVariantService.GetAddedVariantsToProductVariants(selectedVariants, categoryId)
             };
 
             return Partial("_EditCategoryVariant", model);
@@ -349,40 +351,44 @@ namespace ProShop.web.Pages.AdminPanel.Category
         public async Task<IActionResult> OnPostEditCategoryVariant(EditCategoryVariantViewModel model)
         {
             var category = await _categoryService.GetCategoryForEditVariant(model.CategoryId);
+
             if (category is null)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
-           
+
             if (category.IsVariantColor is null)
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
             var categoryVariantsIds = category.categoryVarieants.Select(c => c.VariantId).ToList();
-            if(!await _variantService.CheckVariantsCountAddConfirmStatusForEditCategoryVariants(categoryVariantsIds,category.IsVariantColor.Value))
+            if (!await _variantService.CheckVariantsCountAddConfirmStatusForEditCategoryVariants(categoryVariantsIds, category.IsVariantColor.Value))
             {
                 return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
             }
 
-            var addedVariantsForProductVariants = await _productVariantService.GetAddedVariantsToProductVariants(categoryVariantsIds,model.CategoryId);
+            var addedVariantsForProductVariants = await _productVariantService.GetAddedVariantsToProductVariants(categoryVariantsIds, model.CategoryId);
 
-            foreach (var Variant in category.categoryVarieants)
+
+            //Clear CategoryVariant
+
+            foreach (var CategoryVariant in category.categoryVarieants)
             {
-                if(addedVariantsForProductVariants.Contains(Variant.VariantId))              
+                if (addedVariantsForProductVariants.Contains(CategoryVariant.VariantId))
                     continue;
- 
 
-                category.categoryVarieants.Remove(Variant);
+
+                category.categoryVarieants.Remove(CategoryVariant);
             }
 
 
-          
+            //Add CategoryVariant
             foreach (var variantId in model.SelectedVariants)
             {
                 if (category.categoryVarieants.Any(c => c.VariantId == variantId))
                     continue;
 
-                category.categoryVarieants.Add(new CategoryVarieant()
+                category.categoryVarieants.Add(new CategoryVarieant
                 {
-                    VariantId = variantId,
+                    VariantId = variantId
                 });
             }
             await _unitOfWork.SaveChangesAsync();

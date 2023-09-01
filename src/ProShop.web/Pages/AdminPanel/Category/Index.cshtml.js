@@ -14,19 +14,20 @@ $(function () {
     $(document).on('click', '.variant-Item-button', function () {
 
         var variantId = $(this).attr('veariant-id');
-
         if ($(this).parents('form').find('input[name="SelectedVariants"][value="' + variantId + '"]').length > 0) {
-
             showToastr("warning",'این تنوع قبلا اضافه شده');
             return;
         }
 
 
         $(this).parents('form').prepend('<input name="SelectedVariants" value="' + variantId + '" type="hidden" />')
+
         var variantToAppend =
-            '<button veariant-id="' + variantId + '" type="button" class="mx-1 p-2 badge rounded-pill bg-success border-0">' + $(this).html() + '</button>';
+
+            '<button veariant-id="' + variantId + '" type="button" class="m-2 p-2 badge rounded-pill bg-success border-0">' + $(this).html() + '</button>';
+
         $('#Selected-variant-box').append(variantToAppend);
-        $('#Selected-variant-box button:last').append('<i class="bi bi-x-circle remove-selected-Variant-button mx-2 text-danger"></i>');
+        $('#Selected-variant-box button:last').append('<i class="bi bi-x-circle text-danger fw-bold remove-selected-Variant-button ms-2"></i>');
     });
 
 

@@ -12,9 +12,9 @@
 
 a,a:link {
     color: inherit;
-} 
+}
 
-#buttons-next-to-gallery-box button {
+#buttons-next-to-gallery-box button, #buttons-next-to-gallery-box a {
     color: unset;
     background-color: white;
     border-radius: 8px;
@@ -23,7 +23,7 @@ a,a:link {
     margin: 3px 0;
 }
 
-    #buttons-next-to-gallery-box button:hover {
+    #buttons-next-to-gallery-box button:hover, #buttons-next-to-gallery-box a:hover {
         border: 1px solid #626766;
     }
 

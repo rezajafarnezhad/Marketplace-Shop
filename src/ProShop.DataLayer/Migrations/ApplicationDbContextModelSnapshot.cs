@@ -1241,6 +1241,9 @@ namespace ProShop.DataLayer.Migrations
                     b.Property<int?>("DiscountPrice")
                         .HasColumnType("int");
 
+                    b.Property<int>("FinalPrice")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 

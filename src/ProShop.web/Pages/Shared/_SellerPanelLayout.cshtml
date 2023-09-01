@@ -27,30 +27,50 @@
             <div class="collapse navbar-collapse d-lg-flex justify-content-between" id="seller-panel-navbar">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">منو اول</a>
+                        <a href="/" target="_blank" class="nav-link text-info">
+                            <i class="bi bi-speedometer2"></i>
+                            پروشاپ
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                            منو دوم
+                        <a asp-page="/SellerPanel/Product/Create" class="nav-link text-info">
+                            <span class="badge rounded-pill bg-dark fontsize15">افزودن محصول</span>
+                            <i class="bi-plus-square"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">زیر منو یک</a></li>
-                            <li><a class="dropdown-item" href="#">زیر منو دو</a></li>
-                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a asp-page="/SellerPanel/Product/index" class="nav-link text-info">
+                            <span class="badge rounded-pill bg-info fontsize15"> محصولات من</span>
+                            <i class="bi-person-circle"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a asp-page="/SellerPanel/Product/All" class="nav-link text-info">
+                            <span class="badge rounded-pill bg-secondary fontsize15">  تمامی محصولات پروشاپ</span>
+                            <i class="bi-list-columns-reverse"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a asp-page="/SellerPanel/Consignment/Create" class="nav-link text-info">
+                            <span class="badge rounded-pill bg-warning fontsize15"> ایجاد محموله</span>
+                            <i class="bi-journal-arrow-down"></i>
+                        </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav">
+
+
+                    @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                منو دوم
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">زیر منو یک</a></li>
+                                <li><a class="dropdown-item" href="#">زیر منو دو</a></li>
+                            </ul>
+                        </li>*@
+                    <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">منو اول</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                            منو دوم
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">زیر منو یک</a></li>
-                            <li><a class="dropdown-item" href="#">زیر منو دو</a></li>
-                        </ul>
+                        <a class="nav-link" href="/">برو به پروشاپ</a>
                     </li>
                 </ul>
             </div>

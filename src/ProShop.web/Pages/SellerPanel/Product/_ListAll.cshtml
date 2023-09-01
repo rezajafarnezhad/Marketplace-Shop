@@ -31,12 +31,7 @@
                         <td>@Item.CategoryTitle</td>
 
                         <td class="text-center">
-
-
-
                             <img src="~/images/Products/@Item.MainPicure" alt="@Item.MainPicure" width="100" class="zoom" />
-
-
                         </td>
 
                         <td>@Item.BrandFullTitle</td>
@@ -60,26 +55,17 @@
 
                         <td class="text-center">
 
-                            <div class="dropdown">
-                                <button class="btn button-72 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    بیشتر
-                                </button>
-                                <ul class="dropdown-menu ul-Drop-Down" aria-labelledby="dropdownMenuButton">
-
-                                    <a  productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax btn btn-Drop-Down">
-                                        اطلاعات
-                                        <i class="bi bi-card-list"></i>
-
-                                    </a>
-
-
-
-                                    <a class="btn btn-Drop-Down" asp-page="./AddVariant" asp-route-ProductId="@Item.Id">
-                                        بفروشید
-                                        <i class="bi bi-credit-card-fill"></i>
-                                    </a>
-                                </ul>
-                            </div>
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor">
+                                <span class="badge rounded-pill bg-primary fontsize15">
+                                    اطلاعات
+                                    <i class="bi bi-"></i>
+                                </span>
+                            </a>
+                            <a asp-route-ProductId="@Item.Id" asp-page="./AddVariant"  class="text-info pointer-cursor">
+                                <span class="badge rounded-pill bg-primary fontsize15">
+                                    بفروشید
+                                </span>
+                            </a>
                         </td>
 
                     </tr>

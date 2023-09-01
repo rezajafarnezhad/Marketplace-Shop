@@ -96,6 +96,14 @@ function appendFormModalPlaceToBody() {
 }
 
 
+function closeHtmlModal() {
+    $('#html-modal-place').modal('hide');
+}
+
+function closeScrollableModal() {
+    $('#html-scrollable-modal-place').modal('hide');
+}
+
 
 
 var loadingModalHtml = `<div class="modal" id="loading-modal" data-bs-backdrop="static">
@@ -312,7 +320,7 @@ function initializeSelect2() {
         $('.modal .custom-select2').select2({
             theme: 'bootstrap-5',
             dropdownParent: $('#form-modal-place'),
-            width:'100%'
+            width: '100%'
         });
     }
 }
@@ -321,7 +329,7 @@ function initializeSelect2WithoutModal() {
     if ($('.custom-select2').length > 0) {
         $('.custom-select2').select2({
             theme: 'bootstrap-5',
-            width:'100%'
+            width: '100%'
         });
     }
 
@@ -580,6 +588,7 @@ function initializingAutocomplete() {
 
 // این فانکشن فرم های مربوط به ایجاد و ویرایش را
 // به صورت ایجکس برگشت میزند که در داخل مودال نمایش دهیم
+//برای نمایش مدال مناسب است
 function activatingModalForm() {
     $('.show-modal-form-button').click(function (e) {
         e.preventDefault();
@@ -650,7 +659,7 @@ function publicajaxformFunc(form) {
     var formAction = currentForm.attr('action');
     var functionName = currentForm.attr("call-function-in-the-end");
     var formdata = new FormData(form);
-    
+
     $.ajax({
 
         url: formAction,
@@ -792,6 +801,7 @@ function fillDataTable() {
             activatingPageCount();
             activatingDeleteButtons();
             enablingTooltips();
+            ConvertToPersianNumber();
 
         }
     }).fail(function () {
@@ -865,6 +875,7 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
                 activatingPageCount();
                 activatingModalForm();
                 enablingTooltips();
+                ConvertToPersianNumber();
 
             }
 
@@ -999,6 +1010,7 @@ $(document).on('blur', 'form input', function () {
 });
 
 
+//به غیر از مدال هم میشه
 
 $(document).on('click', '.get-html-with-ajax', function () {
 
@@ -1010,14 +1022,16 @@ $(document).on('click', '.get-html-with-ajax', function () {
 // خواندن صفحات
 // html
 // از سمت سرور
-function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
+function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton, loading = true) {
     $.ajax({
         url: url,
         data: data,
         type: 'GET',
         traditional: true,
         beforeSend: function () {
-            showLoading();
+            if (loading) {
+                showLoading();
+            }
         },
         success: function (data) {
 

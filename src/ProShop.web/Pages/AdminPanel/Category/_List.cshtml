@@ -6,13 +6,13 @@
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-light">
                 <tr>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Id)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Title)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Parent)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].slug)</th>
-                    <th>@Html.DisplayNameFor(c=>c.Categories[0].Picture)</th>
-                    <th class="text-center">@Html.DisplayNameFor(c=>c.Categories[0].ShowInMenus)</th>
-                    <th class="text-center">عملیات</th>
+                    <th>@Html.DisplayNameFor(c => c.Categories[0].Id)</th>
+                    <th>@Html.DisplayNameFor(c => c.Categories[0].Title)</th>
+                    <th>@Html.DisplayNameFor(c => c.Categories[0].Parent)</th>
+                    <th>@Html.DisplayNameFor(c => c.Categories[0].slug)</th>
+                    <th>@Html.DisplayNameFor(c => c.Categories[0].Picture)</th>
+                    <th class="text-center">@Html.DisplayNameFor(c => c.Categories[0].ShowInMenus)</th>
+                    <th class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
@@ -55,61 +55,90 @@
 
                         </td>
 
+
                         <td class="text-center align-middle">
+                            <div class="dropdown">
+                                <button class="btn button7 dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    عملیات
+                                </button>
 
-                            <a asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی" class="btn button7  show-modal-form-button">
-                                <span>ویرایش</span>
-                                <span class="bi bi-eraser"></span>
-                            </a>
+                                <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="static">
+                                    <li>
+                                        <a class="dropdown-item text-secondary show-modal-form-button" asp-page-handler="Edit" asp-route-Id="@Item.Id" custom-title="ویرایش دسته بندی">
+                                            <span class="bi bi-eraser"></span>
+                                            <span>ویرایش</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-page-handler="Add" asp-route-id="@Item.Id" class="dropdown-item text-secondary  show-modal-form-button">
+                                            <span class="bi bi-diagram-3-fill"></span>
+                                            <span>افزودن زیر دسته</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a custom-title="افزودن برند برای دسته  &quot; @Item.Title &quot;" asp-page-handler="AddBrand" asp-route-categoryId="@Item.Id" class="dropdown-item text-secondary  show-modal-form-button">
+                                            <span class="bi bi-globe2"></span>
+                                            <span>افزودن برند</span>
+                                        </a>
+                                    </li>
+                                  
 
-                            @if (Item.IsDeleted)
-                            {
-                                <form asp-page-handler="Restore" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id" />
-                                    <button custom-message="آیا مطمئن به بازگردانی هستید ؟" type="button" class="btn button7  delete-row-button">
-                                        <span>بازگردانی</span>
-                                        <span class="bi bi-trash2"></span>
-                                    </button>
-                                </form>
-                            }
-                            else
-                            {
-                                <form asp-page-handler="Delete" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id" />
-                                    <button type="button" class="btn button7  delete-row-button">
-                                        <span>حذف</span>
-                                        <span class="bi bi-trash2"></span>
-                                    </button>
-                                </form>
-                            }
+                                    @if (Item.IsDeleted)
+                                    {
+                                        <li>
+                                            <form asp-page-handler="Restore" class="d-inline-block">
+                                                <input type="hidden" name="elementId" value="@Item.Id" />
+                                                <button custom-message="آیا مطمئن به بازگردانی هستید ؟" type="button" class="dropdown-item text-secondary delete-row-button">
+                                                    <span>بازگردانی</span>
+                                                    <span class="bi bi-trash2"></span>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <form asp-page-handler="Delete" class="d-inline-block">
+                                                <input type="hidden" name="elementId" value="@Item.Id" />
+                                                <button type="button" class="dropdown-item text-secondary delete-row-button">
+                                                    <span class="bi bi-trash2"></span>
+                                                    <span>حذف</span>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    }
 
-                            <a asp-page-handler="Add" asp-route-id="@Item.Id" class="btn button7  show-modal-form-button">
-                                <span>افزودن زیر دسته</span>
-                                <span class="bi bi-diagram-3-fill"></span>
-                            </a>
-                            <a custom-title="افزودن برند برای دسته  &quot; @Item.Title &quot;" asp-page-handler="AddBrand" asp-route-categoryId="@Item.Id" class="btn button7  show-modal-form-button">
-                                <span>افزودن برند</span>
-                                <span class="bi bi-globe2"></span>
-                            </a>
-                            @if (Item.ShowEditVariantButton)
-                            {
-                                <a custom-title="ویرایش تنوع برای دسته  &quot; @Item.Title &quot;" asp-page-handler="EditCategoryVariant" asp-route-categoryId="@Item.Id" class="btn button7  show-modal-form-button">
-                                    <span>ویرایش تنوع</span>
-                                    <span class="bi bi-globe2"></span>
-                                </a>
-                            }
-                            @if (Item.Picture != "بدون عکس")
-                            {
-                                <form asp-page-handler="DeletePicture" class="d-inline-block">
-                                    <input type="hidden" name="elementId" value="@Item.Id" />
-                                    <button type="button" class="btn button7  delete-row-button">
-                                        <span>حذف تصویر</span>
-                                        <span class="bi bi-trash2"></span>
-                                    </button>
 
-                                </form>
-                            }
+                                    @if (Item.ShowEditVariantButton)
+                                    {
+                                        <li>
+                                            <a custom-title="ویرایش تنوع برای دسته  &quot; @Item.Title &quot;" asp-page-handler="EditCategoryVariant" asp-route-categoryId="@Item.Id" class="dropdown-item text-secondary  show-modal-form-button">
+                                                <span class="bi bi-globe2"></span>
+                                                <span>ویرایش/افزودن تنوع </span>
+                                            </a>
+                                        </li>
+                                      
+                                    }
+                                    @if (Item.Picture != "بدون عکس")
+                                    {
+                                        <li>
+                                            <form asp-page-handler="DeletePicture" class="d-inline-block">
+                                                <input type="hidden" name="elementId" value="@Item.Id" />
+                                                <button type="button" class="dropdown-item text-secondary  delete-row-button">
+                                                    <span class="bi bi-trash2"></span>
+                                                    <span>حذف تصویر</span>
+                                                </button>
+
+                                            </form>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+
                         </td>
+
+
                     </tr>
                 }
             </tbody>
@@ -129,7 +158,7 @@
                 @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                    class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }

@@ -268,5 +268,22 @@ public class CategoryService : GenericService<Category>, ICategoryService
         return await _categories.Include(c=>c.categoryVarieants).SingleOrDefaultAsync(c => c.Id == catagoryId);
     }
 
+
+    /// <summary>
+    /// باید محصولات صفحه مقایسه از یک نو دسته بندی باشند
+    /// معیار اولین محصول هست که تایین میکند
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public async Task<bool> CheckProductCategoryIdsInComparePage(params int[] productCodes)
+    {
+        var MaincategoryIds =await _products.Where(c => productCodes.Contains(c.ProductCode)).Select(c=>c.MainCategoryId)
+            .ToListAsync();
+        
+        if (MaincategoryIds.Count < 1)
+            return false;
+
+        return MaincategoryIds.Distinct().Count() == 1;
+    }
 }
 

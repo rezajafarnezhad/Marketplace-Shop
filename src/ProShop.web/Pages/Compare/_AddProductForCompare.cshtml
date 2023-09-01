@@ -1,0 +1,26 @@
+﻿
+@model ProShop.ViewModels.Product.ShowProductInComparePartialViewModel
+<div class="input-group mb-3">
+    <span class="input-group-text bi bi-search">
+    </span>
+    <input type="text" class="form-control" id="search-input-in-Compare-page" autocomplete="off" placeholder="جستجو در کالاها ..." />
+</div>
+
+<div class="d-flex justify-content-between text-secondary rem15px" id="add-product-header-in-compare-page">
+    <div class="mb-3">برترین کالاها برای مقایسه</div>
+    <div>
+        <span class="persian-numbers" id="Product-Count-In_Compare-Page">@Model.Count</span>
+        کالا
+    </div>
+</div>
+
+<div class="row" id="add-product-modal-in-compare-page">
+    
+    
+    <partial name="~/Pages/Compare/_ProductInAddProductPartial.cshtml" model="Model.products" />
+
+</div>
+
+<div class="mt-2 text-center" id="compare-partilal-loading">
+    <img src="~/images/Application/loading1.gif"  width="40"/>
+</div>

@@ -14,7 +14,7 @@ public class Order : EntityBase, IAuditableEntity
     public int? DiscountPrice { get; set; }
     public byte TotalScore { get; set; }
     public byte ShippingCount { get; set; }
-
+    public int FinalPrice { get; set; }
     public DateTime CreatedDateTime { get; set; }
     /// <summary>
     /// آیا این سفارش توسط مقدار داخل کیف پول کاربر پرداخت شده است ؟

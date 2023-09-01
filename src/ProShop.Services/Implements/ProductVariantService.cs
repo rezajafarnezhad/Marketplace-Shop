@@ -102,10 +102,15 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
 
     public async Task<List<long>> GetAddedVariantsToProductVariants(List<long> VariantsIds, long categoryId)
     {
+        // برای مثال این دسته بندی 3 رنگ دارد
+        // از کدام یک از این رنگ ها در بخش تنوع محصولات استفاده شده
+        // آیدی اون تنوع ها رو برگشت میزنیم
+        // که به ادمین اجازه ندیم که اون تنوع هارو از این دسته بندی حذف کنه
         return await _productVariants
             .Where(c=>c.Product.MainCategoryId == categoryId)
             .Where(c => c.VariantId != null)
-            .Where(c => VariantsIds.Contains(c.VariantId.Value)).GroupBy(c=>c.VariantId)
+            .Where(c => VariantsIds.Contains(c.VariantId.Value))
+            .GroupBy(c=>c.VariantId)
             .Select(c => c.First().VariantId.Value)
             .ToListAsync();
     }

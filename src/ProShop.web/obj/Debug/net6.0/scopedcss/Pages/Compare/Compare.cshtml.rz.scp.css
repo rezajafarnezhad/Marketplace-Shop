@@ -1,0 +1,29 @@
+.remove-button-in-compare-page[b-h44zm76mp3] {
+    width: 22px;
+    height: 22px;
+}
+
+    .remove-button-in-compare-page i[b-h44zm76mp3] {
+        margin-top: 1px;
+    }
+
+.product-name-in-compare-page[b-h44zm76mp3] {
+    line-height: 32px;
+}
+
+.product-item-in-compare-page:not(:nth-child(4))[b-h44zm76mp3] {
+    border-left: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page:not(:last-child)[b-h44zm76mp3] {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page .row div:not(:last-child)[b-h44zm76mp3] {
+    border-left: 1px solid #dee2e6;
+}
+
+.custom-overflow-in-compare-page[b-h44zm76mp3] {
+    overflow-x: auto;
+    overflow-y: hidden;
+}

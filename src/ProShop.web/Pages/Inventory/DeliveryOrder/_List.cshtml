@@ -11,6 +11,7 @@
                     <th>@Html.DisplayNameFor(x => x.Orders[0].AddressFullName)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].Destination)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].CreatedDateTime)</th>
+                    <th>مرسوله تحویل به پست</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].OrderStatus)</th>
                     <th class="text-center"></th>
                 </tr>
@@ -25,6 +26,15 @@
                         <td>@Item.AddressFullName</td>
                         <td>@Item.Destination</td>
                         <td>@Item.CreatedDateTime</td>
+                        <td class="persian-numbers">
+                            <span class="text-success">
+                                @Item.ParcalPostsCount
+                            </span>
+                            /
+                           
+                                @Item.ParcelPostsCountInPost
+                          
+                        </td>
                         <td>
                             @{
                                 var orderStatusColor = string.Empty;
@@ -84,31 +94,57 @@
                                         @if (parcelPost.ParcelPostStatus == ParcelPostStatus.InventoryProcessing)
                                         {
                                             <li>
-                                                <a class="dropdown-item text-secondary show-modal-form-button" asp-page-handler="ShowDeliveryToPost" asp-route-Id="@parcelPost.Id" custom-title="تحویل مرسوله به اداره پست">
-                                                    <span class="bi bi-info"></span>
-                                                    <span>
-                                                        تحویل مرسوله
-                                                        @if (parcelPost.Dimensions == ProductDimensions.Normal)
-                                                        {
-                                                            @:عادی
-                                                        }
-                                                        else if (parcelPost.Dimensions == ProductDimensions.Heavy)
-                                                        {
-                                                            @:بزرگ و سنگین
-                                                        }
-                                                        else
-                                                        {
-                                                            @:فوق سنگین
-
-                                                        }
-                                                        به اداره پست
-                                                    </span>
-                                                </a>
+                                                @if (parcelPost.Dimensions != ProductDimensions.UltraHeavy)
+                                                {
+                                                    <a class="dropdown-item text-secondary show-modal-form-button" asp-page-handler="ShowDeliveryToPost" asp-route-Id="@parcelPost.Id" custom-title="تحویل مرسوله به اداره پست">
+                                                        <span class="bi bi-info"></span>
+                                                        <span>
+                                                            تحویل مرسوله
+                                                            @if (parcelPost.Dimensions == ProductDimensions.Normal)
+                                                            {
+                                                                @:عادی
+                                                            }
+                                                            else 
+                                                            {
+                                                                @:بزرگ و سنگین
+                                                            }
+                                                            به اداره پست
+                                                        </span>
+                                                    </a>
+}
+                                                else
+                                                {
+                                                    //قوق سنگین
+                                                    <li>
+                                                        <form asp-page-handler="ChangeStatusToDeliveryToPost" class="d-inline-block">
+                                                            <input type="hidden" name="Id" value="@parcelPost.Id" />
+                                                            <input type="hidden" name="PostTrackingCode" value="112" />
+                                                            <button custom-message="تحویل مرسوله فوق سنگین؟" type="button" class="dropdown-item text-secondary delete-row-button">
+                                                                <span class="bi bi-trash2"></span>
+                                                                <span>تحویل مرسوله فوق سنگین به اداره پست</span>
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                }
+                                               
                                             </li>
                                         }
 
                                     }
-
+                                    @if (Item.OrderStatus == OrderStatus.CompletelyParcelsDeliveredToPost)
+                                    {
+                                      
+                                        <li>
+                                            <form asp-page-handler="DeliverToClient" class="d-inline-block">
+                                                <input type="hidden" name="id" value="@Item.Id" />
+                                                <button custom-message="وضعیت سفارش به تحویل داده شده به مشتری تغییر یابد؟" type="button" class="dropdown-item text-secondary delete-row-button">
+                                                    <span class="bi bi-trash2"></span>
+                                                    <span>تحویل به مشتزی</span>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    }
+                                   
                                 </ul>
                             </div>
 

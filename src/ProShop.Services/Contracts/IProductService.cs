@@ -18,4 +18,14 @@ public interface IProductService : IGenericService<Product>
     Task<ShowProductInfoViewModel> GetProductInfo(int productCode);
     Task<(int productCode, string slug)> FindByShortLink(string productShortLink);
     Task<List<Product>> GetProductsForChangeStatus(List<long> Ids);
+
+    /// <summary>
+    /// گرفتن محصولات برای نمایش در مقایسه محصول
+    /// </summary>
+    /// <param name="productCodes"></param>
+    /// <returns></returns>
+    Task<List<ShowProductInCompareViewModel>> GetProductCompare(params int[] productCodes);
+
+    Task<ShowProductInComparePartialViewModel> GetProductsForAddProductInCompare(int pageNumber, string searchValue, int[] productCodeToHide);
+    Task<long> GetProductCategory(long productCode);
 }

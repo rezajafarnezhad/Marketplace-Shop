@@ -50,6 +50,9 @@ public class ShowOrder
     [Display(Name ="تاریخ ایجاد")]
     public string CreatedDateTime { get; set; }
 
+    [Display(Name = "قیمت پرداخت شده")]
+    public int FinalPrice { get; set; }
+
 }
 public class SearchOrders
 {
@@ -96,6 +99,13 @@ public class SearchOrders
 
     [Display(Name = "فقط پرداخت شده ها")]
     public bool OnlyPayedOrders { get; set; } = true;
+
+    [Display(Name = "قیمت پرداخت شده از")]
+    [BetweenNumber]
+    public int? FinalPriceFrom { get; set; }
+    [Display(Name = "قیمت پرداخت شده تا")]
+    [BetweenNumber]
+    public int? FinalPriceTo { get; set; }
 
 }
 public enum SortingOrders

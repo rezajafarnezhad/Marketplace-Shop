@@ -86,6 +86,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             {
                 throw new InvalidOperationException(sellerRole.DumpErrors());
             }
+
             var WarehouseRole = identityDbSeedData.SeedWarehouseRole().Result;
             if (WarehouseRole == IdentityResult.Failed())
             {
@@ -97,6 +98,7 @@ public class IdentityDbInitializer : IIdentityDbInitializer
             {
                 throw new InvalidOperationException(DeliveryManRole.DumpErrors());
             }
+
             var UserForseller = identityDbSeedData.SeedUserForSeller().Result;
             if (UserForseller == IdentityResult.Failed())
             {

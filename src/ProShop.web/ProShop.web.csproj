@@ -7,6 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Pages\Compare\_CompareBody.cshtml.css" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Pages\Compare\_CompareBody.cshtml.css" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\ProShop.DataLayer\ProShop.DataLayer.csproj" />
 		<ProjectReference Include="..\ProShop.Ioc\ProShop.Ioc.csproj" />
 		<ProjectReference Include="..\ProShop.Services\ProShop.Services.csproj" />

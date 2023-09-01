@@ -164,6 +164,7 @@
                         </div>
                     </div>
                     <a href="https://tracking.post.ir/search.aspx?id=@normalParcelPost.PostTrackingCode" class="rem14px" target="_blank">پیگیری در سامانه رهگیری پست</a>
+
                 }
             </div>
         </div>
@@ -186,7 +187,7 @@
                             </span>
                             <a target="_blank" asp-page="/Product/Index" asp-route-productCode="@parcelPostItem.ProductVariantProductProductCode"
                                asp-route-slug="@parcelPostItem.ProductVariantProductSlug">
-                                <img src="@wwwRootPaths.ProductImage/@parcelPostItem.ProductPicture" width="150" height="150"/>
+                                <img src="@wwwRootPaths.ProductImage/@parcelPostItem.ProductPicture" width="150" height="150" />
                             </a>
                         </div>
                     </div>

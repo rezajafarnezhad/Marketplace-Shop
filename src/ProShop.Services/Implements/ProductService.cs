@@ -249,4 +249,66 @@ public class ProductService : GenericService<Product>, IProductService
 
     }
 
+    /// <summary>
+    /// گرفتن محصولات برای نمایش در مقایسه محصول
+    /// </summary>
+    /// <param name="productCodes"></param>
+    /// <returns></returns>
+    public Task<List<ShowProductInCompareViewModel>> GetProductCompare(params int[] productCodes)
+    {
+        var ProductCodes = productCodes.Where(c => c > 0).ToArray();
+
+        var data = _mapper.ProjectTo<ShowProductInCompareViewModel>(
+            _products.Where(c => ProductCodes.Contains(c.ProductCode))).ToListAsync();
+        return data;
+    }
+
+    public async Task<ShowProductInComparePartialViewModel> GetProductsForAddProductInCompare(int pageNumber, string searchValue, int[] productCodeToHide)
+    {
+        var result = new ShowProductInComparePartialViewModel();
+
+        searchValue = searchValue?.Trim() ?? "";
+
+
+        if (pageNumber < 1)
+            pageNumber = 1;
+
+        var firstProductCategoryId = await GetProductCategory(productCodeToHide[0]);
+
+        var query = _products
+            .AsNoTracking()
+            .Where(c => searchValue != "" ? c.PersianTitle.Contains(searchValue) || c.EnglishTitle.Contains(searchValue) : true)
+            .Where(c => !productCodeToHide.Contains(c.ProductCode))
+            .Where(c=>c.MainCategoryId == firstProductCategoryId)
+            .OrderBy(c => c.Id).AsNoTracking();
+
+
+        var itemsCount = await query.LongCountAsync();
+        int take = 5;
+        var pageCount = (int)Math.Ceiling((decimal)itemsCount / take);
+        if (pageCount <= 0)
+            pageCount = 1;
+
+        if (pageNumber >= pageCount)
+        {
+            result.IsLastPage = true;
+            pageNumber = pageCount;
+
+        }
+
+        var skip = (pageNumber - 1) * take;
+
+
+        result.products = await _mapper.ProjectTo<ProductItemsForShowProductInComparePartialViewModel>
+            (query.Skip(skip).Take(take)).ToListAsync();
+
+        result.PageNumber = pageNumber;
+        result.Count = itemsCount;
+        return result;
+    }
+
+    public async Task<long> GetProductCategory(long productCode)
+    {
+        return await _products.Where(c => c.ProductCode == productCode).Select(c => c.MainCategoryId).SingleAsync();
+    }
 }

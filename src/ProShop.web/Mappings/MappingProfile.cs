@@ -45,7 +45,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.CreatedDateTime, options => options.MapFrom(src => src.CreatedDateTime.ToLongPersianDate()));
 
 
-        this.CreateMap<AddVariantInPanelAdmin,Entities.Variant>();
+        this.CreateMap<AddVariantInPanelAdmin, Entities.Variant>();
 
         this.CreateMap<Entities.Brand, ShowBrandViewModel>();
         this.CreateMap<AddBrandViewModel, Entities.Brand>()
@@ -304,12 +304,12 @@ public class MappingProfile : Profile
         this.CreateMap<Order, ShowOrder>()
             .ForMember(dest => dest.CreatedDateTime,
                 options =>
-                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour())) 
-            
-            
+                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour()))
+
+
             .ForMember(dest => dest.Destination,
                 options =>
-                    options.MapFrom(src => src.Address.Province.Title+" - "+src.Address.City.Title))
+                    options.MapFrom(src => src.Address.Province.Title + " - " + src.Address.City.Title))
             ;
 
 
@@ -320,7 +320,7 @@ public class MappingProfile : Profile
                     options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour()))
 
 
-           
+
             ;
 
 
@@ -339,10 +339,67 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Destination,
                 options =>
                     options.MapFrom(src => src.Address.Province.Title + " - " + src.Address.City.Title))
+
+            .ForMember(dest => dest.ParcelPostsCountInPost,
+                options =>
+                    options.MapFrom(src => src.ParcalPosts.Count(c => c.ParcelPostStatus == ParcelPostStatus.DeliveredToPost || c.ParcelPostStatus == ParcelPostStatus.DeliveredToClient)))
             ;
 
-        
+
         this.CreateMap<Entities.ParcalPost, ShowParcelPostInDeliveryOrdersViewModel>();
+
+        this.CreateMap<Entities.Product, ShowProductInCompareViewModel>()
+
+            .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName))
+            .ForMember(dest => dest.Price, options => options.MapFrom(src =>
+                src.ProductStockStatustus == ProductStockStatus.Available ? src.ProductVariants.Any() ? src.ProductVariants.OrderBy(c => c.OffPrice ?? c.Price).First().FinalPrice : 0 : 0))
+            .ForMember(dest => dest.Score,
+                options =>
+                    options.MapFrom(src => src.productComments.Any() ? src.productComments.Average(c => c.Score) : 0))
+            ;
+
+        this.CreateMap<Entities.ProductFeature, ShowFeatureInCompareViewModel>().ReverseMap();
+
+
+
+        this.CreateMap<Entities.Product, ProductItemsForShowProductInComparePartialViewModel>()
+
+            .ForMember(dest => dest.MainPicure, options => options.MapFrom(src => src.ProductMedia.First().FileName))
+
+            .ForMember(dest => dest.Price,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductStockStatustus == ProductStockStatus.Available
+                            ? src.ProductVariants.Any()
+                                ? src.ProductVariants.OrderBy(x => x.OffPrice ?? x.Price).First().FinalPrice
+                                : 0
+                            : 0
+                    ))
+
+
+
+            .ForMember(dest => dest.Score,
+                options =>
+                    options.MapFrom(src => src.productComments.Any() ? src.productComments.Average(c => c.Score) : 0))
+
+
+            .ForMember(dest => dest.Count,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductStockStatustus == ProductStockStatus.Available
+                            ?
+                            src.ProductVariants.Any()
+                                ?
+                                src.ProductVariants.OrderBy(x => x.OffPrice ?? x.Price).First().Count > 3
+                                    ? 0
+                                    :
+                                    src.ProductVariants.OrderBy(x => x.OffPrice ?? x.Price).First().Count
+                                :
+                                0
+                            :
+                            0
+                    ));
+
 
     }
 }

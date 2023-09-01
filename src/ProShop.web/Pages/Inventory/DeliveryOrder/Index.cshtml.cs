@@ -16,7 +16,7 @@ namespace ProShop.web.Pages.Inventory.DeliveryOrder;
 
 
 [CheckModelStateInRazorPages]
-public class IndexModel : InventoryPanelBase
+public class IndexModel : DeliveryOrderPanelBase
 {
     private readonly IOrderService _orderService;
     private readonly IMapper _mapper;
@@ -106,13 +106,49 @@ public class IndexModel : InventoryPanelBase
     public async Task<IActionResult> OnPostChangeStatusToDeliveryToPost(DeliveryParcelPostViewModel model)
     {
         var _parcelPost = await _parcelPostService.FindAsync(model.Id);
-        if(_parcelPost is null)
+        if (_parcelPost is null)
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
-        _parcelPost.PostTrackingCode = model.PostTrackingCode;  
         _parcelPost.ParcelPostStatus = ParcelPostStatus.DeliveredToPost;
+
+        if (_parcelPost.Dimensions != ProductDimensions.UltraHeavy)
+        {
+            _parcelPost.PostTrackingCode = model.PostTrackingCode;
+        }
+
+        var Order = await _orderService.FindByIdWithIncludesAsync(_parcelPost.OrderId, nameof(Entities.Order.ParcalPosts));
+
+        //تعداد مرسوله هایی که از این سفارش به پست نحویل داده شده است
+        var DeliveredParcelPostToCount = Order.ParcalPosts.Count(c => c.ParcelPostStatus == ParcelPostStatus.DeliveredToPost);
+
+        if (Order.ParcalPosts.Count == DeliveredParcelPostToCount)
+        {
+            Order.OrderStatus = OrderStatus.CompletelyParcelsDeliveredToPost;
+        }
+        else
+        {
+            Order.OrderStatus = OrderStatus.SomeParcelsDeliveredToPost;
+        }
+
         await _unitOfWork.SaveChangesAsync();
         return Json(new JsonResultOperation(true, "وضعیت مرسوله مورد نظر به \"تحویل داده شده به اداره پست\" تغییر یافت"));
 
+    }
+
+    public async Task<IActionResult> OnPostDeliverToClient(long id)
+    {
+        var _order = await _orderService.FindByIdWithIncludesAsync(id, nameof(Entities.Order.ParcalPosts));
+        if (_order is null)
+            return RecordNotFound();
+
+        _order.OrderStatus = OrderStatus.DeliveredToClient;
+        foreach (var parcelPost in _order.ParcalPosts)
+        {
+            parcelPost.ParcelPostStatus = ParcelPostStatus.DeliveredToClient;
+        }
+        await _unitOfWork.SaveChangesAsync();
+        return Json(new JsonResultOperation(true, "وضعیت سفازش به تحویل داده شده به مشتری تغییر یافت")
+        {
+        });
     }
 }

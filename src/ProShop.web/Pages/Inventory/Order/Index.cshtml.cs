@@ -84,6 +84,7 @@ public class IndexModel : InventoryPanelBase
             return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
 
         _order.OrderStatus = OrderStatus.InventoryProcessing;
+
         foreach (var parcelPost in _order.ParcalPosts)
         {
             parcelPost.ParcelPostStatus = ParcelPostStatus.InventoryProcessing;

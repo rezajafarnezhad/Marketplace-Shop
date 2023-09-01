@@ -54,7 +54,9 @@
     width: 17px;
     height: 17px;
 }
-
+.fontsize15{
+    font-size:15px;
+}
 .rounded-circle {
     border-radius: 50% !important;
 }

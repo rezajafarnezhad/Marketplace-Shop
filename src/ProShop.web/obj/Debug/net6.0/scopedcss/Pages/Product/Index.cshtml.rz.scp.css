@@ -12,9 +12,9 @@
 
 a[b-zptyp67v38],a:link[b-zptyp67v38] {
     color: inherit;
-} 
+}
 
-#buttons-next-to-gallery-box button[b-zptyp67v38] {
+#buttons-next-to-gallery-box button[b-zptyp67v38], #buttons-next-to-gallery-box a[b-zptyp67v38] {
     color: unset;
     background-color: white;
     border-radius: 8px;
@@ -23,7 +23,7 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
     margin: 3px 0;
 }
 
-    #buttons-next-to-gallery-box button:hover[b-zptyp67v38] {
+    #buttons-next-to-gallery-box button:hover[b-zptyp67v38], #buttons-next-to-gallery-box a:hover[b-zptyp67v38] {
         border: 1px solid #626766;
     }
 

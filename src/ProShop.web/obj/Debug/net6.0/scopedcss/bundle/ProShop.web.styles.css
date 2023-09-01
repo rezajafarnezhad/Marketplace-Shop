@@ -2,7 +2,7 @@
 
 
 
-#Selected-variant-box[b-5wkit8f3dk], all-variant-box[b-5wkit8f3dk] {
+#Selected-variant-box[b-5wkit8f3dk], #all-variant-box[b-5wkit8f3dk] {
     max-height: 158px;
     overflow-y: auto;
 }
@@ -41,6 +41,86 @@
 
 #cart-page-title-border[b-tb9g9piu5a] {
     height: 4px;
+}
+/* _content/ProShop.web/Pages/Compare/Index.cshtml.rz.scp.css */
+.remove-button-in-compare-page[b-gxymntt9xs] {
+    width: 22px;
+    height: 22px;
+}
+
+    .remove-button-in-compare-page i[b-gxymntt9xs] {
+        margin-top: 1px;
+    }
+
+.product-name-in-compare-page[b-gxymntt9xs] {
+    line-height: 32px;
+}
+
+.product-item-in-compare-page:not(:nth-child(4))[b-gxymntt9xs] {
+    border-left: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page:not(:last-child)[b-gxymntt9xs] {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page .row div:not(:last-child)[b-gxymntt9xs] {
+    border-left: 1px solid #dee2e6;
+}
+
+.custom-overflow-in-compare-page[b-gxymntt9xs] {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+/* _content/ProShop.web/Pages/Compare/_AddProductForCompare.cshtml.rz.scp.css */
+@media screen and (min-width: 768px) {
+    #add-product-modal-in-compare-page[b-lh3r5x0c6a] >  a:nth-child(odd) {
+        border-left: 1px solid #dee2e6;
+    }
+}
+
+#add-product-modal-in-compare-page a:hover[b-lh3r5x0c6a] {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+/* _content/ProShop.web/Pages/Compare/_CompareBody.cshtml.rz.scp.css */
+.remove-button-in-compare-page[b-wrdu98n8ch] {
+    width: 22px;
+    height: 22px;
+}
+
+    .remove-button-in-compare-page i[b-wrdu98n8ch] {
+        margin-top: 1px;
+    }
+
+.product-name-in-compare-page[b-wrdu98n8ch] {
+    line-height: 32px;
+}
+
+.product-item-in-compare-page:not(:nth-child(4))[b-wrdu98n8ch] {
+    border-left: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page:not(:last-child)[b-wrdu98n8ch] {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.product-details-item-in-compare-page .row div:not(:last-child)[b-wrdu98n8ch] {
+    border-left: 1px solid #dee2e6;
+}
+
+.custom-overflow-in-compare-page[b-wrdu98n8ch] {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+/* _content/ProShop.web/Pages/Compare/_ProductInAddProductPartial.cshtml.rz.scp.css */
+@media screen and (min-width: 768px) {
+    #add-product-modal-in-compare-page[b-ajicha5bmc] >  a:nth-child(odd) {
+        border-left: 1px solid #dee2e6;
+    }
+}
+
+#add-product-modal-in-compare-page a:hover[b-ajicha5bmc] {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
 }
 /* _content/ProShop.web/Pages/Identity/LoginWithPhoneNumber.cshtml.rz.scp.css */
 #login-register-text[b-xhvhmgknev] {
@@ -106,9 +186,9 @@ margin-top: 9rem;
 
 a[b-zptyp67v38],a:link[b-zptyp67v38] {
     color: inherit;
-} 
+}
 
-#buttons-next-to-gallery-box button[b-zptyp67v38] {
+#buttons-next-to-gallery-box button[b-zptyp67v38], #buttons-next-to-gallery-box a[b-zptyp67v38] {
     color: unset;
     background-color: white;
     border-radius: 8px;
@@ -117,7 +197,7 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
     margin: 3px 0;
 }
 
-    #buttons-next-to-gallery-box button:hover[b-zptyp67v38] {
+    #buttons-next-to-gallery-box button:hover[b-zptyp67v38], #buttons-next-to-gallery-box a:hover[b-zptyp67v38] {
         border: 1px solid #626766;
     }
 

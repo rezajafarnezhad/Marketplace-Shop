@@ -27,7 +27,7 @@ public class CartService : GenericService<Cart>, ICartService
 
     public async Task<List<ShowCartInDropDownViewModel>> GetCartForDropDown(long userId)
     {
-        return await _carts.AsNoTracking().Where(c => c.UserId == userId)
+        return await _carts.Where(c => c.UserId == userId)
             .ProjectTo<ShowCartInDropDownViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new { now = DateTime.Now }).ToListAsync();
     }
 

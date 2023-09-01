@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -69,7 +70,3 @@ public class AddProductViewModel
     [AllowExtensions(new[] { "mp4" }, new[] { "video/mp4" },true )]
     public List<IFormFile> ProductVideoFiles { get; set; }
 }
-
-
-
-

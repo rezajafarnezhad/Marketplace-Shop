@@ -38,11 +38,11 @@
 
 
                         </td>
-                        
+
                         <td>@Item.BrandFullTitle</td>
                         <td>
 
-                             @{
+                            @{
                                 string GetButtonClass(ProductStatus status) => status switch
                                 {
                                     ProductStatus.Confirmed => "success",
@@ -59,17 +59,20 @@
                         </td>
 
                         <td class="text-center">
-                            <button productId="@Item.Id" type="button" role="button" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax button-72">
-                                اطلاعات محصول
-                                <i class="bi bi-card-list"></i>
-                            </button>
 
 
-                            <button productId="@Item.Id" type="button" role="button" functionNameToCallOnClick="getProductVariants" class="get-html-with-ajax button-72">
-                               تنوع های من در این محصول
-                                <i class="bi bi-boxes"></i>
-                            </button>
-
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor">
+                                <span class="badge rounded-pill bg-primary fontsize15">
+                                    اطلاعات محصول
+                                    <i class="bi-info-circle"></i>
+                                </span>
+                            </a>
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductVariants" class="get-html-with-ajax text-info pointer-cursor">
+                                <span class="badge rounded-pill bg-primary fontsize15">
+                                    تنوع های من در این محصول
+                                    <i class="bi bi-boxes"></i>
+                                </span>
+                            </a>
                         </td>
 
                     </tr>
@@ -92,7 +95,7 @@
                 @for (int counter = Model.pagination.StartPage; counter <= Model.pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                    class="@(counter == Model.pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                            class="@(counter == Model.pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }

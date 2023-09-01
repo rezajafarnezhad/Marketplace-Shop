@@ -37,7 +37,8 @@ public class ShowOrderInDeliveryOrderViewModel
     public string CreatedDateTime { get; set; }
 
     public List<ShowParcelPostInDeliveryOrdersViewModel> ParcalPosts { get; set; } = new();
-
+    public int ParcalPostsCount { get; set; }
+    public int ParcelPostsCountInPost { get; set; }
 }
 
 public class ShowParcelPostInDeliveryOrdersViewModel

@@ -19,4 +19,12 @@ public interface ICategoryService : IGenericService<Category>
     Task<Dictionary<long, string>> GetSellerCategories();
     Task<bool?> IsVariantTypeColor(long categoryId);
     Task<Category> GetCategoryForEditVariant(long catagoryId);
+
+    /// <summary>
+    /// باید محصولات صفحه مقایسه از یک نو دسته بندی باشند
+    /// معیار اولین محصول هست که تایین میکند
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    Task<bool> CheckProductCategoryIdsInComparePage(params int[] productCodes);
 }

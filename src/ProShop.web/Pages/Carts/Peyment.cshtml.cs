@@ -270,6 +270,7 @@ namespace ProShop.web.Pages.Carts
                 orderToAdd.DiscountPrice = discountPrice;
 
 
+            orderToAdd.FinalPrice = totalPrice + sumPriceOfShipping - discountPrice;
 
             if (result.IsSucceed)
             {

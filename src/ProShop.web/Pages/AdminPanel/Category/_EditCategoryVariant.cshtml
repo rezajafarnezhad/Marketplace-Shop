@@ -35,7 +35,7 @@
 
                         @if (!Model.AddedVariantsToProductVariant.Contains(item.Id))
                         {
-                            <i class="bi bi-x-circle text-danger mx-3 remove-selected-Variant-button"></i>
+                            <i class="bi bi-x-circle text-danger fw-bold remove-selected-Variant-button ms-2"></i>
                         }
 
                     </button>
@@ -53,7 +53,7 @@
 
                 @foreach (var item in Model.Variants)
                 {
-                    <button veariant-id="@item.Id" type="button" class="p-2 badge rounded-pill bg-dark border-0 variant-Item-button">
+                    <button veariant-id="@item.Id" type="button" class="p-2 m-2 badge rounded-pill bg-dark border-0 variant-Item-button">
                         @item.Value
                         @if (item.IsColor)
                         {

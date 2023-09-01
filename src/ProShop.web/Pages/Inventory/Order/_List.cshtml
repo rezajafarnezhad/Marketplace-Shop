@@ -12,6 +12,7 @@
                     <th>@Html.DisplayNameFor(x => x.Orders[0].Destination)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].PaymentGateway)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].BankTransactionCode)</th>
+                    <th>@Html.DisplayNameFor(x => x.Orders[0].FinalPrice)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].CreatedDateTime)</th>
                     <th>@Html.DisplayNameFor(x => x.Orders[0].OrderStatus)</th>
                     <th class="text-center">عملیات</th>
@@ -50,6 +51,7 @@
                             </div>
                         </td>
                         <td>@Item.BankTransactionCode</td>
+                        <td class="persian-numbers">@Item.FinalPrice.ToString("#,0")</td>
                         <td>@Item.CreatedDateTime</td>
                         <td>
                             @{

@@ -1,0 +1,97 @@
+﻿@using ProShop.Services.Implements.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="collapse navbar-collapse d-lg-flex justify-content-lg-between" id="main-menu">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="/" target="_blank" class="nav-link text-info">
+                <i class="bi bi-speedometer2"></i>
+                پروشاپ
+            </a>
+        </li>
+        @if (User.IsInRole(ConstantRoles.Warehouse))
+        {
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link text-info" data-bs-toggle="dropdown">
+                    <span class="badge rounded-pill bg-dark fontsize15">مدیریت محموله ها</span>
+                    <i class="bi-box-seam-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a asp-page="/Inventory/Consignment/Index" class="dropdown-item text-secondary">
+                            <i class="bi-box-seam-fill"></i>
+                            محموله ها
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link text-info" data-bs-toggle="dropdown">
+                    <span class="badge rounded-pill bg-primary fontsize15"> مدیریت موجودی محصولات</span>
+                    <i class="bi-clipboard2-data-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a asp-page="/Inventory/ProductStock/AddProductStockByConsignment" class="dropdown-item text-secondary">
+                            <i class="bi-clipboard2-data-fill"></i>
+                            افرایش موجودی بر اساس محموله ارسالی
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link text-info" data-bs-toggle="dropdown">
+                    <span class="badge rounded-pill bg-secondary fontsize15"> مدیریت سفارشات</span>
+                    <i class="bi bi-bag-fill"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a asp-page="/Inventory/Order/Index" class="dropdown-item text-secondary">
+                            <i class="bi bi-bag-fill"></i>
+                            نمایش سفارشات
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(ConstantRoles.DeliveryMan))
+        {
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link text-info" data-bs-toggle="dropdown">
+                    <span class="badge rounded-pill bg-warning fontsize15"> محموله های در انتظار تحویل به پست</span>
+                    <i class="bi bi-signpost-2"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a asp-page="/Inventory/DeliveryOrder/Index" class="dropdown-item text-secondary">
+                            <i class="bi bi-bag-fill"></i>
+                            نمایش سفارشات
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+    </ul>
+    <ul class="navbar-nav align-items-center d-none d-lg-flex">
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link" data-bs-toggle="dropdown">
+                <img src="~/images/avatars/user-default-avatar.png" alt="User" width="50">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li class="dropdown-header bg-light text-center">
+                    حساب کاربری
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-item text-secondary">
+                        پروفایل
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-item text-secondary">
+                        خروج
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
