@@ -34,6 +34,7 @@ $(document).on('keyup', '#search-input-in-Compare-page', function () {
                     searchValue: searchValue,
                     productCodeToHide: getProductCodesToHide()
                 }
+                pageNumber = 1;
                 GetHtmlWithAjax('?handler=ShowAddProductForCompare', dataTosend, 'ShowAddProductInModal', null, false);
             }
         }
@@ -52,7 +53,7 @@ function ShowAddProductInModal(data, clickedButton) {
     isProcessing = false;
     isModalOpened = true;
 
-    appendHtmlScrollableModalPlaceToBody();
+    appendHtmlScrollableModalPlaceToBody('modal-lg');
 
     $('#html-scrollable-modal-place .modal-body').off('scroll').scroll(function (e) {
 
@@ -122,6 +123,8 @@ $(document).on('click', '.remove-button-in-compare-page', function () {
     var datatosend = {
         productCode1: ProductCode1, productCode2: ProductCode2, productCode3: ProductCode3
     };
+    isModalOpened = false;
+
     GetHtmlWithAjax('/Compare/Index?handler=GetProductsForCompare', datatosend, 'ShowProductsInCompareFunction', null);
 
 });
@@ -144,7 +147,7 @@ $(document).on('click', '#add-product-modal-in-compare-page a', function (e) {
     var datatosend = {
         productCode1: ProductCode1, productCode2: ProductCode2, productCode3: ProductCode3, productCode4: prodcutcode4
     };
-
+    isModalOpened = false;
     closeScrollableModal();
     GetHtmlWithAjax('/Compare/Index?handler=GetProductsForCompare', datatosend, 'ShowProductsInCompareFunction', e);
 

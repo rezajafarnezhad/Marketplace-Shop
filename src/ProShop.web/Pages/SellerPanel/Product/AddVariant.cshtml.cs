@@ -23,7 +23,10 @@ public class AddVariantModel : SellerPanelBase
     private readonly IUnitOfWork unitOfWork;
     private readonly IProductVariantService _productVariantService;
     private readonly IGaranteeService _garanteeService;
-    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null, IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null, IGaranteeService garanteeService = null, IVariantService variantService = null)
+
+    public AddVariantModel(IProductService productService, ISellerService sellerService = null, IMapper mapper = null,
+        IProductVariantService productVariantService = null, IUnitOfWork unitOfWork = null,
+        IGaranteeService garanteeService = null, IVariantService variantService = null)
     {
         _productService = productService;
         _sellerService = sellerService;
@@ -34,8 +37,7 @@ public class AddVariantModel : SellerPanelBase
         _VariantService = variantService;
     }
 
-    [BindProperty]
-    public AddVariantViewModel Variant { get; set; } = new();
+    [BindProperty] public AddVariantViewModel Variant { get; set; } = new();
 
     public async Task<IActionResult> OnGet(long ProductId)
     {
@@ -65,32 +67,41 @@ public class AddVariantModel : SellerPanelBase
         var userId = User.Identity.GetLoggedUserId();
         var sellerId = await _sellerService.GetSellerId(userId);
 
-        var checkInputs = await _VariantService.checkProductAndVariantTypeForAddVariant(Variant.ProductId, Variant.VariantId);
+        var checkInputs =
+            await _VariantService.checkProductAndVariantTypeForAddVariant(Variant.ProductId, Variant.VariantId);
 
         if (!checkInputs.result)
         {
-            return Json(new JsonResultOperation(false,PublicConstantStrings.RecordNotFoundErrorMessage));
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
         }
 
         var ProductVaraintToAdd = _mapper.Map<Entities.ProductVariant>(Variant);
         if (checkInputs.isVariantNull)
         {
-            ProductVaraintToAdd.VariantId =null;
+            ProductVaraintToAdd.VariantId = null;
 
         }
 
+        if (await _productVariantService.isThisVariantAddedForSeller(ProductVaraintToAdd.VariantId, ProductVaraintToAdd.ProductId))
+        {
+            return Json(new JsonResultOperation(false, PublicConstantStrings.RecordNotFoundErrorMessage));
+
+        }
 
         ProductVaraintToAdd.SellerId = sellerId;
         ProductVaraintToAdd.VariantCode = await _productVariantService.GetVariantCodeForCreateProductVariant();
 
-        if (await _productVariantService.existsProductVariant(ProductVaraintToAdd.ProductId, ProductVaraintToAdd.GaranteeId, ProductVaraintToAdd.VariantId, sellerId))
+        if (await _productVariantService.existsProductVariant(ProductVaraintToAdd.ProductId,
+                ProductVaraintToAdd.GaranteeId, ProductVaraintToAdd.VariantId, sellerId))
         {
             return Json(new JsonResultOperation(false, "این مشخصات قبلا برای این محصول ثبت شده"));
         }
+
         await _productVariantService.AddAsync(ProductVaraintToAdd);
 
 
-        var product = await _productService.FindByIdWithIncludesAsync(Variant.ProductId,nameof(Entities.Product.Category));
+        var product =
+            await _productService.FindByIdWithIncludesAsync(Variant.ProductId, nameof(Entities.Product.Category));
         if (product.ProductStockStatustus == Entities.ProductStockStatus.New)
             product.ProductStockStatustus = Entities.ProductStockStatus.Unavailable;
 
@@ -118,9 +129,11 @@ public class AddVariantModel : SellerPanelBase
                 Id = specificGuarantee.value.Id
             };
         }
+
         return Json(new
         {
-            results=result
+            results = result
         });
     }
+
 }

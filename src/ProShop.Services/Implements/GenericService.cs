@@ -124,5 +124,4 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
         _entities.RemoveRange(entities);
     }
 
-   
 }

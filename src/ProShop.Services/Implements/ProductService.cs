@@ -92,14 +92,12 @@ public class ProductService : GenericService<Product>, IProductService
         }
         #endregion
 
-
-
-        var paginationResult = await GenericPagination(Products, model.pagination);
+        var paginationResult = await GenericPagination(Products, model.Pagination);
 
         return new ShowProductsViewModel
         {
             Products = await _mapper.ProjectTo<ShowProductViewModel>(paginationResult.Query).ToListAsync(),
-            pagination = paginationResult.Pagination,
+            Pagination = paginationResult.Pagination,
         };
 
     }
@@ -215,7 +213,11 @@ public class ProductService : GenericService<Product>, IProductService
 
     public async Task<AddVariantViewModel> GetProductInfoForAddVeriant(long productId)
     {
-        return await _mapper.ProjectTo<AddVariantViewModel>(_products).SingleOrDefaultAsync(c => c.ProductId == productId);
+        var sellerId = await _sellerService.GetSellerId();
+        return await _products
+            .AsNoTracking()
+            .AsSplitQuery()
+            .ProjectTo<AddVariantViewModel>(configuration: _mapper.ConfigurationProvider, parameters: new {sellerId=sellerId}).SingleOrDefaultAsync(c => c.ProductId == productId);
     }
     public Task<ShowProductInfoViewModel> GetProductInfo(int productCode)
     {

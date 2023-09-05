@@ -17,10 +17,13 @@ var htmlModalPlace = `<div class="modal fade" id="html-modal-place" data-bs-back
     </div>
 </div>`;
 
-function appendHtmlModalPlaceToBody() {
+function appendHtmlModalPlaceToBody(customClass ='modal-xl') {
     if ($('#html-modal-place').length === 0) {
         $('body').append(htmlModalPlace);
     }
+
+    $('#html-modal-place div:first').removeClass('modal-xl');
+    $('#html-modal-place div:first').addClass(customClass);
 }
 
 var htmlScrollableModalPlace = `<div class="modal fade" id="html-scrollable-modal-place" data-bs-backdrop="static">
@@ -39,10 +42,12 @@ var htmlScrollableModalPlace = `<div class="modal fade" id="html-scrollable-moda
 </div>`;
 
 
-function appendHtmlScrollableModalPlaceToBody() {
+function appendHtmlScrollableModalPlaceToBody(customClass = 'modal-xl') {
     if ($('#html-scrollable-modal-place').length === 0) {
         $('body').append(htmlScrollableModalPlace);
     }
+    $('#html-scrollable-modal-place div:first').removeClass('modal-xl');
+    $('#html-scrollable-modal-place div:first').addClass(customClass);
 }
 
 
@@ -320,7 +325,8 @@ function initializeSelect2() {
         $('.modal .custom-select2').select2({
             theme: 'bootstrap-5',
             dropdownParent: $('#form-modal-place'),
-            width: '100%'
+            dropdownParent: $('#html-scrollable-modal-place'),
+            //width: '100%'
         });
     }
 }
@@ -329,7 +335,7 @@ function initializeSelect2WithoutModal() {
     if ($('.custom-select2').length > 0) {
         $('.custom-select2').select2({
             theme: 'bootstrap-5',
-            width: '100%'
+            //width: '100%'
         });
     }
 

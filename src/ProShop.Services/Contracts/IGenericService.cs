@@ -20,5 +20,6 @@ public interface IGenericService<TEntity> where TEntity : EntityBase, new()
     void RemoveRange(List<TEntity> entities);
     Task<TEntity> FindByIdWithIncludesAsync(long Id, params string[] includes);
 
+
     
 }

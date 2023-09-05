@@ -99,13 +99,17 @@ public class MappingProfile : Profile
         this.CreateMap<Entities.CategoryVarieant, ShowCategoryVariantInAddVariantViewModel>();
         this.CreateMap<Entities.ProductShortLink, ShowProductShortLinkViewModel>();
 
+
+        long sellerId = 0;
         this.CreateMap<Entities.Product, AddVariantViewModel>()
            .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Id))
+           .ForMember(dest => dest.AddedVariantIds, options => options.MapFrom(src => src.ProductVariants.Where(x=>x.SellerId == sellerId).Select(x=>x.VariantId)))
            .ForMember(dest => dest.MainPicture, options => options.MapFrom(src => src.ProductMedia.First().FileName))
            .ForMember(dest => dest.ProductTitle, options => options.MapFrom(src => src.PersianTitle))
            .ForMember(dest => dest.Variants, options => options.MapFrom(src => src.Category.categoryVarieants.Where(c => c.Variant.IsConfirmed)))
            .ForMember(dest => dest.CommissionPercentage, options =>
-             options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
+           
+               options.MapFrom(src => src.Category.CategoryBrands.Select(c => new { c.BrandId, c.CommissionPercentage }).Single(c => c.BrandId == src.BrandId).CommissionPercentage));
 
 
         this.CreateMap<AddVariantViewModel, Entities.ProductVariant>();
@@ -150,7 +154,7 @@ public class MappingProfile : Profile
 
             .ForMember(dest => dest.productCommentsCount,
                 options =>
-                    options.MapFrom(src => src.productComments.LongCount(c => c.CommentTitle != null)))
+                    options.MapFrom(src => src.productComments.Where(c=>c.IsConfirmed).LongCount(c => c.CommentTitle != null)))
 
             .ForMember(dest => dest.SuggestCount,
                 options =>

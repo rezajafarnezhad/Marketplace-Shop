@@ -7,7 +7,7 @@ namespace ProShop.ViewModels.Product;
 
 public class ShowProductsViewModel
 {
-    public PaginationViewModel pagination { get; set; } = new();
+    public PaginationViewModel Pagination { get; set; } = new();
     public SearchProducts SearchProducts { get; set; } = new();
     public List<ShowProductViewModel> Products { get; set; } = new();
 }
@@ -70,7 +70,7 @@ public class SearchProducts
     public ProductStatus? Status { get; set; }
 
     [Display(Name = "مرتب سازی بر اساس")]
-    public SortingOrder SortingOrder { get; set; }
+    public SortingOrder SortingOrder { get; set; } = SortingOrder.Desc;
 
     [Display(Name = "نمایش بر اساس")]
     public SortingProducts Sorting { get; set; }

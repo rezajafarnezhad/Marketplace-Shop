@@ -94,6 +94,12 @@
 
 .product-name-in-compare-page[b-wrdu98n8ch] {
     line-height: 32px;
+    height:67px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-item-in-compare-page:not(:nth-child(4))[b-wrdu98n8ch] {
@@ -121,6 +127,17 @@
 
 #add-product-modal-in-compare-page a:hover[b-ajicha5bmc] {
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+
+.product-name-in-compare-page[b-ajicha5bmc] {
+    line-height: 32px;
+    height: 78px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /* _content/ProShop.web/Pages/Identity/LoginWithPhoneNumber.cshtml.rz.scp.css */
 #login-register-text[b-xhvhmgknev] {
@@ -285,6 +302,21 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
     border-radius: 0.80rem;
 }
 /* End other sellers */
+
+
+#product-options-box-in-single-page-of-product > div div[b-zptyp67v38] {
+    height: 4px;
+    width: 100%;
+}
+
+#product-introduction-in-single-page-of-product[b-zptyp67v38] {
+    line-height: 2.15;
+    color: #232933;
+}
+
+.break-line-in-single-page-of-product[b-zptyp67v38] {
+    height: 3px;
+}
 /* _content/ProShop.web/Pages/Product/_ShareProductP.cshtml.rz.scp.css */
 
 

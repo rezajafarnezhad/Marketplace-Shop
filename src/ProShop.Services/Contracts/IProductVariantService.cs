@@ -14,4 +14,12 @@ public interface IProductVariantService : IGenericService<ProductVariant>
     Task<AddEditDiscountViewModel> GetDateForAddEditDiscount(long ProductVariantId);
     Task<ProductVariant> GetforEdit(long ProductVariantId);
     Task<List<long>> GetAddedVariantsToProductVariants(List<long> VariantsIds,long categoryId);
+
+    /// <summary>
+    /// بررسی میکنیم این تنوع قبلا درچ شدع یا نه
+    /// </summary>
+    /// <param name="variantId"></param>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    Task<bool> isThisVariantAddedForSeller(long? variantId, long productId);
 }

@@ -30,20 +30,13 @@
                         <td>@Item.ProductCode</td>
                         <td>@Item.PersianTitle</td>
                         <td>@Item.CategoryTitle</td>
-
                         <td class="text-center">
-
-
-
                             <img src="~/images/Products/@Item.MainPicure" alt="@Item.MainPicure" width="100" class="zoom" />
-
-
                         </td>
                         <td>@Item.SellerShopName</td>
                         <td>@Item.BrandFullTitle</td>
                         <td>
-
-                             @{
+                            @{
                                 string GetButtonClass(ProductStatus status) => status switch
                                 {
                                     ProductStatus.Confirmed => "success",
@@ -76,36 +69,36 @@
         <hr />
         <div class="btn-toolbar my-3 d-flex justify-content-center" id="main-pagianation">
             <div class="btn-group me-2">
-                @if (Model.pagination.CurrentPage != 1)
+                @if (Model.Pagination.CurrentPage != 1)
                 {
                     <button value="1" type="button" class="btn btn-outline-dark">
                         <i class="bi bi-chevron-double-right"></i>
                     </button>
-                    <button value="@(Model.pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
+                    <button value="@(Model.Pagination.CurrentPage - 1)" type="button" class="btn btn-outline-dark">قبلی</button>
                 }
-                @for (int counter = Model.pagination.StartPage; counter <= Model.pagination.EndPage; counter++)
+                @for (int counter = Model.Pagination.StartPage; counter <= Model.Pagination.EndPage; counter++)
                 {
                     <button value="@counter" type="button"
-                    class="@(counter == Model.pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
+                            class="@(counter == Model.Pagination.CurrentPage ? "active " : string.Empty)btn btn-outline-dark">
                         @counter
                     </button>
                 }
-                @if (Model.pagination.CurrentPage != Model.pagination.PagesCount)
+                @if (Model.Pagination.CurrentPage != Model.Pagination.PagesCount)
                 {
-                    <button value="@(Model.pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
-                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.pagination.PagesCount" value="@Model.pagination.PagesCount" type="button" class="btn btn-outline-dark">
+                    <button value="@(Model.Pagination.CurrentPage + 1)" type="button" class="btn btn-outline-dark">بعدی</button>
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="کل صفحات @Model.Pagination.PagesCount" value="@Model.Pagination.PagesCount" type="button" class="btn btn-outline-dark">
                         <i class="bi bi-chevron-double-left"></i>
-                        @Model.pagination.PagesCount
+                        @Model.Pagination.PagesCount
                     </button>
                 }
             </div>
             <div>
-                <select id="page-count-selectbox" class="form-control" asp-for="pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
+                <select id="page-count-selectbox" class="form-control" asp-for="Pagination.PageCount" asp-items="Html.GetEnumSelectList<PageCount>()"></select>
             </div>
         </div>
         <div class="col-10 col-sm-6 col-md-4 col-xl-3 m-auto">
             <div class="input-group">
-                <input id="page-number-input" value="@Model.pagination.CurrentPage" min="1" max="@Model.pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
+                <input id="page-number-input" value="@Model.Pagination.CurrentPage" min="1" max="@Model.Pagination.PagesCount" type="number" class="form-control rtl-direction" placeholder="شماره صفحه">
                 <button id="goto-page-button" class="btn btn-outline-dark" type="submit">برو به صفحه</button>
             </div>
         </div>

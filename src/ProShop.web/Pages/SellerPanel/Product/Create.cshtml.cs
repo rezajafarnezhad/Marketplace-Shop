@@ -14,6 +14,7 @@ using ProShop.ViewModels.Brands;
 using ProShop.ViewModels.CategoryFeatures;
 using ProShop.ViewModels.FeatureConstantValue;
 using ProShop.ViewModels.Product;
+using ProShop.web.Pages.Seller;
 using System.Text;
 
 namespace ProShop.web.Pages.SellerPanel.Product;
@@ -60,7 +61,7 @@ public class CreateModel : SellerPanelBase
 
 
 
-    public AddProductViewModel Product{ get; set; }
+    public AddProductViewModel Product { get; set; }
 
     public void OnGet()
     {
@@ -77,7 +78,7 @@ public class CreateModel : SellerPanelBase
             });
         }
 
-        
+
         var ProductToAdd = _mapper.Map<Entities.Product>(Product);
 
         var categoriesToAdd = await _categoryService.GetCategoryParentIds(Product.MainCategoryId);
@@ -89,17 +90,34 @@ public class CreateModel : SellerPanelBase
             return Json(new JsonResultOperation(false));
 
         ProductToAdd.SelerId = await _sellerService.GetSellerId(User.Identity.GetLoggedUserId());
-        ProductToAdd.Slug = Product.PersianTitle.Replace(" ","-");
+        ProductToAdd.Slug = Product.PersianTitle.Replace(" ", "-");
         var ShortLink = await _productShortLinkService.GetProductShortLinkForCreateProduct();
         ProductToAdd.ProductShortLinkId = ShortLink.Id;
         ShortLink.IsUsed = true;
 
-        ProductToAdd.ShortDescription = _htmlSanitizer.Sanitize(ProductToAdd.ShortDescription);
-        ProductToAdd.SpecialCheck = _htmlSanitizer.Sanitize(ProductToAdd.SpecialCheck);
-        ProductToAdd.ProductCode = await _productService.GetProductCode();
+        if (string.IsNullOrWhiteSpace(Product.ShortDescription))
+        {
+            ProductToAdd.ShortDescription = null;
+
+        }
+        else
+        {
+            ProductToAdd.ShortDescription = _htmlSanitizer.Sanitize(ProductToAdd.ShortDescription);
+        }
+         
+        if (string.IsNullOrWhiteSpace(Product.SpecialtyCheck))
+        {
+            ProductToAdd.SpecialCheck = null;
+
+        }
+        else
+        {
+            ProductToAdd.SpecialCheck = _htmlSanitizer.Sanitize(ProductToAdd.SpecialCheck);
+        }
+
 
         // main Category Id
-        ProductToAdd.MainCategoryId =  categoriesToAdd.categoryIds.First();
+        ProductToAdd.MainCategoryId = categoriesToAdd.categoryIds.First();
 
 
         foreach (var item in categoriesToAdd.categoryIds)
@@ -221,7 +239,7 @@ public class CreateModel : SellerPanelBase
                     foreach (var value in item.Value)
                     {
                         var trimmedValue = value.Trim();
-                        if (featureConstantValues.Where(c=>c.FeatureId == featureId).Any(c=>c.Value == trimmedValue))
+                        if (featureConstantValues.Where(c => c.FeatureId == featureId).Any(c => c.Value == trimmedValue))
                         {
                             valueToAdd.Append(trimmedValue + "|||");
                         }
@@ -235,7 +253,7 @@ public class CreateModel : SellerPanelBase
                                 FeatureId = featureId,
                                 Value = valueToAdd.ToString().Substring(0, valueToAdd.Length - 3)
                             });
-                          
+
                         }
                     }
 
@@ -275,8 +293,8 @@ public class CreateModel : SellerPanelBase
 
 
         return Json(new JsonResultOperation(true, "محصول مورد نظر با موفقیت ایجاد شد"));
-        
-         
+
+
 
     }
     public async Task<IActionResult> OnGetGetCategories(long[]? selectedCategoriesIds)
@@ -393,20 +411,21 @@ public class CreateModel : SellerPanelBase
         }
         return Json(false);
     }
-  
-    public async Task<IActionResult> OnGetGetCommissionPercentage(long brandId , long categoryid)
+
+    public async Task<IActionResult> OnGetGetCommissionPercentage(long brandId, long categoryid)
     {
-        if(brandId <1 || categoryid < 1)
+        if (brandId < 1 || categoryid < 1)
             return Json(new JsonResultOperation(false));
 
         var data = await _categoryBrandService.GetCommissionPercentage(brandId, categoryid);
 
-        if(data.Item1 is false)
+        if (data.Item1 is false)
             return Json(new JsonResultOperation(false));
 
 
-        return Json(new JsonResultOperation(true,String.Empty) { 
-        Data =data.Item2
+        return Json(new JsonResultOperation(true, String.Empty)
+        {
+            Data = data.Item2
         });
     }
 

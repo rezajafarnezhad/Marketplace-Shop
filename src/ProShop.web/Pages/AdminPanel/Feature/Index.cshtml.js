@@ -2,7 +2,7 @@
 
 $(function () {
     fillDataTable();
-
+    activatingModalForm();
     $('#FeaturesViewModel_SearchFeature_CategoryId').change(function () {
 
         var categoryId = $(this).val();

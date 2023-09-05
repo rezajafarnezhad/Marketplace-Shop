@@ -75,11 +75,11 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
     {
         var sellerId = await _sellerService.GetSellerId();
 
-        var result =  await _mapper.ProjectTo<AddEditDiscountViewModel>(
+        var result = await _mapper.ProjectTo<AddEditDiscountViewModel>(
             _productVariants.Where(c => c.SellerId == sellerId)
             ).SingleOrDefaultAsync(c => c.Id == ProductVariantId);
 
-        if(result?.offPercentage >0)
+        if (result?.offPercentage > 0)
         {
             var parsedDateTime = DateTime.Parse(result.StartDateTime);
             result.StartDateTimeEn = parsedDateTime.ToString("yyyy/MM/dd HH:mm");
@@ -106,14 +106,30 @@ public class ProductVariantService : GenericService<Entities.ProductVariant>, IP
         // از کدام یک از این رنگ ها در بخش تنوع محصولات استفاده شده
         // آیدی اون تنوع ها رو برگشت میزنیم
         // که به ادمین اجازه ندیم که اون تنوع هارو از این دسته بندی حذف کنه
+    
         return await _productVariants
-            .Where(c=>c.Product.MainCategoryId == categoryId)
+            .Where(c => c.Product.MainCategoryId == categoryId)
             .Where(c => c.VariantId != null)
             .Where(c => VariantsIds.Contains(c.VariantId.Value))
-            .GroupBy(c=>c.VariantId)
+            .GroupBy(c => c.VariantId)
             .Select(c => c.First().VariantId.Value)
             .ToListAsync();
     }
 
+    /// <summary>
+    /// بررسی میکنیم این تنوع قبلا درچ شدع یا نه
+    /// </summary>
+    /// <param name="variantId"></param>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    public async Task<bool> isThisVariantAddedForSeller(long? variantId, long productId)
+    {
+        var sellerId = await _sellerService.GetSellerId();
+
+        return await _productVariants
+            .Where(c => c.ProductId == productId)
+            .Where(c => c.SellerId == sellerId)
+            .AnyAsync(c => c.VariantId == variantId);
+    }
 
 }

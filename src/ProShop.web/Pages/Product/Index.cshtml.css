@@ -111,3 +111,18 @@ a,a:link {
     border-radius: 0.80rem;
 }
 /* End other sellers */
+
+
+#product-options-box-in-single-page-of-product > div div {
+    height: 4px;
+    width: 100%;
+}
+
+#product-introduction-in-single-page-of-product {
+    line-height: 2.15;
+    color: #232933;
+}
+
+.break-line-in-single-page-of-product {
+    height: 3px;
+}

@@ -52,7 +52,7 @@ public class AddVariantViewModel
     public byte CommissionPercentage { get; set; }
 
     public string MainPicture { get; set; }
-
+    public List<long?> AddedVariantIds { get; set; }
     public List<ShowCategoryVariantInAddVariantViewModel> Variants { get; set; }
 }
 

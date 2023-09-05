@@ -31,6 +31,9 @@ public class ShowProductInfoViewModel
         }
     }
 
+
+    public string ShortDescription { get; set; }
+    public string SpecialCheck { get; set; }
     public List<ProductMediaForProductInfoViewModel> ProductMedia { get; set; }
     public List<ProductCategoryForProductInfoViewModel> productCategories { get; set; }
     public List<ProductFeatureForProductInfoViewModel> ProductFeatures { get; set; } = new();
