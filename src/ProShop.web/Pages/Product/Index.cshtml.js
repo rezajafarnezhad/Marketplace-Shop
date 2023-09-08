@@ -86,7 +86,7 @@ $(function () {
         }, 0);
     });
 
-    $('#product-details-in-single-page-of-product > div.text-info').click(function () {
+    $('.closeandShow').click(function () {
 
         var isAllFeaturesShown = $(this).find('span.spShow').html().trim() === 'بستن';
         if (isAllFeaturesShown) {
@@ -532,4 +532,8 @@ function addProductVariantToCart(message, data) {
     $('#cart-count-text').html(allprodcutCountInCart.toPersinaDigit());
 
 
+}
+
+function commentReportsFunc(message) {
+    showToastr('success', message);
 }

@@ -13,11 +13,11 @@
                     <th>@Html.DisplayNameFor(x => x.Products[0].ProductCode)</th>
                     <th>@Html.DisplayNameFor(x => x.Products[0].PersianTitle)</th>
                     <th>@Html.DisplayNameFor(x => x.Products[0].CategoryTitle)</th>
-                    <th>@Html.DisplayNameFor(x => x.Products[0].MainPicure)</th>
                     <th>@Html.DisplayNameFor(x => x.Products[0].BrandFullTitle)</th>
-                    <th>@Html.DisplayNameFor(x => x.Products[0].Status)</th>
+                    <th>@Html.DisplayNameFor(x => x.Products[0].MainPicure)</th>
+                    @*<th>@Html.DisplayNameFor(x => x.Products[0].Status)</th>*@
 
-                    <th class="text-center"></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,43 +27,44 @@
                     <tr>
                         <td>@Item.Id</td>
                         <td>@Item.ProductCode</td>
-                        <td>@Item.PersianTitle</td>
+                        <td>@(Item.PersianTitle.Length>50?Item.PersianTitle.Substring(0,30)+"...":Item.PersianTitle)</td>
                         <td>@Item.CategoryTitle</td>
 
+
+                        <td>@Item.BrandFullTitle</td>
                         <td class="text-center">
                             <img src="~/images/Products/@Item.MainPicure" alt="@Item.MainPicure" width="100" class="zoom" />
                         </td>
+                        @* <td>
 
-                        <td>@Item.BrandFullTitle</td>
+            @{
+                string GetButtonClass(ProductStatus status) => status switch
+                {
+                    ProductStatus.Confirmed => "success",
+                    ProductStatus.AwaitingInitialApproval => "warning",
+                    _ => "danger"
+                };
+            }
+            <div class="d-grid">
+                <span class="btn btn-@GetButtonClass(Item.Status)" type="button">
+                    @Item.Status.GetEnumDisplayName()
+                </span>
+            </div>
+
+        </td>
+                        *@
                         <td>
 
-                            @{
-                                string GetButtonClass(ProductStatus status) => status switch
-                                {
-                                    ProductStatus.Confirmed => "success",
-                                    ProductStatus.AwaitingInitialApproval => "warning",
-                                    _ => "danger"
-                                };
-                            }
-                            <div class="d-grid">
-                                <span class="btn btn-@GetButtonClass(Item.Status)" type="button">
-                                    @Item.Status.GetEnumDisplayName()
-                                </span>
-                            </div>
-
-                        </td>
-
-                        <td class="text-center">
-
-                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor">
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor btnTableList">
                                 <span class="badge rounded-pill bg-primary fontsize15">
-                                    اطلاعات
-                                    <i class="bi bi-"></i>
+                                    اطلاعات محصول
+                                    <i class="bi-info-circle"></i>
                                 </span>
                             </a>
-                            <a asp-route-ProductId="@Item.Id" asp-page="./AddVariant"  class="text-info pointer-cursor">
+                            <a asp-route-ProductId="@Item.Id" asp-page="./AddVariant" class="text-info pointer-cursor btnTableList">
                                 <span class="badge rounded-pill bg-primary fontsize15">
-                                    بفروشید
+                                   فروشنده این محصول شوید
+                                    <i class="bi bi-coin"></i>
                                 </span>
                             </a>
                         </td>

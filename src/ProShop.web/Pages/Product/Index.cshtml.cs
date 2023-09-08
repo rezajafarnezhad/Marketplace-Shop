@@ -1,6 +1,5 @@
 ﻿using DNTCommon.Web.Core;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProShop.Common.Constants;
 using ProShop.Common.Helpers;
 using ProShop.Common.IdentityToolkit;
@@ -8,7 +7,7 @@ using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
 using ProShop.ViewModels.Product;
-using System.Security.AccessControl;
+
 
 namespace ProShop.web.Pages.Product;
 
@@ -21,8 +20,10 @@ public class IndexModel : PageBase
     private readonly ICartService _cartService;
     private readonly IUnitOfWork unitOfWork;
     private readonly IViewRenderService _viewRendererService;
+    private readonly ICommentsReportsService _commentsReportsService;
+    private readonly IProductCommentService _productCommentService;
 
-    public IndexModel(IProductService productService, IUserProductFavoriteService userFavoriteService, IUnitOfWork unitOfWork, IProductVariantService productVariantService, ICartService cartService, IViewRenderService viewRendererService)
+    public IndexModel(IProductService productService, IUserProductFavoriteService userFavoriteService, IUnitOfWork unitOfWork, IProductVariantService productVariantService, ICartService cartService, IViewRenderService viewRendererService, ICommentsReportsService commentsReportsService, IProductCommentService productCommentService)
     {
         _productService = productService;
         _userFavoriteService = userFavoriteService;
@@ -30,6 +31,8 @@ public class IndexModel : PageBase
         _productVariantService = productVariantService;
         _cartService = cartService;
         _viewRendererService = viewRendererService;
+        _commentsReportsService = commentsReportsService;
+        _productCommentService = productCommentService;
     }
 
     public ShowProductInfoViewModel ProductInfo { get; set; }
@@ -108,7 +111,7 @@ public class IndexModel : PageBase
                 cart.Count = ProductVariant.MaxCountInCart;
 
             //ProductVariant.Count موجودی انبار
-            if(cart.Count > ProductVariant.Count)
+            if (cart.Count > ProductVariant.Count)
                 cart.Count = (short)ProductVariant.Count;
         }
         else
@@ -140,11 +143,46 @@ public class IndexModel : PageBase
                 count = cart?.Count ?? 1,
                 productvariantid = productVariantId,
                 iscartfull = IsCartFull,
-                cartsDetails = await _viewRendererService.RenderViewToStringAsync("~/Pages/Shared/_Cart.cshtml",carts)
+                cartsDetails = await _viewRendererService.RenderViewToStringAsync("~/Pages/Shared/_Cart.cshtml", carts)
             }
 
         });
 
+    }
+
+    public async Task<IActionResult> OnPostAddCommentReports(long commentId)
+    {
+        if (commentId < 0)
+            return RecordNotFound();
+
+        var userid = ProShop.Common.IdentityToolkit.IdentityExtensions.GetUserId(User.Identity);
+
+        if (userid is null)
+            return RecordNotFound();
+
+        if (!await _productCommentService.IsExistsBy(nameof(Entities.ProductComment.Id), commentId))
+            return RecordNotFound();
+
+
+        if (await _commentsReportsService.IsExistsBy(nameof(Entities.CommentsReports.UserId),
+                nameof(Entities.CommentsReports.ProductCommentId), userid, commentId))
+        {
+            return Json(new JsonResultOperation(false, "شما برای این کامنت قبلا گزارش ثبت کرده اید."));
+
+        }
+
+
+        var _comment = new CommentsReports()
+        {
+            UserId = userid.Value,
+            ProductCommentId = commentId
+        };
+
+
+        await _commentsReportsService.AddAsync(_comment);
+        await unitOfWork.SaveChangesAsync();
+
+        return Json(new JsonResultOperation(true, "گزارش شما با موفقیت ثبت شد با تشکر از همکاری شما"));
     }
 
 }

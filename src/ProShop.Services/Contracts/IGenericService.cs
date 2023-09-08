@@ -14,6 +14,7 @@ public interface IGenericService<TEntity> where TEntity : EntityBase, new()
     Task<TEntity> FindByIdAsync(long id);
     Task<TEntity> FindAsync(params object[] ids);
     Task<bool> IsExistsBy(string propertyToFilter, object propertyValue, long? id = null);
+    Task<bool> IsExistsBy(string propertyName1, string propertyName2, object propertyValue1, object propertyValue2);
     Task SoftDelete(TEntity entity);
     Task Restore(TEntity entity);
     Task<bool> AnyAsync();

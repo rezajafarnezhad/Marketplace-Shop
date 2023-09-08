@@ -239,7 +239,14 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
 }
 
 
+.buyer-backgournd-color-in-single-page-of-product[b-zptyp67v38] {
+    background-color: #dedede;
+}
 
+.comment-variant-color-in-single-page-of-product[b-zptyp67v38] {
+    width: 17px;
+    height: 17px;
+}
 
 
 .product-info-dots[b-zptyp67v38] {
@@ -333,6 +340,16 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
 
 [b-l9zynfn6xc] .main-image-AddVariant {
     max-width: 80%;
+}
+/* _content/ProShop.web/Pages/SellerPanel/Product/All.cshtml.rz.scp.css */
+[b-35dnsmp4iy] .btnTableList {
+    display: grid;
+    margin: 15px;
+}
+/* _content/ProShop.web/Pages/SellerPanel/Product/Index.cshtml.rz.scp.css */
+[b-zrbldfigbb] .btnTableList {
+    display: grid;
+    margin: 15px;
 }
 /* _content/ProShop.web/Pages/SellerPanel/Product/_ProductDetails.cshtml.rz.scp.css */
 

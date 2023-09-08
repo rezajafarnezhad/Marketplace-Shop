@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProShop.Entities;
 
@@ -24,4 +25,3 @@ public class CategoryBrandConfiguration : IEntityTypeConfiguration<CategoryBrand
 
     }
 }
-

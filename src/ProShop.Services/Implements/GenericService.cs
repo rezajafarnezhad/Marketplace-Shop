@@ -60,6 +60,12 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
             .AnyAsync(exp);
     }
 
+    public async Task<bool> IsExistsBy(string propertyName1,string propertyName2,object propertyValue1,object propertyValue2)
+    {
+        var exp = ExpressionHelpers.CreateExistExpressionForMiddleEntities<TEntity>(propertyName1, propertyName2,propertyValue1,propertyValue2);
+        return await _entities.AnyAsync(exp);
+    }
+
 
     public async Task SoftDelete(TEntity entity)
         => entity.IsDeleted = true;

@@ -34,7 +34,7 @@ public class Product : EntityBase , IAuditableEntity
     public ICollection<ProductComment> productComments { get; set; } = new List<ProductComment>();
     public List<ProductVariant> ProductVariants { get; set; }
     public virtual ICollection<UserProductFavorite> UserProductFavorites { get; set; }
-
+    public ICollection<ProductQuestionAndAnswer> ProductsQuestionsAndAnswers { get; set; }
     public Brand Brand { get; set; }
     public Seller Seller { get; set; }
     public Category Category{ get; set; }

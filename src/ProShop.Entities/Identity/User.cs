@@ -32,6 +32,9 @@ public class User : IdentityUser<long>, IAuditableEntity
     public virtual ICollection<UserProductFavorite> UserProductFavorites { get; set; }
     public virtual ICollection<Cart> Carts{ get; set; }
     public virtual ICollection<Order> Orders { get; set; }
+    public virtual ICollection<CommentScore> CommentScores { get; set; }
+    public virtual ICollection<CommentsReports> CommentsReports { get; set; }
+    public virtual ICollection<ProductQuestionAnswerScore> ProductQuestionAnswerScore { get; set; }
     public Seller Seller { get; set; }
 }
 

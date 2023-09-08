@@ -26,7 +26,7 @@
                     <tr>
                         <td>@Item.Id</td>
                         <td>@Item.ProductCode</td>
-                        <td>@(Item.PersianTitle.Length>=80 ? Item.PersianTitle.Substring(0,40) : Item.PersianTitle)</td>
+                        <td>@(Item.PersianTitle.Length>=50 ? Item.PersianTitle.Substring(0,30)+"..." : Item.PersianTitle)</td>
                         <td>@Item.CategoryTitle</td>
                         <td class="text-center">
                             <img src="~/images/Products/@Item.MainPicure" alt="@Item.MainPicure" width="100" class="zoom" />
@@ -54,13 +54,13 @@
                         <td class="text-center">
 
 
-                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor">
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductDetails" class="get-html-with-ajax text-info pointer-cursor btnTableList">
                                 <span class="badge rounded-pill bg-primary fontsize15">
                                     اطلاعات محصول
                                     <i class="bi-info-circle"></i>
                                 </span>
                             </a>
-                            <a productId="@Item.Id" functionNameToCallOnClick="getProductVariants" class="get-html-with-ajax text-info pointer-cursor">
+                            <a productId="@Item.Id" functionNameToCallOnClick="getProductVariants" class="get-html-with-ajax text-info pointer-cursor btnTableList">
                                 <span class="badge rounded-pill bg-primary fontsize15">
                                     تنوع های من در این محصول
                                     <i class="bi bi-boxes"></i>

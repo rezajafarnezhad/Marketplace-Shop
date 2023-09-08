@@ -156,6 +156,11 @@ public class MappingProfile : Profile
                 options =>
                     options.MapFrom(src => src.productComments.Where(c=>c.IsConfirmed).LongCount(c => c.CommentTitle != null)))
 
+            .ForMember(dest => dest.productQuestionsCount,
+                options =>
+                    options.MapFrom(src => src.ProductsQuestionsAndAnswers.Where(c => c.IsConfirmed).LongCount(c => c.IsParent == null)))
+
+
             .ForMember(dest => dest.SuggestCount,
                 options =>
                     options.MapFrom(src => src.productComments.Where(c => c.IsBuyer).LongCount(c => c.Suggest == true)))
@@ -172,6 +177,23 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.IsVariantTypeNull,
                 options =>
                     options.MapFrom(src => src.Category.IsVariantColor == null))
+            
+            
+            .ForMember(dest => dest.ProductsQuestionsAndAnswers,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductsQuestionsAndAnswers
+                            .Where(c=>c.IsConfirmed)
+                            .Where(c=>c.IsParent == null)
+                        ))
+
+            .ForMember(dest => dest.productComments,
+                options =>
+                    options.MapFrom(src => src.productComments.Where(c=>c.IsConfirmed)
+                        .Where(c=>c.CommentTitle !=null)
+                        .OrderByDescending(c=>c.Id)
+                    ))
+
 
             .ForMember(dest => dest.isFavorite,
                 options =>
@@ -405,5 +427,61 @@ public class MappingProfile : Profile
                     ));
 
 
+
+        this.CreateMap<Entities.ProductComment, ProductCommentForProductInfoViewModel>()
+            .ForMember(dest => dest.CreatedDateTime,
+                options =>
+                    options.MapFrom(src => src.CreatedDateTime.ToLongPersianDatewithHour()))
+
+            .ForMember(dest => dest.Like,
+                options =>
+                    options.MapFrom(src => src.CommentScores.LongCount(c => c.IsLike)))
+
+            .ForMember(dest => dest.DisLike,
+                options =>
+                    options.MapFrom(src => src.CommentScores.LongCount(c => !c.IsLike)))
+          
+            .ForMember(dest => dest.Name,
+                options =>
+                    options.MapFrom(src =>
+                        src.IsUnknown ? null : (src.User != null ? src.User.FullName : src.Seller.ShopName)))
+           
+            .ForMember(dest => dest.IsShop,
+                options =>
+                    options.MapFrom(src =>
+                        src.SellerId != null)) 
+            
+            .ForMember(dest => dest.ShopName,
+                options =>
+                    options.MapFrom(src =>
+                        src.Seller.ShopName))
+
+            ;
+
+
+        this.CreateMap<Entities.ProductQuestionAndAnswer,ProductQuestionAnswerForProductInfoViewModel>()
+            .ForMember(dest => dest.IsShop,
+                options =>
+                    options.MapFrom(src =>
+                        src.SellerId != null))
+
+            .ForMember(dest => dest.Like,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductQuestionAnswerScore.LongCount(c=>c.IsLike)))
+
+            .ForMember(dest => dest.Dislike,
+                options =>
+                    options.MapFrom(src =>
+                        src.ProductQuestionAnswerScore.LongCount(c => !c.IsLike)))
+
+            .ForMember(dest => dest.Name,
+                options =>
+                    options.MapFrom(src =>
+                        src.IsUnknown==true ? null : (src.User != null ? src.User.FullName : src.Seller.ShopName)))
+
+            ;
+
+        this.CreateMap<ProductQuestionAndAnswer, ProductQuestionsForProductInfoViewModel>();
     }
 }

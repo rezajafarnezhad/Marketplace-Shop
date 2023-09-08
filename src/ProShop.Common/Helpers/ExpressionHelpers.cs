@@ -15,7 +15,26 @@ public static class ExpressionHelpers
         var equal = Expression.Equal(property, constantValue);
         return Expression.Lambda<Func<T, bool>>(equal, parameter);
     }
+    public static Expression<Func<T, bool>> CreateExistExpressionForMiddleEntities<T>(string propertyName1, string propertyName2, object propertyValue1, object propertyValue2)
+    {
+        var parameter = Expression.Parameter(typeof(T));
+        var property = Expression.Property(parameter, propertyName1);
+        if (propertyValue1 is string)
+            propertyValue1 = propertyValue1.ToString()?.Trim();
+        var constantValue = Expression.Constant(propertyValue1);
+        var equal = Expression.Equal(property, constantValue);
 
+
+        var property2 = Expression.Property(parameter, propertyName2);
+        if (propertyValue2 is string)
+            propertyValue2 = propertyValue2.ToString()?.Trim();
+        var constantValue2 = Expression.Constant(propertyValue2);
+        var equal2 = Expression.Equal(property2, constantValue2);
+
+        var finalResult = Expression.AndAlso(equal,equal2);
+
+        return Expression.Lambda<Func<T, bool>>(finalResult, parameter);
+    }
     public static IOrderedQueryable<T> CreateOrderByExpression<T>(this IQueryable<T> query, string propertyName, string isAsc)
     {
         var parameter = Expression.Parameter(typeof(T));

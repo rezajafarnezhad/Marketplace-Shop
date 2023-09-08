@@ -51,6 +51,9 @@ public class ProductComment : EntityBase, IAuditableEntity
     public Seller SellerShopName { get; set; }
 
     public Variant Variant { get; set; }
+    public virtual ICollection<CommentScore> CommentScores { get; set; }
+    public virtual ICollection<CommentsReports> CommentsReports { get; set; }
+
 
     #endregion
 }

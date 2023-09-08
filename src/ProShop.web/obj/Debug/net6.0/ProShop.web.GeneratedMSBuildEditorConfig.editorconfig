@@ -260,10 +260,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBZGRFZGl0RGlzY291bnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/All.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBbGwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -274,10 +270,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/EditProductVariant.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxFZGl0UHJvZHVjdFZhcmlhbnQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/SuccessfulProductVariant.cshtml]
@@ -455,6 +447,14 @@ build_metadata.AdditionalFiles.CssScope = b-1dy8fubdrh
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/AddVariant.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBZGRWYXJpYW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = b-l9zynfn6xc
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/All.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxBbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-35dnsmp4iy
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-zrbldfigbb
 
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/SellerPanel/Product/_ProductDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VsbGVyUGFuZWxcUHJvZHVjdFxfUHJvZHVjdERldGFpbHMuY3NodG1s
