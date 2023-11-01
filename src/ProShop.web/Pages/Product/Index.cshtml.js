@@ -537,3 +537,49 @@ function addProductVariantToCart(message, data) {
 function commentReportsFunc(message) {
     showToastr('success', message);
 }
+
+
+function showCommentsByPagination(el) {
+    var productId = $(".container-fluid[product-id]").attr('product-id');
+    var commentPagesCount = $(".container-fluid[comment-Pages-Count]").attr('comment-Pages-Count');;
+    var pageNumber = $(el).attr("page-number");
+    var sortBy = $("#comments-sorting div.text-danger").attr('sort-by');
+    var orderBy = $("#comments-sorting div.text-danger").attr('order-by');
+    var dataToSend = {
+        productId: productId,
+        pageNumber: pageNumber,
+        commentPagesCount: commentPagesCount,
+        sortBy: sortBy,
+        orderBy: orderBy
+    };
+
+    GetHtmlWithAjax('?handler=ShowCommentsByPagination', dataToSend,'showCommentByPagingFunction');
+}
+
+$("#comments-sorting div.pointer-cursor").click(function () {
+
+    alert("s");
+    $("#comments-sorting div.pointer-cursor").removeClass("text-danger");
+    $("#comments-sorting div.pointer-cursor").addClass("text-secondary");
+    $(this).addClass("text-danger");
+    var productId = $(".container-fluid[product-id]").attr('product-id');
+    var commentPagesCount = $(".container-fluid[comment-Pages-Count]").attr('comment-Pages-Count');;
+    var pageNumber = 1;
+    var sortBy = $(this).attr('sort-by');
+    var orderBy = $(this).attr('order-by');
+    var dataToSend = {
+        productId: productId,
+        pageNumber: pageNumber,
+        commentPagesCount: commentPagesCount,
+        sortBy: sortBy,
+        orderBy: orderBy
+    };
+
+    GetHtmlWithAjax('?handler=ShowCommentsByPagination', dataToSend, 'showCommentByPagingFunction');
+});
+
+function showCommentByPagingFunction(data) {
+
+    $("#comment-box-in-single-page-of-product").html(data);
+    ConvertToPersianNumber();
+}

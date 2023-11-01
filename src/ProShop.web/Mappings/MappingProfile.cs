@@ -192,6 +192,7 @@ public class MappingProfile : Profile
                     options.MapFrom(src => src.productComments.Where(c=>c.IsConfirmed)
                         .Where(c=>c.CommentTitle !=null)
                         .OrderByDescending(c=>c.Id)
+                        .Take(1)
                     ))
 
 

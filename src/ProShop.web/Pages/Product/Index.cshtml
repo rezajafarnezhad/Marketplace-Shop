@@ -1,5 +1,6 @@
 ﻿@page "/product/pc-{productCode}/{slug}"
 @using ProShop.Common.Helpers;
+@using Microsoft.EntityFrameworkCore.Infrastructure
 @model ProShop.web.Pages.Product.IndexModel
 @{
     var firstImage = Model.ProductInfo.ProductMedia.First(c => !c.IsVideo).FileName;
@@ -38,7 +39,7 @@
 
 <!-- Start breadcrumb -->
 
-<div class="container-fluid mt-3 rem14px">
+<div class="container-fluid mt-3 rem14px" product-id="@Model.ProductInfo.Id" comment-Pages-Count="@Model.ProductInfo.productCommentsCount">
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -861,103 +862,21 @@
                             <i class="bi bi-chevron-left"></i>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between mt-3">
+                    <div class="d-flex justify-content-between mt-3" id="comments-sorting">
                         <div class="rem13px d-flex">
                             <i class="bi bi-sort-down rem21px me-2"></i>
                             <div class="me-2">مرتب سازی:</div>
-                            <div class="text-danger me-2 pointer-cursor">جدیدترین</div>
-                            <div class="text-secondary me-2 pointer-cursor">دیدگاه خریداران</div>
-                            <div class="text-secondary me-2 pointer-cursor">مفیدترین</div>
+                            <div class="text-danger me-2 pointer-cursor" sort-by="Id" order-by="Desc">جدیدترین</div>
+                            <div class="text-secondary me-2 pointer-cursor" sort-by="IsBuyer" order-by="Desc">دیدگاه خریداران</div>
+                            <div class="text-secondary me-2 pointer-cursor" sort-by="MostUseful">مفیدترین</div>
                         </div>
                         <div class="rem13px text-secondary">
-                            <span>@Model.ProductInfo.productComments.Count()</span>
+                            <span>@Model.ProductInfo.productCommentsCount</span>
                             دیدگاه
                         </div>
                     </div>
-                    <div class="mt-4">
-                        @foreach (var comment in Model.ProductInfo.productComments)
-                        {
-                            <div class="pb-3 mt-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-success persian-numbers text-white rem14px px-2 rounded-3">@comment.Score.0</div>
-                                        <div class="fw-bold ms-2">@comment.CommentTitle</div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <i class="bi bi-three-dots-vertical pointer-cursor text-black-50 rem19px" data-bs-toggle="dropdown"></i>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <form asp-page-handler="AddCommentReports" method="post" class="public-ajax-form" call-function-in-the-end="commentReportsFunc">
-                                                <input value="@comment.Id" name="commentId" hidden />
-                                                <button type="submit" class="dropdown-item pointer-cursor">
-                                                    <i class="bi bi-flag text-danger">
-                                                        گزارش این دیدگاه
-                                                    </i>
-                                                </button>
-                                            </form>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mt-4 px-5">
-                                    <div class="d-flex align-items-center text-black-50 rem13px pb-3 border-bottom mb-3">
-                                        <div>@comment.CreatedDateTime</div>
-                                        <div class="mx-3 product-info-dots bg-custom-grey rounded-circle"></div>
-                                        <div>@(string.IsNullOrWhiteSpace(comment.Name)?"کاربر سایت": comment.Name)</div>
-                                        @if (comment.IsBuyer)
-                                        {
-
-
-                                            <div class="ms-2 px-2 buyer-backgournd-color-in-single-page-of-product text-dark">خریدار</div>
-                                        }
-                                        else if (comment.IsShop)
-                                        {
-                                            <div class="ms-2 px-2 buyer-backgournd-color-in-single-page-of-product text-dark">فروشگاه</div>
-                                        }
-                                    </div>
-                                    <div class="rem14px text-success">
-                                        <i class="bi bi-hand-thumbs-up rem17px me-1"></i>
-                                        پیشنهاد میکنم
-                                    </div>
-                                    <div class="my-3 rem15px border-bottom pb-3">
-                                        @Html.Raw(comment.CommentText)
-                                    </div>
-                                    <div class="d-flex justify-content-end text-black-50 rem14px align-items-center">
-                                        <div class="me-5">آیا این دیدگاه مفید بود ؟</div>
-                                        <div class="me-3 pointer-cursor">
-                                            <span class="persian-numbers">@comment.Like</span>
-                                            <i class="bi bi-hand-thumbs-up rem19px"></i>
-                                        </div>
-                                        <div class="pointer-cursor">
-                                            <span class="persian-numbers">@comment.DisLike</span>
-                                            <i class="bi bi-hand-thumbs-down rem19px"></i>
-                                        </div>
-                                    </div>
-                                    @if (comment.IsBuyer)
-                                    {
-                                        <div class="d-flex align-items-center rem14px">
-                                            <i class="bi bi-shop rem18px me-2"></i>
-                                            <div>@comment.ShopName</div>
-                                            @if (comment.VariantValue != null)
-                                            {
-                                                <div class="product-info-dots bg-custom-grey rounded-circle mx-3"></div>
-                                                @if (comment.VariantIsColor)
-                                                {
-                                                    <div class="comment-variant-color-in-single-page-of-product rounded-circle me-2" style="background-color: @comment.VariantColorCode;"></div>
-                                                    @comment.VariantValue
-                                                }
-                                                else if (!comment.VariantIsColor)
-                                                {
-                                                    <i class="bi bi-sort-numeric-up me-2"></i>
-                                                    <span class="persian-numbers">@comment.VariantValue</span>
-                                                }
-                                            }
-                                        </div>
-                                    }
-                                  
-                                </div>
-                               
-                            </div>
-                           
-                        }
+                    <div id="comment-box-in-single-page-of-product">
+                        <partial name="_CommentPartial" model="(Model.ProductInfo.productComments,Model.ProductInfo.ProductsPageCount,1)"/>
                     </div>
                 </div>
             </div>

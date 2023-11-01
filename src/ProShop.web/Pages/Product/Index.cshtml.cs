@@ -6,8 +6,9 @@ using ProShop.Common.IdentityToolkit;
 using ProShop.DataLayer.Context;
 using ProShop.Entities;
 using ProShop.Services.Contracts;
+using ProShop.ViewModels;
 using ProShop.ViewModels.Product;
-
+using ProShop.ViewModels.Product.ProductComments;
 
 namespace ProShop.web.Pages.Product;
 
@@ -46,6 +47,9 @@ public class IndexModel : PageBase
 
         if (ProductInfo.Slug != slug)
             return RedirectToPage("Index", new { productCode, slug = ProductInfo.Slug });
+
+        ProductInfo.ProductsPageCount =(int)Math.Ceiling((decimal)ProductInfo.productCommentsCount/1);
+
 
         var userid = User.Identity.GetLoggedUserId();
         var ProductVariantsIds = ProductInfo.ProductVariants.Select(c => c.Id).ToList();
@@ -185,4 +189,14 @@ public class IndexModel : PageBase
         return Json(new JsonResultOperation(true, "گزارش شما با موفقیت ثبت شد با تشکر از همکاری شما"));
     }
 
+    public async Task<IActionResult> OnGetShowCommentsByPagination(long productId,int pageNumber,int commentPagesCount, CommentSorting sortBy, SortingOrder orderBy)
+    {
+        if(!await _productService.IsExistsBy(nameof(Entities.Product.Id),productId))
+        {
+            return jsonBadRequest();
+        }
+
+        var comment = await _productCommentService.GetCommentsByPagination(productId, pageNumber,sortBy,orderBy);
+        return Partial("_CommentPartial", (comment, commentPagesCount,pageNumber));
+    }
 }

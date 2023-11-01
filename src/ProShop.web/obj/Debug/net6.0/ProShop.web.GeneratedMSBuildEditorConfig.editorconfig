@@ -440,6 +440,14 @@ build_metadata.AdditionalFiles.CssScope = b-vlh9k2eis7
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-zptyp67v38
 
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Product/_CommentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxfQ29tbWVudFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-orqhkw0dru
+
+[C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Product/_PaginationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxfUGFnaW5hdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-b9exrozbkt
+
 [C:/Users/mReza/source/repos/Marketplace-Shop/src/ProShop.web/Pages/Product/_ShareProductP.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxfU2hhcmVQcm9kdWN0UC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-1dy8fubdrh

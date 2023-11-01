@@ -52,8 +52,7 @@ public class IndexModel : PageBase
                 Count = 1
             };
 
-
-            await _cartService.AddAsync(CartToAdd);
+             await _cartService.AddAsync(CartToAdd);
         }
         else if (isIncrease)
         {

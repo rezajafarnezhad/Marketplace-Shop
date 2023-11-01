@@ -1,0 +1,90 @@
+﻿
+
+@model (List<ProShop.ViewModels.Product.ProductCommentForProductInfoViewModel> ProductComment,int CommentPageCount,int CurrentPage)
+
+<div class="mt-4">
+    @foreach (var comment in Model.ProductComment)
+    {
+        <div class="pb-3 mt-2">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success persian-numbers text-white rem14px px-2 rounded-3">@comment.Score.0</div>
+                    <div class="fw-bold ms-2">@comment.CommentTitle</div>
+                </div>
+                <div class="dropdown">
+                    <i class="bi bi-three-dots-vertical pointer-cursor text-black-50 rem19px" data-bs-toggle="dropdown"></i>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <form asp-page-handler="AddCommentReports" method="post" class="public-ajax-form" call-function-in-the-end="commentReportsFunc">
+                            <input value="@comment.Id" name="commentId" hidden />
+                            <button type="submit" class="dropdown-item pointer-cursor">
+                                <i class="bi bi-flag text-danger">
+                                    گزارش این دیدگاه
+                                </i>
+                            </button>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4 px-5">
+                <div class="d-flex align-items-center text-black-50 rem13px pb-3 border-bottom mb-3">
+                    <div>@comment.CreatedDateTime</div>
+                    <div class="mx-3 product-info-dots bg-custom-grey rounded-circle"></div>
+                    <div>@(string.IsNullOrWhiteSpace(comment.Name)?"کاربر سایت": comment.Name)</div>
+                    @if (comment.IsBuyer)
+                    {
+
+
+                        <div class="ms-2 px-2 buyer-backgournd-color-in-single-page-of-product text-dark">خریدار</div>
+                    }
+                    else if (comment.IsShop)
+                    {
+                        <div class="ms-2 px-2 buyer-backgournd-color-in-single-page-of-product text-dark">فروشگاه</div>
+                    }
+                </div>
+                <div class="rem14px text-success">
+                    <i class="bi bi-hand-thumbs-up rem17px me-1"></i>
+                    پیشنهاد میکنم
+                </div>
+                <div class="my-3 rem15px border-bottom pb-3">
+                    @Html.Raw(comment.CommentText)
+                </div>
+                <div class="d-flex justify-content-end text-black-50 rem14px align-items-center">
+                    <div class="me-5">آیا این دیدگاه مفید بود ؟</div>
+                    <div class="me-3 pointer-cursor">
+                        <span class="persian-numbers">@comment.Like</span>
+                        <i class="bi bi-hand-thumbs-up rem19px"></i>
+                    </div>
+                    <div class="pointer-cursor">
+                        <span class="persian-numbers">@comment.DisLike</span>
+                        <i class="bi bi-hand-thumbs-down rem19px"></i>
+                    </div>
+                </div>
+                @if (comment.IsBuyer)
+                {
+                    <div class="d-flex align-items-center rem14px">
+                        <i class="bi bi-shop rem18px me-2"></i>
+                        <div>@comment.ShopName</div>
+                        @if (comment.VariantValue != null)
+                        {
+                            <div class="product-info-dots bg-custom-grey rounded-circle mx-3"></div>
+                            @if (comment.VariantIsColor)
+                            {
+                                <div class="comment-variant-color-in-single-page-of-product rounded-circle me-2" style="background-color: @comment.VariantColorCode;"></div>
+                                @comment.VariantValue
+                            }
+                            else if (!comment.VariantIsColor)
+                            {
+                                <i class="bi bi-sort-numeric-up me-2"></i>
+                                <span class="persian-numbers">@comment.VariantValue</span>
+                            }
+                        }
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    }
+</div>
+<partial name="_PaginationPartial" model="(Model.CommentPageCount,Model.CurrentPage)" />
