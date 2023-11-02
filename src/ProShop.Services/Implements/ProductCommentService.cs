@@ -25,7 +25,6 @@ public class ProductCommentService : GenericService<Entities.ProductComment>, IP
         var query = _producutComment.Where(c => c.ProductId == productsId);
 
         #region OrderBy
-
         if (sortBy == CommentSorting.MostUseful)
         {
             query = query.OrderByDescending(c =>
@@ -35,8 +34,6 @@ public class ProductCommentService : GenericService<Entities.ProductComment>, IP
         {
             query = query.CreateOrderByExpression(sortBy.ToString(),orderBy.ToString());
         }
-
-
         #endregion
 
         query = await GenericPaginationAsync(query, pageNumber, 1);

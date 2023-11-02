@@ -693,7 +693,7 @@ function publicajaxformFunc(form) {
                 }
             }
             else {
-                window[functionName](data.message, data.data);
+                window[functionName](data.message, data.data, form);
             }
         },
         complete: function () {
@@ -1141,6 +1141,15 @@ function ConvertToPersianNumber() {
     });
 }
 
+String.prototype.toEnglishDigit = function () {
+    var find = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    var replace = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    var replaceString = this; var regex;
+    for (var i = 0; i < find.length; i++) {
+        regex = new RegExp(find[i], "g"); replaceString = replaceString.replace(regex, replace[i]);
+    }
+    return replaceString;
+};
 
 $(function () {
     activatingInputAttributes();
@@ -1214,4 +1223,11 @@ function copyTextToClipboard(text, functionNameToCallInTheEnd, clickedEl) {
     }, function (err) {
         showErrorMessage('مرورگر شما قابلیت کپی کردن متن را ندارد');
     });
+}
+
+function scorollTo(el, subtract=0) {
+
+    $('html,body').animate({
+        scrollTop: $(el).offset().top - subtract
+    }, 0);
 }

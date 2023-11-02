@@ -120,7 +120,7 @@ $(function () {
 
     }
 
-   
+
 
 
 
@@ -540,6 +540,11 @@ function commentReportsFunc(message) {
 
 
 function showCommentsByPagination(el) {
+
+    if ($(el).hasClass("bg-danger")) {
+        return;
+    }
+
     var productId = $(".container-fluid[product-id]").attr('product-id');
     var commentPagesCount = $(".container-fluid[comment-Pages-Count]").attr('comment-Pages-Count');;
     var pageNumber = $(el).attr("page-number");
@@ -553,12 +558,15 @@ function showCommentsByPagination(el) {
         orderBy: orderBy
     };
 
-    GetHtmlWithAjax('?handler=ShowCommentsByPagination', dataToSend,'showCommentByPagingFunction');
+    GetHtmlWithAjax('?handler=ShowCommentsByPagination', dataToSend, 'showCommentByPagingFunction');
 }
 
 $("#comments-sorting div.pointer-cursor").click(function () {
 
-    alert("s");
+    if ($(this).hasClass("text-danger")) {
+        return;
+    }
+
     $("#comments-sorting div.pointer-cursor").removeClass("text-danger");
     $("#comments-sorting div.pointer-cursor").addClass("text-secondary");
     $(this).addClass("text-danger");
@@ -582,4 +590,67 @@ function showCommentByPagingFunction(data) {
 
     $("#comment-box-in-single-page-of-product").html(data);
     ConvertToPersianNumber();
+    scorollTo('#commnets-introduction-in-single-page-product', 69);
+}
+
+$(document).on('click', '.comment-score-form-submit', function () {
+    $(this).submit();
+});
+
+function commentReportsFunc(message, data, form) {
+
+    var isLiskclicked = $(form).find('i').hasClass('bi-hand-thumbs-up') || $(form).find('i').hasClass('bi-hand-thumbs-up-fill');
+    scorollTo('#commnets-introduction-in-single-page-product', 69);
+
+    var currentSpan = $(form).find('span');
+    var currentScoreValue = parseInt(currentSpan.html().trim().toEnglishDigit());
+
+    if (data === 'Add') {
+        var valueToRplase = (currentScoreValue + 1).toString().toPersinaDigit();
+        currentSpan.html(valueToRplase);
+        if (isLiskclicked) {
+            $(form).find('i').removeClass('bi-hand-thumbs-up');
+            $(form).find('i').addClass('text-success bi-hand-thumbs-up-fill');
+        } else {
+            $(form).find('i').removeClass('bi-hand-thumbs-down');
+            $(form).find('i').addClass('text-danger bi-hand-thumbs-down-fill');
+        }
+
+    } else if (data === 'Subtract') {
+        var valueToRplase = (currentScoreValue - 1).toString().toPersinaDigit();
+        currentSpan.html(valueToRplase);
+        if (isLiskclicked) {
+            $(form).find('i').removeClass('text-seuccess bi-hand-thumbs-up-fill');
+            $(form).find('i').addClass('bi-hand-thumbs-up');
+        } else {
+            $(form).find('i').removeClass('text-danger bi-hand-thumbs-down-fill');
+            $(form).find('i').addClass('bi-hand-thumbs-down');
+        }
+
+    } else {
+        var valueToRplase = (currentScoreValue + 1).toString().toPersinaDigit();
+        currentSpan.html(valueToRplase);
+
+        if (isLiskclicked) {
+            $(form).find('i').removeClass('bi-hand-thumbs-up');
+            $(form).find('i').addClass('text-success bi-hand-thumbs-up-fill');
+        } else {
+            $(form).find('i').removeClass('bi-hand-thumbs-down');
+            $(form).find('i').addClass('text-danger bi-hand-thumbs-down-fill');
+        }
+
+        var anotherForm;
+        if (isLiskclicked) {
+            anotherForm = $(form).parent().find('form:last');
+            anotherForm.find('i').removeClass('text-danger bi-hand-thumbs-down-fill');
+            anotherForm.find('i').addClass('bi-hand-thumbs-down');
+        } else {
+            anotherForm = $(form).parent().find('form:first');
+            anotherForm.find('i').removeClass('text-seuccess bi-hand-thumbs-up-fill');
+            anotherForm.find('i').addClass('bi-hand-thumbs-up');
+        }
+        var anotherSpan = anotherForm.find('span');
+        var anotherScoreValue = parseInt(anotherSpan.html().trim().toEnglishDigit());
+        anotherSpan.html((anotherScoreValue - 1).toString().toPersinaDigit());
+    }
 }

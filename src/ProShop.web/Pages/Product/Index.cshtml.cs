@@ -23,8 +23,8 @@ public class IndexModel : PageBase
     private readonly IViewRenderService _viewRendererService;
     private readonly ICommentsReportsService _commentsReportsService;
     private readonly IProductCommentService _productCommentService;
-
-    public IndexModel(IProductService productService, IUserProductFavoriteService userFavoriteService, IUnitOfWork unitOfWork, IProductVariantService productVariantService, ICartService cartService, IViewRenderService viewRendererService, ICommentsReportsService commentsReportsService, IProductCommentService productCommentService)
+    private readonly ICommentScoreService _commentScoreService;
+    public IndexModel(IProductService productService, IUserProductFavoriteService userFavoriteService, IUnitOfWork unitOfWork, IProductVariantService productVariantService, ICartService cartService, IViewRenderService viewRendererService, ICommentsReportsService commentsReportsService, IProductCommentService productCommentService, ICommentScoreService commentScoreService)
     {
         _productService = productService;
         _userFavoriteService = userFavoriteService;
@@ -34,6 +34,7 @@ public class IndexModel : PageBase
         _viewRendererService = viewRendererService;
         _commentsReportsService = commentsReportsService;
         _productCommentService = productCommentService;
+        _commentScoreService = commentScoreService;
     }
 
     public ShowProductInfoViewModel ProductInfo { get; set; }
@@ -198,5 +199,46 @@ public class IndexModel : PageBase
 
         var comment = await _productCommentService.GetCommentsByPagination(productId, pageNumber,sortBy,orderBy);
         return Partial("_CommentPartial", (comment, commentPagesCount,pageNumber));
+    }
+
+
+    public async Task<IActionResult> OnPostCommentScore(long commentId, bool isLike)
+    {
+        var userid = ProShop.Common.IdentityToolkit.IdentityExtensions.GetUserId(User.Identity);
+        if (userid is null)
+            return RecordNotFound();
+
+        if (!await _productCommentService.IsExistsBy(nameof(Entities.ProductComment.Id), commentId))
+            return RecordNotFound();
+
+        var commentScore = await _commentScoreService.FindAsync(userid.Value,commentId);
+        var operation = string.Empty;
+        if (commentScore == null)
+        {
+            operation = "Add";
+            await _commentScoreService.AddAsync(new CommentScore()
+            {
+                ProductCommentId = commentId,
+                UserId = userid.Value,
+                IsLike = isLike
+            });
+        }
+        else if (commentScore.IsLike && isLike || !commentScore.IsLike && !isLike)
+        {
+            operation = "Subtract";
+            _commentScoreService.Remove(commentScore);
+        }
+        else
+        {
+            operation = "AddAndSubtract";
+            commentScore.IsLike = !commentScore.IsLike;
+        }
+
+        await unitOfWork.SaveChangesAsync();
+
+        return Json(new JsonResultOperation(true, string.Empty)
+        {
+            Data = operation,
+        });
     }
 }

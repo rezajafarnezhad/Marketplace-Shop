@@ -80,6 +80,7 @@ public static class AddCustomServicesExtensions
         services.AddScoped<IParcelPostService,ParcelPostService>();
         services.AddScoped<ICommentsReportsService, CommentsReportsService>();
         services.AddScoped<IProductCommentService,ProductCommentService>();
+        services.AddScoped<ICommentScoreService,CommentScoreService>();
 
         #region Html sanitizer
         IHtmlSanitizer sanitizer = new HtmlSanitizer();
