@@ -55,7 +55,8 @@ public class IndexModel : PageBase
         var userid = User.Identity.GetLoggedUserId();
         var ProductVariantsIds = ProductInfo.ProductVariants.Select(c => c.Id).ToList();
         ProductInfo.ProductVariantInCart = await _cartService.GetProductVariantsInCart(ProductVariantsIds, userid);
-
+        var commentIds = ProductInfo.productComments.Select(c=>c.Id).ToArray();
+        ProductInfo.LikedCommentByUser = await _commentScoreService.GetLikedCommentByUser(userid,commentIds);
         return Page();
 
     }
@@ -198,7 +199,17 @@ public class IndexModel : PageBase
         }
 
         var comment = await _productCommentService.GetCommentsByPagination(productId, pageNumber,sortBy,orderBy);
-        return Partial("_CommentPartial", (comment, commentPagesCount,pageNumber));
+
+        var userid = User.Identity.GetLoggedUserId();
+        var commentIds = comment.Select(c => c.Id).ToArray();
+        var model = new CommentForCommentPartialViewModel
+        {
+            ProductComments = comment,
+            CommentPageCount = commentPagesCount,
+            CurrentPage = pageNumber,
+            LikedCommentByUser = await _commentScoreService.GetLikedCommentByUser(userid, commentIds)
+        };
+        return Partial("_CommentPartial", model);
     }
 
 

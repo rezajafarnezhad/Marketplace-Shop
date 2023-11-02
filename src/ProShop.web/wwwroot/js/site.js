@@ -17,7 +17,7 @@ var htmlModalPlace = `<div class="modal fade" id="html-modal-place" data-bs-back
     </div>
 </div>`;
 
-function appendHtmlModalPlaceToBody(customClass ='modal-xl') {
+function appendHtmlModalPlaceToBody(customClass = 'modal-xl') {
     if ($('#html-modal-place').length === 0) {
         $('body').append(htmlModalPlace);
     }
@@ -646,7 +646,10 @@ $(document).on('submit', 'form.public-ajax-form', function (e) {
     var currentForm = this;
     $('#html-modal-place').modal('hide');
     $('#Second-html-modal-place').modal('hide');
-    showLoading();
+    var hideloadingAttr = $(this).attr('hide-loading');
+    if (!hideloadingAttr) {
+        showLoading();
+    }
 
     if ($(this).parents('.modal').length === 0) {
         publicajaxformFunc(currentForm);
@@ -1225,7 +1228,7 @@ function copyTextToClipboard(text, functionNameToCallInTheEnd, clickedEl) {
     });
 }
 
-function scorollTo(el, subtract=0) {
+function scorollTo(el, subtract = 0) {
 
     $('html,body').animate({
         scrollTop: $(el).offset().top - subtract

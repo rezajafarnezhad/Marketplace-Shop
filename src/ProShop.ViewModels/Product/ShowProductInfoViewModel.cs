@@ -23,7 +23,6 @@ public class ShowProductInfoViewModel
     public long SuggestCount { get; set; }
     public long BuyerCount { get; set; }
     public bool isFavorite { get; set; }
-
     public double SuggestPercentage
     {
         get
@@ -44,6 +43,7 @@ public class ShowProductInfoViewModel
     public List<ProductVariantInCartForProductInfoViewModel> ProductVariantInCart { get; set; } = new();
     public List<ProductCommentForProductInfoViewModel> productComments { get; set; } = new();
     public List<ProductQuestionsForProductInfoViewModel> ProductsQuestionsAndAnswers { get; set; }
+    public List<LikedCommentByUserViewModel> LikedCommentByUser { get; set; }
 }
 
 public class ProductMediaForProductInfoViewModel
@@ -76,7 +76,9 @@ public class ProductCommentForProductInfoViewModel
     public string CreatedDateTime { get; set; }
 
     public bool IsBuyer { get; set; }
-
+    public bool? suggest { get; set; }
+    public string PositiveItems { get; set; }
+    public string NegativeItems { get; set; }
     public bool IsConfirmed { get; set; }
     public long Like { get; set; }
     public long DisLike { get; set; }
@@ -88,6 +90,13 @@ public class ProductCommentForProductInfoViewModel
     public bool VariantIsColor { get; set; }
     public string VariantColorCode { get; set; }
 }
+
+public class LikedCommentByUserViewModel
+{
+    public long ProductCommentId { get; set; }
+    public bool IsLike { get; set; }
+}
+
 
 public class ProductVariantForProductInfoViewModel
 {

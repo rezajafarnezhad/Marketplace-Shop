@@ -1,6 +1,8 @@
 ﻿@page "/product/pc-{productCode}/{slug}"
 @using ProShop.Common.Helpers;
 @using Microsoft.EntityFrameworkCore.Infrastructure
+@using ProShop.ViewModels.Product.ProductComments
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ProShop.web.Pages.Product.IndexModel
 @{
     var firstImage = Model.ProductInfo.ProductMedia.First(c => !c.IsVideo).FileName;
@@ -876,7 +878,16 @@
                         </div>
                     </div>
                     <div id="comment-box-in-single-page-of-product">
-                        <partial name="_CommentPartial" model="(Model.ProductInfo.productComments,Model.ProductInfo.ProductsPageCount,1)"/>
+                        @{
+                            var commentModel = new CommentForCommentPartialViewModel()
+                            {
+                                ProductComments = Model.ProductInfo.productComments,
+                                LikedCommentByUser = Model.ProductInfo.LikedCommentByUser,
+                                CommentPageCount = Model.ProductInfo.ProductsPageCount,
+                                CurrentPage = 1
+                            };
+                        }
+                        <partial name="_CommentPartial" model="commentModel"/>
                     </div>
                 </div>
             </div>
@@ -921,7 +932,7 @@
                                 </div>
                                 @foreach (var answer in question.Answers.Select((value, index) => new { index, value }))
                                 {
-                                    <div class="d-flex mt-3 text-secondary">
+                                    <div class="d-flex mt-3 text-secondary@(answer.index>0?"d-none":"")">
                                         <div class="rem13px">
                                             پاسخ
                                         </div>
@@ -956,7 +967,7 @@
                                             @if (question.Answers.Count > 1 && answer.index == 0)
                                             {
                                                 <div class="d-flex mt-3">
-                                                    <div class="text-info rem14px pointer-cursor">
+                                                    <div class="text-info rem14px pointer-cursor show-another-answer=button">
                                                         مشاهده پاسخ های دیگر
                                                         <i class="bi bi-chevron-down"></i>
                                                     </div>
@@ -965,7 +976,7 @@
                                         </div>
                                     </div>
                                 }
-                                <div class="text-info rem14px mt-3 pointer-cursor">
+                                <div class="text-info rem14px mt-3 pointer-cursor @(question.Answers.Count>1?"d-none":"")">
                                     ثبت پاسخ
                                     @if (question.Answers.Count > 0)
                                     {

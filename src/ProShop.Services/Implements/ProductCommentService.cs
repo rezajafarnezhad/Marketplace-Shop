@@ -22,7 +22,9 @@ public class ProductCommentService : GenericService<Entities.ProductComment>, IP
 
     public async Task<List<ProductCommentForProductInfoViewModel>> GetCommentsByPagination(long productsId, int pageNumber, CommentSorting sortBy, SortingOrder orderBy)
     {
-        var query = _producutComment.Where(c => c.ProductId == productsId);
+        var query = _producutComment
+            .Where(c=>c.IsConfirmed)
+            .Where(c => c.ProductId == productsId);
 
         #region OrderBy
         if (sortBy == CommentSorting.MostUseful)

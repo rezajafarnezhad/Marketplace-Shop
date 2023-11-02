@@ -326,6 +326,10 @@ a[b-zptyp67v38],a:link[b-zptyp67v38] {
     width: 17px;
     height: 17px;
 }
+
+.not-suggeset-color[b-orqhkw0dru]{
+    color:#f57f17;
+}
 /* _content/ProShop.web/Pages/Product/_PaginationPartial.cshtml.rz.scp.css */
 .pagination-box-in-single-page-of-product div:not(.pagination-dots-in-single-page-of-produdts)[b-b9exrozbkt] {
     width: 36px;

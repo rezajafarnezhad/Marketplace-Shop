@@ -45,8 +45,18 @@ function ProductInfoScrollSpy(e) {
 
 $(function () {
 
-    ProductInfoScrollSpy($(this))
+    $(document).on('click', '.show-another-answer=button', function () {
+        var parent = $(this).parents('.question-box-in-single-page-product');
+        parent.find('.text-secondary').removeClass('d-none');
+        parent.find('.text-info:last').removeClass('d-none');
+        $(this).parent().remove();
 
+    });
+
+
+
+    ProductInfoScrollSpy($(this))
+   
     $(document).scroll(function () {
         ProductInfoScrollSpy($(this))
     });
@@ -594,10 +604,22 @@ function showCommentByPagingFunction(data) {
 }
 
 $(document).on('click', '.comment-score-form-submit', function () {
+    if ($(this).find('span').hasClass('d-none')) {
+        return;
+    }
+    $(this).removeClass('pointer-cursor');
+    $(this).find('span').addClass('d-none');
+    $(this).find('i').addClass('d-none');
+    $(this).find('img').removeClass('d-none');
     $(this).submit();
 });
 
 function commentReportsFunc(message, data, form) {
+
+    $(form).find('div').addClass('pointer-cursor');
+    $(form).find('span').removeClass('d-none');
+    $(form).find('i').removeClass('d-none');
+    $(form).find('img').addClass('d-none');
 
     var isLiskclicked = $(form).find('i').hasClass('bi-hand-thumbs-up') || $(form).find('i').hasClass('bi-hand-thumbs-up-fill');
     scorollTo('#commnets-introduction-in-single-page-product', 69);

@@ -428,7 +428,7 @@ public class MappingProfile : Profile
                     ));
 
 
-
+        var userId = 0;
         this.CreateMap<Entities.ProductComment, ProductCommentForProductInfoViewModel>()
             .ForMember(dest => dest.CreatedDateTime,
                 options =>
@@ -456,7 +456,6 @@ public class MappingProfile : Profile
                 options =>
                     options.MapFrom(src =>
                         src.Seller.ShopName))
-
             ;
 
 
@@ -484,5 +483,6 @@ public class MappingProfile : Profile
             ;
 
         this.CreateMap<ProductQuestionAndAnswer, ProductQuestionsForProductInfoViewModel>();
+        this.CreateMap<LikedCommentByUserViewModel, CommentScore>().ReverseMap();
     }
 }
